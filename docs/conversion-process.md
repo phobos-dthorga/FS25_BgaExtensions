@@ -8,7 +8,9 @@ Do not force every organic crop into vanilla `SILAGE`.
 
 Some materials genuinely belong in a silage pathway. Others are better represented as wet biomass, grain mash, compost/organic residuals, or pretreated low-grade substrate. The mod should preserve those differences while still making many more organic materials useful for BGA energy production.
 
-For the first proof of concept, prefer the smallest useful compatibility layer. The installed PlanET modular BGA already uses internal feedstocks, so the initial implementation feeds those internal lanes directly instead of adding a Phobos substrate fillType too early.
+For the first proof of concept, prefer the smallest useful compatibility layer. The installed PlanET modular BGA already uses internal feedstocks, so forage and manure lanes feed those internal PlanET lanes directly.
+
+The wet crop lane now uses one Phobos-owned intermediary, `PHB_WET_BIOMASS_MASH`, before handing material to PlanET as `SUGARBEETCUT_IN`. This avoids presenting spinach, peas, roots, and produce waste as if they were sugar beet.
 
 See `docs/integration-strategy.md` for the companion-module rule that governs PlanET and future third-party integrations.
 
@@ -109,11 +111,16 @@ Current PoC recipes:
 - `DRYGRASS_WINDROW` -> `SILAGE_IN`
 - `STRAW` -> `SILAGE_IN` at poor efficiency
 - `STRAW` -> `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant
-- `SUGARBEET_CUT` -> `SUGARBEETCUT_IN`
-- `POTATO` -> `SUGARBEETCUT_IN`
-- `BEETROOT` -> `SUGARBEETCUT_IN`
-- `CARROT` -> `SUGARBEETCUT_IN`
-- `PARSNIP` -> `SUGARBEETCUT_IN`
+- `SUGARBEET_CUT` -> `PHB_WET_BIOMASS_MASH`
+- `SUGARCANE` -> `PHB_WET_BIOMASS_MASH`
+- `POTATO` -> `PHB_WET_BIOMASS_MASH`
+- `BEETROOT` -> `PHB_WET_BIOMASS_MASH`
+- `CARROT` -> `PHB_WET_BIOMASS_MASH`
+- `PARSNIP` -> `PHB_WET_BIOMASS_MASH`
+- `SPINACH` -> `PHB_WET_BIOMASS_MASH`
+- `PEA` -> `PHB_WET_BIOMASS_MASH`
+- `GREENBEAN` -> `PHB_WET_BIOMASS_MASH`
+- `PHB_WET_BIOMASS_MASH` -> `SUGARBEETCUT_IN`
 
 Optional detected inputs for the first expansion:
 
@@ -147,7 +154,7 @@ The safer path is to ship a self-contained Phobos conversion chain first, then a
 
 ## Fill Type Caution
 
-The first proof of concept does not add `PHB_BGA_SUBSTRATE`.
+The first proof of concept does not add a broad `PHB_BGA_SUBSTRATE`.
 
 If `PHB_BGA_SUBSTRATE` is added later, it should not require custom bales in its first version.
 
@@ -172,3 +179,13 @@ Suggested initial factors:
 - emergency residues: `0.05-0.35`
 
 The exact numbers should be tuned against vanilla BGA recipes after the first XML prototype is testable.
+
+## Current By-Product Guidance
+
+The current implementation now uses one Phobos-owned wet intermediary, `PHB_WET_BIOMASS_MASH`, for wet/root/produce substrates before handing them to PlanET as `SUGARBEETCUT_IN`.
+
+For by-products and farm-adjacent outputs, follow `docs/byproduct-integration-audit.md`:
+
+- prefer existing fillTypes such as `COMPOST`, `DIGESTATE`, `STRAW_PELLETS`, `WOODCHIPS`, `ORGANICWASTE`, `RICE_HUSK`, and corn-residue fillTypes when they already exist
+- avoid defining one-off waste fillTypes unless the gameplay need is clear
+- keep PlanET internal fillTypes as PlanET handoffs, not general Phobos farm commodities
