@@ -2,6 +2,8 @@
 
 This document defines how `FS25_BgaExtensions` should integrate with other FS25 mods, especially `FS25_PlanET_BGA_Modular`.
 
+For the full build workflow, validation method, and resource policy, see `docs/implementation-approach.md`.
+
 ## Core Rule
 
 Ship companion modules, not edits to other mods.

@@ -20,6 +20,7 @@ Extend Farming Simulator 25 BGA gameplay with richer production, management, or 
 
 ## Working References
 
+- Implementation approach: `docs/implementation-approach.md`.
 - Biomass crop ranking: `docs/biomass-crop-ranking.md`.
 - Conversion process: `docs/conversion-process.md`.
 - Integration strategy: `docs/integration-strategy.md`.
