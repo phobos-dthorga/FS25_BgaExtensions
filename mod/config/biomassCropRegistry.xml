@@ -2,42 +2,45 @@
 <biomassCropRegistry>
     <!-- Draft data registry. This file is not loaded by the mod yet. -->
     <tier id="exceptional" bgaValue="0.80 1.00">
-        <crop id="maize_whole_crop" fillTypes="MAIZE CHAFF" pathway="chaffToSilage" source="baseGame"/>
+        <crop id="maize_whole_crop" fillTypes="MAIZE CHAFF SILAGEMAIZE" pathway="chaffToSilage" source="mixed"/>
         <crop id="grass_meadow" fillTypes="GRASS MEADOW GRASS_WINDROW" pathway="windrowToSilage" source="baseGame"/>
-        <crop id="alfalfa_lucerne" fillTypes="ALFALFA ALFALFA_WINDROW LUCERNE" pathway="optionalForageSilage" source="commonMap"/>
-        <crop id="clover_mixed_forage" fillTypes="CLOVER CLOVER_WINDROW VETCH FIELDGRASS" pathway="optionalForageSilage" source="commonMap"/>
+        <crop id="alfalfa_lucerne" fillTypes="ALFALFA ALFALFA_WINDROW ALFALFA_FERMENTED DRYALFALFA DRYALFALFA_WINDROW LUCERNE" pathway="optionalForageSilage" source="commonMap"/>
+        <crop id="clover_mixed_forage" fillTypes="CLOVER CLOVER_WINDROW CLOVER_FERMENTED DRYCLOVER DRYCLOVER_WINDROW VETCH VETCHRYE FIELDGRASS" pathway="optionalForageSilage" source="commonMap"/>
         <crop id="sugarbeet_cut" fillTypes="SUGARBEET SUGARBEET_CUT BEETPULP" pathway="wetSubstrate" source="mixed"/>
     </tier>
 
     <tier id="excellent" bgaValue="0.65 0.90">
-        <crop id="sorghum_whole_crop" fillTypes="SORGHUM CHAFF" pathway="chaffToSilage" source="baseGame"/>
-        <crop id="whole_crop_cereals" fillTypes="WHEAT BARLEY OAT RYE TRITICALE SPELT" pathway="wholeCropSilage" source="mixed"/>
-        <crop id="starchy_roots" fillTypes="POTATO SWEETPOTATO" pathway="wetSubstrate" source="mixed"/>
+        <crop id="sorghum_whole_crop" fillTypes="SORGHUM SORGHUM_CUT CHAFF" pathway="chaffToSilage" source="mixed"/>
+        <crop id="whole_crop_cereals" fillTypes="WHEAT BARLEY OAT RYE RYE_CUT GREENRYE TRITICALE TRITICALE_CUT SPELT SPELT_CUT WINTERBARLEY WINTERWHEAT" pathway="wholeCropSilage" source="mixed"/>
+        <crop id="starchy_roots" fillTypes="POTATO POTATO_WASHED SWEETPOTATO" pathway="wetSubstrate" source="mixed"/>
         <crop id="root_vegetables" fillTypes="BEETROOT CARROT PARSNIP ONION" pathway="wetSubstrate" source="mixed"/>
         <crop id="sugarcane" fillTypes="SUGARCANE" pathway="wetSubstrate" source="baseGame"/>
+        <crop id="organic_waste" fillTypes="ORGANICWASTE COMPOST_RAW COMPOST" pathway="wasteSubstrate" source="commonMap"/>
     </tier>
 
     <tier id="good" bgaValue="0.45 0.75">
         <crop id="dry_grass" fillTypes="DRYGRASS DRYGRASS_WINDROW" pathway="windrowToSilage" source="baseGame"/>
         <crop id="sunflower_whole_crop" fillTypes="SUNFLOWER CHAFF" pathway="chaffToSilage" source="baseGame"/>
         <crop id="peas_beans" fillTypes="PEA GREENBEAN FIELDPEA FIELDBEAN HORSEBEAN" pathway="wetSubstrate" source="mixed"/>
-        <crop id="leafy_greens" fillTypes="SPINACH LETTUCE NAPACABBAGE" pathway="wetSubstrate" source="mixed"/>
-        <crop id="rice" fillTypes="RICE RICELONGGRAIN" pathway="grainMashSubstrate" source="baseGame"/>
-        <crop id="small_grains" fillTypes="MILLET BUCKWHEAT" pathway="wholeCropSilage" source="commonMap"/>
-        <crop id="oilseed_whole_crop" fillTypes="CANOLA SOYBEAN FLAX MUSTARD" pathway="greenChopSubstrate" source="mixed"/>
+        <crop id="leafy_greens" fillTypes="SPINACH LETTUCE NAPACABBAGE CUCUMBER GREENPEPPER" pathway="wetSubstrate" source="mixed"/>
+        <crop id="rice" fillTypes="RICE RICELONGGRAIN RICELONGGRAIN_CUT RUSKED_RICE" pathway="grainMashSubstrate" source="mixed"/>
+        <crop id="small_grains" fillTypes="MILLET BUCKWHEAT BUCKWHEAT_GROATS" pathway="wholeCropSilage" source="commonMap"/>
+        <crop id="oilseed_whole_crop" fillTypes="CANOLA SOYBEAN FLAX LINSEED LINSEED_CUT MUSTARD MUSTARD_CUT" pathway="greenChopSubstrate" source="mixed"/>
     </tier>
 
     <tier id="fair" bgaValue="0.20 0.60">
-        <crop id="dry_grain_diversion" fillTypes="WHEAT BARLEY OAT SORGHUM MAIZE RICELONGGRAIN" pathway="grainMashSubstrate" source="baseGame"/>
-        <crop id="fruit_and_pomace" fillTypes="GRAPE OLIVE STRAWBERRY TOMATO" pathway="wasteSubstrate" source="mixed"/>
+        <crop id="dry_grain_diversion" fillTypes="WHEAT BARLEY OAT SORGHUM MAIZE RICELONGGRAIN DRY_MAIZE" pathway="grainMashSubstrate" source="mixed"/>
+        <crop id="fruit_and_pomace" fillTypes="GRAPE OLIVE STRAWBERRY TOMATO APPLE APRICOT PEAR PLUM WATERMELON GRAPECLEAN" pathway="wasteSubstrate" source="mixed"/>
         <crop id="hemp_fiber_annuals" fillTypes="HEMP" pathway="greenChopSubstrate" source="commonMap"/>
         <crop id="specialty_crops" fillTypes="HOPS LAVENDER" pathway="wasteSubstrate" source="commonMap"/>
+        <crop id="maize_processing_residue" fillTypes="MAIZECOB MAIZECOBWASTE MAIZEGERM MAIZESTALKS" pathway="residueSubstrate" source="commonMap"/>
     </tier>
 
     <tier id="emergency" bgaValue="0.05 0.35">
-        <crop id="straw_residues" fillTypes="STRAW RYE_STRAW TRITICALE_STRAW" pathway="pretreatedDrySubstrate" source="mixed"/>
+        <crop id="straw_residues" fillTypes="STRAW RYE_STRAW TRITICALE_STRAW FLAX_STRAW CROP_WINDROW" pathway="pretreatedDrySubstrate" source="mixed"/>
         <crop id="woody_biomass" fillTypes="POPLAR WOODCHIPS" pathway="pretreatmentOnly" source="baseGame"/>
-        <crop id="cover_crop_biomass" fillTypes="OILSEEDRADISH MUSTARD" pathway="greenManureSalvage" source="mixed"/>
+        <crop id="cover_crop_biomass" fillTypes="OILSEEDRADISH MUSTARDCOVER FLOWERINGCATCHCROP HUMUSACTIVE" pathway="greenManureSalvage" source="mixed"/>
+        <crop id="rice_husk" fillTypes="RICE_HUSK" pathway="pretreatedDrySubstrate" source="commonMap"/>
+        <crop id="processed_maize_pellets" fillTypes="MAIZESTALKS_PELLETS" pathway="pretreatedDrySubstrate" source="commonMap"/>
     </tier>
 </biomassCropRegistry>
-

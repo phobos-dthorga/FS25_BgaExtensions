@@ -12,6 +12,8 @@ Base-game observations checked on 2026-06-06 against local FS25 install files:
 - `data/placeables/brandless/bunkerSilos/*/bunkerSilo*.xml`
 - `data/placeables/planET/bga*/bga*.xml`
 
+Installed mod observations are recorded in `docs/installed-mod-observations.md`.
+
 ## Implementation Bias
 
 - Prefer bulk substrate and placeable production paths before custom bales.
@@ -24,30 +26,33 @@ Base-game observations checked on 2026-06-06 against local FS25 install files:
 
 | Rank | Crop or crop family | FS25/base fill types or common names | Preferred pathway | BGA value | Implementation notes |
 | --- | --- | --- | --- | --- | --- |
-| Exceptional | Maize/corn whole crop | `MAIZE`, `CHAFF` | Forage harvest to `CHAFF`, bunker to `SILAGE`, then BGA | 1.00 baseline | Core baseline. Vanilla forage harvester already converts maize to chaff, and bunker silos already accept chaff. |
+| Exceptional | Maize/corn whole crop | `MAIZE`, `CHAFF`, common: `SILAGEMAIZE` | Forage harvest to `CHAFF`, bunker to `SILAGE`, then BGA | 1.00 baseline | Core baseline. Vanilla forage harvester already converts maize to chaff, and bunker silos already accept chaff. |
 | Exceptional | Grass and meadow forage | `GRASS`, `MEADOW`, `GRASS_WINDROW` | Mow to windrow, bunker to `SILAGE`, then BGA | 0.85-0.95 | High-volume, repeatable, already fits the vanilla silage loop. |
-| Exceptional | Alfalfa/lucerne | Common: `ALFALFA`, `ALFALFA_WINDROW`, `LUCERNE` | Optional whole-crop forage silage or green biomass substrate | 0.85-0.95 | Very common in map/mod ecosystems. Should be a first optional integration once fill type detection exists. |
-| Exceptional | Clover and mixed forage legumes | Common: `CLOVER`, `CLOVER_WINDROW`, `VETCH`, `FIELDGRASS` | Optional whole-crop forage silage or green biomass substrate | 0.80-0.92 | Related to alfalfa in design terms. Good silage candidate, but exact names vary by map. |
+| Exceptional | Alfalfa/lucerne | Common: `ALFALFA`, `ALFALFA_WINDROW`, `ALFALFA_FERMENTED`, `DRYALFALFA`, `DRYALFALFA_WINDROW`, `LUCERNE` | Optional whole-crop forage silage or green biomass substrate | 0.85-0.95 | Very common in map/mod ecosystems. Should be a first optional integration once fill type detection exists. |
+| Exceptional | Clover and mixed forage legumes | Common: `CLOVER`, `CLOVER_WINDROW`, `CLOVER_FERMENTED`, `DRYCLOVER`, `DRYCLOVER_WINDROW`, `VETCHRYE`, `FIELDGRASS` | Optional whole-crop forage silage or green biomass substrate | 0.80-0.92 | Related to alfalfa in design terms. Good silage candidate, but exact names vary by map. |
 | Exceptional | Sugar beet, chopped beet, beet pulp | `SUGARBEET`, `SUGARBEET_CUT`; common: `BEETPULP` | Chop/pulp to wet biomass substrate; BGA direct or via substrate | 0.80-0.95 | Vanilla BGAs already consume `SUGARBEET_CUT`. Treat whole beet as needing chopping/pulping. |
 | Excellent | Sorghum whole crop | `SORGHUM`, `CHAFF` | Forage harvest to chaff or energy-crop substrate | 0.75-0.90 | Good drought-style energy crop. Vanilla forage conversion exists. |
-| Excellent | Whole-crop cereals | `WHEAT`, `BARLEY`, `OAT`; common: `RYE`, `TRITICALE`, `SPELT` | Green chop to chaff/whole-crop silage | 0.70-0.88 | Strong fit for silage when harvested green. Keep separate from dry grain diversion. |
+| Excellent | Whole-crop cereals | `WHEAT`, `BARLEY`, `OAT`; common: `RYE`, `RYE_CUT`, `GREENRYE`, `TRITICALE`, `TRITICALE_CUT`, `SPELT`, `SPELT_CUT`, `WINTERBARLEY`, `WINTERWHEAT` | Green chop to chaff/whole-crop silage | 0.70-0.88 | Strong fit for silage when harvested green. Keep separate from dry grain diversion. |
 | Excellent | Potatoes and starchy roots | `POTATO`; common: `SWEETPOTATO` | Wash/chop/mash to wet biomass substrate | 0.70-0.86 | Excellent fermentable starch, but not a true silage crop. Should not require bales. |
 | Excellent | Beets, carrots, parsnips, onions | `BEETROOT`, `CARROT`, `PARSNIP`; common/DLC: `ONION` | Chop/shred to wet biomass substrate | 0.65-0.82 | Wet, sugary root/vegetable stream. Good as co-substrate with silage/manure. |
 | Excellent | Sugarcane | `SUGARCANE` | Chop/crush to sugary biomass substrate | 0.65-0.82 | High sugar and biomass, but fibrous. Better as substrate than vanilla silage. |
+| Excellent | Organic waste and compost rawstock | Common: `ORGANICWASTE`, `COMPOST_RAW`, `COMPOST` | Waste substrate or co-digestion stream | 0.60-0.82 | Very relevant when greenhouse/orchard/production mods expose bulk waste. Finished compost may be better as a soil product, so tune carefully. |
 | Good | Hay and dry grass | `DRYGRASS`, `DRYGRASS_WINDROW` | Bunker to `SILAGE`, or rehydrate to substrate | 0.55-0.75 | Vanilla bunker silos already accept `dryGrass_windrow`. Lower priority than fresh grass. |
 | Good | Sunflower whole crop | `SUNFLOWER`, `CHAFF` | Forage harvest to chaff or oilseed biomass substrate | 0.55-0.75 | Vanilla forage conversion exists. Good biomass, but keep oilseed economics in mind. |
 | Good | Peas, field peas, beans | `PEA`, `GREENBEAN`; common: `FIELDPEA`, `FIELDBEAN`, `HORSEBEAN` | Wet green biomass or produce-waste substrate | 0.50-0.72 | Useful co-substrate. High moisture means it should not be the sole pathway. |
 | Good | Spinach and leafy greens | `SPINACH`; greenhouse/common: `LETTUCE`, `NAPACABBAGE` | Wet green biomass substrate | 0.45-0.68 | Good organic mass but watery. Balance with lower throughput/yield. |
 | Good | Rice and long grain rice | `RICE`, `RICELONGGRAIN` | Whole-crop or grain mash substrate | 0.45-0.68 | Starchy and fermentable, but wet-field logistics make it less universal than maize/cereals. |
 | Good | Millet, buckwheat, similar small grains | Common: `MILLET`, `BUCKWHEAT` | Whole-crop silage or grain mash substrate | 0.45-0.65 | Common multifruit candidates. Add only by detected fill type. |
-| Good | Oilseed crops as whole crop | `CANOLA`, `SOYBEAN`; common: `FLAX`, `MUSTARD` | Green chop or oilseed biomass substrate | 0.45-0.65 | Fermentable but economically sensitive. Do not let them become a profit exploit. |
+| Good | Oilseed crops as whole crop | `CANOLA`, `SOYBEAN`; common: `FLAX`, `LINSEED`, `LINSEED_CUT`, `MUSTARD`, `MUSTARD_CUT` | Green chop or oilseed biomass substrate | 0.45-0.65 | Fermentable but economically sensitive. Do not let them become a profit exploit. |
 | Fair | Dry cereal grain diversion | `WHEAT`, `BARLEY`, `OAT`, `SORGHUM`, `MAIZE`, `RICELONGGRAIN` | Mill/soak to energy mash substrate | 0.35-0.60 | Biologically plausible but should be expensive/inefficient compared with selling or feeding. |
 | Fair | Grapes, olives, fruit produce | `GRAPE`, `OLIVE`; greenhouse: `STRAWBERRY`, `TOMATO` | Waste/pomace style substrate | 0.30-0.55 | Whole fruit should be a fallback. Pomace/waste products would be better if a map/mod exposes them. |
 | Fair | Hemp and high-fiber annuals | Common: `HEMP` | Chopped green biomass substrate | 0.30-0.55 | High biomass but can be fibrous. Keep below forage crops. |
 | Fair | Hops and specialty crops | Common: `HOPS`, `LAVENDER`, herbs | Organic waste substrate | 0.20-0.45 | Include only when a map makes them available in bulk. Not a core path. |
+| Fair | Corn processing residues | Common: `MAIZECOB`, `MAIZECOBWASTE`, `MAIZEGERM`, `MAIZESTALKS` | Residue substrate | 0.25-0.50 | Useful byproducts from corn production mods. Keep below whole-crop maize and silage. |
 | Emergency only | Straw and grain residues | `STRAW`; common: `RYE_STRAW`, `TRITICALE_STRAW` | Pretreated dry biomass substrate | 0.15-0.35 | Lignocellulosic and slow. Useful for cleanup or low-grade co-digestion, not premium energy production. |
 | Emergency only | Poplar and woody biomass | `POPLAR`, `WOODCHIPS` | Pretreatment-only biomass route | 0.05-0.20 | Better suited to heating than BGA. Do not include in the first playable path unless deliberately experimental. |
 | Emergency only | Cover crop biomass | `OILSEEDRADISH`; common: `MUSTARD`, cover mixes | Green manure salvage route | 0.10-0.30 | Only if the map exposes a harvestable product. Otherwise leave as field agronomy, not BGA feedstock. |
+| Emergency only | Rice husk and processed stalk pellets | Common: `RICE_HUSK`, `MAIZESTALKS_PELLETS` | Pretreated dry biomass substrate | 0.05-0.25 | Fibrous residues. More plausible as low-grade emergency substrate than as silage. |
 
 ## Excluded For Now
 
