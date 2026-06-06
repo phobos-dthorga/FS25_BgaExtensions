@@ -36,6 +36,8 @@ try {
         throw "Tracked worktree changes exist. Commit or revert them before releasing."
     }
 
+    git fetch --tags origin
+
     $localTag = git tag --list $tag
     if (-not [string]::IsNullOrWhiteSpace($localTag)) {
         throw "Tag already exists locally: $tag"
