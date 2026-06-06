@@ -6,7 +6,7 @@ This document defines the planned biomass conversion flow for `FS25_BgaExtension
 
 Do not force every organic crop into vanilla `SILAGE`.
 
-Some materials genuinely belong in a silage pathway. Others are better represented as wet biomass, grain mash, organic waste, or pretreated low-grade substrate. The mod should preserve those differences while still making many more organic materials useful for BGA energy production.
+Some materials genuinely belong in a silage pathway. Others are better represented as wet biomass, grain mash, compost/organic residuals, or pretreated low-grade substrate. The mod should preserve those differences while still making many more organic materials useful for BGA energy production.
 
 ## Conversion Lanes
 
@@ -34,14 +34,14 @@ Use this for wet, sugary, starchy, or produce-waste materials:
 - carrots, parsnips, beetroot, onions
 - sugarcane
 - fruit and vegetable waste
-- organic waste and compost rawstock
+- compost and organic residuals
 
 Preferred behavior:
 
 - Process through a Phobos-owned biomass preparation production.
 - Output should be a Phobos-owned intermediate substrate, not vanilla `SILAGE`, unless testing proves vanilla silage is the better gameplay compromise.
 - The substrate then feeds a Phobos-owned BGA intake or a guarded optional BGA integration.
-- Reuse existing waste fill types such as `ORGANICWASTE` or `COMPOST_RAW` when present. If they are not present, prefer direct input recipes from the original crop over adding another generic waste fillType.
+- Prefer `COMPOST` when present because maps may already support it as a handled/spreadable material. Treat `COMPOST_RAW` and `ORGANICWASTE` as detected aliases or fallback inputs, not as fillTypes this mod should define separately.
 
 ### Lane 3: Whole-Crop And Grain Mash
 
@@ -105,14 +105,15 @@ Optional detected inputs for the first expansion:
 - `CLOVER_WINDROW`
 - `FIELDGRASS`
 - `SILAGEMAIZE`
-- `ORGANICWASTE`
+- `COMPOST`
 - `COMPOST_RAW`
+- `ORGANICWASTE`
 
 Generated waste should be conservative:
 
 - use `DIGESTATE` as the normal BGA residue
 - use `CHAFF`, `STRAW`, `SUGARBEET_CUT`, or `WOODCHIPS` for coarse byproducts where they are close enough
-- use detected mod fillTypes such as `ORGANICWASTE`, `COMPOST_RAW`, `MAIZECOB`, `MAIZESTALKS`, or `RICE_HUSK` only when they already exist
+- use detected mod fillTypes such as `COMPOST`, `COMPOST_RAW`, `ORGANICWASTE`, `MAIZECOB`, `MAIZESTALKS`, or `RICE_HUSK` only when they already exist
 - avoid adding new one-off waste fillTypes until a real gameplay loop needs them
 
 ## Why Not Patch Vanilla BGAs First?

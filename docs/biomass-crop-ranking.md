@@ -36,7 +36,7 @@ Installed mod observations are recorded in `docs/installed-mod-observations.md`.
 | Excellent | Potatoes and starchy roots | `POTATO`; common: `SWEETPOTATO` | Wash/chop/mash to wet biomass substrate | 0.70-0.86 | Excellent fermentable starch, but not a true silage crop. Should not require bales. |
 | Excellent | Beets, carrots, parsnips, onions | `BEETROOT`, `CARROT`, `PARSNIP`; common/DLC: `ONION` | Chop/shred to wet biomass substrate | 0.65-0.82 | Wet, sugary root/vegetable stream. Good as co-substrate with silage/manure. |
 | Excellent | Sugarcane | `SUGARCANE` | Chop/crush to sugary biomass substrate | 0.65-0.82 | High sugar and biomass, but fibrous. Better as substrate than vanilla silage. |
-| Excellent | Organic waste and compost rawstock | Common: `ORGANICWASTE`, `COMPOST_RAW`, `COMPOST` | Waste substrate or co-digestion stream | 0.60-0.82 | Very relevant when greenhouse/orchard/production mods expose bulk waste. Finished compost may be better as a soil product, so tune carefully. |
+| Excellent | Compost and organic residuals | Common: `COMPOST`, `COMPOST_RAW`, `ORGANICWASTE` | Waste substrate or co-digestion stream | 0.60-0.82 | Prefer `COMPOST` because maps may already support spreading, heaps, and handling for it. Treat `ORGANICWASTE` as an alias/fallback, not a new compatibility layer. |
 | Good | Hay and dry grass | `DRYGRASS`, `DRYGRASS_WINDROW` | Bunker to `SILAGE`, or rehydrate to substrate | 0.55-0.75 | Vanilla bunker silos already accept `dryGrass_windrow`. Lower priority than fresh grass. |
 | Good | Sunflower whole crop | `SUNFLOWER`, `CHAFF` | Forage harvest to chaff or oilseed biomass substrate | 0.55-0.75 | Vanilla forage conversion exists. Good biomass, but keep oilseed economics in mind. |
 | Good | Peas, field peas, beans | `PEA`, `GREENBEAN`; common: `FIELDPEA`, `FIELDBEAN`, `HORSEBEAN` | Wet green biomass or produce-waste substrate | 0.50-0.72 | Useful co-substrate. High moisture means it should not be the sole pathway. |
@@ -67,12 +67,12 @@ FillTypes are a scarce resource, so waste streams should reuse vanilla or alread
 
 | Waste stream | Preferred fillType | Fallback | BGA usefulness | Notes |
 | --- | --- | --- | --- | --- |
-| Food/produce rejects | `ORGANICWASTE` if present | direct recipe input from original crop | Excellent | Best when another mod already defines `ORGANICWASTE`; otherwise do not add a new waste fillType just for this. |
+| Food/produce rejects | `COMPOST` if present | direct recipe input from original crop | Excellent | Prefer `COMPOST` to preserve map/implement compatibility. Use `ORGANICWASTE` only when a loaded mod already defines and uses it. |
 | Beet/vegetable trimmings | `SUGARBEET_CUT` for beet-like waste | original root crop | Excellent | Slightly gamey, but close enough and already BGA-relevant. |
 | Grain cleaning screenings | `CHAFF` | original grain | Good | Works as a generic dry-ish plant fraction without spending a new fillType. |
 | Forage sweepings | `GRASS_WINDROW` or `DRYGRASS_WINDROW` | `CHAFF` | Good | Keep it in the silage lane if it came from forage handling. |
 | Corn cobs/stalks | detected mod fillTypes such as `MAIZECOB`, `MAIZESTALKS` | `CHAFF` | Fair | Use the modded residue names when present; otherwise collapse to `CHAFF`. |
-| Fruit pomace | `ORGANICWASTE` if present | original fruit crop | Fair | Good optional integration, poor reason to create a new fillType. |
+| Fruit pomace | `COMPOST` if present | original fruit crop | Fair | Good optional integration. Do not create `ORGANICWASTE` just to represent this. |
 | Rice husk | `RICE_HUSK` if present | `STRAW` | Emergency only | Fibrous residue; useful mostly for cleanup or pretreatment. |
 | Straw-like screenings | `STRAW` | none | Emergency only | Low-grade, slow substrate. |
 | Woody contamination | `WOODCHIPS` | exclude | Emergency only | Prefer heating use; BGA route should be poor or disabled by default. |

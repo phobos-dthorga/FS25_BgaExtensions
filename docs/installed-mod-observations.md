@@ -24,7 +24,7 @@ Scan date: 2026-06-06.
 | `FS25_calmsden.zip` | `LINSEED`, `LINSEED_CUT` | Add linseed as an oilseed/green-chop optional integration. |
 | `FS25_CombineXP.zip` | `ALFALFA`, `CLOVER`, `GREENRYE`, `ONION`, `POPPY`, `RYE`, `SILAGEMAIZE`, `SPELT`, `TRITICALE`, `VETCHRYE`, `WINTERBARLEY`, `WINTERWHEAT` | Useful compatibility signal, but this appears to be a script/data support mod rather than a map-owned crop source. |
 | `FS25_cornProductionPack.zip` | `MAIZECOB`, `MAIZECOBWASTE`, `MAIZEGERM`, `MAIZESTALKS`, `MAIZESTALKS_PELLETS` | Add corn processing residues as fair or emergency substrate candidates, not premium silage. |
-| `FS25_orchardsAndGreenhouses_crossplay.zip` | `APPLE`, `APRICOT`, `COMPOST`, `CUCUMBER`, `GREENPEPPER`, `ONION`, `ORGANICWASTE`, `PEAR`, `PLUM`, `WATERMELON` | Strong source for organic waste and wet produce substrate integrations. |
+| `FS25_orchardsAndGreenhouses_crossplay.zip` | `APPLE`, `APRICOT`, `COMPOST`, `CUCUMBER`, `GREENPEPPER`, `ONION`, `ORGANICWASTE`, `PEAR`, `PLUM`, `WATERMELON` | Strong source for compost/organic residual and wet produce substrate integrations. Prefer `COMPOST` over `ORGANICWASTE` for compatibility with spreading/handling support. |
 | `FS25_PlanET_BGA_Modular.zip` | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, `RAWMETHANE`, `DIGESTATE1`, `DIGESTATE2`, `DIGESTATE3` | BGA-adjacent, but likely internal to that mod. Do not integrate until its loading and API behavior are studied. |
 | `FS25_swathingPlus.zip` | `RICELONGGRAIN_CUT`, `SORGHUM_CUT`; keyword hits for alfalfa/clover | Supports cut-crop aliases for our registry. |
 | `FS25_RicePackagingFactory.zip` | `RICE_HUSK`, `RUSKED_RICE` | Rice byproducts can be substrate candidates, with husk treated as low-value fibrous residue. |
