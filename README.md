@@ -22,3 +22,11 @@ This repository is the staging ground for early design and implementation. The m
 
 phobosgekko
 
+## License
+
+This project uses dual licensing:
+
+- **Code** (Lua scripts, XML definitions, tools, and documentation): [MIT License](LICENSE)
+- **Assets** (textures, icons, images, models, and other media): [CC BY-NC-SA 4.0](LICENSE-CC-BY-NC-SA.txt)
+
+Forks and addons are encouraged. Code is permissively licensed for integration. Assets are protected from commercial use and must preserve attribution and ShareAlike terms.
