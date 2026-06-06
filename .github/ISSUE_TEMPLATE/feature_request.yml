@@ -1,0 +1,28 @@
+name: Feature Request
+description: Suggest a BGA extension, balance change, or usability improvement.
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Goal
+      description: What should this improve for players?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Describe the desired behavior or change.
+    validations:
+      required: true
+  - type: textarea
+    id: gameplay-impact
+    attributes:
+      label: Gameplay Impact
+      description: How would this affect balance, realism, progression, multiplayer, or compatibility?
+    validations:
+      required: false
+

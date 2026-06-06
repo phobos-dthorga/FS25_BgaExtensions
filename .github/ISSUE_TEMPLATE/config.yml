@@ -1,0 +1,6 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Repository
+    url: https://github.com/phobos-dthorga/FS25_BgaExtensions
+    about: Check the README and design notes before opening a new issue.
+
