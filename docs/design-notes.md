@@ -15,11 +15,13 @@ Extend Farming Simulator 25 BGA gameplay with richer production, management, or 
 - Repository name: `FS25_BgaExtensions`.
 - Initial visibility: public.
 - Author: `phobosgekko`.
-- First implementation direction: registry-driven biomass pathways, starting with bulk substrate and vanilla-compatible silage flows before custom bales.
+- First implementation direction: PlanET-compatible biomass intake modules, followed by registry-driven biomass pathways and optional compatibility layers.
+- PlanET integration strategy: depend on `FS25_PlanET_BGA_Modular` where needed, use its registered runtime fillTypes as integration points, and ship Phobos-owned companion modules without editing or redistributing PlanET files.
 
 ## Working References
 
 - Biomass crop ranking: `docs/biomass-crop-ranking.md`.
 - Conversion process: `docs/conversion-process.md`.
+- Integration strategy: `docs/integration-strategy.md`.
 - Draft biomass crop registry: `mod/config/biomassCropRegistry.xml`.
 - Installed mod observations: `docs/installed-mod-observations.md`.

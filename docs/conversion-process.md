@@ -10,6 +10,8 @@ Some materials genuinely belong in a silage pathway. Others are better represent
 
 For the first proof of concept, prefer the smallest useful compatibility layer. The installed PlanET modular BGA already uses internal feedstocks, so the initial implementation feeds those internal lanes directly instead of adding a Phobos substrate fillType too early.
 
+See `docs/integration-strategy.md` for the companion-module rule that governs PlanET and future third-party integrations.
+
 ## Conversion Lanes
 
 ### Lane 1: Vanilla-Compatible Silage
