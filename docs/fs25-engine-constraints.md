@@ -22,6 +22,7 @@ Observed source:
 
 - Prefer bulk/liquid/pallet/placeable production paths before adding custom bale workflows.
 - Keep new fill types and heightTypes minimal. Reuse base-game fill types where that produces acceptable gameplay.
+- Verify the role and handling support of every fillType before first use. A fillType name alone does not prove whether it is a normal product, loose windrow material, bale material, liquid, internal process handoff, map-owned material, or technical/category-only concept.
 - Do not promise universal custom-bale support from a standard mod unless testing proves it works on a normal, unmodified map.
 - If custom biomass bales become important, treat them as a separate feature requiring explicit map integration, a map-extension prefab, or a clear compatibility warning.
 - Avoid making expanded BGA input depend on animal feeding or forage mixer integration. Those can be optional later layers, not the core path.

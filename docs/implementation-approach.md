@@ -118,13 +118,30 @@ Use existing fillTypes wherever they are technically and thematically close enou
 
 Add a Phobos custom fillType only when it provides a clear gameplay boundary that cannot be represented well by vanilla or dependency-provided types.
 
+### First-Use Verification
+
+Do not introduce a fillType into recipes, storage, triggers, ranking tables, registries, or recommendations just because the name looks right.
+
+Before first use, verify:
+
+1. Where it is defined: vanilla data, a declared dependency, a map, another optional mod, or Phobos XML.
+2. What it represents in-game and what its real-world analogue is.
+3. Whether it is a usable material or an internal-only handoff.
+4. What handling support exists: bulk, liquid, pallet, bale, heap, forage wagon, mixer wagon, shovel/fork, tanker, hayloft, sell point, or production input/output.
+5. Whether it needs runtime detection, a hard dependency, or a Phobos-owned fallback.
+6. Whether bales, ground tipping, animal food, forage mixing, or map-owned recipes create load-order or compatibility risk.
+
+Good verification sources include `data/maps/maps_fillTypes.xml`, `data/maps/maps_densityMapHeightTypes.xml`, bale XML, vehicle fillUnits/additives, placeable storage/loading XML, local dependency XML, and observed game-log behavior.
+
+If a fillType is safe only in a narrow context, document that boundary. For example, PlanET internals such as `SILAGE_IN` are valid PlanET handoffs, not general farm commodities.
+
 ## Implementation Workflow
 
 Use this workflow for each feature:
 
 1. Define the target gameplay loop.
 2. Identify whether the feature is standalone, vanilla-compatible, or dependency-specific.
-3. Confirm every required fillType exists in vanilla, the declared dependency, or Phobos-owned definitions.
+3. Confirm every required fillType exists and verify its actual role using the first-use checklist above.
 4. Prefer a Phobos-owned companion placeable over patching an existing one.
 5. Keep recipes small and readable.
 6. Validate XML against local FS25 schemas.

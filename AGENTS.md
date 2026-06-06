@@ -24,6 +24,12 @@ Read `docs/fs25-engine-constraints.md` before designing custom fill types, bales
 
 Current caution: a standard mod may not be able to globally add custom ingredients to map-owned animal food/forage mixer data, and custom bales for mod-defined fill types may require map-native integration because of FS25 bale/fillType loading order behavior.
 
+## FillType First-Use Rule
+
+Never use a fillType for the first time from name recognition alone. Before adding a fillType to a recipe, storage, trigger, category, registry, ranking table, or recommendation, verify its actual FS25 role against local game data, declared dependency XML, or Phobos-owned definitions.
+
+At minimum, confirm whether it is a real usable material, an internal-only handoff, a vehicle/tool handling category, a map-owned material, a bale/heap/liquid material, or merely a similarly named technical artifact. Record the source or reasoning in the relevant doc when the choice affects design.
+
 ## Local References To Configure
 
 Add project-specific paths here once available:
