@@ -20,7 +20,9 @@ This repository is the staging ground for early design and implementation. The m
 
 ## Current Design Direction
 
-The first playable implementation is a small PlanET-compatible biomass intake module. It converts selected vanilla biomass inputs into the internal feedstocks used by `FS25_PlanET_BGA_Modular`, and can pelletize straw into `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant, without adding a new fillType yet.
+The first playable implementation is a small PlanET-compatible biomass intake module. It converts selected vanilla biomass inputs into the internal feedstocks used by `FS25_PlanET_BGA_Modular`, can pelletize straw into `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant, and handles vanilla `WOODCHIPS` as a combustion-yard storage material.
+
+Maize+/MaizePlus integration is parked until a production-ready FS25 release is installed and explicitly selected as a target. Corn Production Pack remains observation-only.
 
 The broader design remains registry-driven for later optional integrations. See `docs/implementation-approach.md`, `docs/integration-strategy.md`, `docs/biomass-crop-ranking.md`, `docs/conversion-process.md`, and the draft registry at `mod/config/biomassCropRegistry.xml`.
 

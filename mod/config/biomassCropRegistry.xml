@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <biomassCropRegistry>
-    <!-- Draft data registry. This file is not loaded by the mod yet. -->
+    <!-- Draft data registry. This file is not loaded by the mod yet. Optional names are planning notes and must be guarded before use. -->
     <tier id="exceptional" bgaValue="0.80 1.00">
         <crop id="maize_whole_crop" fillTypes="MAIZE CHAFF SILAGEMAIZE" pathway="chaffToSilage" source="mixed"/>
         <crop id="grass_meadow" fillTypes="GRASS MEADOW GRASS_WINDROW" pathway="windrowToSilage" source="baseGame"/>
@@ -29,21 +29,17 @@
     </tier>
 
     <tier id="fair" bgaValue="0.20 0.60">
-        <crop id="dry_grain_diversion" fillTypes="WHEAT BARLEY OAT SORGHUM MAIZE RICELONGGRAIN DRY_MAIZE" pathway="grainMashSubstrate" source="mixed"/>
+        <crop id="dry_grain_diversion" fillTypes="WHEAT BARLEY OAT SORGHUM MAIZE RICELONGGRAIN" pathway="grainMashSubstrate" source="mixed"/>
         <crop id="fruit_and_pomace" fillTypes="GRAPE OLIVE STRAWBERRY TOMATO APPLE APRICOT PEAR PLUM WATERMELON GRAPECLEAN" pathway="wasteSubstrate" source="mixed"/>
         <crop id="hemp_fiber_annuals" fillTypes="HEMP" pathway="greenChopSubstrate" source="commonMap"/>
         <crop id="specialty_crops" fillTypes="HOPS LAVENDER" pathway="wasteSubstrate" source="commonMap"/>
-        <!-- Deferred: do not target Corn Production Pack. Revisit with production-ready Maize+/MaizePlus FS25 conventions. -->
-        <crop id="maizeplus_processing_residue_deferred" fillTypes="" pathway="residueSubstrate" source="deferredMaizePlus"/>
     </tier>
 
     <tier id="emergency" bgaValue="0.05 0.35">
         <crop id="straw_residues" fillTypes="STRAW RYE_STRAW TRITICALE_STRAW FLAX_STRAW CROP_WINDROW" pathway="pretreatedDrySubstrate" source="mixed"/>
-        <crop id="woody_biomass" fillTypes="POPLAR WOODCHIPS" pathway="pretreatmentOnly" source="baseGame"/>
+        <crop id="woody_biomass" fillTypes="POPLAR WOODCHIPS" pathway="combustionFuelStorage" source="baseGame"/>
         <crop id="cover_crop_biomass" fillTypes="OILSEEDRADISH MUSTARDCOVER FLOWERINGCATCHCROP HUMUSACTIVE" pathway="greenManureSalvage" source="mixed"/>
         <crop id="rice_husk" fillTypes="RICE_HUSK" pathway="pretreatedDrySubstrate" source="commonMap"/>
-        <!-- Deferred: do not target Corn Production Pack stalk pellet names. -->
-        <crop id="maizeplus_processed_residue_deferred" fillTypes="" pathway="pretreatedDrySubstrate" source="deferredMaizePlus"/>
     </tier>
 
     <wasteMaterials>
@@ -52,10 +48,9 @@
         <waste id="beet_vegetable_trimmings" preferredFillType="PHB_WET_BIOMASS_MASH" fallback="directOriginalCrop" pathway="wetSubstrate"/>
         <waste id="grain_screenings" preferredFillType="CHAFF" fallback="directOriginalCrop" pathway="grainMashSubstrate"/>
         <waste id="forage_sweepings" preferredFillType="GRASS_WINDROW" fallback="CHAFF" pathway="windrowToSilage"/>
-        <waste id="maizeplus_corn_residue_deferred" preferredFillType="" fallback="defer" pathway="residueSubstrate"/>
         <waste id="fruit_pomace" preferredFillType="COMPOST" fallback="directOriginalCrop" aliases="COMPOST_RAW ORGANICWASTE" pathway="wasteSubstrate"/>
         <waste id="rice_husk" preferredFillType="RICE_HUSK" fallback="STRAW" pathway="pretreatedDrySubstrate"/>
-        <waste id="woody_contamination" preferredFillType="WOODCHIPS" fallback="exclude" pathway="pretreatmentOnly"/>
+        <waste id="woody_contamination" preferredFillType="WOODCHIPS" fallback="exclude" pathway="combustionFuelStorage"/>
         <waste id="bga_residue" preferredFillType="DIGESTATE" fallback="none" pathway="outputOnly"/>
     </wasteMaterials>
 </biomassCropRegistry>

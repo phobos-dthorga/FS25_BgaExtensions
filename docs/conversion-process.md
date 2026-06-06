@@ -73,7 +73,6 @@ Use this for fibrous residues and emergency feedstocks:
 - flax straw
 - crop windrow residue
 - rice husk
-- maize stalks and stalk pellets
 - woodchips and poplar, if included at all
 
 Preferred behavior:
@@ -81,6 +80,7 @@ Preferred behavior:
 - Require pretreatment before BGA use.
 - Output low-grade substrate at poor conversion rates.
 - Keep this lane optional or late-stage. It is useful for cleanup gameplay, not premium power generation.
+- Treat `WOODCHIPS` primarily as combustion fuel and yard logistics material. Do not send it to the digester by default.
 
 ## First Playable Implementation
 
@@ -121,6 +121,7 @@ Current PoC recipes:
 - `PEA` -> `PHB_WET_BIOMASS_MASH`
 - `GREENBEAN` -> `PHB_WET_BIOMASS_MASH`
 - `PHB_WET_BIOMASS_MASH` -> `SUGARBEETCUT_IN`
+- `WOODCHIPS` storage/load/unload support only, for combustion logistics
 
 Optional detected inputs for the first expansion:
 
@@ -139,7 +140,7 @@ Generated waste should be conservative:
 - use `DIGESTATE` as the normal BGA residue
 - use `CHAFF`, `STRAW`, `SUGARBEET_CUT`, or `WOODCHIPS` for coarse byproducts where they are close enough
 - use detected mod fillTypes such as `COMPOST`, `COMPOST_RAW`, `ORGANICWASTE`, or `RICE_HUSK` only when they already exist
-- defer maize/corn residues until Maize+/MaizePlus FS25 releases are production-ready; do not target the current Corn Production Pack
+- keep Maize+/MaizePlus and Corn Production Pack residue work out of active development until a future explicit decision
 - avoid adding new one-off waste fillTypes until a real gameplay loop needs them
 
 ## Why Not Patch Vanilla BGAs First?
@@ -187,6 +188,7 @@ The current implementation now uses one Phobos-owned wet intermediary, `PHB_WET_
 
 For by-products and farm-adjacent outputs, follow `docs/byproduct-integration-audit.md`:
 
-- prefer existing fillTypes such as `COMPOST`, `DIGESTATE`, `STRAW_PELLETS`, `WOODCHIPS`, `ORGANICWASTE`, `RICE_HUSK`, and corn-residue fillTypes when they already exist
+- prefer existing fillTypes such as `COMPOST`, `DIGESTATE`, `STRAW_PELLETS`, `WOODCHIPS`, `ORGANICWASTE`, and `RICE_HUSK` when they already exist
 - avoid defining one-off waste fillTypes unless the gameplay need is clear
 - keep PlanET internal fillTypes as PlanET handoffs, not general Phobos farm commodities
+- keep Maize+/MaizePlus integration parked until a future explicit decision

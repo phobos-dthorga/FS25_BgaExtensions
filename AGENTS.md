@@ -24,6 +24,10 @@ Read `docs/fs25-engine-constraints.md` before designing custom fill types, bales
 
 Current caution: a standard mod may not be able to globally add custom ingredients to map-owned animal food/forage mixer data, and custom bales for mod-defined fill types may require map-native integration because of FS25 bale/fillType loading order behavior.
 
+## Parked Integrations
+
+Do not implement, scaffold, or prototype Maize+/MaizePlus integration until the user explicitly decides that the FS25 ecosystem is production-ready enough to target. The local Corn Production Pack may be documented as an observation source only; do not add it as a dependency and do not target its fillTypes in active recipes or compatibility modules.
+
 ## FillType First-Use Rule
 
 Never use a fillType for the first time from name recognition alone. Before adding a fillType to a recipe, storage, trigger, category, registry, ranking table, or recommendation, verify its actual FS25 role against local game data, declared dependency XML, or Phobos-owned definitions.

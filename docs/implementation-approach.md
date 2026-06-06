@@ -48,6 +48,7 @@ Current method:
 - declare `pdlc_strawHarvestPack` when a feature uses Straw Harvest pellet fillTypes or HALLSYS heat-plant routing
 - use its registered internal fillTypes as the contract, especially `SILAGE_IN` and `SUGARBEETCUT_IN`
 - use Straw Harvest `STRAW_PELLETS` as the dry fuel handoff when bridging straw residues to the HALLSYS Pellet Heat Plant
+- handle vanilla `WOODCHIPS` as a combustion/logistics material, not as a normal anaerobic feedstock
 - add Phobos-owned modules that convert expanded biomass inputs into those internal fillTypes
 - let PlanET's own fermenters, generators, storages, and distributors continue doing their normal work
 - let the HALLSYS Pellet Heat Plant remain the destination for pellet fuel
@@ -115,6 +116,12 @@ Use existing fillTypes wherever they are technically and thematically close enou
 - use Straw Harvest `STRAW_PELLETS` for dry straw fuel when the pellet heat route is active
 - prefer `COMPOST` if it exists on a map/mod because other equipment may already support it
 - treat `COMPOST_RAW` and `ORGANICWASTE` as detected aliases or fallback inputs, not fillTypes this mod should define casually
+
+### Parked Maize Work
+
+Maize+/MaizePlus integration is out of scope until the FS25 releases are production-ready, locally installed, and explicitly chosen as a target. Do not add Maize+/MaizePlus recipes, dependency entries, registry placeholders, compatibility packages, or tests before that decision.
+
+`FS25_cornProductionPack` remains an observation source only. Do not target its fillTypes or naming model in shipped Phobos content.
 
 Add a Phobos custom fillType only when it provides a clear gameplay boundary that cannot be represented well by vanilla or dependency-provided types.
 

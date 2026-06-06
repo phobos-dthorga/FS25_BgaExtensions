@@ -238,12 +238,12 @@
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW WOODCHIPS MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN"/>
             <unloadTrigger exactFillRootNode="unloadTriggerLiquidManure" fillTypes="LIQUIDMANURE" aiNode="unloadTriggerLiquidManureAiNode"/>
-            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW SUGARBEET_CUT"/>
+            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW WOODCHIPS SUGARBEET_CUT"/>
 
-            <unloadTrigger exactFillRootNode="unloadTriggerInFront" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN" aiNode="unloadTriggerInFrontAINode"/>
-            <baleTrigger triggerNode="baleTriggerInFront" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW SUGARBEET_CUT"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerInFront" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW WOODCHIPS MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN" aiNode="unloadTriggerInFrontAINode"/>
+            <baleTrigger triggerNode="baleTriggerInFront" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW WOODCHIPS SUGARBEET_CUT"/>
 
             <animationNodes>
                 <animationNode node="mixingDrum" rotAxis="2" rotSpeed="-80"/>
@@ -251,7 +251,7 @@
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN PHB_WET_BIOMASS_MASH SUGARBEETCUT_IN LIQUIDMANURE1 STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN PHB_WET_BIOMASS_MASH SUGARBEETCUT_IN LIQUIDMANURE1 STRAW_PELLETS WOODCHIPS" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
@@ -260,6 +260,7 @@
             <capacity fillType="GRASS_WINDROW" capacity="30000"/>
             <capacity fillType="DRYGRASS_WINDROW" capacity="30000"/>
             <capacity fillType="STRAW" capacity="20000"/>
+            <capacity fillType="WOODCHIPS" capacity="20000"/>
             <capacity fillType="MANURE" capacity="20000"/>
             <capacity fillType="LIQUIDMANURE" capacity="30000"/>
             <capacity fillType="SUGARBEET_CUT" capacity="15000"/>

@@ -13,9 +13,9 @@ This keeps the design practical:
 - better compatibility with trailers, spreaders, greenhouses, BGAs, and sell points
 - less risk of creating isolated production chains that only talk to themselves
 
-## Current Phobos Outputs
+## Current Phobos Outputs And Handled Materials
 
-The current PlanET-compatible intake modules produce these outputs:
+The current PlanET-compatible intake modules produce or handle these materials:
 
 | Output | Source process | Current use | Audit status |
 | --- | --- | --- | --- |
@@ -24,6 +24,7 @@ The current PlanET-compatible intake modules produce these outputs:
 | `PHB_WET_BIOMASS_MASH` | Beet cut, sugarcane, roots, spinach, peas, green beans | Phobos staging material, then conditioned into `SUGARBEETCUT_IN` | Good internal Phobos intermediary. Keep it internal until a real storage/logistics use appears. |
 | `SUGARBEETCUT_IN` | Wet mash conditioning | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
 | `STRAW_PELLETS` | Straw pelletizing | Straw Harvest HALLSYS Pellet Heat Plant and pellet-compatible systems | Strong cross-mod by-product/fuel route. Keep this meaningful. |
+| `WOODCHIPS` | Player-delivered vanilla material | Combustion-yard storage and transfer | Handled as fuel logistics only. Do not route to BGA digestion by default. |
 
 The mod does not yet produce a farm-wide residue such as `COMPOST` or `DIGESTATE` directly. That is probably correct for now: PlanET should own BGA digestion outputs, while Phobos owns preparation and routing.
 
@@ -43,7 +44,7 @@ These fillTypes or process outputs were found in the current local stack and are
 | `ORGANICWASTE` | `FS25_orchardsAndGreenhouses_crossplay`, `FS25_Potato_Chips_Factory_MF` | Food/produce processing residue | Consume optionally. Prefer converting toward `COMPOST` or wet substrate. |
 | `POTATO_WASHED` | `FS25_potatoWasher` | Wet substrate equivalent to potato | Good optional input candidate. |
 | `RICE_HUSK` | `FS25_RicePackagingFactory` | Low-value fibrous residue | Emergency/pretreated dry substrate or combustion candidate. |
-| Maize+/MaizePlus corn residues | Deferred until production-ready FS25 Maize+/MaizePlus releases exist | Corn-processing residues, CCM, whole-crop, and silage-adjacent loops | Preferred future corn-residue integration family. Do not target `FS25_cornProductionPack`. |
+| Maize+/MaizePlus corn residues | Parked | None in active development | Do not implement until a future explicit decision says the FS25 ecosystem is production-ready. Do not target `FS25_cornProductionPack`. |
 
 ## Strong Current Opportunities
 
@@ -64,19 +65,21 @@ Recommended routes:
 
 3. Dry fuel route
 
-`STRAW_PELLETS` and `WOODCHIPS` form a credible combustion family. Straw pellets are already implemented. Corn-stalk or maize-residue fuels should wait for the Maize+/MaizePlus FS25 ecosystem rather than using the current Corn Production Pack as the target.
+`STRAW_PELLETS` and `WOODCHIPS` form a credible combustion family. Straw pellets are already implemented, and wood chips are now handled as a storage/transfer material.
 
 Recommended posture: combustion first, BGA only as low-value emergency substrate.
 
 4. Crop-processing residue intake
 
-Rice husks are useful precisely because they are not premium feedstock. Corn residues are still a good concept, but they are now explicitly deferred for a future Maize+/MaizePlus integration rather than a Corn Production Pack integration.
+Rice husks are useful precisely because they are not premium feedstock.
 
 Recommended posture: low yield, low priority, optional.
 
-## Maize+/MaizePlus Policy
+## Parked Maize+/MaizePlus Policy
 
-Corn-residue, CCM, and advanced maize-silage work should align with the Maize+/MaizePlus family where possible. The current local `FS25_cornProductionPack` was useful as an observation source, but it should not become a Phobos integration target.
+Do not implement Maize+/MaizePlus integration yet.
+
+Corn-residue, CCM, and advanced maize-silage ideas should remain parked until the FS25 Maize+/MaizePlus ecosystem is production-ready, locally installed, and explicitly selected as a target. The current local `FS25_cornProductionPack` was useful as an observation source, but it must not become a Phobos integration target.
 
 Official ModHub history shows MaizePlus as a silage and feeding overhaul for FS22 with distinct silage families such as grass silage, maize silage, CCM, beetcut silage, and whole-crop silage:
 
@@ -86,12 +89,14 @@ For FS25, official ModHub evidence already shows other mods trying to follow Mai
 
 - https://www.farming-simulator.com/mod.php?mod_id=342332&title=fs2025
 
-Until Maize+/MaizePlus FS25 releases are production-ready and locally installed, keep this as a documentation-only preference:
+Until a future explicit decision changes this:
 
 - do not add `FS25_cornProductionPack` as a dependency
+- do not add Maize+/MaizePlus as a dependency
+- do not add Maize+/MaizePlus registry placeholders or compatibility packages
 - do not add Corn Production Pack-specific fillTypes to active recipes
 - do not copy Corn Production Pack naming as the canonical Phobos naming model
-- revisit corn residues after Maize+/MaizePlus FS25 conventions are visible in real XML
+- do not revisit corn residues as an implementation task
 
 ## Cautions
 
@@ -108,7 +113,6 @@ Until Maize+/MaizePlus FS25 releases are production-ready and locally installed,
 3. Add `POTATO_WASHED` as a wet substrate input.
 4. Add Rice Packaging residue support for `RICE_HUSK`.
 5. Consider a dedicated dry combustion companion module for `WOODCHIPS` and `STRAW_PELLETS`.
-6. Revisit maize residues only after Maize+/MaizePlus FS25 releases are stable enough to study and target.
 
 ## Design Rule Going Forward
 
