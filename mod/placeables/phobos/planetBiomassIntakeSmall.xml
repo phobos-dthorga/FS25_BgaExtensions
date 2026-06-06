@@ -73,27 +73,41 @@
 
     <productionPoint>
         <productions sharedThroughputCapacity="false">
-            <production id="phbSmallChaffToPlanetSilage" name="$l10n_production_phbChaffToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="2.5">
+            <production id="phbSmallChaffToPlanetSilage" name="$l10n_production_phbChaffToPlanetSilage" cyclesPerHour="8" costsPerActiveHour="3">
                 <inputs><input fillType="CHAFF" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="840"/></outputs>
+            </production>
+            <production id="phbSmallChaffAdditiveToPlanetSilage" name="$l10n_production_phbChaffAdditiveToPlanetSilage" cyclesPerHour="8" costsPerActiveHour="3.5">
+                <inputs>
+                    <input fillType="CHAFF" amount="840"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
+                </inputs>
+                <outputs><output fillType="SILAGE_IN" amount="910"/></outputs>
             </production>
             <production id="phbSmallSilageToPlanetSilage" name="$l10n_production_phbSilageToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="2.5">
                 <inputs><input fillType="SILAGE" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="840"/></outputs>
             </production>
-            <production id="phbSmallGrassToPlanetSilage" name="$l10n_production_phbGrassToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="2.5">
+            <production id="phbSmallGrassToPlanetSilage" name="$l10n_production_phbGrassToPlanetSilage" cyclesPerHour="6" costsPerActiveHour="3">
                 <inputs><input fillType="GRASS_WINDROW" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="650"/></outputs>
             </production>
-            <production id="phbSmallHayToPlanetSilage" name="$l10n_production_phbHayToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="2.5">
+            <production id="phbSmallGrassAdditiveToPlanetSilage" name="$l10n_production_phbGrassAdditiveToPlanetSilage" cyclesPerHour="6" costsPerActiveHour="3.5">
+                <inputs>
+                    <input fillType="GRASS_WINDROW" amount="840"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
+                </inputs>
+                <outputs><output fillType="SILAGE_IN" amount="720"/></outputs>
+            </production>
+            <production id="phbSmallHayToPlanetSilage" name="$l10n_production_phbHayToPlanetSilage" cyclesPerHour="6" costsPerActiveHour="3">
                 <inputs><input fillType="DRYGRASS_WINDROW" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="720"/></outputs>
             </production>
-            <production id="phbSmallStrawToPlanetSilage" name="$l10n_production_phbStrawToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="2.5">
+            <production id="phbSmallStrawToPlanetSilage" name="$l10n_production_phbStrawToPlanetSilage" cyclesPerHour="4" costsPerActiveHour="4">
                 <inputs><input fillType="STRAW" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="420"/></outputs>
             </production>
-            <production id="phbSmallStrawToPellets" name="$l10n_production_phbStrawToPellets" cyclesPerHour="10" costsPerActiveHour="5">
+            <production id="phbSmallStrawToPellets" name="$l10n_production_phbStrawToPellets" cyclesPerHour="5" costsPerActiveHour="6">
                 <inputs><input fillType="STRAW" amount="1000"/></inputs>
                 <outputs><output fillType="STRAW_PELLETS" amount="250"/></outputs>
             </production>
@@ -105,30 +119,30 @@
                 <inputs><input fillType="SUGARBEET_CUT" amount="200"/></inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
             </production>
-            <production id="phbSmallSugarcaneToPlanetBeet" name="$l10n_production_phbSugarcaneToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+            <production id="phbSmallSugarcaneToPlanetBeet" name="$l10n_production_phbSugarcaneToPlanetBeet" cyclesPerHour="6" costsPerActiveHour="3">
                 <inputs><input fillType="SUGARCANE" amount="200"/></inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="170"/></outputs>
             </production>
-            <production id="phbSmallPotatoToPlanetBeet" name="$l10n_production_phbPotatoToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+            <production id="phbSmallPotatoToPlanetBeet" name="$l10n_production_phbPotatoToPlanetBeet" cyclesPerHour="6" costsPerActiveHour="3">
                 <inputs><input fillType="POTATO" amount="200"/></inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="150"/></outputs>
             </production>
-            <production id="phbSmallBeetrootToPlanetBeet" name="$l10n_production_phbBeetrootToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+            <production id="phbSmallBeetrootToPlanetBeet" name="$l10n_production_phbBeetrootToPlanetBeet" cyclesPerHour="6" costsPerActiveHour="3">
                 <inputs><input fillType="BEETROOT" amount="200"/></inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="150"/></outputs>
             </production>
-            <production id="phbSmallCarrotToPlanetBeet" name="$l10n_production_phbCarrotToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+            <production id="phbSmallCarrotToPlanetBeet" name="$l10n_production_phbCarrotToPlanetBeet" cyclesPerHour="6" costsPerActiveHour="3">
                 <inputs><input fillType="CARROT" amount="200"/></inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="150"/></outputs>
             </production>
-            <production id="phbSmallParsnipToPlanetBeet" name="$l10n_production_phbParsnipToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+            <production id="phbSmallParsnipToPlanetBeet" name="$l10n_production_phbParsnipToPlanetBeet" cyclesPerHour="6" costsPerActiveHour="3">
                 <inputs><input fillType="PARSNIP" amount="200"/></inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="150"/></outputs>
             </production>
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SILAGE_ADDITIVE"/>
             <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW SUGARBEET_CUT"/>
         </sellingStation>
 
@@ -149,6 +163,7 @@
             <capacity fillType="BEETROOT" capacity="10000"/>
             <capacity fillType="CARROT" capacity="10000"/>
             <capacity fillType="PARSNIP" capacity="10000"/>
+            <capacity fillType="SILAGE_ADDITIVE" capacity="60"/>
             <capacity fillType="SILAGE_IN" capacity="30000"/>
             <capacity fillType="MANURE_IN" capacity="15000"/>
             <capacity fillType="SUGARBEETCUT_IN" capacity="20000"/>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>phobosgekko</author>
-    <version>0.2.0.0</version>
+    <version>0.2.1.0</version>
     <title>
         <en>FS25 BGA Extensions</en>
     </title>
@@ -32,11 +32,17 @@
         <text name="production_phbChaffToPlanetSilage">
             <en>Chaff substrate</en>
         </text>
+        <text name="production_phbChaffAdditiveToPlanetSilage">
+            <en>Chaff substrate with additive</en>
+        </text>
         <text name="production_phbSilageToPlanetSilage">
             <en>Prepared silage intake</en>
         </text>
         <text name="production_phbGrassToPlanetSilage">
             <en>Fresh grass substrate</en>
+        </text>
+        <text name="production_phbGrassAdditiveToPlanetSilage">
+            <en>Fresh grass substrate with additive</en>
         </text>
         <text name="production_phbHayToPlanetSilage">
             <en>Hay substrate</en>
