@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>phobosgekko</author>
-    <version>0.2.1.0</version>
+    <version>0.2.2.0</version>
     <title>
         <en>FS25 BGA Extensions</en>
     </title>
@@ -27,7 +27,10 @@
             <en>Converts additional biomass into PlanET BGA feedstock or pellet fuel.</en>
         </text>
         <text name="function_phobosPlanetSolidBiomassIntake">
-            <en>Converts solid biomass into PlanET feedstock or straw pellets.</en>
+            <en>Converts staged biomass into PlanET feedstock or straw pellets.</en>
+        </text>
+        <text name="fillType_phbWetBiomassMash">
+            <en>Wet biomass mash</en>
         </text>
         <text name="production_phbChaffToPlanetSilage">
             <en>Chaff substrate</en>
@@ -60,7 +63,7 @@
             <en>Liquid manure transfer</en>
         </text>
         <text name="production_phbSugarbeetCutToPlanetBeet">
-            <en>Beet pulp intake</en>
+            <en>Beet pulp mash</en>
         </text>
         <text name="production_phbSugarcaneToPlanetBeet">
             <en>Sugarcane mash</en>
@@ -77,6 +80,18 @@
         <text name="production_phbParsnipToPlanetBeet">
             <en>Parsnip mash</en>
         </text>
+        <text name="production_phbSpinachToWetMash">
+            <en>Spinach mash</en>
+        </text>
+        <text name="production_phbPeaToWetMash">
+            <en>Pea mash</en>
+        </text>
+        <text name="production_phbGreenBeanToWetMash">
+            <en>Green bean mash</en>
+        </text>
+        <text name="production_phbWetMashToPlanetBeet">
+            <en>Wet mash conditioning</en>
+        </text>
     </l10n>
 
     <dependencies>
@@ -85,6 +100,8 @@
     </dependencies>
 
     <multiplayer supported="true"/>
+
+    <fillTypes filename="xml/phobosFillTypes.xml"/>
 
     <storeItems>
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeSmall.xml"/>

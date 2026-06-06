@@ -47,7 +47,7 @@
     <wasteMaterials>
         <!-- Prefer existing fillTypes. These are routing hints, not new fillType declarations. -->
         <waste id="food_rejects" preferredFillType="COMPOST" fallback="directOriginalCrop" aliases="COMPOST_RAW ORGANICWASTE" pathway="wasteSubstrate"/>
-        <waste id="beet_vegetable_trimmings" preferredFillType="SUGARBEET_CUT" fallback="directOriginalCrop" pathway="wetSubstrate"/>
+        <waste id="beet_vegetable_trimmings" preferredFillType="PHB_WET_BIOMASS_MASH" fallback="directOriginalCrop" pathway="wetSubstrate"/>
         <waste id="grain_screenings" preferredFillType="CHAFF" fallback="directOriginalCrop" pathway="grainMashSubstrate"/>
         <waste id="forage_sweepings" preferredFillType="GRASS_WINDROW" fallback="CHAFF" pathway="windrowToSilage"/>
         <waste id="corn_residue" preferredFillType="MAIZESTALKS" fallback="CHAFF" pathway="residueSubstrate"/>
