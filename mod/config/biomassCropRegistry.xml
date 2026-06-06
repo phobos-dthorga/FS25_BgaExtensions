@@ -43,4 +43,17 @@
         <crop id="rice_husk" fillTypes="RICE_HUSK" pathway="pretreatedDrySubstrate" source="commonMap"/>
         <crop id="processed_maize_pellets" fillTypes="MAIZESTALKS_PELLETS" pathway="pretreatedDrySubstrate" source="commonMap"/>
     </tier>
+
+    <wasteMaterials>
+        <!-- Prefer existing fillTypes. These are routing hints, not new fillType declarations. -->
+        <waste id="food_rejects" preferredFillType="ORGANICWASTE" fallback="directOriginalCrop" pathway="wasteSubstrate"/>
+        <waste id="beet_vegetable_trimmings" preferredFillType="SUGARBEET_CUT" fallback="directOriginalCrop" pathway="wetSubstrate"/>
+        <waste id="grain_screenings" preferredFillType="CHAFF" fallback="directOriginalCrop" pathway="grainMashSubstrate"/>
+        <waste id="forage_sweepings" preferredFillType="GRASS_WINDROW" fallback="CHAFF" pathway="windrowToSilage"/>
+        <waste id="corn_residue" preferredFillType="MAIZESTALKS" fallback="CHAFF" pathway="residueSubstrate"/>
+        <waste id="fruit_pomace" preferredFillType="ORGANICWASTE" fallback="directOriginalCrop" pathway="wasteSubstrate"/>
+        <waste id="rice_husk" preferredFillType="RICE_HUSK" fallback="STRAW" pathway="pretreatedDrySubstrate"/>
+        <waste id="woody_contamination" preferredFillType="WOODCHIPS" fallback="exclude" pathway="pretreatmentOnly"/>
+        <waste id="bga_residue" preferredFillType="DIGESTATE" fallback="none" pathway="outputOnly"/>
+    </wasteMaterials>
 </biomassCropRegistry>

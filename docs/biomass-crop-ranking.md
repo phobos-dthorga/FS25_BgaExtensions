@@ -61,6 +61,23 @@ Installed mod observations are recorded in `docs/installed-mod-observations.md`.
 - Tiny spice, mushroom, or greenhouse trickle outputs unless a map/mod provides them in bulk.
 - Animal products such as milk, eggs, wool, or honey. They are organic, but they do not belong in this crop pathway.
 
+## Waste And Byproduct Table
+
+FillTypes are a scarce resource, so waste streams should reuse vanilla or already-detected mod fill types wherever practical.
+
+| Waste stream | Preferred fillType | Fallback | BGA usefulness | Notes |
+| --- | --- | --- | --- | --- |
+| Food/produce rejects | `ORGANICWASTE` if present | direct recipe input from original crop | Excellent | Best when another mod already defines `ORGANICWASTE`; otherwise do not add a new waste fillType just for this. |
+| Beet/vegetable trimmings | `SUGARBEET_CUT` for beet-like waste | original root crop | Excellent | Slightly gamey, but close enough and already BGA-relevant. |
+| Grain cleaning screenings | `CHAFF` | original grain | Good | Works as a generic dry-ish plant fraction without spending a new fillType. |
+| Forage sweepings | `GRASS_WINDROW` or `DRYGRASS_WINDROW` | `CHAFF` | Good | Keep it in the silage lane if it came from forage handling. |
+| Corn cobs/stalks | detected mod fillTypes such as `MAIZECOB`, `MAIZESTALKS` | `CHAFF` | Fair | Use the modded residue names when present; otherwise collapse to `CHAFF`. |
+| Fruit pomace | `ORGANICWASTE` if present | original fruit crop | Fair | Good optional integration, poor reason to create a new fillType. |
+| Rice husk | `RICE_HUSK` if present | `STRAW` | Emergency only | Fibrous residue; useful mostly for cleanup or pretreatment. |
+| Straw-like screenings | `STRAW` | none | Emergency only | Low-grade, slow substrate. |
+| Woody contamination | `WOODCHIPS` | exclude | Emergency only | Prefer heating use; BGA route should be poor or disabled by default. |
+| Digestate output | `DIGESTATE` | none | Output only | Do not create custom digestate variants unless another mod forces it. |
+
 ## First Implementation Slice
 
 Start with the least fragile path:

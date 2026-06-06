@@ -41,6 +41,7 @@ Preferred behavior:
 - Process through a Phobos-owned biomass preparation production.
 - Output should be a Phobos-owned intermediate substrate, not vanilla `SILAGE`, unless testing proves vanilla silage is the better gameplay compromise.
 - The substrate then feeds a Phobos-owned BGA intake or a guarded optional BGA integration.
+- Reuse existing waste fill types such as `ORGANICWASTE` or `COMPOST_RAW` when present. If they are not present, prefer direct input recipes from the original crop over adding another generic waste fillType.
 
 ### Lane 3: Whole-Crop And Grain Mash
 
@@ -107,6 +108,13 @@ Optional detected inputs for the first expansion:
 - `ORGANICWASTE`
 - `COMPOST_RAW`
 
+Generated waste should be conservative:
+
+- use `DIGESTATE` as the normal BGA residue
+- use `CHAFF`, `STRAW`, `SUGARBEET_CUT`, or `WOODCHIPS` for coarse byproducts where they are close enough
+- use detected mod fillTypes such as `ORGANICWASTE`, `COMPOST_RAW`, `MAIZECOB`, `MAIZESTALKS`, or `RICE_HUSK` only when they already exist
+- avoid adding new one-off waste fillTypes until a real gameplay loop needs them
+
 ## Why Not Patch Vanilla BGAs First?
 
 Patching existing BGAs sounds attractive, but it makes the mod fragile:
@@ -143,4 +151,3 @@ Suggested initial factors:
 - emergency residues: `0.05-0.35`
 
 The exact numbers should be tuned against vanilla BGA recipes after the first XML prototype is testable.
-
