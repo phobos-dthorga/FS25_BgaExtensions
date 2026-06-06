@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>phobosgekko</author>
-    <version>0.1.0.0</version>
+    <version>0.1.1.0</version>
     <title>
         <en>FS25 BGA Extensions</en>
     </title>
@@ -20,6 +20,9 @@
         <text name="production_phbChaffToPlanetSilage">
             <en>Chaff substrate</en>
         </text>
+        <text name="production_phbSilageToPlanetSilage">
+            <en>Prepared silage intake</en>
+        </text>
         <text name="production_phbGrassToPlanetSilage">
             <en>Fresh grass substrate</en>
         </text>
@@ -32,8 +35,17 @@
         <text name="production_phbStrawToPellets">
             <en>Straw pelletizing</en>
         </text>
+        <text name="production_phbManureToPlanetManure">
+            <en>Manure intake</en>
+        </text>
+        <text name="production_phbLiquidManureToPlanetFermenter">
+            <en>Liquid manure transfer</en>
+        </text>
         <text name="production_phbSugarbeetCutToPlanetBeet">
             <en>Beet pulp intake</en>
+        </text>
+        <text name="production_phbSugarcaneToPlanetBeet">
+            <en>Sugarcane mash</en>
         </text>
         <text name="production_phbPotatoToPlanetBeet">
             <en>Potato mash</en>

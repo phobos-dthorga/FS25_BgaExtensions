@@ -80,6 +80,7 @@
 
     <triggerMarkers>
         <triggerMarker node="unloadTriggerMixerMarker"        filename="$data/shared/assets/marker/markerIconUnload.i3d" adjustToGround="false"/>
+        <triggerMarker node="unloadTriggerLiquidManureMarker" filename="$data/shared/assets/marker/markerIconUnload.i3d" adjustToGround="false"/>
         <triggerMarker node="loadTriggerMarker"               filename="$data/shared/assets/marker/markerIconLoad.i3d"   adjustToGround="true"/>
         <triggerMarker node="playerTriggerMarker"             filename="$data/shared/assets/marker/markerIconWrench.i3d" adjustToGround="true"/>
     </triggerMarkers>
@@ -93,6 +94,14 @@
             <production id="phbChaffToPlanetSilage" name="$l10n_production_phbChaffToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="2.5">
                 <inputs>
                     <input fillType="CHAFF" amount="840"/>
+                </inputs>
+                <outputs>
+                    <output fillType="SILAGE_IN" amount="840"/>
+                </outputs>
+            </production>
+            <production id="phbSilageToPlanetSilage" name="$l10n_production_phbSilageToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs>
+                    <input fillType="SILAGE" amount="840"/>
                 </inputs>
                 <outputs>
                     <output fillType="SILAGE_IN" amount="840"/>
@@ -130,12 +139,36 @@
                     <output fillType="STRAW_PELLETS" amount="250"/>
                 </outputs>
             </production>
+            <production id="phbManureToPlanetManure" name="$l10n_production_phbManureToPlanetManure" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs>
+                    <input fillType="MANURE" amount="400"/>
+                </inputs>
+                <outputs>
+                    <output fillType="MANURE_IN" amount="400"/>
+                </outputs>
+            </production>
+            <production id="phbLiquidManureToPlanetFermenter" name="$l10n_production_phbLiquidManureToPlanetFermenter" cyclesPerHour="20" costsPerActiveHour="1">
+                <inputs>
+                    <input fillType="LIQUIDMANURE" amount="500"/>
+                </inputs>
+                <outputs>
+                    <output fillType="LIQUIDMANURE1" amount="500"/>
+                </outputs>
+            </production>
             <production id="phbSugarbeetCutToPlanetBeet" name="$l10n_production_phbSugarbeetCutToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
                 <inputs>
                     <input fillType="SUGARBEET_CUT" amount="200"/>
                 </inputs>
                 <outputs>
                     <output fillType="SUGARBEETCUT_IN" amount="200"/>
+                </outputs>
+            </production>
+            <production id="phbSugarcaneToPlanetBeet" name="$l10n_production_phbSugarcaneToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs>
+                    <input fillType="SUGARCANE" amount="200"/>
+                </inputs>
+                <outputs>
+                    <output fillType="SUGARBEETCUT_IN" amount="170"/>
                 </outputs>
             </production>
             <production id="phbPotatoToPlanetBeet" name="$l10n_production_phbPotatoToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
@@ -173,11 +206,12 @@
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF GRASS_WINDROW DRYGRASS_WINDROW STRAW SUGARBEET_CUT POTATO BEETROOT CARROT PARSNIP"/>
-            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF GRASS_WINDROW DRYGRASS_WINDROW STRAW"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerLiquidManure" fillTypes="LIQUIDMANURE" aiNode="unloadTriggerLiquidManureAiNode"/>
+            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW SUGARBEET_CUT"/>
 
-            <unloadTrigger exactFillRootNode="unloadTriggerInFront" fillTypes="CHAFF GRASS_WINDROW DRYGRASS_WINDROW STRAW SUGARBEET_CUT POTATO BEETROOT CARROT PARSNIP" aiNode="unloadTriggerInFrontAINode"/>
-            <baleTrigger triggerNode="baleTriggerInFront" fillTypes="CHAFF GRASS_WINDROW DRYGRASS_WINDROW STRAW"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerInFront" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP" aiNode="unloadTriggerInFrontAINode"/>
+            <baleTrigger triggerNode="baleTriggerInFront" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW SUGARBEET_CUT"/>
 
             <animationNodes>
                 <animationNode node="mixingDrum" rotAxis="2" rotSpeed="-80"/>
@@ -185,21 +219,27 @@
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN SUGARBEETCUT_IN STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN SUGARBEETCUT_IN LIQUIDMANURE1 STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
             <capacity fillType="CHAFF" capacity="30000"/>
+            <capacity fillType="SILAGE" capacity="30000"/>
             <capacity fillType="GRASS_WINDROW" capacity="30000"/>
             <capacity fillType="DRYGRASS_WINDROW" capacity="30000"/>
             <capacity fillType="STRAW" capacity="20000"/>
+            <capacity fillType="MANURE" capacity="20000"/>
+            <capacity fillType="LIQUIDMANURE" capacity="30000"/>
             <capacity fillType="SUGARBEET_CUT" capacity="15000"/>
+            <capacity fillType="SUGARCANE" capacity="15000"/>
             <capacity fillType="POTATO" capacity="15000"/>
             <capacity fillType="BEETROOT" capacity="15000"/>
             <capacity fillType="CARROT" capacity="15000"/>
             <capacity fillType="PARSNIP" capacity="15000"/>
             <capacity fillType="SILAGE_IN" capacity="100000"/>
+            <capacity fillType="MANURE_IN" capacity="50000"/>
             <capacity fillType="SUGARBEETCUT_IN" capacity="50000"/>
+            <capacity fillType="LIQUIDMANURE1" capacity="50000"/>
             <capacity fillType="STRAW_PELLETS" capacity="25000"/>
 
             <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="CHAFF"/>
