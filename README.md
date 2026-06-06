@@ -20,7 +20,7 @@ This repository is the staging ground for early design and implementation. The m
 
 ## Current Design Direction
 
-The first implementation path is a registry-driven biomass pipeline for expanded BGA inputs. See `docs/biomass-crop-ranking.md` and the draft registry at `mod/config/biomassCropRegistry.xml`.
+The first implementation path is a registry-driven biomass pipeline for expanded BGA inputs. See `docs/biomass-crop-ranking.md`, `docs/conversion-process.md`, and the draft registry at `mod/config/biomassCropRegistry.xml`.
 
 ## Author
 

@@ -20,5 +20,6 @@ Extend Farming Simulator 25 BGA gameplay with richer production, management, or 
 ## Working References
 
 - Biomass crop ranking: `docs/biomass-crop-ranking.md`.
+- Conversion process: `docs/conversion-process.md`.
 - Draft biomass crop registry: `mod/config/biomassCropRegistry.xml`.
 - Installed mod observations: `docs/installed-mod-observations.md`.
