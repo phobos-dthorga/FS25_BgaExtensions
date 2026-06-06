@@ -18,6 +18,10 @@ This repository is the staging ground for early design and implementation. The m
 - `docs/` - design notes, references, and planning documents.
 - `tools/` - local helper scripts for packaging or maintenance.
 
+## Current Design Direction
+
+The first implementation path is a registry-driven biomass pipeline for expanded BGA inputs. See `docs/biomass-crop-ranking.md` and the draft registry at `mod/config/biomassCropRegistry.xml`.
+
 ## Author
 
 phobosgekko

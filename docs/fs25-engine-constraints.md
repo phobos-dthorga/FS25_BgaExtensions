@@ -26,9 +26,22 @@ Observed source:
 - If custom biomass bales become important, treat them as a separate feature requiring explicit map integration, a map-extension prefab, or a clear compatibility warning.
 - Avoid making expanded BGA input depend on animal feeding or forage mixer integration. Those can be optional later layers, not the core path.
 
+### Broader Applicability
+
+The same class of issue can apply anywhere FS25 loads definitions in a specific order or expects map-owned XML to be complete before standard mods are evaluated. Treat these as cautious zones:
+
+- `fillTypes.xml` and fill type categories.
+- `heightTypes` and ground-tip heaps.
+- `bales.xml` and custom bale definitions.
+- `animalFood.xml` and husbandry feed recipes.
+- Forage mixer recipes and map-specific mixing rules.
+- Placeable storage and loading stations that whitelist fill types.
+- Production points when trying to modify existing vanilla/map productions instead of defining a Phobos-owned placeable.
+
+For this project, prefer adding our own placeable production path first. Patch existing map or third-party systems only through guarded optional integrations.
+
 ## Open Verification Tasks
 
 - Verify current FS25 behavior for custom bale registration against local LUADOC, sample mods, and an unmodified base-game map.
 - Confirm whether any safe runtime hook exists for custom bale/fillType loading order. Do not assume one exists.
 - Test the smallest possible custom fill type plus BGA intake path before expanding the biomass registry.
-
