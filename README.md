@@ -18,6 +18,10 @@ This repository is the staging ground for early design and implementation. The m
 - `docs/` - design notes, references, and planning documents.
 - `tools/` - local helper scripts for packaging or maintenance.
 
+## Release Rhythm
+
+Each shipped mod version should get a GitHub release and retain its old releases as the project timeline. Use `tools/release.ps1` after committing and pushing a version bump; it builds a versioned package, creates a `vX.Y.Z.W` tag, and publishes a GitHub prerelease by default.
+
 ## Current Design Direction
 
 The first playable implementation is a small PlanET-compatible biomass intake module. It converts selected vanilla biomass inputs into the internal feedstocks used by `FS25_PlanET_BGA_Modular`, can pelletize straw into `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant, and handles vanilla `WOODCHIPS` as a combustion-yard storage material.
