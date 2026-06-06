@@ -138,7 +138,8 @@ Generated waste should be conservative:
 
 - use `DIGESTATE` as the normal BGA residue
 - use `CHAFF`, `STRAW`, `SUGARBEET_CUT`, or `WOODCHIPS` for coarse byproducts where they are close enough
-- use detected mod fillTypes such as `COMPOST`, `COMPOST_RAW`, `ORGANICWASTE`, `MAIZECOB`, `MAIZESTALKS`, or `RICE_HUSK` only when they already exist
+- use detected mod fillTypes such as `COMPOST`, `COMPOST_RAW`, `ORGANICWASTE`, or `RICE_HUSK` only when they already exist
+- defer maize/corn residues until Maize+/MaizePlus FS25 releases are production-ready; do not target the current Corn Production Pack
 - avoid adding new one-off waste fillTypes until a real gameplay loop needs them
 
 ## Why Not Patch Vanilla BGAs First?

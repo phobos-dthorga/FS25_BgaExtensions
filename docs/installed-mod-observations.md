@@ -23,7 +23,7 @@ Scan date: 2026-06-06.
 | `FS25_Osweiler.zip` | `FIELDGRASS`, `GREENRYE`, `HUMUSACTIVE`, `MUSTARD`, `RYE`, `RYE_CUT`, `SILAGEMAIZE`, `SPELT`, `SPELT_CUT`, `TRITICALE`, `TRITICALE_CUT`, `VETCHRYE` | Similar crop family to Nordkirchen; treat these as common map-maker names. |
 | `FS25_calmsden.zip` | `LINSEED`, `LINSEED_CUT` | Add linseed as an oilseed/green-chop optional integration. |
 | `FS25_CombineXP.zip` | `ALFALFA`, `CLOVER`, `GREENRYE`, `ONION`, `POPPY`, `RYE`, `SILAGEMAIZE`, `SPELT`, `TRITICALE`, `VETCHRYE`, `WINTERBARLEY`, `WINTERWHEAT` | Useful compatibility signal, but this appears to be a script/data support mod rather than a map-owned crop source. |
-| `FS25_cornProductionPack.zip` | `MAIZECOB`, `MAIZECOBWASTE`, `MAIZEGERM`, `MAIZESTALKS`, `MAIZESTALKS_PELLETS` | Add corn processing residues as fair or emergency substrate candidates, not premium silage. |
+| `FS25_cornProductionPack.zip` | `MAIZECOB`, `MAIZECOBWASTE`, `MAIZEGERM`, `MAIZESTALKS`, `MAIZESTALKS_PELLETS` | Observation only. Do not target this mod for integration; reserve maize/corn-residue work for future Maize+/MaizePlus-compatible releases. |
 | `FS25_orchardsAndGreenhouses_crossplay.zip` | `APPLE`, `APRICOT`, `COMPOST`, `CUCUMBER`, `GREENPEPPER`, `ONION`, `ORGANICWASTE`, `PEAR`, `PLUM`, `WATERMELON` | Strong source for compost/organic residual and wet produce substrate integrations. Prefer `COMPOST` over `ORGANICWASTE` for compatibility with spreading/handling support. |
 | `FS25_PlanET_BGA_Modular.zip` | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, `RAWMETHANE`, `DIGESTATE1`, `DIGESTATE2`, `DIGESTATE3` | BGA-adjacent, but likely internal to that mod. Do not integrate until its loading and API behavior are studied. |
 | `FS25_swathingPlus.zip` | `RICELONGGRAIN_CUT`, `SORGHUM_CUT`; keyword hits for alfalfa/clover | Supports cut-crop aliases for our registry. |
@@ -36,3 +36,4 @@ Scan date: 2026-06-06.
 - Re-scan after adding or removing major maps.
 - Do not treat detected fill type names as safe to load blindly. Runtime existence checks are still required.
 - Study `FS25_PlanET_BGA_Modular.zip` separately before attempting compatibility with its internal BGA fill types.
+- Revisit maize/corn-residue integrations after Maize+/MaizePlus FS25 releases are production-ready and locally installed.

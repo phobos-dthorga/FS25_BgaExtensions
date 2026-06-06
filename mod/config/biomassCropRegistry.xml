@@ -33,7 +33,8 @@
         <crop id="fruit_and_pomace" fillTypes="GRAPE OLIVE STRAWBERRY TOMATO APPLE APRICOT PEAR PLUM WATERMELON GRAPECLEAN" pathway="wasteSubstrate" source="mixed"/>
         <crop id="hemp_fiber_annuals" fillTypes="HEMP" pathway="greenChopSubstrate" source="commonMap"/>
         <crop id="specialty_crops" fillTypes="HOPS LAVENDER" pathway="wasteSubstrate" source="commonMap"/>
-        <crop id="maize_processing_residue" fillTypes="MAIZECOB MAIZECOBWASTE MAIZEGERM MAIZESTALKS" pathway="residueSubstrate" source="commonMap"/>
+        <!-- Deferred: do not target Corn Production Pack. Revisit with production-ready Maize+/MaizePlus FS25 conventions. -->
+        <crop id="maizeplus_processing_residue_deferred" fillTypes="" pathway="residueSubstrate" source="deferredMaizePlus"/>
     </tier>
 
     <tier id="emergency" bgaValue="0.05 0.35">
@@ -41,7 +42,8 @@
         <crop id="woody_biomass" fillTypes="POPLAR WOODCHIPS" pathway="pretreatmentOnly" source="baseGame"/>
         <crop id="cover_crop_biomass" fillTypes="OILSEEDRADISH MUSTARDCOVER FLOWERINGCATCHCROP HUMUSACTIVE" pathway="greenManureSalvage" source="mixed"/>
         <crop id="rice_husk" fillTypes="RICE_HUSK" pathway="pretreatedDrySubstrate" source="commonMap"/>
-        <crop id="processed_maize_pellets" fillTypes="MAIZESTALKS_PELLETS" pathway="pretreatedDrySubstrate" source="commonMap"/>
+        <!-- Deferred: do not target Corn Production Pack stalk pellet names. -->
+        <crop id="maizeplus_processed_residue_deferred" fillTypes="" pathway="pretreatedDrySubstrate" source="deferredMaizePlus"/>
     </tier>
 
     <wasteMaterials>
@@ -50,7 +52,7 @@
         <waste id="beet_vegetable_trimmings" preferredFillType="PHB_WET_BIOMASS_MASH" fallback="directOriginalCrop" pathway="wetSubstrate"/>
         <waste id="grain_screenings" preferredFillType="CHAFF" fallback="directOriginalCrop" pathway="grainMashSubstrate"/>
         <waste id="forage_sweepings" preferredFillType="GRASS_WINDROW" fallback="CHAFF" pathway="windrowToSilage"/>
-        <waste id="corn_residue" preferredFillType="MAIZESTALKS" fallback="CHAFF" pathway="residueSubstrate"/>
+        <waste id="maizeplus_corn_residue_deferred" preferredFillType="" fallback="defer" pathway="residueSubstrate"/>
         <waste id="fruit_pomace" preferredFillType="COMPOST" fallback="directOriginalCrop" aliases="COMPOST_RAW ORGANICWASTE" pathway="wasteSubstrate"/>
         <waste id="rice_husk" preferredFillType="RICE_HUSK" fallback="STRAW" pathway="pretreatedDrySubstrate"/>
         <waste id="woody_contamination" preferredFillType="WOODCHIPS" fallback="exclude" pathway="pretreatmentOnly"/>

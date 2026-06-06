@@ -48,11 +48,11 @@ Installed mod observations are recorded in `docs/installed-mod-observations.md`.
 | Fair | Grapes, olives, fruit produce | `GRAPE`, `OLIVE`; greenhouse: `STRAWBERRY`, `TOMATO` | Waste/pomace style substrate | 0.30-0.55 | Whole fruit should be a fallback. Pomace/waste products would be better if a map/mod exposes them. |
 | Fair | Hemp and high-fiber annuals | Common: `HEMP` | Chopped green biomass substrate | 0.30-0.55 | High biomass but can be fibrous. Keep below forage crops. |
 | Fair | Hops and specialty crops | Common: `HOPS`, `LAVENDER`, herbs | Organic waste substrate | 0.20-0.45 | Include only when a map makes them available in bulk. Not a core path. |
-| Fair | Corn processing residues | Common: `MAIZECOB`, `MAIZECOBWASTE`, `MAIZEGERM`, `MAIZESTALKS` | Residue substrate | 0.25-0.50 | Useful byproducts from corn production mods. Keep below whole-crop maize and silage. |
+| Deferred | Maize+/MaizePlus corn residues | Wait for production-ready FS25 Maize+/MaizePlus releases | Residue substrate, CCM, or advanced silage pathway | TBD | Do not target the current Corn Production Pack. Revisit when Maize+/MaizePlus conventions are visible in stable FS25 releases. |
 | Emergency only | Straw and grain residues | `STRAW`; common: `RYE_STRAW`, `TRITICALE_STRAW` | Pretreated dry biomass substrate | 0.15-0.35 | Lignocellulosic and slow. Useful for cleanup or low-grade co-digestion, not premium energy production. |
 | Emergency only | Poplar and woody biomass | `POPLAR`, `WOODCHIPS` | Pretreatment-only biomass route | 0.05-0.20 | Better suited to heating than BGA. Do not include in the first playable path unless deliberately experimental. |
 | Emergency only | Cover crop biomass | `OILSEEDRADISH`; common: `MUSTARD`, cover mixes | Green manure salvage route | 0.10-0.30 | Only if the map exposes a harvestable product. Otherwise leave as field agronomy, not BGA feedstock. |
-| Emergency only | Rice husk and processed stalk pellets | Common: `RICE_HUSK`, `MAIZESTALKS_PELLETS` | Pretreated dry biomass substrate | 0.05-0.25 | Fibrous residues. More plausible as low-grade emergency substrate than as silage. |
+| Emergency only | Rice husk | Common: `RICE_HUSK` | Pretreated dry biomass substrate | 0.05-0.25 | Fibrous residue. More plausible as low-grade emergency substrate than as silage. |
 
 ## Excluded For Now
 
@@ -71,7 +71,7 @@ FillTypes are a scarce resource, so waste streams should reuse vanilla or alread
 | Beet/vegetable trimmings | `SUGARBEET_CUT` for beet-like waste | original root crop | Excellent | Slightly gamey, but close enough and already BGA-relevant. |
 | Grain cleaning screenings | `CHAFF` | original grain | Good | Works as a generic dry-ish plant fraction without spending a new fillType. |
 | Forage sweepings | `GRASS_WINDROW` or `DRYGRASS_WINDROW` | `CHAFF` | Good | Keep it in the silage lane if it came from forage handling. |
-| Corn cobs/stalks | detected mod fillTypes such as `MAIZECOB`, `MAIZESTALKS` | `CHAFF` | Fair | Use the modded residue names when present; otherwise collapse to `CHAFF`. |
+| Maize/corn residues | future Maize+/MaizePlus-compatible fillTypes | defer | Deferred | Do not use Corn Production Pack as the target. Revisit after Maize+/MaizePlus FS25 releases stabilize. |
 | Fruit pomace | `COMPOST` if present | original fruit crop | Fair | Good optional integration. Do not create `ORGANICWASTE` just to represent this. |
 | Rice husk | `RICE_HUSK` if present | `STRAW` | Emergency only | Fibrous residue; useful mostly for cleanup or pretreatment. |
 | Straw-like screenings | `STRAW` | none | Emergency only | Low-grade, slow substrate. |
