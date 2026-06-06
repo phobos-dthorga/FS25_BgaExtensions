@@ -80,9 +80,18 @@ For dependency mods such as PlanET:
 - inspect XML and fillTypes to understand the integration contract
 - use registered fillType names at runtime when the dependency is declared
 - use behavior patterns as reference material
+- reference installed dependency assets from XML only when the dependency is required and the path is tested
 - do not copy dependency assets or source files into this repository without clear license permission
 
 For the current PlanET proof of concept, the dependency resources are the internal fillTypes. The placeable uses Phobos-owned XML and base-game referenced assets.
+
+### Reference Policy
+
+Referencing is allowed; vendoring is not.
+
+Use references such as `$data/...` or `$moddir$RequiredMod/...` when they point to content the player must already have installed. This keeps ownership clear and avoids duplicating third-party or DLC files inside the Phobos package.
+
+The Phobos release zip should contain only Phobos-owned files. A required dependency should remain the source of truth for its own assets, fillTypes, placeables, and scripts.
 
 ### Project Resources
 
@@ -161,6 +170,7 @@ Release packages should contain only:
 
 - Phobos-owned XML, scripts, docs, and assets
 - allowed base-game references via `$data` paths
+- allowed dependency references via `$moddir$...` paths when that dependency is explicit
 - no copied third-party mod assets unless licensing has been checked and recorded
 
 ## When To Use Lua

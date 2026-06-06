@@ -30,6 +30,7 @@ Allowed by default:
 
 - depending on another mod by filename
 - using fillTypes or gameplay registrations that exist at runtime
+- referencing installed base-game, DLC, or dependency-owned assets from Phobos XML when the owning content is required
 - documenting compatibility behavior and required dependencies
 
 Not allowed without clear license permission:
@@ -38,7 +39,26 @@ Not allowed without clear license permission:
 - redistributing another mod's assets inside a Phobos package
 - publishing a patched version of another author's mod
 
-If cross-mod asset references are ever considered, verify both technical support and licensing first. Prefer base-game assets or Phobos-owned assets for release packages.
+## Reference, Do Not Vendor
+
+The preferred safety boundary is to reference installed resources, not vendor them.
+
+Acceptable references:
+
+- `$data/...` paths for base-game resources
+- `$moddir$SomeRequiredMod/...` paths for assets owned by a declared dependency
+- registered fillTypes and runtime behavior exposed by an installed dependency
+
+Requirements for dependency-owned references:
+
+- the dependency must be declared or the feature must be guarded
+- the referenced path must be tested in-game
+- the Phobos package must still contain only Phobos-owned files
+- attribution should be documented when a dependency meaningfully enables a feature
+
+Do not copy dependency XML, models, textures, icons, scripts, or sounds into this repository merely because they can be referenced. Keep the original package as the insular safety net.
+
+Prefer base-game assets or Phobos-owned assets for release packages. Use dependency-owned references only when they are technically useful and the dependency relationship is explicit.
 
 ## Rebuild Policy
 
