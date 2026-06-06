@@ -45,12 +45,15 @@ For PlanET-specific features, treat `FS25_PlanET_BGA_Modular` as a required fram
 Current method:
 
 - declare `FS25_PlanET_BGA_Modular` as a dependency for PlanET-specific modules
+- declare `pdlc_strawHarvestPack` when a feature uses Straw Harvest pellet fillTypes or HALLSYS heat-plant routing
 - use its registered internal fillTypes as the contract, especially `SILAGE_IN` and `SUGARBEETCUT_IN`
+- use Straw Harvest `STRAW_PELLETS` as the dry fuel handoff when bridging straw residues to the HALLSYS Pellet Heat Plant
 - add Phobos-owned modules that convert expanded biomass inputs into those internal fillTypes
 - let PlanET's own fermenters, generators, storages, and distributors continue doing their normal work
+- let the HALLSYS Pellet Heat Plant remain the destination for pellet fuel
 - keep all Phobos balancing and recipes in `FS25_BgaExtensions`
 
-This gives compatibility without touching the PlanET package.
+This gives compatibility without touching the PlanET or Straw Harvest packages.
 
 ## Resource Use
 
@@ -109,6 +112,7 @@ Use existing fillTypes wherever they are technically and thematically close enou
 
 - use PlanET `SILAGE_IN` for prepared forage biomass in PlanET-specific modules
 - use PlanET `SUGARBEETCUT_IN` for wet or starchy biomass in PlanET-specific modules
+- use Straw Harvest `STRAW_PELLETS` for dry straw fuel when the pellet heat route is active
 - prefer `COMPOST` if it exists on a map/mod because other equipment may already support it
 - treat `COMPOST_RAW` and `ORGANICWASTE` as detected aliases or fallback inputs, not fillTypes this mod should define casually
 

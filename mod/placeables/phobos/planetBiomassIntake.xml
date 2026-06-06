@@ -122,6 +122,14 @@
                     <output fillType="SILAGE_IN" amount="420"/>
                 </outputs>
             </production>
+            <production id="phbStrawToPellets" name="$l10n_production_phbStrawToPellets" cyclesPerHour="10" costsPerActiveHour="5">
+                <inputs>
+                    <input fillType="STRAW" amount="1000"/>
+                </inputs>
+                <outputs>
+                    <output fillType="STRAW_PELLETS" amount="250"/>
+                </outputs>
+            </production>
             <production id="phbSugarbeetCutToPlanetBeet" name="$l10n_production_phbSugarbeetCutToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
                 <inputs>
                     <input fillType="SUGARBEET_CUT" amount="200"/>
@@ -177,7 +185,7 @@
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN SUGARBEETCUT_IN" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN SUGARBEETCUT_IN STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
@@ -192,6 +200,7 @@
             <capacity fillType="PARSNIP" capacity="15000"/>
             <capacity fillType="SILAGE_IN" capacity="100000"/>
             <capacity fillType="SUGARBEETCUT_IN" capacity="50000"/>
+            <capacity fillType="STRAW_PELLETS" capacity="25000"/>
 
             <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="CHAFF"/>
         </storage>

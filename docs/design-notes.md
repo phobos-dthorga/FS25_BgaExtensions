@@ -17,6 +17,7 @@ Extend Farming Simulator 25 BGA gameplay with richer production, management, or 
 - Author: `phobosgekko`.
 - First implementation direction: PlanET-compatible biomass intake modules, followed by registry-driven biomass pathways and optional compatibility layers.
 - PlanET integration strategy: depend on `FS25_PlanET_BGA_Modular` where needed, use its registered runtime fillTypes as integration points, and ship Phobos-owned companion modules without editing or redistributing PlanET files.
+- Straw Harvest integration strategy: depend on `pdlc_strawHarvestPack` when using pellet fillTypes, route `STRAW_PELLETS` toward the HALLSYS Pellet Heat Plant, and keep raw straw BGA pretreatment deliberately inefficient.
 
 ## Working References
 

@@ -85,10 +85,11 @@ Preferred behavior:
 The first implementation should be deliberately narrow:
 
 1. Add one Phobos-owned production point: PlanET Biomass Intake.
-2. Depend on `FS25_PlanET_BGA_Modular` for the proof of concept.
+2. Depend on `FS25_PlanET_BGA_Modular` and `pdlc_strawHarvestPack` for the proof of concept.
 3. Convert selected high-confidence vanilla inputs into PlanET internal feedstocks.
 4. Use `SILAGE_IN` for forage-like biomass and `SUGARBEETCUT_IN` for wet/starchy/root biomass.
-5. Avoid adding any new fillTypes until a standalone or non-PlanET pathway genuinely needs one.
+5. Use existing `STRAW_PELLETS` for the dry heat route to the HALLSYS Pellet Heat Plant.
+6. Avoid adding any new fillTypes until a standalone or non-PlanET pathway genuinely needs one.
 
 Initial input set:
 
@@ -107,6 +108,7 @@ Current PoC recipes:
 - `GRASS_WINDROW` -> `SILAGE_IN`
 - `DRYGRASS_WINDROW` -> `SILAGE_IN`
 - `STRAW` -> `SILAGE_IN` at poor efficiency
+- `STRAW` -> `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant
 - `SUGARBEET_CUT` -> `SUGARBEETCUT_IN`
 - `POTATO` -> `SUGARBEETCUT_IN`
 - `BEETROOT` -> `SUGARBEETCUT_IN`
