@@ -18,6 +18,12 @@ Do not guess FS25 Lua APIs from memory. Before adding or changing any FS25 Lua A
 
 If local references are not yet configured for this repository, pause and ask for their location before implementing API-sensitive code.
 
+## Known FS25 Constraints
+
+Read `docs/fs25-engine-constraints.md` before designing custom fill types, bales, animal feed integration, forage mixer recipes, tippable heaps, or map-owned XML integrations.
+
+Current caution: a standard mod may not be able to globally add custom ingredients to map-owned animal food/forage mixer data, and custom bales for mod-defined fill types may require map-native integration because of FS25 bale/fillType loading order behavior.
+
 ## Local References To Configure
 
 Add project-specific paths here once available:
@@ -52,4 +58,3 @@ Add project-specific paths here once available:
 - Document any API uncertainty instead of filling gaps with invented calls.
 - Prefer narrow commits with clear messages.
 - Avoid direct pushes to stable branches once a development branch workflow is introduced.
-
