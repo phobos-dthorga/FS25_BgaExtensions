@@ -8,6 +8,8 @@ Do not force every organic crop into vanilla `SILAGE`.
 
 Some materials genuinely belong in a silage pathway. Others are better represented as wet biomass, grain mash, compost/organic residuals, or pretreated low-grade substrate. The mod should preserve those differences while still making many more organic materials useful for BGA energy production.
 
+For the first proof of concept, prefer the smallest useful compatibility layer. The installed PlanET modular BGA already uses internal feedstocks, so the initial implementation feeds those internal lanes directly instead of adding a Phobos substrate fillType too early.
+
 ## Conversion Lanes
 
 ### Lane 1: Vanilla-Compatible Silage
@@ -80,11 +82,11 @@ Preferred behavior:
 
 The first implementation should be deliberately narrow:
 
-1. Add one Phobos-owned production point: Biomass Preprocessor.
-2. Add one Phobos-owned intermediate fill type: `PHB_BGA_SUBSTRATE`.
-3. Let the preprocessor convert selected high-confidence inputs into `PHB_BGA_SUBSTRATE`.
-4. Add one Phobos-owned BGA or BGA intake production that consumes `PHB_BGA_SUBSTRATE`.
-5. Keep vanilla `SILAGE`, `MANURE`, `LIQUIDMANURE`, and `SUGARBEET_CUT` behavior intact.
+1. Add one Phobos-owned production point: PlanET Biomass Intake.
+2. Depend on `FS25_PlanET_BGA_Modular` for the proof of concept.
+3. Convert selected high-confidence vanilla inputs into PlanET internal feedstocks.
+4. Use `SILAGE_IN` for forage-like biomass and `SUGARBEETCUT_IN` for wet/starchy/root biomass.
+5. Avoid adding any new fillTypes until a standalone or non-PlanET pathway genuinely needs one.
 
 Initial input set:
 
@@ -96,6 +98,18 @@ Initial input set:
 - `BEETROOT`
 - `CARROT`
 - `PARSNIP`
+
+Current PoC recipes:
+
+- `CHAFF` -> `SILAGE_IN`
+- `GRASS_WINDROW` -> `SILAGE_IN`
+- `DRYGRASS_WINDROW` -> `SILAGE_IN`
+- `STRAW` -> `SILAGE_IN` at poor efficiency
+- `SUGARBEET_CUT` -> `SUGARBEETCUT_IN`
+- `POTATO` -> `SUGARBEETCUT_IN`
+- `BEETROOT` -> `SUGARBEETCUT_IN`
+- `CARROT` -> `SUGARBEETCUT_IN`
+- `PARSNIP` -> `SUGARBEETCUT_IN`
 
 Optional detected inputs for the first expansion:
 
@@ -129,7 +143,9 @@ The safer path is to ship a self-contained Phobos conversion chain first, then a
 
 ## Fill Type Caution
 
-`PHB_BGA_SUBSTRATE` should not require custom bales in the first version.
+The first proof of concept does not add `PHB_BGA_SUBSTRATE`.
+
+If `PHB_BGA_SUBSTRATE` is added later, it should not require custom bales in its first version.
 
 If a custom fill type is added, keep it tightly scoped:
 

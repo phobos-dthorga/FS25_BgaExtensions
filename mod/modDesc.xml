@@ -6,7 +6,53 @@
         <en>FS25 BGA Extensions</en>
     </title>
     <description>
-        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay.</en>
+        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. The first proof of concept adds a PlanET-compatible biomass intake module.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
+
+    <l10n>
+        <text name="storeItem_phobosPlanetBiomassIntake">
+            <en>Phobos PlanET Biomass Intake</en>
+        </text>
+        <text name="function_phobosPlanetBiomassIntake">
+            <en>Converts additional biomass into PlanET BGA feedstock.</en>
+        </text>
+        <text name="production_phbChaffToPlanetSilage">
+            <en>Chaff substrate</en>
+        </text>
+        <text name="production_phbGrassToPlanetSilage">
+            <en>Fresh grass substrate</en>
+        </text>
+        <text name="production_phbHayToPlanetSilage">
+            <en>Hay substrate</en>
+        </text>
+        <text name="production_phbStrawToPlanetSilage">
+            <en>Straw pretreatment</en>
+        </text>
+        <text name="production_phbSugarbeetCutToPlanetBeet">
+            <en>Beet pulp intake</en>
+        </text>
+        <text name="production_phbPotatoToPlanetBeet">
+            <en>Potato mash</en>
+        </text>
+        <text name="production_phbBeetrootToPlanetBeet">
+            <en>Beetroot mash</en>
+        </text>
+        <text name="production_phbCarrotToPlanetBeet">
+            <en>Carrot mash</en>
+        </text>
+        <text name="production_phbParsnipToPlanetBeet">
+            <en>Parsnip mash</en>
+        </text>
+    </l10n>
+
+    <dependencies>
+        <dependency>FS25_PlanET_BGA_Modular</dependency>
+    </dependencies>
+
+    <multiplayer supported="true"/>
+
+    <storeItems>
+        <storeItem xmlFilename="placeables/phobos/planetBiomassIntake.xml"/>
+    </storeItems>
 </modDesc>
