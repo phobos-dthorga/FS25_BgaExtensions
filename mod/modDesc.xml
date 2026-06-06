@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
+    <author>phobosgekko</author>
+    <version>0.1.0.0</version>
+    <title>
+        <en>FS25 BGA Extensions</en>
+    </title>
+    <description>
+        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay.</en>
+    </description>
+    <iconFilename>icon.dds</iconFilename>
+</modDesc>
