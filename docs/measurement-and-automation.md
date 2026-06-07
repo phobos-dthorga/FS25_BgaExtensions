@@ -9,7 +9,7 @@ This document explains how `FS25_BgaExtensions` performance and health measureme
 | Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, Phobos-owned asset references resolve, core fillTypes are known, optional fillTypes are not in core XML, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target. |
 | Package validation | GitHub Actions and local tools | Implemented | The zip has FS25's expected root layout, avoids repository-only folders, and stays under the XML-only package size target. |
 | Log triage | Local machine after an FS25 test | Implemented | Phobos-owned warnings/errors are separated from external mod noise. |
-| Runtime smoke test | Local FS25 disposable save | Manual, documented | The placeable can be bought, placed, filled, activated, unloaded, and connected to the intended PlanET or Straw Harvest loop. |
+| Runtime smoke test | Local FS25 disposable save | Manual, documented in `docs/runtime-smoke-tests.md` | The placeable can be bought, placed, filled, activated, unloaded, and connected to the intended PlanET or Straw Harvest loop. |
 | Load-time comparison | Local FS25 disposable save | Manual with light scripting | A Phobos-enabled test can be compared with a baseline test using the same map/mod stack. |
 | Hitching/UI feel | Local FS25 disposable save | Manual | Whether production UI size, yard use, or repeated interactions feel bad in actual play. |
 | Full game automation | Local self-hosted runner only, if ever | Not implemented | Hosted GitHub runners cannot launch the user's installed FS25, DLCs, mods, maps, or saves. |
@@ -60,13 +60,19 @@ python tools/validate_mod.py --package dist/FS25_BgaExtensions_ci.zip
 Summarize the FS25 log after a disposable-save test:
 
 ```powershell
-python tools/measure_log.py --log "D:\synologydrive\phobosdthorga\cloudstation drive\google drive\gekko-data\Documents\My Games\FarmingSimulator2025\log.txt" --summary-json dist/current-log-summary.json
+powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1
 ```
 
 Fail the command when Phobos-owned warnings or errors are present:
 
 ```powershell
-python tools/measure_log.py --log "D:\synologydrive\phobosdthorga\cloudstation drive\google drive\gekko-data\Documents\My Games\FarmingSimulator2025\log.txt" --fail-on-phobos-warning
+powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -FailOnPhobosWarning
+```
+
+If FS25 stores `log.txt` outside the usual Windows Documents path, pass it explicitly:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -LogPath "D:\path\to\FarmingSimulator2025\log.txt" -FailOnPhobosWarning
 ```
 
 ## Measurement Recipes

@@ -177,6 +177,12 @@ The small, medium, and large intake XML files intentionally duplicate recipe str
 
 Do not abstract or generate those files until balancing has settled and the repeated shape becomes a maintenance problem. Clear, inspectable XML is more useful during proof-of-concept tuning than a clever generator that hides the exact recipes being tested.
 
+## Legacy Placeable XML
+
+`modDesc.xml` is the current shop surface. A placeable XML file may still remain packaged after it is removed from `storeItems` when keeping that path helps early disposable saves load cleanly.
+
+Do not delete legacy placeable XML just to tidy the package. First confirm no published prerelease used the path, or intentionally break compatibility in a documented release.
+
 ## Testing Method
 
 A feature is not considered proven until it passes a new-save smoke test.

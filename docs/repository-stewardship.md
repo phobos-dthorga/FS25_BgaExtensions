@@ -14,6 +14,7 @@
 - Dependabot is configured to watch GitHub Actions versions.
 - Visual asset policy and the first custom fillType HUD icon are documented.
 - Dry fuel yard storage is offered in small, medium, and large PlanET-style variants.
+- Runtime smoke-test and log-triage instructions are documented for disposable-save testing.
 
 ## Still To Decide
 

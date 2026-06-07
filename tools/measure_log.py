@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import sys
 from datetime import datetime
@@ -12,11 +13,69 @@ from pathlib import Path
 
 
 TIMESTAMP_RE = re.compile(r"^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}\.\d{3})")
+FS25_USER_RELATIVE_PATH = Path("My Games") / "FarmingSimulator2025"
 
 
 def parse_timestamp(line: str) -> str | None:
     match = TIMESTAMP_RE.match(line)
     return match.group(1) if match else None
+
+
+def unique_paths(paths: list[Path]) -> list[Path]:
+    result: list[Path] = []
+    seen: set[str] = set()
+    for path in paths:
+        key = str(path.expanduser()).lower()
+        if key in seen:
+            continue
+        seen.add(key)
+        result.append(path.expanduser())
+    return result
+
+
+def candidate_log_paths(game_user_dir: str | None) -> list[Path]:
+    candidates: list[Path] = []
+
+    if game_user_dir:
+        candidates.append(Path(game_user_dir) / "log.txt")
+
+    env_log_path = os.environ.get("FS25_LOG_PATH")
+    if env_log_path:
+        candidates.append(Path(env_log_path))
+
+    env_user_dir = os.environ.get("FS25_USER_DIR")
+    if env_user_dir:
+        candidates.append(Path(env_user_dir) / "log.txt")
+
+    home = Path.home()
+    candidates.append(home / "Documents" / FS25_USER_RELATIVE_PATH / "log.txt")
+
+    user_profile = os.environ.get("USERPROFILE")
+    if user_profile:
+        candidates.append(Path(user_profile) / "Documents" / FS25_USER_RELATIVE_PATH / "log.txt")
+
+    for env_name in ["OneDrive", "OneDriveConsumer", "OneDriveCommercial"]:
+        one_drive = os.environ.get(env_name)
+        if one_drive:
+            candidates.append(Path(one_drive) / "Documents" / FS25_USER_RELATIVE_PATH / "log.txt")
+
+    for start in [Path.cwd(), Path(__file__).resolve()]:
+        current = start if start.is_dir() else start.parent
+        candidates.extend(parent / FS25_USER_RELATIVE_PATH / "log.txt" for parent in [current, *current.parents])
+
+    return unique_paths(candidates)
+
+
+def resolve_log_path(log_arg: str | None, game_user_dir: str | None) -> tuple[Path | None, list[Path]]:
+    if log_arg:
+        return Path(log_arg).expanduser().resolve(), []
+
+    searched = candidate_log_paths(game_user_dir)
+    existing = [path for path in searched if path.is_file()]
+    if not existing:
+        return None, searched
+
+    return max(existing, key=lambda path: path.stat().st_mtime).resolve(), searched
 
 
 def is_phobos_line(line: str, mod_name: str) -> bool:
@@ -74,10 +133,16 @@ def summarize_log(log_path: Path, mod_name: str) -> dict[str, object]:
 def print_human_summary(summary: dict[str, object]) -> None:
     print(f"Log: {summary['log_path']}")
     print(f"Lines: {summary['line_count']}")
+    if summary.get("first_timestamp"):
+        print(f"First timestamp: {summary['first_timestamp']}")
+    if summary.get("last_timestamp"):
+        print(f"Last timestamp: {summary['last_timestamp']}")
     if summary.get("log_span_seconds") is not None:
         print(f"Log span: {summary['log_span_seconds']} seconds")
 
     for label, key in [
+        ("Mod available lines", "mod_available_lines"),
+        ("Mod load lines", "mod_load_lines"),
         ("Phobos errors", "phobos_errors"),
         ("Phobos warnings", "phobos_warnings"),
         ("External errors", "external_errors"),
@@ -94,15 +159,24 @@ def print_human_summary(summary: dict[str, object]) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Summarize FS25 log lines relevant to FS25_BgaExtensions")
-    parser.add_argument("--log", required=True, help="Path to FS25 log.txt")
+    parser.add_argument("--log", help="Path to FS25 log.txt")
+    parser.add_argument(
+        "--game-user-dir",
+        help="Path to the FarmingSimulator2025 user folder containing log.txt",
+    )
     parser.add_argument("--mod-name", default="FS25_BgaExtensions", help="Mod name to search for")
     parser.add_argument("--summary-json", help="Optional path to write JSON summary")
     parser.add_argument("--fail-on-phobos-warning", action="store_true", help="Exit non-zero for Phobos warnings/errors")
     args = parser.parse_args()
 
-    log_path = Path(args.log).resolve()
-    if not log_path.is_file():
-        print(f"Log file not found: {log_path}", file=sys.stderr)
+    log_path, searched = resolve_log_path(args.log, args.game_user_dir)
+    if log_path is None or not log_path.is_file():
+        print("Log file not found.", file=sys.stderr)
+        if searched:
+            print("Checked:", file=sys.stderr)
+            for candidate in searched:
+                print(f"  {candidate}", file=sys.stderr)
+        print("Pass --log or set FS25_LOG_PATH to the FS25 log.txt path.", file=sys.stderr)
         return 2
 
     summary = summarize_log(log_path, args.mod_name)

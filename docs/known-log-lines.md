@@ -25,7 +25,7 @@ Current log checked on 2026-06-07:
 
 ## Pending Test Targets
 
-For `v0.2.5.0`, smoke-test all three dry fuel yard sizes:
+For `v0.2.5.1`, smoke-test all three dry fuel yard sizes:
 
 - buy and place small, medium, and large yards
 - unload `WOODCHIPS`

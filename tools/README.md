@@ -26,4 +26,16 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 
 ## Log Measurement
 
-Run `tools/measure_log.py --log <path-to-log.txt>` after an in-game disposable-save test to separate Phobos-owned warnings/errors from external mod noise.
+Run `tools/measure-log.ps1` after an in-game disposable-save test to separate Phobos-owned warnings/errors from external mod noise. It uses the Python triage script when Python is available, falls back to a small PowerShell summary when it is not, and writes `dist/current-log-summary.json` by default.
+
+If the FS25 log is not in the usual Windows Documents path, pass it explicitly:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -LogPath "D:\path\to\FarmingSimulator2025\log.txt" -FailOnPhobosWarning
+```
+
+The underlying Python script can also be run directly:
+
+```powershell
+python tools/measure_log.py --log "D:\path\to\FarmingSimulator2025\log.txt" --fail-on-phobos-warning
+```
