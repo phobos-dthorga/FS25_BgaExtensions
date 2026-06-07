@@ -9,6 +9,7 @@
 - Dual licensing added to match nearby Phobos Project Zomboid mod repositories.
 - Packaging script and GitHub release helper are present.
 - GitHub pre-releases are used as the historical timeline for shipped versions.
+- Performance targets and decisive-action rules are documented.
 
 ## Still To Decide
 

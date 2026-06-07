@@ -104,6 +104,7 @@ The Phobos release zip should contain only Phobos-owned files. A required depend
 - `docs/integration-strategy.md` defines the companion-module rule.
 - `docs/dependency-contract.md` defines required dependency fillTypes and asset contracts.
 - `docs/guarded-compatibility.md` defines how optional fillTypes are allowed to enter the project.
+- `docs/performance-targets.md` defines performance tripwires and the required action when a target is missed.
 - `docs/known-log-lines.md` records observed log messages and actions.
 - `docs/release-process.md` defines pre-release and hotfix cadence.
 - `docs/fs25-engine-constraints.md` records engine/load-order cautions.
@@ -165,7 +166,8 @@ Use this workflow for each feature:
 7. Package from `mod/` using `tools/package.ps1`.
 8. Test in a fresh save before touching an existing save.
 9. Review the game log and document any hard lessons.
-10. Tune balancing after the loop works end to end.
+10. Check the feature against `docs/performance-targets.md`.
+11. Tune balancing after the loop works end to end.
 
 ## XML Duplication Note
 
@@ -188,6 +190,7 @@ Minimum smoke test:
 - outputs are created in the expected fillTypes
 - outputs can be loaded, distributed, or consumed by the target BGA system
 - the log has no relevant errors or repeated warnings
+- no performance target has a known hard miss
 
 For PlanET modules, also test that generated internal feedstocks can be moved into or consumed by PlanET's own downstream modules.
 

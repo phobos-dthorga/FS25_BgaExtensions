@@ -28,7 +28,7 @@ The first playable implementation is a small PlanET-compatible biomass intake mo
 
 Maize+/MaizePlus integration is parked until a production-ready FS25 release is installed and explicitly selected as a target. Corn Production Pack remains observation-only.
 
-The broader design remains registry-driven for later optional integrations. See `docs/implementation-approach.md`, `docs/integration-strategy.md`, `docs/dependency-contract.md`, `docs/guarded-compatibility.md`, `docs/known-log-lines.md`, `docs/biomass-crop-ranking.md`, `docs/conversion-process.md`, and the draft registry at `mod/config/biomassCropRegistry.xml`.
+The broader design remains registry-driven for later optional integrations. See `docs/implementation-approach.md`, `docs/integration-strategy.md`, `docs/dependency-contract.md`, `docs/guarded-compatibility.md`, `docs/performance-targets.md`, `docs/known-log-lines.md`, `docs/biomass-crop-ranking.md`, `docs/conversion-process.md`, and the draft registry at `mod/config/biomassCropRegistry.xml`.
 
 ## Author
 

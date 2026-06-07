@@ -65,6 +65,7 @@ Add project-specific paths here once available:
 ## Implementation Discipline
 
 - Check the game log after test launches.
+- Check `docs/performance-targets.md` before expanding or releasing a feature; known Phobos-owned hard misses must be fixed, split, or removed.
 - Document any API uncertainty instead of filling gaps with invented calls.
 - Prefer narrow commits with clear messages.
 - Avoid direct pushes to stable branches once a development branch workflow is introduced.

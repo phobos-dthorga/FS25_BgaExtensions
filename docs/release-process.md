@@ -41,6 +41,7 @@ Every release note should include:
 - what changed
 - whether a disposable save is recommended
 - known warnings or log lines
+- performance target status when relevant
 - whether the live mods folder was touched
 
 The normal answer for the live mods folder should be: no, packages are built to `dist/` only.
