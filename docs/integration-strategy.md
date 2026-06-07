@@ -20,7 +20,7 @@ For PlanET-specific features, treat `FS25_PlanET_BGA_Modular` as the BGA framewo
 - keep Phobos recipes and balancing in this repository
 - avoid monkey-patching PlanET's existing placeables unless in-game testing proves a stable, release-safe API exists
 
-The current proof of concept follows this model by adding a Phobos PlanET Biomass Intake module that converts selected vanilla biomass into PlanET internal feedstocks.
+The current proof of concept follows this model by adding Phobos PlanET Biomass Intake and Wet Substrate Prep modules that convert selected vanilla biomass into PlanET internal feedstocks.
 
 ## Straw Harvest / HALLSYS Integration
 
@@ -32,7 +32,7 @@ For straw pellet heat features, treat `pdlc_strawHarvestPack` as the owner of th
 - do not copy Straw Harvest XML, models, textures, icons, scripts, or sounds into this repository
 - keep raw-straw BGA pretreatment weaker than pellet heating, so the heat route remains meaningful
 
-The current proof of concept lets straw become either low-yield PlanET `SILAGE_IN` or `STRAW_PELLETS` for the HALLSYS heat plant.
+The current proof of concept keeps low-yield straw BGA pretreatment in the biomass intakes and moves `STRAW_PELLETS` production to a focused Dry Fuel Processor for the HALLSYS heat plant.
 
 ## Asset And Licensing Boundary
 

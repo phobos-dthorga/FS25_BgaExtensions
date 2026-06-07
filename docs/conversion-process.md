@@ -88,7 +88,7 @@ Preferred behavior:
 
 The first implementation should be deliberately narrow:
 
-1. Add Phobos-owned companion production points: PlanET Biomass Intake and Wet Substrate Prep.
+1. Add Phobos-owned companion production points: PlanET Biomass Intake, Wet Substrate Prep, and Dry Fuel Processor.
 2. Depend on `FS25_PlanET_BGA_Modular` and `pdlc_strawHarvestPack` for the proof of concept.
 3. Convert selected high-confidence vanilla inputs into PlanET internal feedstocks.
 4. Use `SILAGE_IN` for forage-like biomass and `SUGARBEETCUT_IN` for wet/starchy/root biomass.
@@ -112,6 +112,9 @@ Current biomass intake recipes:
 - `GRASS_WINDROW` -> `SILAGE_IN`
 - `DRYGRASS_WINDROW` -> `SILAGE_IN`
 - `STRAW` -> `SILAGE_IN` at poor efficiency
+
+Current Dry Fuel Processor recipes:
+
 - `STRAW` -> `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant
 
 Current Wet Substrate Prep recipes:
@@ -126,6 +129,9 @@ Current Wet Substrate Prep recipes:
 - `PEA` -> `PHB_WET_BIOMASS_MASH`
 - `GREENBEAN` -> `PHB_WET_BIOMASS_MASH`
 - `PHB_WET_BIOMASS_MASH` -> `SUGARBEETCUT_IN`
+
+Current dry fuel yard storage:
+
 - `WOODCHIPS` and `STRAW_PELLETS` -> medium or large dry fuel yard storage for heat-plant logistics
 
 Optional detected inputs for the first expansion:

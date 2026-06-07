@@ -21,7 +21,7 @@ For now:
 - do not copy or edit dependency-owned icons
 - avoid custom 3D decals, textures, or model edits until the gameplay modules settle
 
-The active dry fuel yards intentionally reuse PlanET bunker store icons because they reuse PlanET bunker models through the declared dependency.
+The active PlanET-style process and storage placeables intentionally reuse PlanET bunker store icons because they reuse PlanET bunker models through the declared dependency.
 
 See `docs/model-fit-decisions.md` for retired or hidden placeables whose models do not currently match their gameplay role.
 

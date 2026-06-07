@@ -87,7 +87,7 @@ For dependency mods such as PlanET:
 - reference installed dependency assets from XML only when the dependency is required and the path is tested
 - do not copy dependency assets or source files into this repository without clear license permission
 
-For the current PlanET proof of concept, the dependency resources are the internal fillTypes. The placeable uses Phobos-owned XML and base-game referenced assets.
+For the current PlanET proof of concept, the dependency resources are internal fillTypes plus referenced PlanET bunker models and store icons. The placeable XML remains Phobos-owned and the dependency remains the source of truth for its own assets.
 
 ### Reference Policy
 

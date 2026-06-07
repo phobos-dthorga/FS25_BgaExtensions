@@ -107,10 +107,6 @@
                 <inputs><input fillType="STRAW" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="420"/></outputs>
             </production>
-            <production id="phbSmallStrawToPellets" name="$l10n_production_phbStrawToPellets" cyclesPerHour="5" costsPerActiveHour="6">
-                <inputs><input fillType="STRAW" amount="1000"/></inputs>
-                <outputs><output fillType="STRAW_PELLETS" amount="250"/></outputs>
-            </production>
             <production id="phbSmallManureToPlanetManure" name="$l10n_production_phbManureToPlanetManure" cyclesPerHour="10" costsPerActiveHour="2.5">
                 <inputs><input fillType="MANURE" amount="400"/></inputs>
                 <outputs><output fillType="MANURE_IN" amount="400"/></outputs>
@@ -123,7 +119,7 @@
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
@@ -136,7 +132,6 @@
             <capacity fillType="SILAGE_ADDITIVE" capacity="120"/>
             <capacity fillType="SILAGE_IN" capacity="60000"/>
             <capacity fillType="MANURE_IN" capacity="30000"/>
-            <capacity fillType="STRAW_PELLETS" capacity="20000"/>
 
             <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="SILAGE"/>
         </storage>

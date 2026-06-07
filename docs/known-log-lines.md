@@ -26,11 +26,14 @@ Current log checked on 2026-06-07:
 
 ## Pending Test Targets
 
-For `v0.2.9.0`, smoke-test the new Wet Substrate Prep split, medium and large dry fuel yard sizes, the custom construction tabs, the doubled capacities, and the HUD texture hotfix:
+For `v0.2.10.0`, smoke-test the dry fuel processor split, Wet Substrate Prep, medium and large dry fuel yard sizes, the custom construction tabs, the doubled capacities, and the HUD texture hotfix:
 
 - confirm the small dry fuel yard no longer appears in the shop
 - confirm Wet Substrate Prep appears under `Production > Phobos BGA`
+- confirm Dry Fuel Processor appears under `Production > Phobos Fuel Processing`
 - confirm biomass intakes no longer show wet/root/produce recipes
+- confirm biomass intakes no longer show straw pelletizing
+- confirm Dry Fuel Processor accepts `STRAW` and produces `STRAW_PELLETS`
 - confirm Wet Substrate Prep accepts wet/root/produce crops and produces `PHB_WET_BIOMASS_MASH`
 - confirm Wet Substrate Prep conditions `PHB_WET_BIOMASS_MASH` into `SUGARBEETCUT_IN`
 - buy and place medium and large yards

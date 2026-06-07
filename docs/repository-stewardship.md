@@ -22,6 +22,7 @@
 - Intake and dry fuel yard storage capacities were doubled as a logistics-quality pass without changing recipe yields.
 - Runtime HUD textures use DDS with mipmaps after `v0.2.6.0` exposed raw PNG performance warnings.
 - Wet/root/produce processing is split into Wet Substrate Prep so biomass intakes remain focused and under the recipe-count soft target.
+- Straw pelletizing is split into Dry Fuel Processor so biomass intakes remain BGA-focused and dry fuel yards remain storage-only.
 
 ## Still To Decide
 

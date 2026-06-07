@@ -16,7 +16,8 @@ That is enough for the current Phobos need. The Corn Production Pack archive als
 
 | Vanilla category | Phobos tab | Purpose |
 | --- | --- | --- |
-| `production` | `phobosBgaProduction` | Biomass intake and future BGA/feedstock process buildings. |
+| `production` | `phobosBgaProduction` | Biomass intake and BGA feedstock process buildings. |
+| `production` | `phobosFuelProcessing` | Dry fuel processing buildings such as straw pelletizing. |
 | `buildings` | `phobosFuelStorage` | Dry fuel yards and future fuel-storage buildings. |
 
 ## Rules
@@ -26,4 +27,3 @@ That is enough for the current Phobos need. The Corn Production Pack archive als
 - Give each Phobos process family a readable tab before adding many more placeables.
 - Keep tab names stable after release so existing saves and player habits are not disturbed.
 - Do not copy third-party menu scripts when FS25 XML can express the category layout.
-

@@ -12,7 +12,7 @@ Each building family should own one clear process type. This keeps the in-game p
 
 | Carrier | Role | Current posture |
 | --- | --- | --- |
-| `STRAW_PELLETS` | Dry combustion fuel | Active. Produced by Phobos biomass intakes and stored in dry fuel yards. Intended for Straw Harvest HALLSYS heat logistics. |
+| `STRAW_PELLETS` | Dry combustion fuel | Active. Produced by Dry Fuel Processor and stored in dry fuel yards. Intended for Straw Harvest HALLSYS heat logistics. |
 | `WOODCHIPS` | Dry combustion fuel | Active as storage/logistics only. Keep out of BGA digestion by default. |
 | `STRAW` | Raw dry residue | Active. Can become low-grade PlanET substrate or `STRAW_PELLETS`. Better as fuel feedstock than premium BGA material. |
 | `METHANE` | BGA energy product | Observe and integrate carefully. Base-game/PlanET BGAs commonly sell it directly. Do not feed it back into biomass prep. |
@@ -61,7 +61,7 @@ Current materials:
 
 This should remain storage/logistics first. If fuel conversion expands, use a separate fuel plant rather than turning the yard into another production wall.
 
-### Pellet And Dry Fuel Plant
+### Dry Fuel Processor
 
 Purpose: convert dry residues into combustion fuel.
 
@@ -97,7 +97,7 @@ Use this split when adding new features:
 | making BGA feedstock from crops | Biomass Intake |
 | making wet substrate from roots/waste | Wet Substrate Prep |
 | holding wood chips or pellets | Dry Fuel Yard |
-| making pellets or dry combustion fuel | Pellet And Dry Fuel Plant |
+| making pellets or dry combustion fuel | Dry Fuel Processor |
 | producing methane, electricity, or digestate | BGA Digestion And Energy Export |
 | selling or buffering energy products | Energy Export module |
 
@@ -129,8 +129,11 @@ This rule matters more than strict realism. A realistic process that makes the p
 
 Do not add methane/electricity handling yet.
 
-The next reasonable gameplay addition is a focused dry fuel plant, not an energy-output loop. Once the current dry fuel yards and wet substrate prep are tested, the safest expansion is:
+The focused dry fuel processor now exists. The next reasonable gameplay addition is guarded by-product compatibility, not an energy-output loop.
+
+Near-term order:
 
 1. Keep dry fuel yard storage as-is.
-2. Move or mirror straw pelletizing into a dedicated dry fuel plant if intake UI becomes crowded.
-3. Add future methane/electricity export only as a separate module after proving the fillTypes can be handled without warnings.
+2. Keep straw pelletizing in Dry Fuel Processor, not in BGA intakes.
+3. Add optional `ORGANICWASTE` or `COMPOST` routes only when detected safely.
+4. Add future methane/electricity export only as a separate module after proving the fillTypes can be handled without warnings.

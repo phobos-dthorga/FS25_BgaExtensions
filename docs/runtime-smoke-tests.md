@@ -19,6 +19,7 @@ The goal is to prove that the current Phobos placeables can be bought, placed, f
   - Phobos PlanET Biomass Intake - Medium
   - Phobos PlanET Biomass Intake - Large
   - Phobos PlanET Wet Substrate Prep
+  - Phobos PlanET Dry Fuel Processor
   - Phobos PlanET Dry Fuel Yard - Medium
   - Phobos PlanET Dry Fuel Yard - Large
 - The small dry fuel yard does not appear in the shop.
@@ -37,9 +38,8 @@ For `v0.2.7.0` and later, confirm the intake capacity values are visibly larger 
 | Prepared silage | Unload `SILAGE`, start prepared silage intake. | `SILAGE_IN` is produced. |
 | Grass and hay | Unload `GRASS_WINDROW` and `DRYGRASS_WINDROW`. | Both accepted by the intake and produce `SILAGE_IN`. |
 | Straw pretreatment | Unload `STRAW`, start straw pretreatment. | Low-yield `SILAGE_IN` route works. |
-| Straw pelletizing | Unload `STRAW`, start straw pelletizing. | `STRAW_PELLETS` are produced and can be loaded out. |
 | Manure | Unload `MANURE`, start manure intake. | `MANURE_IN` is produced. |
-The biomass intakes no longer accept wet/root/produce crops directly. Those routes belong to Wet Substrate Prep.
+The biomass intakes no longer accept wet/root/produce crops directly, and they no longer produce straw pellets. Those routes belong to Wet Substrate Prep and Dry Fuel Processor.
 
 ## Wet Substrate Prep Checks
 
@@ -49,6 +49,12 @@ The biomass intakes no longer accept wet/root/produce crops directly. Those rout
 | Produce mash | Unload one produce crop such as `SPINACH`, `PEA`, or `GREENBEAN`. | `PHB_WET_BIOMASS_MASH` is produced. |
 | Beet cut mash | Unload `SUGARBEET_CUT`. | `PHB_WET_BIOMASS_MASH` is produced. |
 | Wet mash conditioning | Start wet mash conditioning. | `SUGARBEETCUT_IN` is produced and can be loaded out. |
+
+## Dry Fuel Processor Checks
+
+| Route | Minimum check | Expected result |
+| --- | --- | --- |
+| Straw pelletizing | Unload `STRAW`, start straw pelletizing. | `STRAW_PELLETS` are produced and can be loaded out. |
 
 ## Dry Fuel Yard Checks
 
