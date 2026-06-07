@@ -28,6 +28,8 @@ The current PlanET-compatible intake modules produce or handle these materials:
 
 The mod does not yet produce a farm-wide residue such as `COMPOST` or `DIGESTATE` directly. That is probably correct for now: PlanET should own BGA digestion outputs, while Phobos owns preparation and routing.
 
+`METHANE` and `ELECTRICCHARGE` are BGA energy products, not general-purpose Phobos fuel inputs. Keep them in the BGA/export layer unless a future dedicated energy module proves they can be stored or routed cleanly.
+
 ## Confirmed Local Compatibility Materials
 
 These fillTypes or process outputs were found in the current local stack and are relevant to future by-product design.
@@ -113,6 +115,7 @@ Until a future explicit decision changes this:
 3. Add `POTATO_WASHED` as a wet substrate input.
 4. Add Rice Packaging residue support for `RICE_HUSK`.
 5. Expand the dry fuel yard beyond storage only after a post-release log check proves the silo path is clean.
+6. Consider a dedicated dry fuel plant only if pellet/fuel recipes make the biomass intake UI too crowded.
 
 ## Design Rule Going Forward
 

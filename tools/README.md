@@ -28,6 +28,8 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 
 Run `tools/measure-log.ps1` after an in-game disposable-save test to separate Phobos-owned warnings/errors from external mod noise. It uses the Python triage script when Python is available, falls back to a small PowerShell summary when it is not, and writes `dist/current-log-summary.json` by default.
 
+The wrapper checks `PHOBOS_PYTHON_PATH`, common per-user Python install paths, every discovered `python`, and then every discovered `py`. This avoids the Microsoft Store Python alias when a real Python install is also present.
+
 If the FS25 log is not in the usual Windows Documents path, pass it explicitly:
 
 ```powershell

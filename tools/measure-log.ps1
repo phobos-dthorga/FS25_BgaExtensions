@@ -240,14 +240,74 @@ function Test-CommandRuns {
     }
 }
 
+function Get-PythonCandidates {
+    $candidates = @()
+
+    if (-not [string]::IsNullOrWhiteSpace($env:PHOBOS_PYTHON_PATH)) {
+        $candidates += [ordered]@{
+            Command = $env:PHOBOS_PYTHON_PATH
+            PrefixArgs = @()
+            VersionArgs = @("--version")
+        }
+    }
+
+    $pathCandidates = @(
+        Join-Path $env:LOCALAPPDATA "Python\bin\python.exe"
+        Join-Path $env:LOCALAPPDATA "Programs\Python\Python314\python.exe"
+        Join-Path $env:LOCALAPPDATA "Programs\Python\Python313\python.exe"
+        Join-Path $env:LOCALAPPDATA "Programs\Python\Python312\python.exe"
+        Join-Path $env:LOCALAPPDATA "Programs\Python\Python311\python.exe"
+    )
+
+    foreach ($path in $pathCandidates) {
+        if (Test-Path -LiteralPath $path -PathType Leaf) {
+            $candidates += [ordered]@{
+                Command = $path
+                PrefixArgs = @()
+                VersionArgs = @("--version")
+            }
+        }
+    }
+
+    foreach ($commandInfo in @(Get-Command python -All -ErrorAction SilentlyContinue)) {
+        $candidates += [ordered]@{
+            Command = $commandInfo.Source
+            PrefixArgs = @()
+            VersionArgs = @("--version")
+        }
+    }
+
+    foreach ($commandInfo in @(Get-Command py -All -ErrorAction SilentlyContinue)) {
+        $candidates += [ordered]@{
+            Command = $commandInfo.Source
+            PrefixArgs = @("-3")
+            VersionArgs = @("-3", "--version")
+        }
+    }
+
+    $seen = @{}
+    $result = @()
+    foreach ($candidate in $candidates) {
+        $key = "$($candidate.Command)|$($candidate.PrefixArgs -join ' ')".ToLowerInvariant()
+        if ($seen.ContainsKey($key)) {
+            continue
+        }
+        $seen[$key] = $true
+        $result += $candidate
+    }
+
+    return $result
+}
+
 $pythonCommand = $null
 $pythonPrefixArgs = @()
 
-if (Test-CommandRuns -Command "python" -Arguments @("--version")) {
-    $pythonCommand = "python"
-} elseif (Test-CommandRuns -Command "py" -Arguments @("-3", "--version")) {
-    $pythonCommand = "py"
-    $pythonPrefixArgs = @("-3")
+foreach ($candidate in Get-PythonCandidates) {
+    if (Test-CommandRuns -Command $candidate.Command -Arguments $candidate.VersionArgs) {
+        $pythonCommand = $candidate.Command
+        $pythonPrefixArgs = $candidate.PrefixArgs
+        break
+    }
 }
 
 $measureArgs = @()

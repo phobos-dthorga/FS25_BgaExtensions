@@ -106,6 +106,7 @@ The Phobos release zip should contain only Phobos-owned files. A required depend
 - `docs/guarded-compatibility.md` defines how optional fillTypes are allowed to enter the project.
 - `docs/performance-targets.md` defines performance tripwires and the required action when a target is missed.
 - `docs/measurement-and-automation.md` defines how the performance targets are measured and what CI can automate.
+- `docs/energy-carrier-strategy.md` defines which building family owns combustion fuels, BGA energy products, and digestate.
 - `docs/visual-assets.md` defines the custom visual asset policy.
 - `docs/known-log-lines.md` records observed log messages and actions.
 - `docs/release-process.md` defines pre-release and hotfix cadence.
@@ -163,13 +164,14 @@ Use this workflow for each feature:
 2. Identify whether the feature is standalone, vanilla-compatible, or dependency-specific.
 3. Confirm every required fillType exists and verify its actual role using the first-use checklist above.
 4. Prefer a Phobos-owned companion placeable over patching an existing one.
-5. Keep recipes small and readable.
-6. Validate XML against local FS25 schemas.
-7. Package from `mod/` using `tools/package.ps1`.
-8. Test in a fresh save before touching an existing save.
-9. Review the game log and document any hard lessons.
-10. Check the feature against `docs/performance-targets.md`.
-11. Tune balancing after the loop works end to end.
+5. Choose the correct process building family from `docs/energy-carrier-strategy.md`.
+6. Keep recipes small and readable.
+7. Validate XML against local FS25 schemas.
+8. Package from `mod/` using `tools/package.ps1`.
+9. Test in a fresh save before touching an existing save.
+10. Review the game log and document any hard lessons.
+11. Check the feature against `docs/performance-targets.md`.
+12. Tune balancing after the loop works end to end.
 
 ## XML Duplication Note
 

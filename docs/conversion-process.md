@@ -14,6 +14,8 @@ The wet crop lane now uses one Phobos-owned intermediary, `PHB_WET_BIOMASS_MASH`
 
 See `docs/integration-strategy.md` for the companion-module rule that governs PlanET and future third-party integrations.
 
+See `docs/energy-carrier-strategy.md` for the rule that separates biomass preparation, combustion fuel logistics, BGA digestion, and energy export into different building families.
+
 ## Conversion Lanes
 
 ### Lane 1: Vanilla-Compatible Silage
@@ -142,6 +144,12 @@ Generated waste should be conservative:
 - use detected mod fillTypes such as `COMPOST`, `COMPOST_RAW`, `ORGANICWASTE`, or `RICE_HUSK` only when they already exist
 - keep Maize+/MaizePlus and Corn Production Pack residue work out of active development until a future explicit decision
 - avoid adding new one-off waste fillTypes until a real gameplay loop needs them
+
+Energy products should also be conservative:
+
+- let PlanET own `METHANE`, `ELECTRICCHARGE`, and `DIGESTATE` output for now
+- do not feed `METHANE` or `ELECTRICCHARGE` back into biomass intake recipes
+- add any future methane/electricity handling as a separate energy export module, not as more intake recipes
 
 ## Why Not Patch Vanilla BGAs First?
 
