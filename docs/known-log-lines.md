@@ -21,7 +21,18 @@ Current log checked on 2026-06-07:
 | Log line | Status | Action |
 | --- | --- | --- |
 | `Input filltype 'PHB_WET_BIOMASS_MASH' is not supported by unloading station` | Phobos warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by allowing `PHB_WET_BIOMASS_MASH` on the intake unload triggers. |
-| `storage fillType 'WOODCHIPS' not used as a production input or ouput` | Phobos warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by removing storage-only wood chip handling from production-point XML. `v0.2.4.0` adds the dry fuel yard silo for wood chip and straw pellet storage. |
+| `storage fillType 'WOODCHIPS' not used as a production input or output` | Phobos warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by removing storage-only wood chip handling from production-point XML. `v0.2.5.0` provides small, medium, and large dry fuel yard silos for wood chip and straw pellet storage. |
+
+## Pending Test Targets
+
+For `v0.2.5.0`, smoke-test all three dry fuel yard sizes:
+
+- buy and place small, medium, and large yards
+- unload `WOODCHIPS`
+- unload `STRAW_PELLETS`
+- load both materials back out
+- confirm the visible fill plane behaves acceptably
+- check the log for Phobos-owned warnings or errors
 
 ## User Test Confirmation
 

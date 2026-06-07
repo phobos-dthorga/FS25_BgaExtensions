@@ -17,6 +17,7 @@ from xml.etree import ElementTree as ET
 
 VERSION_RE = re.compile(r"^\d+\.\d+\.\d+\.\d+$")
 L10N_RE = re.compile(r"\$l10n_([A-Za-z0-9_]+)")
+SELF_MOD_REF_RE = re.compile(r"\$moddir\$FS25_BgaExtensions/([^\"'\s<>]+)")
 
 VANILLA_FILLTYPES = {
     "BEETROOT",
@@ -196,6 +197,16 @@ def collect_l10n_refs(tree: ET.ElementTree) -> set[str]:
     return refs
 
 
+def validate_self_mod_refs(path: Path, mod_root: Path, repo_root: Path, validation: Validation) -> None:
+    text = path.read_text(encoding="utf-8")
+    for match in SELF_MOD_REF_RE.finditer(text):
+        referenced = match.group(1)
+        if not (mod_root / referenced).is_file():
+            validation.error(
+                f"Missing Phobos-owned asset reference '{referenced}' in {path.relative_to(repo_root)}"
+            )
+
+
 def production_filltypes(tree: ET.ElementTree) -> set[str]:
     refs: set[str] = set()
     productions = tree.find(".//productions")
@@ -254,6 +265,8 @@ def validate_source(repo_root: Path, validation: Validation) -> None:
         tree = parse_xml_file(path, validation)
         if tree is None:
             continue
+
+        validate_self_mod_refs(path, mod_root, repo_root, validation)
 
         missing_l10n = sorted(collect_l10n_refs(tree) - l10n_keys - GLOBAL_L10N_KEYS)
         for key in missing_l10n:

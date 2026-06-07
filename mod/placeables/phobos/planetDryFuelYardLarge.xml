@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <placeable type="silo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
     <storeData>
-        <name>$l10n_storeItem_phobosPlanetDryFuelYardSmall</name>
+        <name>$l10n_storeItem_phobosPlanetDryFuelYardLarge</name>
         <functions>
             <function>$l10n_function_phobosPlanetDryFuelYard</function>
         </functions>
-        <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerKlein.dds</image>
-        <price>38000</price>
-        <dailyUpkeep>12</dailyUpkeep>
+        <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerGross.dds</image>
+        <price>92000</price>
+        <dailyUpkeep>28</dailyUpkeep>
         <lifetime>1000</lifetime>
         <rotation>0</rotation>
         <brand>PLANET</brand>
@@ -21,7 +21,7 @@
     </storeData>
 
     <base>
-        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Bunker_Klein.i3d</filename>
+        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Bunker_Gross.i3d</filename>
         <canBeRenamed>true</canBeRenamed>
         <boughtWithFarmland>true</boughtWithFarmland>
     </base>
@@ -72,7 +72,7 @@
 
     <silo>
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="WOODCHIPS STRAW_PELLETS" fillLitersPerSecond="2000" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="WOODCHIPS STRAW_PELLETS" fillLitersPerSecond="3000" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <unloadingStation supportsExtension="false">
@@ -81,7 +81,7 @@
         </unloadingStation>
 
         <storages>
-            <storage node="hotspotMarker" fillTypes="WOODCHIPS STRAW_PELLETS" capacity="80000" isExtension="false">
+            <storage node="hotspotMarker" fillTypes="WOODCHIPS STRAW_PELLETS" capacity="300000" isExtension="false">
                 <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="WOODCHIPS"/>
             </storage>
         </storages>

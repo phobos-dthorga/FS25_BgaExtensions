@@ -6,7 +6,7 @@ This document explains how `FS25_BgaExtensions` performance and health measureme
 
 | Layer | Where it runs | Current status | What it can prove |
 | --- | --- | --- | --- |
-| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, core fillTypes are known, optional fillTypes are not in core XML, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target. |
+| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, Phobos-owned asset references resolve, core fillTypes are known, optional fillTypes are not in core XML, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target. |
 | Package validation | GitHub Actions and local tools | Implemented | The zip has FS25's expected root layout, avoids repository-only folders, and stays under the XML-only package size target. |
 | Log triage | Local machine after an FS25 test | Implemented | Phobos-owned warnings/errors are separated from external mod noise. |
 | Runtime smoke test | Local FS25 disposable save | Manual, documented | The placeable can be bought, placed, filled, activated, unloaded, and connected to the intended PlanET or Straw Harvest loop. |

@@ -20,6 +20,8 @@ For now:
 - do not copy or edit dependency-owned icons
 - avoid custom 3D decals, textures, or model edits until the gameplay modules settle
 
+The dry fuel yards intentionally reuse PlanET bunker store icons because they reuse PlanET bunker models through the declared dependency.
+
 ## Asset Licensing
 
 Phobos-owned visual assets are covered by the repository asset license, CC BY-NC-SA 4.0, unless a file states otherwise.

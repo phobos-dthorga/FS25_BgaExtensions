@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>phobosgekko</author>
-    <version>0.2.4.0</version>
+    <version>0.2.5.0</version>
     <title>
         <en>FS25 BGA Extensions</en>
     </title>
@@ -23,8 +23,14 @@
         <text name="storeItem_phobosPlanetBiomassIntakeLarge">
             <en>Phobos PlanET Biomass Intake - Large</en>
         </text>
-        <text name="storeItem_phobosPlanetDryFuelYard">
-            <en>Phobos PlanET Dry Fuel Yard</en>
+        <text name="storeItem_phobosPlanetDryFuelYardSmall">
+            <en>Phobos PlanET Dry Fuel Yard - Small</en>
+        </text>
+        <text name="storeItem_phobosPlanetDryFuelYardMedium">
+            <en>Phobos PlanET Dry Fuel Yard - Medium</en>
+        </text>
+        <text name="storeItem_phobosPlanetDryFuelYardLarge">
+            <en>Phobos PlanET Dry Fuel Yard - Large</en>
         </text>
         <text name="function_phobosPlanetBiomassIntake">
             <en>Converts additional biomass into PlanET BGA feedstock or straw pellet fuel.</en>
@@ -114,5 +120,7 @@
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeMedium.xml"/>
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeLarge.xml"/>
         <storeItem xmlFilename="placeables/phobos/planetDryFuelYard.xml"/>
+        <storeItem xmlFilename="placeables/phobos/planetDryFuelYardMedium.xml"/>
+        <storeItem xmlFilename="placeables/phobos/planetDryFuelYardLarge.xml"/>
     </storeItems>
 </modDesc>
