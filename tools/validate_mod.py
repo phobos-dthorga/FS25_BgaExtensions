@@ -36,6 +36,7 @@ VANILLA_FILLTYPES = {
     "STRAW",
     "SUGARCANE",
     "SUGARBEET_CUT",
+    "WOODCHIPS",
 }
 
 DEPENDENCY_FILLTYPES = {
@@ -131,6 +132,22 @@ def local_filltypes(mod_root: Path, validation: Validation) -> set[str]:
     return result
 
 
+def validate_moddesc_references(mod_root: Path, root: ET.Element, validation: Validation) -> None:
+    icon_filename = (root.findtext("iconFilename") or "").strip()
+    if icon_filename and not (mod_root / icon_filename).is_file():
+        validation.error(f"modDesc.xml references missing iconFilename: {icon_filename}")
+
+    for node in root.findall("./fillTypes"):
+        filename = node.get("filename", "").strip()
+        if filename and not (mod_root / filename).is_file():
+            validation.error(f"modDesc.xml references missing fillTypes file: {filename}")
+
+    for node in root.findall("./storeItems/storeItem"):
+        filename = node.get("xmlFilename", "").strip()
+        if filename and not (mod_root / filename).is_file():
+            validation.error(f"modDesc.xml references missing storeItem file: {filename}")
+
+
 def moddesc_data(mod_root: Path, validation: Validation) -> tuple[set[str], set[str]]:
     moddesc_path = mod_root / "modDesc.xml"
     tree = parse_xml_file(moddesc_path, validation)
@@ -141,6 +158,8 @@ def moddesc_data(mod_root: Path, validation: Validation) -> tuple[set[str], set[
     version = (root.findtext("version") or "").strip()
     if not VERSION_RE.match(version):
         validation.error(f"modDesc.xml version must be X.Y.Z.W, found '{version}'")
+
+    validate_moddesc_references(mod_root, root, validation)
 
     dependencies = {
         (node.text or "").strip()
@@ -256,11 +275,12 @@ def validate_source(repo_root: Path, validation: Validation) -> None:
                 f"Optional fillType '{fill_type}' appears in core placeable XML: {path.relative_to(repo_root)}"
             )
 
-        storage_only = sorted(storage_filltypes(tree) - production_filltypes(tree))
-        for fill_type in storage_only:
-            validation.error(
-                f"Storage-only fillType '{fill_type}' in production point {path.relative_to(repo_root)}"
-            )
+        if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
+            storage_only = sorted(storage_filltypes(tree) - production_filltypes(tree))
+            for fill_type in storage_only:
+                validation.error(
+                    f"Storage-only fillType '{fill_type}' in production point {path.relative_to(repo_root)}"
+                )
 
         recipe_count = count_production_recipes(tree)
         if recipe_count > 24:

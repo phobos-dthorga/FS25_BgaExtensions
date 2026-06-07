@@ -12,6 +12,7 @@
 - Performance targets and decisive-action rules are documented.
 - GitHub CI validates source, builds a package artifact, and validates the package.
 - Dependabot is configured to watch GitHub Actions versions.
+- Visual asset policy and the first custom fillType HUD icon are documented.
 
 ## Still To Decide
 

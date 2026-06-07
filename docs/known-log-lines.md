@@ -21,7 +21,13 @@ Current log checked on 2026-06-07:
 | Log line | Status | Action |
 | --- | --- | --- |
 | `Input filltype 'PHB_WET_BIOMASS_MASH' is not supported by unloading station` | Phobos warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by allowing `PHB_WET_BIOMASS_MASH` on the intake unload triggers. |
-| `storage fillType 'WOODCHIPS' not used as a production input or ouput` | Phobos warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by removing storage-only wood chip handling from production-point XML. Wood chips are deferred to a future dedicated combustion storage/module. |
+| `storage fillType 'WOODCHIPS' not used as a production input or ouput` | Phobos warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by removing storage-only wood chip handling from production-point XML. `v0.2.4.0` adds the dry fuel yard silo for wood chip and straw pellet storage. |
+
+## User Test Confirmation
+
+On 2026-06-07, the user reported that the current tested package works correctly: inputs appear correct visually within the bunkers, processes work as expected, and the checked game log appeared clean.
+
+Treat this as successful proof-of-concept confirmation for the PlanET biomass intake path. Continue using disposable saves for new feature slices.
 
 ## External Or Unattributed Lines
 

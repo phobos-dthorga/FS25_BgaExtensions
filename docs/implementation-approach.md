@@ -48,7 +48,7 @@ Current method:
 - declare `pdlc_strawHarvestPack` when a feature uses Straw Harvest pellet fillTypes or HALLSYS heat-plant routing
 - use its registered internal fillTypes as the contract, especially `SILAGE_IN` and `SUGARBEETCUT_IN`
 - use Straw Harvest `STRAW_PELLETS` as the dry fuel handoff when bridging straw residues to the HALLSYS Pellet Heat Plant
-- keep vanilla `WOODCHIPS` out of the production-point intake until a dedicated combustion storage/module exists
+- keep vanilla `WOODCHIPS` out of the production-point intake; handle it through the dedicated dry fuel yard silo
 - add Phobos-owned modules that convert expanded biomass inputs into those internal fillTypes
 - let PlanET's own fermenters, generators, storages, and distributors continue doing their normal work
 - let the HALLSYS Pellet Heat Plant remain the destination for pellet fuel
@@ -106,6 +106,7 @@ The Phobos release zip should contain only Phobos-owned files. A required depend
 - `docs/guarded-compatibility.md` defines how optional fillTypes are allowed to enter the project.
 - `docs/performance-targets.md` defines performance tripwires and the required action when a target is missed.
 - `docs/measurement-and-automation.md` defines how the performance targets are measured and what CI can automate.
+- `docs/visual-assets.md` defines the custom visual asset policy.
 - `docs/known-log-lines.md` records observed log messages and actions.
 - `docs/release-process.md` defines pre-release and hotfix cadence.
 - `docs/fs25-engine-constraints.md` records engine/load-order cautions.
@@ -152,7 +153,7 @@ If a fillType is safe only in a narrow context, document that boundary. For exam
 
 Do not add storage-only materials to production-point storage merely to make a yard buffer. FS25 warns when a production point stores a fillType that is not used as a production input or output.
 
-The `v0.2.3.0` wood chip experiment proved this. Keep `WOODCHIPS` as a future combustion candidate, but implement it through a proper storage/silo/combustion module rather than as passive storage inside the PlanET biomass intake.
+The `v0.2.3.0` wood chip experiment proved this. `WOODCHIPS` now belongs in the dry fuel yard silo, not inside the PlanET biomass intake production point.
 
 ## Implementation Workflow
 

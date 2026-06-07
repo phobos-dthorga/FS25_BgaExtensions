@@ -7,7 +7,7 @@ This document records what `FS25_BgaExtensions` expects from required dependenci
 | Dependency | Why it is required | Contract used by Phobos | Verification source |
 | --- | --- | --- | --- |
 | `FS25_PlanET_BGA_Modular` | PlanET-specific intake modules use PlanET internal feedstocks and PlanET bunker assets. | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, plus referenced PlanET bunker models and store icons. | Local mod XML and game log on 2026-06-07: loaded as version `1.0.0.1`, with 9 fillTypes loaded. |
-| `pdlc_strawHarvestPack` | Straw pellet output targets the HALLSYS Pellet Heat Plant ecosystem. | `STRAW_PELLETS` and installed pDLC runtime support for straw pellet handling. | Game log on 2026-06-07: available pDLC version `1.1.0.0`, with 3 fillTypes loaded. |
+| `pdlc_strawHarvestPack` | Straw pellet output and dry fuel storage target the HALLSYS Pellet Heat Plant ecosystem. | `STRAW_PELLETS` and installed pDLC runtime support for straw pellet handling. | Game log on 2026-06-07: available pDLC version `1.1.0.0`, with 3 fillTypes loaded. |
 
 ## Phobos-Owned Contract
 

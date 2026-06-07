@@ -24,6 +24,7 @@ The current PlanET-compatible intake modules produce or handle these materials:
 | `PHB_WET_BIOMASS_MASH` | Beet cut, sugarcane, roots, spinach, peas, green beans | Phobos staging material, then conditioned into `SUGARBEETCUT_IN` | Good internal Phobos intermediary. Keep it internal until a real storage/logistics use appears. |
 | `SUGARBEETCUT_IN` | Wet mash conditioning | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
 | `STRAW_PELLETS` | Straw pelletizing | Straw Harvest HALLSYS Pellet Heat Plant and pellet-compatible systems | Strong cross-mod by-product/fuel route. Keep this meaningful. |
+| `WOODCHIPS` | Player-delivered vanilla material | Dry fuel yard storage for combustion logistics | Stored outside the BGA intake so it does not trigger production-point storage warnings. |
 
 The mod does not yet produce a farm-wide residue such as `COMPOST` or `DIGESTATE` directly. That is probably correct for now: PlanET should own BGA digestion outputs, while Phobos owns preparation and routing.
 
@@ -64,7 +65,7 @@ Recommended routes:
 
 3. Dry fuel route
 
-`STRAW_PELLETS` and `WOODCHIPS` form a credible combustion family. Straw pellets are already implemented. Wood chips should wait for a dedicated combustion storage/module because passive storage inside a production point produced a game-log warning in `v0.2.3.0`.
+`STRAW_PELLETS` and `WOODCHIPS` form a credible combustion family. Straw pellets are produced by the intake modules, and the dry fuel yard stores both fuel materials without putting wood chips inside the BGA intake production point.
 
 Recommended posture: combustion first, BGA only as low-value emergency substrate.
 
@@ -111,7 +112,7 @@ Until a future explicit decision changes this:
 2. Add optional `COMPOST` intake/output routes if the loaded map/mod stack defines `COMPOST`.
 3. Add `POTATO_WASHED` as a wet substrate input.
 4. Add Rice Packaging residue support for `RICE_HUSK`.
-5. Consider a dedicated dry combustion companion module for `WOODCHIPS` and `STRAW_PELLETS`.
+5. Expand the dry fuel yard only after a post-release log check proves the silo path is clean.
 
 ## Design Rule Going Forward
 

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>phobosgekko</author>
-    <version>0.2.3.1</version>
+    <version>0.2.4.0</version>
     <title>
         <en>FS25 BGA Extensions</en>
     </title>
     <description>
-        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. Adds modular PlanET-compatible biomass intakes with straw pellet routing for heat-plant logistics.</en>
+        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. Adds modular PlanET-compatible biomass intakes, straw pellet routing, and dry fuel yard storage for heat-plant logistics.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
 
@@ -23,11 +23,17 @@
         <text name="storeItem_phobosPlanetBiomassIntakeLarge">
             <en>Phobos PlanET Biomass Intake - Large</en>
         </text>
+        <text name="storeItem_phobosPlanetDryFuelYard">
+            <en>Phobos PlanET Dry Fuel Yard</en>
+        </text>
         <text name="function_phobosPlanetBiomassIntake">
             <en>Converts additional biomass into PlanET BGA feedstock or straw pellet fuel.</en>
         </text>
         <text name="function_phobosPlanetSolidBiomassIntake">
             <en>Converts staged biomass into PlanET feedstock or straw pellets.</en>
+        </text>
+        <text name="function_phobosPlanetDryFuelYard">
+            <en>Stores wood chips and straw pellets for combustion heat logistics.</en>
         </text>
         <text name="fillType_phbWetBiomassMash">
             <en>Wet biomass mash</en>
@@ -107,5 +113,6 @@
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeSmall.xml"/>
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeMedium.xml"/>
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeLarge.xml"/>
+        <storeItem xmlFilename="placeables/phobos/planetDryFuelYard.xml"/>
     </storeItems>
 </modDesc>

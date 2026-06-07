@@ -4,7 +4,7 @@
         <fillType name="PHB_WET_BIOMASS_MASH" title="$l10n_fillType_phbWetBiomassMash" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
             <physics massPerLiter="0.00" maxPhysicalSurfaceAngle="0"/>
             <economy pricePerLiter="0.001"/>
-            <image hud="$dataS/menu/hud/fillTypes/hud_fill_sugarBeetCut.png"/>
+            <image hud="$moddir$FS25_BgaExtensions/hud/fillTypes/hud_fill_phbWetBiomassMash.png"/>
         </fillType>
     </fillTypes>
 

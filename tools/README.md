@@ -15,6 +15,7 @@ GitHub CI uses `tools/package_mod.py` for the same zip layout on hosted Linux ru
 Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do not require FS25:
 
 - XML parse checks
+- `modDesc.xml` referenced file checks
 - active fillType reference checks
 - optional fillType guard checks
 - storage-only production-point guard checks
