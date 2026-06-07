@@ -27,6 +27,8 @@ The goal is to prove that the current Phobos placeables can be bought, placed, f
 
 Test at least one intake size first. If it passes, repeat placement and a smaller sample on the other two sizes.
 
+For `v0.2.7.0` and later, confirm the intake capacity values are visibly larger than the earlier prerelease values. This is a storage/logistics change only; recipe speed and yield should remain unchanged.
+
 | Route | Minimum check | Expected result |
 | --- | --- | --- |
 | Chaff substrate | Unload `CHAFF`, start chaff substrate. | `SILAGE_IN` is produced and can be loaded out. |
@@ -47,6 +49,7 @@ Run these on small, medium, and large yards:
 - Load `WOODCHIPS` back out.
 - Unload `STRAW_PELLETS`.
 - Load `STRAW_PELLETS` back out.
+- Confirm capacities are small 160,000 l, medium 320,000 l, and large 600,000 l.
 - Confirm the visible fill plane looks acceptable for both materials.
 - Confirm the yards do not create production-point storage warnings.
 

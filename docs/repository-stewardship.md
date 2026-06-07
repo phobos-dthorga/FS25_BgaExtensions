@@ -17,6 +17,7 @@
 - Runtime smoke-test and log-triage instructions are documented for disposable-save testing.
 - Energy carriers are split by building family before adding methane, electricity, or extra combustion routes.
 - Phobos placeables are grouped into custom construction tabs inside vanilla FS25 categories.
+- Intake and dry fuel yard storage capacities were doubled as a logistics-quality pass without changing recipe yields.
 
 ## Still To Decide
 

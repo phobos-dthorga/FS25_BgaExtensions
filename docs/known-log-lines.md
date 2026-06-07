@@ -25,7 +25,7 @@ Current log checked on 2026-06-07:
 
 ## Pending Test Targets
 
-For `v0.2.6.0`, smoke-test all three dry fuel yard sizes and the custom construction tabs:
+For `v0.2.7.0`, smoke-test all three dry fuel yard sizes, the custom construction tabs, and the doubled capacities:
 
 - buy and place small, medium, and large yards
 - unload `WOODCHIPS`
@@ -34,6 +34,8 @@ For `v0.2.6.0`, smoke-test all three dry fuel yard sizes and the custom construc
 - confirm the visible fill plane behaves acceptably
 - confirm biomass intakes appear under `Production > Phobos BGA`
 - confirm dry fuel yards appear under `Buildings > Phobos Fuel Storage`
+- confirm intake storage accepts the larger capacity values without UI or log issues
+- confirm dry fuel yard capacities are small 160,000 l, medium 320,000 l, and large 600,000 l
 - check the log for Phobos-owned warnings or errors
 
 ## User Test Confirmation

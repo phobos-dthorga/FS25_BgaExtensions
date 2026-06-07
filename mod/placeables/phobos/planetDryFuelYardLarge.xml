@@ -81,7 +81,7 @@
         </unloadingStation>
 
         <storages>
-            <storage node="hotspotMarker" fillTypes="WOODCHIPS STRAW_PELLETS" capacity="300000" isExtension="false">
+            <storage node="hotspotMarker" fillTypes="WOODCHIPS STRAW_PELLETS" capacity="600000" isExtension="false">
                 <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="WOODCHIPS"/>
             </storage>
         </storages>

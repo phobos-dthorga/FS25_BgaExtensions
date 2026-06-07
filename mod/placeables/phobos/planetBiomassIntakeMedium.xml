@@ -167,27 +167,27 @@
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
-            <capacity fillType="CHAFF" capacity="60000"/>
-            <capacity fillType="SILAGE" capacity="60000"/>
-            <capacity fillType="GRASS_WINDROW" capacity="60000"/>
-            <capacity fillType="DRYGRASS_WINDROW" capacity="60000"/>
-            <capacity fillType="STRAW" capacity="30000"/>
-            <capacity fillType="MANURE" capacity="25000"/>
-            <capacity fillType="SUGARBEET_CUT" capacity="20000"/>
-            <capacity fillType="SUGARCANE" capacity="20000"/>
-            <capacity fillType="POTATO" capacity="20000"/>
-            <capacity fillType="BEETROOT" capacity="20000"/>
-            <capacity fillType="CARROT" capacity="20000"/>
-            <capacity fillType="PARSNIP" capacity="20000"/>
-            <capacity fillType="SPINACH" capacity="20000"/>
-            <capacity fillType="PEA" capacity="20000"/>
-            <capacity fillType="GREENBEAN" capacity="20000"/>
-            <capacity fillType="SILAGE_ADDITIVE" capacity="120"/>
-            <capacity fillType="SILAGE_IN" capacity="80000"/>
-            <capacity fillType="MANURE_IN" capacity="25000"/>
-            <capacity fillType="PHB_WET_BIOMASS_MASH" capacity="40000"/>
-            <capacity fillType="SUGARBEETCUT_IN" capacity="40000"/>
-            <capacity fillType="STRAW_PELLETS" capacity="20000"/>
+            <capacity fillType="CHAFF" capacity="120000"/>
+            <capacity fillType="SILAGE" capacity="120000"/>
+            <capacity fillType="GRASS_WINDROW" capacity="120000"/>
+            <capacity fillType="DRYGRASS_WINDROW" capacity="120000"/>
+            <capacity fillType="STRAW" capacity="60000"/>
+            <capacity fillType="MANURE" capacity="50000"/>
+            <capacity fillType="SUGARBEET_CUT" capacity="40000"/>
+            <capacity fillType="SUGARCANE" capacity="40000"/>
+            <capacity fillType="POTATO" capacity="40000"/>
+            <capacity fillType="BEETROOT" capacity="40000"/>
+            <capacity fillType="CARROT" capacity="40000"/>
+            <capacity fillType="PARSNIP" capacity="40000"/>
+            <capacity fillType="SPINACH" capacity="40000"/>
+            <capacity fillType="PEA" capacity="40000"/>
+            <capacity fillType="GREENBEAN" capacity="40000"/>
+            <capacity fillType="SILAGE_ADDITIVE" capacity="240"/>
+            <capacity fillType="SILAGE_IN" capacity="160000"/>
+            <capacity fillType="MANURE_IN" capacity="50000"/>
+            <capacity fillType="PHB_WET_BIOMASS_MASH" capacity="80000"/>
+            <capacity fillType="SUGARBEETCUT_IN" capacity="80000"/>
+            <capacity fillType="STRAW_PELLETS" capacity="40000"/>
 
             <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="SILAGE"/>
         </storage>
