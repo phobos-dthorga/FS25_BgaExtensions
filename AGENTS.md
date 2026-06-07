@@ -41,7 +41,7 @@ Add project-specific paths here once available:
 - FS25 Community LUADOC:
 - FS25 Lua scripting examples:
 - Farming Simulator 25 mods folder:
-- Farming Simulator 25 log file:
+- Farming Simulator 25 log file: `D:\synologydrive\phobosdthorga\cloudstation drive\google drive\gekko-data\Documents\My Games\FarmingSimulator2025\log.txt`
 - GIANTS Editor:
 
 ## Architecture Preferences

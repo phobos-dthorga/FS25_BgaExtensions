@@ -158,12 +158,12 @@
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW WOODCHIPS MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN SILAGE_ADDITIVE"/>
-            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW WOODCHIPS SUGARBEET_CUT"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN PHB_WET_BIOMASS_MASH SILAGE_ADDITIVE"/>
+            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW SUGARBEET_CUT"/>
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN PHB_WET_BIOMASS_MASH SUGARBEETCUT_IN STRAW_PELLETS WOODCHIPS" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN PHB_WET_BIOMASS_MASH SUGARBEETCUT_IN STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
@@ -172,7 +172,6 @@
             <capacity fillType="GRASS_WINDROW" capacity="60000"/>
             <capacity fillType="DRYGRASS_WINDROW" capacity="60000"/>
             <capacity fillType="STRAW" capacity="30000"/>
-            <capacity fillType="WOODCHIPS" capacity="30000"/>
             <capacity fillType="MANURE" capacity="25000"/>
             <capacity fillType="SUGARBEET_CUT" capacity="20000"/>
             <capacity fillType="SUGARCANE" capacity="20000"/>

@@ -50,7 +50,7 @@ Installed mod observations are recorded in `docs/installed-mod-observations.md`.
 | Fair | Hemp and high-fiber annuals | Common: `HEMP` | Chopped green biomass substrate | 0.30-0.55 | High biomass but can be fibrous. Keep below forage crops. |
 | Fair | Hops and specialty crops | Common: `HOPS`, `LAVENDER`, herbs | Organic waste substrate | 0.20-0.45 | Include only when a map makes them available in bulk. Not a core path. |
 | Emergency only | Straw and grain residues | `STRAW`; common: `RYE_STRAW`, `TRITICALE_STRAW` | Pretreated dry biomass substrate | 0.15-0.35 | Lignocellulosic and slow. Useful for cleanup or low-grade co-digestion, not premium energy production. |
-| Emergency only | Poplar and woody biomass | `POPLAR`, `WOODCHIPS` | Combustion fuel or pretreatment-only biomass route | 0.05-0.20 | Better suited to heating than BGA. Current implementation handles `WOODCHIPS` as storage/transfer fuel, not as digester feed. |
+| Emergency only | Poplar and woody biomass | `POPLAR`, `WOODCHIPS` | Combustion fuel or pretreatment-only biomass route | 0.05-0.20 | Better suited to heating than BGA. Do not store wood chips passively inside a production point; use a future dedicated combustion storage/module. |
 | Emergency only | Cover crop biomass | `OILSEEDRADISH`; common: `MUSTARD`, cover mixes | Green manure salvage route | 0.10-0.30 | Only if the map exposes a harvestable product. Otherwise leave as field agronomy, not BGA feedstock. |
 | Emergency only | Rice husk | Common: `RICE_HUSK` | Pretreated dry biomass substrate | 0.05-0.25 | Fibrous residue. More plausible as low-grade emergency substrate than as silage. |
 

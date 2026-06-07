@@ -24,7 +24,6 @@ The current PlanET-compatible intake modules produce or handle these materials:
 | `PHB_WET_BIOMASS_MASH` | Beet cut, sugarcane, roots, spinach, peas, green beans | Phobos staging material, then conditioned into `SUGARBEETCUT_IN` | Good internal Phobos intermediary. Keep it internal until a real storage/logistics use appears. |
 | `SUGARBEETCUT_IN` | Wet mash conditioning | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
 | `STRAW_PELLETS` | Straw pelletizing | Straw Harvest HALLSYS Pellet Heat Plant and pellet-compatible systems | Strong cross-mod by-product/fuel route. Keep this meaningful. |
-| `WOODCHIPS` | Player-delivered vanilla material | Combustion-yard storage and transfer | Handled as fuel logistics only. Do not route to BGA digestion by default. |
 
 The mod does not yet produce a farm-wide residue such as `COMPOST` or `DIGESTATE` directly. That is probably correct for now: PlanET should own BGA digestion outputs, while Phobos owns preparation and routing.
 
@@ -65,7 +64,7 @@ Recommended routes:
 
 3. Dry fuel route
 
-`STRAW_PELLETS` and `WOODCHIPS` form a credible combustion family. Straw pellets are already implemented, and wood chips are now handled as a storage/transfer material.
+`STRAW_PELLETS` and `WOODCHIPS` form a credible combustion family. Straw pellets are already implemented. Wood chips should wait for a dedicated combustion storage/module because passive storage inside a production point produced a game-log warning in `v0.2.3.0`.
 
 Recommended posture: combustion first, BGA only as low-value emergency substrate.
 

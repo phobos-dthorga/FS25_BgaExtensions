@@ -7,13 +7,13 @@
 - Upstream FS25 guidance documented with attribution and license boundary.
 - Issue templates and pull request template are present.
 - Dual licensing added to match nearby Phobos Project Zomboid mod repositories.
+- Packaging script and GitHub release helper are present.
+- GitHub pre-releases are used as the historical timeline for shipped versions.
 
 ## Still To Decide
 
-- First playable scope for version `0.1.0.0`.
 - Local FS25 reference paths for API validation.
-- Packaging workflow for creating the distributable mod zip.
-- Branch protection or release workflow once the project has more contributors.
+- Branch protection once the project has more contributors.
 
 ## License Decision
 

@@ -20,15 +20,15 @@ This repository is the staging ground for early design and implementation. The m
 
 ## Release Rhythm
 
-Each shipped mod version should get a GitHub release and retain its old releases as the project timeline. Use `tools/release.ps1` after committing and pushing a version bump; it builds a versioned package, creates a `vX.Y.Z.W` tag, and publishes a GitHub prerelease by default.
+Each shipped mod version should get a GitHub release and retain its old releases as the project timeline. See `docs/release-process.md`; `tools/release.ps1` builds a versioned package, creates a `vX.Y.Z.W` tag, and publishes a GitHub prerelease by default.
 
 ## Current Design Direction
 
-The first playable implementation is a small PlanET-compatible biomass intake module. It converts selected vanilla biomass inputs into the internal feedstocks used by `FS25_PlanET_BGA_Modular`, can pelletize straw into `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant, and handles vanilla `WOODCHIPS` as a combustion-yard storage material.
+The first playable implementation is a small PlanET-compatible biomass intake module. It converts selected vanilla biomass inputs into the internal feedstocks used by `FS25_PlanET_BGA_Modular`, and can pelletize straw into `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant.
 
 Maize+/MaizePlus integration is parked until a production-ready FS25 release is installed and explicitly selected as a target. Corn Production Pack remains observation-only.
 
-The broader design remains registry-driven for later optional integrations. See `docs/implementation-approach.md`, `docs/integration-strategy.md`, `docs/biomass-crop-ranking.md`, `docs/conversion-process.md`, and the draft registry at `mod/config/biomassCropRegistry.xml`.
+The broader design remains registry-driven for later optional integrations. See `docs/implementation-approach.md`, `docs/integration-strategy.md`, `docs/dependency-contract.md`, `docs/guarded-compatibility.md`, `docs/known-log-lines.md`, `docs/biomass-crop-ranking.md`, `docs/conversion-process.md`, and the draft registry at `mod/config/biomassCropRegistry.xml`.
 
 ## Author
 

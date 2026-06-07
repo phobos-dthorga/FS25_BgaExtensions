@@ -80,7 +80,7 @@ Preferred behavior:
 - Require pretreatment before BGA use.
 - Output low-grade substrate at poor conversion rates.
 - Keep this lane optional or late-stage. It is useful for cleanup gameplay, not premium power generation.
-- Treat `WOODCHIPS` primarily as combustion fuel and yard logistics material. Do not send it to the digester by default.
+- Treat `WOODCHIPS` primarily as combustion fuel. Do not send it to the digester by default, and do not add it as storage-only material inside a production point.
 
 ## First Playable Implementation
 
@@ -121,7 +121,6 @@ Current PoC recipes:
 - `PEA` -> `PHB_WET_BIOMASS_MASH`
 - `GREENBEAN` -> `PHB_WET_BIOMASS_MASH`
 - `PHB_WET_BIOMASS_MASH` -> `SUGARBEETCUT_IN`
-- `WOODCHIPS` storage/load/unload support only, for combustion logistics
 
 Optional detected inputs for the first expansion:
 

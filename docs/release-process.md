@@ -1,0 +1,50 @@
+# Release Process
+
+Every shipped mod version should have a GitHub release. Old releases remain published as the project timeline.
+
+## Version Rhythm
+
+Use this pattern while the mod is still pre-release:
+
+| Version shape | Meaning |
+| --- | --- |
+| `0.2.x.0` | Small feature slice or new playable behavior. |
+| `0.2.x.1`, `0.2.x.2` | Hotfixes for the previous slice, usually log cleanup or small XML corrections. |
+| Docs-only commit | No release required unless it changes test instructions, dependency expectations, or packaged files. |
+
+All current releases should be GitHub pre-releases.
+
+## Release Steps
+
+1. Make the code/docs changes.
+2. Bump `mod/modDesc.xml` only when the packaged mod behavior or testable contract changes.
+3. Validate XML and packaging.
+4. Commit and push the version bump.
+5. Run `tools/release.ps1`.
+
+The helper script:
+
+- reads the version from `modDesc.xml` if `-Version` is omitted
+- builds a versioned zip in `dist/`
+- creates a `vX.Y.Z.W` tag
+- pushes the tag
+- creates a GitHub pre-release by default
+- refuses to overwrite an existing tag or release
+
+Use `-Stable` only when the project is genuinely ready to leave pre-release for that version. Use `-Draft` when notes need manual editing before publication.
+
+## Release Notes Checklist
+
+Every release note should include:
+
+- dependency requirements
+- what changed
+- whether a disposable save is recommended
+- known warnings or log lines
+- whether the live mods folder was touched
+
+The normal answer for the live mods folder should be: no, packages are built to `dist/` only.
+
+## Historical Rule
+
+Never overwrite an old GitHub release asset to make history look cleaner. If a package needs correction, bump the version and publish a hotfix release.
