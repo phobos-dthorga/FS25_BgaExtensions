@@ -17,6 +17,7 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 - XML parse checks
 - `modDesc.xml` referenced file checks
 - Phobos-owned `$moddir$FS25_BgaExtensions/...` asset reference checks
+- Phobos HUD texture references use DDS rather than runtime PNG files
 - active fillType reference checks
 - optional fillType guard checks
 - storage-only production-point guard checks

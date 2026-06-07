@@ -210,6 +210,10 @@ def validate_self_mod_refs(path: Path, mod_root: Path, repo_root: Path, validati
             validation.error(
                 f"Missing Phobos-owned asset reference '{referenced}' in {path.relative_to(repo_root)}"
             )
+        if referenced.lower().startswith("hud/") and referenced.lower().endswith(".png"):
+            validation.error(
+                f"Phobos HUD texture should be DDS with mipmaps, not PNG: {path.relative_to(repo_root)}"
+            )
 
 
 def production_filltypes(tree: ET.ElementTree) -> set[str]:

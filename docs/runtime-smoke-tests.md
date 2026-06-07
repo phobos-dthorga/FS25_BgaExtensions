@@ -78,6 +78,7 @@ A prerelease is ready for broader personal testing when:
 - intended outputs can be loaded or consumed downstream
 - production UI remains readable
 - no recurring Phobos-owned hitching is visible
+- no Phobos HUD texture raw-format or mip-generation warnings appear
 - no Phobos-owned warnings or errors appear in the log
 
 If a Phobos-owned warning or error appears, stop expanding that feature and record the line in `docs/known-log-lines.md`.
