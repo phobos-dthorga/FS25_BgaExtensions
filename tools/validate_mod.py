@@ -149,11 +149,11 @@ def validate_moddesc_references(mod_root: Path, root: ET.Element, validation: Va
             validation.error(f"modDesc.xml references missing storeItem file: {filename}")
 
 
-def moddesc_data(mod_root: Path, validation: Validation) -> tuple[set[str], set[str]]:
+def moddesc_data(mod_root: Path, validation: Validation) -> tuple[set[str], set[str], dict[str, str]]:
     moddesc_path = mod_root / "modDesc.xml"
     tree = parse_xml_file(moddesc_path, validation)
     if tree is None:
-        return set(), set()
+        return set(), set(), {}
 
     root = tree.getroot()
     version = (root.findtext("version") or "").strip()
@@ -172,7 +172,12 @@ def moddesc_data(mod_root: Path, validation: Validation) -> tuple[set[str], set[
         for node in root.findall("./l10n/text")
         if node.get("name")
     }
-    return dependencies, l10n_keys
+    construction_tabs = {
+        node.get("name", ""): node.get("categoryName", "")
+        for node in root.findall("./constructionCategories/tab")
+        if node.get("name")
+    }
+    return dependencies, l10n_keys, construction_tabs
 
 
 def collect_filltype_refs(path: Path, tree: ET.ElementTree) -> set[str]:
@@ -235,6 +240,38 @@ def count_production_recipes(tree: ET.ElementTree) -> int:
     return len(productions.findall("./production"))
 
 
+def validate_construction_tabs(
+    path: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    construction_tabs: dict[str, str],
+    validation: Validation,
+) -> None:
+    for brush in tree.findall("./storeData/brush"):
+        tab = (brush.findtext("tab") or "").strip()
+        category = (brush.findtext("category") or "").strip()
+        relative_path = path.relative_to(repo_root)
+
+        if not tab:
+            validation.error(f"Phobos placeable is missing a construction brush tab: {relative_path}")
+            continue
+
+        if not tab.startswith("phobos"):
+            validation.error(
+                f"Phobos placeable uses non-Phobos construction tab '{tab}': {relative_path}"
+            )
+            continue
+
+        declared_category = construction_tabs.get(tab)
+        if declared_category is None:
+            validation.error(f"Phobos construction tab '{tab}' is not declared in modDesc.xml: {relative_path}")
+        elif category and declared_category != category:
+            validation.error(
+                f"Phobos construction tab '{tab}' is declared for '{declared_category}' "
+                f"but used under '{category}': {relative_path}"
+            )
+
+
 def validate_source(repo_root: Path, validation: Validation) -> None:
     mod_root = repo_root / "mod"
     if not mod_root.is_dir():
@@ -246,7 +283,7 @@ def validate_source(repo_root: Path, validation: Validation) -> None:
         validation.error("No XML files found under mod/")
         return
 
-    dependencies, l10n_keys = moddesc_data(mod_root, validation)
+    dependencies, l10n_keys, construction_tabs = moddesc_data(mod_root, validation)
     known_filltypes = set(VANILLA_FILLTYPES)
     known_filltypes.update(local_filltypes(mod_root, validation))
     for dependency in dependencies:
@@ -287,6 +324,8 @@ def validate_source(repo_root: Path, validation: Validation) -> None:
             validation.error(
                 f"Optional fillType '{fill_type}' appears in core placeable XML: {path.relative_to(repo_root)}"
             )
+
+        validate_construction_tabs(path, repo_root, tree, construction_tabs, validation)
 
         if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
             storage_only = sorted(storage_filltypes(tree) - production_filltypes(tree))

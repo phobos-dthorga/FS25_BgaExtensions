@@ -16,7 +16,7 @@
         <brush>
             <type>placeable</type>
             <category>production</category>
-            <tab>factories</tab>
+            <tab>phobosBgaProduction</tab>
         </brush>
     </storeData>
 

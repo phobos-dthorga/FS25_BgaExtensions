@@ -16,7 +16,7 @@
         <brush>
             <type>placeable</type>
             <category>buildings</category>
-            <tab>silos</tab>
+            <tab>phobosFuelStorage</tab>
         </brush>
     </storeData>
 

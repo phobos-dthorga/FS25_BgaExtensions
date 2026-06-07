@@ -16,7 +16,7 @@
         <brush>
             <type>placeable</type>
             <category>production</category>
-            <tab>factories</tab>
+            <tab>phobosBgaProduction</tab>
         </brush>
         <vertexBufferMemoryUsage>1746688</vertexBufferMemoryUsage>
         <indexBufferMemoryUsage>431872</indexBufferMemoryUsage>

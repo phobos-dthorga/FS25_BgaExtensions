@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>phobosgekko</author>
-    <version>0.2.5.1</version>
+    <version>0.2.6.0</version>
     <title>
         <en>FS25 BGA Extensions</en>
     </title>
@@ -40,6 +40,12 @@
         </text>
         <text name="function_phobosPlanetDryFuelYard">
             <en>Stores wood chips and straw pellets for combustion heat logistics.</en>
+        </text>
+        <text name="construction_tab_phobosBgaProduction">
+            <en>Phobos BGA</en>
+        </text>
+        <text name="construction_tab_phobosFuelStorage">
+            <en>Phobos Fuel Storage</en>
         </text>
         <text name="fillType_phbWetBiomassMash">
             <en>Wet biomass mash</en>
@@ -114,6 +120,11 @@
     <multiplayer supported="true"/>
 
     <fillTypes filename="xml/phobosFillTypes.xml"/>
+
+    <constructionCategories>
+        <tab categoryName="production" name="phobosBgaProduction" title="$l10n_construction_tab_phobosBgaProduction"/>
+        <tab categoryName="buildings" name="phobosFuelStorage" title="$l10n_construction_tab_phobosFuelStorage"/>
+    </constructionCategories>
 
     <storeItems>
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeSmall.xml"/>

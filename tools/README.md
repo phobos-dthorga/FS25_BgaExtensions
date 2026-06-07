@@ -20,6 +20,7 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 - active fillType reference checks
 - optional fillType guard checks
 - storage-only production-point guard checks
+- Phobos construction tab checks
 - l10n reference checks
 - recipe count target checks
 - package layout and size checks when `--package` is provided

@@ -16,6 +16,7 @@
 - Dry fuel yard storage is offered in small, medium, and large PlanET-style variants.
 - Runtime smoke-test and log-triage instructions are documented for disposable-save testing.
 - Energy carriers are split by building family before adding methane, electricity, or extra combustion routes.
+- Phobos placeables are grouped into custom construction tabs inside vanilla FS25 categories.
 
 ## Still To Decide
 
