@@ -105,6 +105,7 @@ The Phobos release zip should contain only Phobos-owned files. A required depend
 - `docs/dependency-contract.md` defines required dependency fillTypes and asset contracts.
 - `docs/guarded-compatibility.md` defines how optional fillTypes are allowed to enter the project.
 - `docs/performance-targets.md` defines performance tripwires and the required action when a target is missed.
+- `docs/measurement-and-automation.md` defines how the performance targets are measured and what CI can automate.
 - `docs/known-log-lines.md` records observed log messages and actions.
 - `docs/release-process.md` defines pre-release and hotfix cadence.
 - `docs/fs25-engine-constraints.md` records engine/load-order cautions.

@@ -20,7 +20,8 @@ All current releases should be GitHub pre-releases.
 2. Bump `mod/modDesc.xml` only when the packaged mod behavior or testable contract changes.
 3. Validate XML and packaging.
 4. Commit and push the version bump.
-5. Run `tools/release.ps1`.
+5. Let GitHub CI pass on the pushed commit.
+6. Run `tools/release.ps1`.
 
 The helper script:
 
@@ -30,6 +31,8 @@ The helper script:
 - pushes the tag
 - creates a GitHub pre-release by default
 - refuses to overwrite an existing tag or release
+
+GitHub CI currently builds validation artifacts only. It does not create releases, because `tools/release.ps1` remains the release owner. Do not add a release-creating tag workflow until the local helper is retired or changed to delegate release creation to GitHub Actions.
 
 Use `-Stable` only when the project is genuinely ready to leave pre-release for that version. Use `-Draft` when notes need manual editing before publication.
 

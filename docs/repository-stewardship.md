@@ -10,11 +10,14 @@
 - Packaging script and GitHub release helper are present.
 - GitHub pre-releases are used as the historical timeline for shipped versions.
 - Performance targets and decisive-action rules are documented.
+- GitHub CI validates source, builds a package artifact, and validates the package.
+- Dependabot is configured to watch GitHub Actions versions.
 
 ## Still To Decide
 
 - Local FS25 reference paths for API validation.
 - Branch protection once the project has more contributors.
+- Whether release creation should remain local via `tools/release.ps1` or move fully to GitHub Actions.
 
 ## License Decision
 

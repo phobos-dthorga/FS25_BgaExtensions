@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-and-package:
+    name: Validate and package
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Validate source
+        run: python tools/validate_mod.py
+
+      - name: Build package
+        run: python tools/package_mod.py --output dist/FS25_BgaExtensions_ci.zip
+
+      - name: Validate package
+        run: python tools/validate_mod.py --package dist/FS25_BgaExtensions_ci.zip
+
+      - name: Upload package artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: FS25_BgaExtensions-ci-package
+          path: dist/FS25_BgaExtensions_ci.zip
+          if-no-files-found: error
+          retention-days: 14

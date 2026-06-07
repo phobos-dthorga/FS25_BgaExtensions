@@ -66,6 +66,7 @@ Add project-specific paths here once available:
 
 - Check the game log after test launches.
 - Check `docs/performance-targets.md` before expanding or releasing a feature; known Phobos-owned hard misses must be fixed, split, or removed.
+- Use `docs/measurement-and-automation.md` to decide which checks belong in GitHub CI and which require local FS25 testing.
 - Document any API uncertainty instead of filling gaps with invented calls.
 - Prefer narrow commits with clear messages.
 - Avoid direct pushes to stable branches once a development branch workflow is introduced.

@@ -4,6 +4,8 @@ This document defines the performance and stability tripwires for `FS25_BgaExten
 
 The point is not to over-measure an early proof of concept. The point is to know when a feature has become too expensive, too noisy, or too broad to keep expanding in its current form.
 
+For the measurement procedure and automation boundaries, see `docs/measurement-and-automation.md`.
+
 ## Baseline Method
 
 Use a disposable save for measurement.

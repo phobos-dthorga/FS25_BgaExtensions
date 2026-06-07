@@ -5,6 +5,9 @@
 *.txt text eol=lf
 *.yml text eol=lf
 *.yaml text eol=lf
+*.py text eol=lf
 *.lua text eol=lf
 *.i3d text eol=lf
+.gitattributes text eol=lf
+.gitignore text eol=lf
 LICENSE text eol=lf
