@@ -29,8 +29,6 @@ Purpose: prepare crops and residues for PlanET-compatible BGA feedstock.
 Examples:
 
 - forage and silage material to `SILAGE_IN`
-- wet crops to `PHB_WET_BIOMASS_MASH`
-- wet mash conditioning to `SUGARBEETCUT_IN`
 - straw emergency pretreatment to low-yield `SILAGE_IN`
 
 Do not add combustion-only material here unless it is being converted into a real BGA substrate.
@@ -39,13 +37,18 @@ Do not add combustion-only material here unless it is being converted into a rea
 
 Purpose: keep wet, starchy, sugary, root, and produce-waste flows separate from forage/silage handling.
 
+Current route:
+
+- wet crops to `PHB_WET_BIOMASS_MASH`
+- wet mash conditioning to `SUGARBEETCUT_IN`
+
 Good future candidates:
 
 - optional `COMPOST` intake where it already exists
 - washed potatoes if a loaded mod defines them
 - orchard/greenhouse organic residuals when safely detected
 
-This family can share the current intake XML while the project is small, but it should split into its own building if the production UI grows beyond the soft target.
+This family now has its own Wet Substrate Prep placeable. Keep it separate from forage/manure/straw intake recipes unless a future model or gameplay loop proves a shared module is clearer.
 
 ### Dry Fuel Yard
 
@@ -126,7 +129,7 @@ This rule matters more than strict realism. A realistic process that makes the p
 
 Do not add methane/electricity handling yet.
 
-The next reasonable gameplay addition is a focused dry fuel plant or a wet substrate prep split, not an energy-output loop. Once the current dry fuel yards are tested, the safest expansion is:
+The next reasonable gameplay addition is a focused dry fuel plant, not an energy-output loop. Once the current dry fuel yards and wet substrate prep are tested, the safest expansion is:
 
 1. Keep dry fuel yard storage as-is.
 2. Move or mirror straw pelletizing into a dedicated dry fuel plant if intake UI becomes crowded.

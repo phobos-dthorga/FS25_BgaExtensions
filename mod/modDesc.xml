@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>phobosgekko</author>
-    <version>0.2.8.0</version>
+    <version>0.2.9.0</version>
     <title>
         <en>FS25 BGA Extensions</en>
     </title>
     <description>
-        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. Adds modular PlanET-compatible biomass intakes, straw pellet routing, and dry fuel yard storage for heat-plant logistics.</en>
+        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. Adds modular PlanET-compatible biomass intakes, wet substrate prep, straw pellet routing, and dry fuel yard storage for heat-plant logistics.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
 
@@ -22,6 +22,9 @@
         </text>
         <text name="storeItem_phobosPlanetBiomassIntakeLarge">
             <en>Phobos PlanET Biomass Intake - Large</en>
+        </text>
+        <text name="storeItem_phobosPlanetWetSubstratePrep">
+            <en>Phobos PlanET Wet Substrate Prep</en>
         </text>
         <text name="storeItem_phobosPlanetDryFuelYardSmall">
             <en>Phobos PlanET Dry Fuel Yard - Small</en>
@@ -40,6 +43,9 @@
         </text>
         <text name="function_phobosPlanetDryFuelYard">
             <en>Stores wood chips and straw pellets for combustion heat logistics.</en>
+        </text>
+        <text name="function_phobosPlanetWetSubstratePrep">
+            <en>Prepares wet, root, and produce crops into PlanET-compatible beet substrate.</en>
         </text>
         <text name="construction_tab_phobosBgaProduction">
             <en>Phobos BGA</en>
@@ -130,6 +136,7 @@
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeSmall.xml"/>
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeMedium.xml"/>
         <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeLarge.xml"/>
+        <storeItem xmlFilename="placeables/phobos/planetWetSubstratePrep.xml"/>
         <storeItem xmlFilename="placeables/phobos/planetDryFuelYardMedium.xml"/>
         <storeItem xmlFilename="placeables/phobos/planetDryFuelYardLarge.xml"/>
     </storeItems>

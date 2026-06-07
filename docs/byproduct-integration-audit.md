@@ -15,14 +15,14 @@ This keeps the design practical:
 
 ## Current Phobos Outputs And Handled Materials
 
-The current PlanET-compatible intake modules produce or handle these materials:
+The current PlanET-compatible preparation modules produce or handle these materials:
 
 | Output | Source process | Current use | Audit status |
 | --- | --- | --- | --- |
 | `SILAGE_IN` | Chaff, silage, grass, hay, low-yield straw pretreatment | PlanET modular fermenter input | Good as a PlanET-owned handoff only. Do not expose as general farm material. |
 | `MANURE_IN` | Manure intake | PlanET modular fermenter input | Good as a PlanET-owned handoff only. |
-| `PHB_WET_BIOMASS_MASH` | Beet cut, sugarcane, roots, spinach, peas, green beans | Phobos staging material, then conditioned into `SUGARBEETCUT_IN` | Good internal Phobos intermediary. Keep it internal until a real storage/logistics use appears. |
-| `SUGARBEETCUT_IN` | Wet mash conditioning | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
+| `PHB_WET_BIOMASS_MASH` | Wet Substrate Prep from beet cut, sugarcane, roots, spinach, peas, green beans | Phobos staging material, then conditioned into `SUGARBEETCUT_IN` | Good internal Phobos intermediary. Keep it internal until a real storage/logistics use appears. |
+| `SUGARBEETCUT_IN` | Wet Substrate Prep mash conditioning | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
 | `STRAW_PELLETS` | Straw pelletizing | Straw Harvest HALLSYS Pellet Heat Plant and pellet-compatible systems | Strong cross-mod by-product/fuel route. Keep this meaningful. |
 | `WOODCHIPS` | Player-delivered vanilla material | Medium and large dry fuel yard storage for combustion logistics | Stored outside the BGA intake so it does not trigger production-point storage warnings. |
 
@@ -67,7 +67,7 @@ Recommended routes:
 
 3. Dry fuel route
 
-`STRAW_PELLETS` and `WOODCHIPS` form a credible combustion family. Straw pellets are produced by the intake modules, and the dry fuel yards store both fuel materials without putting wood chips inside the BGA intake production point.
+`STRAW_PELLETS` and `WOODCHIPS` form a credible combustion family. Straw pellets are produced by the biomass intake modules, and the dry fuel yards store both fuel materials without putting wood chips inside the BGA intake production point.
 
 Recommended posture: combustion first, BGA only as low-value emergency substrate.
 

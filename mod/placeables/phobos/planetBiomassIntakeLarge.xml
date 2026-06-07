@@ -115,55 +115,15 @@
                 <inputs><input fillType="MANURE" amount="400"/></inputs>
                 <outputs><output fillType="MANURE_IN" amount="400"/></outputs>
             </production>
-            <production id="phbLargeSugarbeetCutToPlanetBeet" name="$l10n_production_phbSugarbeetCutToPlanetBeet" cyclesPerHour="20" costsPerActiveHour="2.5">
-                <inputs><input fillType="SUGARBEET_CUT" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="200"/></outputs>
-            </production>
-            <production id="phbLargeSugarcaneToPlanetBeet" name="$l10n_production_phbSugarcaneToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs><input fillType="SUGARCANE" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="170"/></outputs>
-            </production>
-            <production id="phbLargePotatoToPlanetBeet" name="$l10n_production_phbPotatoToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs><input fillType="POTATO" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
-            </production>
-            <production id="phbLargeBeetrootToPlanetBeet" name="$l10n_production_phbBeetrootToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs><input fillType="BEETROOT" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
-            </production>
-            <production id="phbLargeCarrotToPlanetBeet" name="$l10n_production_phbCarrotToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs><input fillType="CARROT" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
-            </production>
-            <production id="phbLargeParsnipToPlanetBeet" name="$l10n_production_phbParsnipToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs><input fillType="PARSNIP" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
-            </production>
-            <production id="phbLargeSpinachToWetMash" name="$l10n_production_phbSpinachToWetMash" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs><input fillType="SPINACH" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="130"/></outputs>
-            </production>
-            <production id="phbLargePeaToWetMash" name="$l10n_production_phbPeaToWetMash" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs><input fillType="PEA" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="140"/></outputs>
-            </production>
-            <production id="phbLargeGreenBeanToWetMash" name="$l10n_production_phbGreenBeanToWetMash" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs><input fillType="GREENBEAN" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="140"/></outputs>
-            </production>
-            <production id="phbLargeWetMashToPlanetBeet" name="$l10n_production_phbWetMashToPlanetBeet" cyclesPerHour="20" costsPerActiveHour="2.5">
-                <inputs><input fillType="PHB_WET_BIOMASS_MASH" amount="200"/></inputs>
-                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
-            </production>
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN PHB_WET_BIOMASS_MASH SILAGE_ADDITIVE"/>
-            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW SUGARBEET_CUT"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SILAGE_ADDITIVE"/>
+            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW"/>
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN PHB_WET_BIOMASS_MASH SUGARBEETCUT_IN STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
@@ -173,20 +133,9 @@
             <capacity fillType="DRYGRASS_WINDROW" capacity="160000"/>
             <capacity fillType="STRAW" capacity="100000"/>
             <capacity fillType="MANURE" capacity="70000"/>
-            <capacity fillType="SUGARBEET_CUT" capacity="60000"/>
-            <capacity fillType="SUGARCANE" capacity="60000"/>
-            <capacity fillType="POTATO" capacity="60000"/>
-            <capacity fillType="BEETROOT" capacity="60000"/>
-            <capacity fillType="CARROT" capacity="60000"/>
-            <capacity fillType="PARSNIP" capacity="60000"/>
-            <capacity fillType="SPINACH" capacity="60000"/>
-            <capacity fillType="PEA" capacity="60000"/>
-            <capacity fillType="GREENBEAN" capacity="60000"/>
             <capacity fillType="SILAGE_ADDITIVE" capacity="480"/>
             <capacity fillType="SILAGE_IN" capacity="240000"/>
             <capacity fillType="MANURE_IN" capacity="70000"/>
-            <capacity fillType="PHB_WET_BIOMASS_MASH" capacity="120000"/>
-            <capacity fillType="SUGARBEETCUT_IN" capacity="120000"/>
             <capacity fillType="STRAW_PELLETS" capacity="70000"/>
 
             <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="SILAGE"/>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <placeable type="productionPoint" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
     <storeData>
-        <name>$l10n_storeItem_phobosPlanetBiomassIntakeSmall</name>
+        <name>$l10n_storeItem_phobosPlanetWetSubstratePrep</name>
         <functions>
-            <function>$l10n_function_phobosPlanetSolidBiomassIntake</function>
+            <function>$l10n_function_phobosPlanetWetSubstratePrep</function>
         </functions>
         <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerKlein.dds</image>
-        <price>62000</price>
-        <dailyUpkeep>22</dailyUpkeep>
+        <price>56000</price>
+        <dailyUpkeep>24</dailyUpkeep>
         <lifetime>1000</lifetime>
         <rotation>0</rotation>
         <brand>PLANET</brand>
@@ -73,72 +73,71 @@
 
     <productionPoint>
         <productions sharedThroughputCapacity="false">
-            <production id="phbSmallChaffToPlanetSilage" name="$l10n_production_phbChaffToPlanetSilage" cyclesPerHour="8" costsPerActiveHour="3">
-                <inputs><input fillType="CHAFF" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="840"/></outputs>
+            <production id="phbWetPrepSugarbeetCutToWetMash" name="$l10n_production_phbSugarbeetCutToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="2.5">
+                <inputs><input fillType="SUGARBEET_CUT" amount="200"/></inputs>
+                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="200"/></outputs>
             </production>
-            <production id="phbSmallChaffAdditiveToPlanetSilage" name="$l10n_production_phbChaffAdditiveToPlanetSilage" cyclesPerHour="8" costsPerActiveHour="3.5">
-                <inputs>
-                    <input fillType="CHAFF" amount="840"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
-                </inputs>
-                <outputs><output fillType="SILAGE_IN" amount="910"/></outputs>
+            <production id="phbWetPrepSugarcaneToWetMash" name="$l10n_production_phbSugarcaneToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+                <inputs><input fillType="SUGARCANE" amount="200"/></inputs>
+                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="170"/></outputs>
             </production>
-            <production id="phbSmallSilageToPlanetSilage" name="$l10n_production_phbSilageToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="2.5">
-                <inputs><input fillType="SILAGE" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="840"/></outputs>
+            <production id="phbWetPrepPotatoToWetMash" name="$l10n_production_phbPotatoToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+                <inputs><input fillType="POTATO" amount="200"/></inputs>
+                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
             </production>
-            <production id="phbSmallGrassToPlanetSilage" name="$l10n_production_phbGrassToPlanetSilage" cyclesPerHour="6" costsPerActiveHour="3">
-                <inputs><input fillType="GRASS_WINDROW" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="650"/></outputs>
+            <production id="phbWetPrepBeetrootToWetMash" name="$l10n_production_phbBeetrootToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+                <inputs><input fillType="BEETROOT" amount="200"/></inputs>
+                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
             </production>
-            <production id="phbSmallGrassAdditiveToPlanetSilage" name="$l10n_production_phbGrassAdditiveToPlanetSilage" cyclesPerHour="6" costsPerActiveHour="3.5">
-                <inputs>
-                    <input fillType="GRASS_WINDROW" amount="840"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
-                </inputs>
-                <outputs><output fillType="SILAGE_IN" amount="720"/></outputs>
+            <production id="phbWetPrepCarrotToWetMash" name="$l10n_production_phbCarrotToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+                <inputs><input fillType="CARROT" amount="200"/></inputs>
+                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
             </production>
-            <production id="phbSmallHayToPlanetSilage" name="$l10n_production_phbHayToPlanetSilage" cyclesPerHour="6" costsPerActiveHour="3">
-                <inputs><input fillType="DRYGRASS_WINDROW" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="720"/></outputs>
+            <production id="phbWetPrepParsnipToWetMash" name="$l10n_production_phbParsnipToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+                <inputs><input fillType="PARSNIP" amount="200"/></inputs>
+                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
             </production>
-            <production id="phbSmallStrawToPlanetSilage" name="$l10n_production_phbStrawToPlanetSilage" cyclesPerHour="4" costsPerActiveHour="4">
-                <inputs><input fillType="STRAW" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="420"/></outputs>
+            <production id="phbWetPrepSpinachToWetMash" name="$l10n_production_phbSpinachToWetMash" cyclesPerHour="8" costsPerActiveHour="3">
+                <inputs><input fillType="SPINACH" amount="200"/></inputs>
+                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="130"/></outputs>
             </production>
-            <production id="phbSmallStrawToPellets" name="$l10n_production_phbStrawToPellets" cyclesPerHour="5" costsPerActiveHour="6">
-                <inputs><input fillType="STRAW" amount="1000"/></inputs>
-                <outputs><output fillType="STRAW_PELLETS" amount="250"/></outputs>
+            <production id="phbWetPrepPeaToWetMash" name="$l10n_production_phbPeaToWetMash" cyclesPerHour="8" costsPerActiveHour="3">
+                <inputs><input fillType="PEA" amount="200"/></inputs>
+                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="140"/></outputs>
             </production>
-            <production id="phbSmallManureToPlanetManure" name="$l10n_production_phbManureToPlanetManure" cyclesPerHour="10" costsPerActiveHour="2.5">
-                <inputs><input fillType="MANURE" amount="400"/></inputs>
-                <outputs><output fillType="MANURE_IN" amount="400"/></outputs>
+            <production id="phbWetPrepGreenBeanToWetMash" name="$l10n_production_phbGreenBeanToWetMash" cyclesPerHour="8" costsPerActiveHour="3">
+                <inputs><input fillType="GREENBEAN" amount="200"/></inputs>
+                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="140"/></outputs>
+            </production>
+            <production id="phbWetPrepWetMashToPlanetBeet" name="$l10n_production_phbWetMashToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="2.5">
+                <inputs><input fillType="PHB_WET_BIOMASS_MASH" amount="200"/></inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
             </production>
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SILAGE_ADDITIVE"/>
-            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN PHB_WET_BIOMASS_MASH"/>
+            <baleTrigger triggerNode="baleTrigger" fillTypes="SUGARBEET_CUT"/>
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="PHB_WET_BIOMASS_MASH SUGARBEETCUT_IN" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
-            <capacity fillType="CHAFF" capacity="40000"/>
-            <capacity fillType="SILAGE" capacity="40000"/>
-            <capacity fillType="GRASS_WINDROW" capacity="40000"/>
-            <capacity fillType="DRYGRASS_WINDROW" capacity="40000"/>
-            <capacity fillType="STRAW" capacity="30000"/>
-            <capacity fillType="MANURE" capacity="30000"/>
-            <capacity fillType="SILAGE_ADDITIVE" capacity="120"/>
-            <capacity fillType="SILAGE_IN" capacity="60000"/>
-            <capacity fillType="MANURE_IN" capacity="30000"/>
-            <capacity fillType="STRAW_PELLETS" capacity="20000"/>
+            <capacity fillType="SUGARBEET_CUT" capacity="40000"/>
+            <capacity fillType="SUGARCANE" capacity="40000"/>
+            <capacity fillType="POTATO" capacity="40000"/>
+            <capacity fillType="BEETROOT" capacity="40000"/>
+            <capacity fillType="CARROT" capacity="40000"/>
+            <capacity fillType="PARSNIP" capacity="40000"/>
+            <capacity fillType="SPINACH" capacity="40000"/>
+            <capacity fillType="PEA" capacity="40000"/>
+            <capacity fillType="GREENBEAN" capacity="40000"/>
+            <capacity fillType="PHB_WET_BIOMASS_MASH" capacity="80000"/>
+            <capacity fillType="SUGARBEETCUT_IN" capacity="80000"/>
 
-            <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="SILAGE"/>
+            <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="SUGARBEET_CUT"/>
         </storage>
 
         <playerTrigger node="playerTrigger"/>

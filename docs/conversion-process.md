@@ -10,7 +10,7 @@ Some materials genuinely belong in a silage pathway. Others are better represent
 
 For the first proof of concept, prefer the smallest useful compatibility layer. The installed PlanET modular BGA already uses internal feedstocks, so forage and manure lanes feed those internal PlanET lanes directly.
 
-The wet crop lane now uses one Phobos-owned intermediary, `PHB_WET_BIOMASS_MASH`, before handing material to PlanET as `SUGARBEETCUT_IN`. This avoids presenting spinach, peas, roots, and produce waste as if they were sugar beet.
+The wet crop lane now uses a dedicated Wet Substrate Prep placeable and one Phobos-owned intermediary, `PHB_WET_BIOMASS_MASH`, before handing material to PlanET as `SUGARBEETCUT_IN`. This avoids presenting spinach, peas, roots, and produce waste as if they were sugar beet.
 
 See `docs/integration-strategy.md` for the companion-module rule that governs PlanET and future third-party integrations.
 
@@ -88,7 +88,7 @@ Preferred behavior:
 
 The first implementation should be deliberately narrow:
 
-1. Add one Phobos-owned production point: PlanET Biomass Intake.
+1. Add Phobos-owned companion production points: PlanET Biomass Intake and Wet Substrate Prep.
 2. Depend on `FS25_PlanET_BGA_Modular` and `pdlc_strawHarvestPack` for the proof of concept.
 3. Convert selected high-confidence vanilla inputs into PlanET internal feedstocks.
 4. Use `SILAGE_IN` for forage-like biomass and `SUGARBEETCUT_IN` for wet/starchy/root biomass.
@@ -106,13 +106,16 @@ Initial input set:
 - `CARROT`
 - `PARSNIP`
 
-Current PoC recipes:
+Current biomass intake recipes:
 
 - `CHAFF` -> `SILAGE_IN`
 - `GRASS_WINDROW` -> `SILAGE_IN`
 - `DRYGRASS_WINDROW` -> `SILAGE_IN`
 - `STRAW` -> `SILAGE_IN` at poor efficiency
 - `STRAW` -> `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant
+
+Current Wet Substrate Prep recipes:
+
 - `SUGARBEET_CUT` -> `PHB_WET_BIOMASS_MASH`
 - `SUGARCANE` -> `PHB_WET_BIOMASS_MASH`
 - `POTATO` -> `PHB_WET_BIOMASS_MASH`
@@ -192,7 +195,7 @@ The exact numbers should be tuned against vanilla BGA recipes after the first XM
 
 ## Current By-Product Guidance
 
-The current implementation now uses one Phobos-owned wet intermediary, `PHB_WET_BIOMASS_MASH`, for wet/root/produce substrates before handing them to PlanET as `SUGARBEETCUT_IN`.
+The current implementation now uses one Phobos-owned wet intermediary, `PHB_WET_BIOMASS_MASH`, in the Wet Substrate Prep placeable for wet/root/produce substrates before handing them to PlanET as `SUGARBEETCUT_IN`.
 
 For by-products and farm-adjacent outputs, follow `docs/byproduct-integration-audit.md`:
 
