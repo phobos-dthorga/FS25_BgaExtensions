@@ -123,7 +123,7 @@ Current PoC recipes:
 - `PEA` -> `PHB_WET_BIOMASS_MASH`
 - `GREENBEAN` -> `PHB_WET_BIOMASS_MASH`
 - `PHB_WET_BIOMASS_MASH` -> `SUGARBEETCUT_IN`
-- `WOODCHIPS` and `STRAW_PELLETS` -> small, medium, or large dry fuel yard storage for heat-plant logistics
+- `WOODCHIPS` and `STRAW_PELLETS` -> medium or large dry fuel yard storage for heat-plant logistics
 
 Optional detected inputs for the first expansion:
 

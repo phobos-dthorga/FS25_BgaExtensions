@@ -108,6 +108,7 @@ The Phobos release zip should contain only Phobos-owned files. A required depend
 - `docs/measurement-and-automation.md` defines how the performance targets are measured and what CI can automate.
 - `docs/energy-carrier-strategy.md` defines which building family owns combustion fuels, BGA energy products, and digestate.
 - `docs/construction-menu-categories.md` defines where Phobos placeables appear in the FS25 construction menu.
+- `docs/model-fit-decisions.md` records model choices that are hidden or retired because their visual language misleads the player.
 - `docs/visual-assets.md` defines the custom visual asset policy.
 - `docs/known-log-lines.md` records observed log messages and actions.
 - `docs/release-process.md` defines pre-release and hotfix cadence.

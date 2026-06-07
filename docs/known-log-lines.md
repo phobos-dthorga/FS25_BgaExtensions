@@ -21,14 +21,15 @@ Current log checked on 2026-06-07:
 | Log line | Status | Action |
 | --- | --- | --- |
 | `Input filltype 'PHB_WET_BIOMASS_MASH' is not supported by unloading station` | Phobos warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by allowing `PHB_WET_BIOMASS_MASH` on the intake unload triggers. |
-| `storage fillType 'WOODCHIPS' not used as a production input or output` | Phobos warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by removing storage-only wood chip handling from production-point XML. `v0.2.5.0` provides small, medium, and large dry fuel yard silos for wood chip and straw pellet storage. |
+| `storage fillType 'WOODCHIPS' not used as a production input or output` | Phobos warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by removing storage-only wood chip handling from production-point XML. `v0.2.5.0` added dry fuel yard silos; `v0.2.8.0` keeps only medium and large variants in the shop. |
 | `Texture ... hud_fill_phbWetBiomassMash.png raw format` and `CPU mip generation code activated` | Phobos warning found in `v0.2.6.0`. | Fixed in `v0.2.7.1` by replacing the PNG HUD reference with a DDS texture that includes mipmaps. |
 
 ## Pending Test Targets
 
-For `v0.2.7.1`, smoke-test all three dry fuel yard sizes, the custom construction tabs, the doubled capacities, and the HUD texture hotfix:
+For `v0.2.8.0`, smoke-test the medium and large dry fuel yard sizes, the custom construction tabs, the doubled capacities, and the HUD texture hotfix:
 
-- buy and place small, medium, and large yards
+- confirm the small dry fuel yard no longer appears in the shop
+- buy and place medium and large yards
 - unload `WOODCHIPS`
 - unload `STRAW_PELLETS`
 - load both materials back out
@@ -36,7 +37,7 @@ For `v0.2.7.1`, smoke-test all three dry fuel yard sizes, the custom constructio
 - confirm biomass intakes appear under `Production > Phobos BGA`
 - confirm dry fuel yards appear under `Buildings > Phobos Fuel Storage`
 - confirm intake storage accepts the larger capacity values without UI or log issues
-- confirm dry fuel yard capacities are small 160,000 l, medium 320,000 l, and large 600,000 l
+- confirm dry fuel yard capacities are medium 320,000 l and large 600,000 l
 - confirm no `hud_fill_phbWetBiomassMash` raw-format or mip-generation warnings appear
 - check the log for Phobos-owned warnings or errors
 

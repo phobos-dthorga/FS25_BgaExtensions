@@ -13,7 +13,7 @@
 - GitHub CI validates source, builds a package artifact, and validates the package.
 - Dependabot is configured to watch GitHub Actions versions.
 - Visual asset policy and the first custom fillType HUD icon are documented.
-- Dry fuel yard storage is offered in small, medium, and large PlanET-style variants.
+- Dry fuel yard storage is offered in medium and large PlanET-style variants; the small variant is retained only as packaged compatibility XML because its rotating blade does not fit passive storage.
 - Runtime smoke-test and log-triage instructions are documented for disposable-save testing.
 - Energy carriers are split by building family before adding methane, electricity, or extra combustion routes.
 - Phobos placeables are grouped into custom construction tabs inside vanilla FS25 categories.

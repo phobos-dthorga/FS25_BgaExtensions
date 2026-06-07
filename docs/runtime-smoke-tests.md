@@ -18,10 +18,10 @@ The goal is to prove that the current Phobos placeables can be bought, placed, f
   - Phobos PlanET Biomass Intake - Small
   - Phobos PlanET Biomass Intake - Medium
   - Phobos PlanET Biomass Intake - Large
-  - Phobos PlanET Dry Fuel Yard - Small
   - Phobos PlanET Dry Fuel Yard - Medium
   - Phobos PlanET Dry Fuel Yard - Large
-- All six items can be placed and sold in the disposable save.
+- The small dry fuel yard does not appear in the shop.
+- All listed items can be placed and sold in the disposable save.
 
 ## Biomass Intake Checks
 
@@ -43,13 +43,13 @@ For `v0.2.7.0` and later, confirm the intake capacity values are visibly larger 
 
 ## Dry Fuel Yard Checks
 
-Run these on small, medium, and large yards:
+Run these on medium and large yards:
 
 - Unload `WOODCHIPS`.
 - Load `WOODCHIPS` back out.
 - Unload `STRAW_PELLETS`.
 - Load `STRAW_PELLETS` back out.
-- Confirm capacities are small 160,000 l, medium 320,000 l, and large 600,000 l.
+- Confirm capacities are medium 320,000 l and large 600,000 l.
 - Confirm the visible fill plane looks acceptable for both materials.
 - Confirm the yards do not create production-point storage warnings.
 
