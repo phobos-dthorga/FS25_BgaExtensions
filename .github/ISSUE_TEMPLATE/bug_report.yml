@@ -4,6 +4,14 @@ title: "[Bug]: "
 labels:
   - bug
 body:
+  - type: checkboxes
+    id: duplicate-check
+    attributes:
+      label: Duplicate Check
+      description: Please search open and closed issues before creating a new report.
+      options:
+        - label: I checked existing issues and this is majorly new or unique.
+          required: true
   - type: textarea
     id: summary
     attributes:
@@ -57,4 +65,3 @@ body:
       render: text
     validations:
       required: false
-

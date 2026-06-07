@@ -112,6 +112,7 @@ The Phobos release zip should contain only Phobos-owned files. A required depend
 - `docs/visual-assets.md` defines the custom visual asset policy.
 - `docs/known-log-lines.md` records observed log messages and actions.
 - `docs/release-process.md` defines pre-release and hotfix cadence.
+- `docs/issue-management.md` defines when testing and follow-up work belongs in Issues, including duplicate avoidance.
 - `docs/fs25-engine-constraints.md` records engine/load-order cautions.
 - `mod/config/biomassCropRegistry.xml` is a draft data registry for future expansion.
 

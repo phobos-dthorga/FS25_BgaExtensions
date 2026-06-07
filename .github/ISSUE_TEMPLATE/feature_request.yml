@@ -4,6 +4,14 @@ title: "[Feature]: "
 labels:
   - enhancement
 body:
+  - type: checkboxes
+    id: duplicate-check
+    attributes:
+      label: Duplicate Check
+      description: Please search open and closed issues before creating a new request.
+      options:
+        - label: I checked existing issues and this is majorly new or unique.
+          required: true
   - type: textarea
     id: goal
     attributes:
@@ -25,4 +33,3 @@ body:
       description: How would this affect balance, realism, progression, multiplayer, or compatibility?
     validations:
       required: false
-

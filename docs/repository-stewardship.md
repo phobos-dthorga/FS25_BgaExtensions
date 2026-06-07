@@ -9,6 +9,8 @@
 - Dual licensing added to match nearby Phobos Project Zomboid mod repositories.
 - Packaging script and GitHub release helper are present.
 - GitHub pre-releases are used as the historical timeline for shipped versions.
+- Release pages are kept as public-facing changelogs; smoke-test checklists and local handoffs belong in GitHub Issues or internal docs.
+- New issues are created only for majorly new or unique topics; otherwise update the existing issue's version/checklist/status.
 - Performance targets and decisive-action rules are documented.
 - GitHub CI validates source, builds a package artifact, and validates the package.
 - Dependabot is configured to watch GitHub Actions versions.

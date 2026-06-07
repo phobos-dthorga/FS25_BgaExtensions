@@ -1,0 +1,47 @@
+name: Runtime Test Track
+description: Track prerelease smoke testing or log verification.
+title: "[Testing]: "
+labels:
+  - testing
+body:
+  - type: checkboxes
+    id: duplicate-check
+    attributes:
+      label: Duplicate Check
+      description: Prefer updating the rolling prerelease smoke-test issue when this is the same testing track.
+      options:
+        - label: I checked existing issues and this is majorly new or unique, or I am updating the rolling test track.
+          required: true
+  - type: input
+    id: mod-version
+    attributes:
+      label: Mod Version
+      description: Which prerelease or commit is being tested?
+      placeholder: "0.2.8.0"
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Test Scope
+      description: What behavior, placeables, fillTypes, or log lines need checking?
+    validations:
+      required: true
+  - type: textarea
+    id: checklist
+    attributes:
+      label: Checklist
+      description: Keep this updated as the prerelease advances.
+      placeholder: |
+        - [ ] Confirm the mod loads.
+        - [ ] Check relevant placeables.
+        - [ ] Review the FS25 log.
+    validations:
+      required: true
+  - type: textarea
+    id: findings
+    attributes:
+      label: Findings
+      description: Add results, links, and log snippets as they are discovered.
+    validations:
+      required: false

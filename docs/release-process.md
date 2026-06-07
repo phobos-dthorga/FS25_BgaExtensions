@@ -38,16 +38,20 @@ Use `-Stable` only when the project is genuinely ready to leave pre-release for 
 
 ## Release Notes Checklist
 
+Release notes are public-facing changelog entries. Keep them concise and player-facing.
+
 Every release note should include:
 
 - dependency requirements
 - what changed
-- whether a disposable save is recommended
-- known warnings or log lines
+- known warnings or log lines when they affect the released package
 - performance target status when relevant
-- whether the live mods folder was touched
 
-The normal answer for the live mods folder should be: no, packages are built to `dist/` only.
+Release notes should not include disposable-save instructions, smoke-test checklists, local machine paths, live-mods-folder bookkeeping, or one-off handoff notes. Put those in GitHub Issues or internal docs instead.
+
+For release testing, prefer one rolling issue for the current prerelease smoke-test checklist. Update its version number and checklist as the prerelease advances instead of opening a new overlapping issue.
+
+Before creating any issue, search open and closed issues in this repository for the same bug, test track, feature, or compatibility topic. Create a new issue only when the topic is majorly new or unique. If a suitable issue already exists, update that issue's version, checklist, labels, or status instead.
 
 ## Historical Rule
 
