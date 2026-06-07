@@ -6,8 +6,8 @@ This document explains how `FS25_BgaExtensions` performance and health measureme
 
 | Layer | Where it runs | Current status | What it can prove |
 | --- | --- | --- | --- |
-| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, Phobos-owned asset references resolve, core fillTypes are known, optional fillTypes are not in core XML, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target. |
-| Package validation | GitHub Actions and local tools | Implemented | The zip has FS25's expected root layout, avoids repository-only folders, and stays under the XML-only package size target. |
+| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, Phobos-owned asset references resolve, core fillTypes are known, optional fillTypes require declared provider dependencies, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target. |
+| Package validation | GitHub Actions and local tools | Implemented | Core and active add-on zips have FS25's expected root layout, avoid repository-only folders, and stay under the XML-only package size target. |
 | Log triage | Local machine after an FS25 test | Implemented | Phobos-owned warnings/errors are separated from external mod noise. |
 | Runtime smoke test | Local FS25 disposable save | Manual, documented in `docs/runtime-smoke-tests.md` | The placeable can be bought, placed, filled, activated, unloaded, and connected to the intended PlanET or Straw Harvest loop. |
 | Load-time comparison | Local FS25 disposable save | Manual with light scripting | A Phobos-enabled test can be compared with a baseline test using the same map/mod stack. |
@@ -23,9 +23,9 @@ It performs:
 1. Checkout.
 2. Python setup.
 3. Source validation with `tools/validate_mod.py`.
-4. Package build with `tools/package_mod.py`.
+4. Core and active add-on package builds with `tools/package_mod.py`.
 5. Package validation with `tools/validate_mod.py --package`.
-6. Upload of a short-lived CI package artifact.
+6. Upload of short-lived CI package artifacts.
 
 The CI package is for inspection and disposable-save testing. It is not a GitHub release artifact.
 

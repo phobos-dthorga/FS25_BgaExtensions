@@ -146,6 +146,10 @@ Optional detected inputs for the first expansion:
 - `COMPOST_RAW`
 - `ORGANICWASTE`
 
+Active optional add-on inputs:
+
+- `POTATO_WASHED` -> `PHB_WET_BIOMASS_MASH` in `FS25_BgaExtensions_PotatoWasherCompat`
+
 Generated waste should be conservative:
 
 - use `DIGESTATE` as the normal BGA residue

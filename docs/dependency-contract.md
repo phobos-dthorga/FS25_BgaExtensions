@@ -45,3 +45,9 @@ If a fillType belongs to a map or optional mod, use one of these patterns:
 - no active recipe yet, only documentation
 
 Do not put optional fillTypes directly into the core placeable XML. The current game log already shows why: other mods that reference absent alfalfa/clover fillTypes generate invalid fillType warnings.
+
+## Active Optional Add-Ons
+
+| Add-on package | Required dependencies | Contract used by Phobos |
+| --- | --- | --- |
+| `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_potatoWasher` | `POTATO_WASHED` from Potato Washing System, `PHB_WET_BIOMASS_MASH` from core Phobos, and the small PlanET bunker model. |

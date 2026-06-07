@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
+    <author>phobosgekko</author>
+    <version>0.2.11.0</version>
+    <title>
+        <en>FS25 BGA Extensions - Potato Washer Compat</en>
+    </title>
+    <description>
+        <en>Optional compatibility add-on for FS25 BGA Extensions and Potato Washing System. Converts washed potatoes into Phobos wet biomass mash for PlanET BGA routing.</en>
+    </description>
+    <iconFilename>icon.dds</iconFilename>
+
+    <l10n>
+        <text name="storeItem_phobosPotatoWasherWetSubstratePrep">
+            <en>Phobos Washed Potato Prep</en>
+        </text>
+        <text name="function_phobosPotatoWasherWetSubstratePrep">
+            <en>Converts washed potatoes into Phobos wet biomass mash.</en>
+        </text>
+        <text name="construction_tab_phobosBgaCompatibility">
+            <en>Phobos BGA Compat</en>
+        </text>
+        <text name="production_phbWashedPotatoToWetMash">
+            <en>Washed potato mash</en>
+        </text>
+    </l10n>
+
+    <dependencies>
+        <dependency>FS25_BgaExtensions</dependency>
+        <dependency>FS25_PlanET_BGA_Modular</dependency>
+        <dependency>FS25_potatoWasher</dependency>
+    </dependencies>
+
+    <multiplayer supported="true"/>
+
+    <constructionCategories>
+        <tab categoryName="production" name="phobosBgaCompatibility" title="$l10n_construction_tab_phobosBgaCompatibility"/>
+    </constructionCategories>
+
+    <storeItems>
+        <storeItem xmlFilename="placeables/phobos/potatoWasherWetSubstratePrep.xml"/>
+    </storeItems>
+</modDesc>

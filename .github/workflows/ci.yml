@@ -32,16 +32,27 @@ jobs:
       - name: Validate source
         run: python tools/validate_mod.py
 
+      - name: Validate Potato Washer compatibility add-on
+        run: python tools/validate_mod.py --mod-source addons/FS25_BgaExtensions_PotatoWasherCompat
+
       - name: Build package
         run: python tools/package_mod.py --output dist/FS25_BgaExtensions_ci.zip
 
+      - name: Build Potato Washer compatibility add-on
+        run: python tools/package_mod.py --source addons/FS25_BgaExtensions_PotatoWasherCompat --output dist/FS25_BgaExtensions_PotatoWasherCompat_ci.zip
+
       - name: Validate package
         run: python tools/validate_mod.py --package dist/FS25_BgaExtensions_ci.zip
+
+      - name: Validate Potato Washer compatibility package
+        run: python tools/validate_mod.py --mod-source addons/FS25_BgaExtensions_PotatoWasherCompat --package dist/FS25_BgaExtensions_PotatoWasherCompat_ci.zip
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v7
         with:
           name: FS25_BgaExtensions-ci-package
-          path: dist/FS25_BgaExtensions_ci.zip
+          path: |
+            dist/FS25_BgaExtensions_ci.zip
+            dist/FS25_BgaExtensions_PotatoWasherCompat_ci.zip
           if-no-files-found: error
           retention-days: 14

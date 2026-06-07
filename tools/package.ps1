@@ -1,11 +1,21 @@
 param(
+    [string]$SourcePath,
     [string]$OutputPath
 )
 
 $ErrorActionPreference = "Stop"
 
 $repoRoot = Resolve-Path (Join-Path $PSScriptRoot "..")
-$modRoot = Join-Path $repoRoot "mod"
+
+if ([string]::IsNullOrWhiteSpace($SourcePath)) {
+    $SourcePath = "mod"
+}
+
+if ([System.IO.Path]::IsPathRooted($SourcePath)) {
+    $modRoot = $SourcePath
+} else {
+    $modRoot = Join-Path $repoRoot $SourcePath
+}
 
 if (-not (Test-Path -LiteralPath $modRoot -PathType Container)) {
     throw "Mod source folder not found: $modRoot"
@@ -13,7 +23,12 @@ if (-not (Test-Path -LiteralPath $modRoot -PathType Container)) {
 
 if ([string]::IsNullOrWhiteSpace($OutputPath)) {
     $distRoot = Join-Path $repoRoot "dist"
-    $OutputPath = Join-Path $distRoot "FS25_BgaExtensions.zip"
+    if ($SourcePath -eq "mod") {
+        $packageName = "FS25_BgaExtensions"
+    } else {
+        $packageName = Split-Path -Leaf $modRoot
+    }
+    $OutputPath = Join-Path $distRoot "$packageName.zip"
 }
 
 $resolvedOutputParent = Split-Path -Parent $OutputPath

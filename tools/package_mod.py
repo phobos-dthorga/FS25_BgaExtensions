@@ -12,8 +12,8 @@ import zipfile
 from pathlib import Path
 
 
-def package_mod(repo_root: Path, output_path: Path) -> None:
-    mod_root = repo_root / "mod"
+def package_mod(repo_root: Path, source_path: Path, output_path: Path) -> None:
+    mod_root = source_path if source_path.is_absolute() else repo_root / source_path
     if not mod_root.is_dir():
         raise FileNotFoundError(f"Mod source folder not found: {mod_root}")
 
@@ -30,6 +30,7 @@ def package_mod(repo_root: Path, output_path: Path) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build FS25_BgaExtensions zip")
     parser.add_argument("--repo-root", default=".", help="Repository root")
+    parser.add_argument("--source", default="mod", help="Mod source folder relative to the repository root")
     parser.add_argument("--output", default="dist/FS25_BgaExtensions.zip", help="Output zip path")
     args = parser.parse_args()
 
@@ -38,7 +39,7 @@ def main() -> int:
     if not output_path.is_absolute():
         output_path = repo_root / output_path
 
-    package_mod(repo_root, output_path)
+    package_mod(repo_root, Path(args.source), output_path)
     print(f"Created {output_path}")
     return 0
 

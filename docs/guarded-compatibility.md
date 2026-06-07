@@ -6,9 +6,13 @@ FS25 `modDesc.xml` dependencies are hard dependencies, and production XML does n
 
 ## Current Status
 
-No optional compatibility recipes are active yet.
+The first optional compatibility package is active:
 
-The first candidate is `POTATO_WASHED`, because it has a clean interpretation: washed potatoes should behave like a wet/starchy substrate. It still must not be referenced by the core intake until its provider is declared or detected safely.
+| Package | Provider dependency | Route |
+| --- | --- | --- |
+| `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_potatoWasher` | `POTATO_WASHED` -> `PHB_WET_BIOMASS_MASH` |
+
+`POTATO_WASHED` still must not be referenced by the core mod. It is safe only inside the add-on because that add-on declares `FS25_potatoWasher` as a hard dependency.
 
 ## Acceptable Patterns
 
@@ -40,9 +44,9 @@ For uncertain or unstable ecosystems, document the candidate and do not ship act
 
 | Candidate | Intended route | Guard requirement |
 | --- | --- | --- |
-| `POTATO_WASHED` | `POTATO_WASHED` -> `PHB_WET_BIOMASS_MASH` | Requires `FS25_potatoWasher` or runtime fillType detection. |
+| `POTATO_WASHED` | `POTATO_WASHED` -> `PHB_WET_BIOMASS_MASH` | Implemented in `FS25_BgaExtensions_PotatoWasherCompat`, which requires `FS25_potatoWasher`. |
 
-Suggested balance: slightly better or equal to `POTATO`, not dramatically better. Washing should improve cleanliness and handling, not turn potatoes into premium energy crop magic.
+Current balance matches the normal potato wet-mash route. Washing already has its own upstream cost and should not turn potatoes into premium energy crop magic.
 
 ## Later Candidates
 

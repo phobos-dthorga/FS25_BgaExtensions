@@ -7,6 +7,7 @@ This document records the custom visual assets used by `FS25_BgaExtensions`.
 | Asset | Path | Purpose |
 | --- | --- | --- |
 | Mod icon | `mod/icon.dds` | FS25 mod list icon. |
+| Potato Washer Compat icon | `addons/FS25_BgaExtensions_PotatoWasherCompat/icon.dds` | Reuses the Phobos mod icon for the optional add-on package. |
 | Wet biomass mash HUD icon | `mod/hud/fillTypes/hud_fill_phbWetBiomassMash.dds` | Custom HUD image for `PHB_WET_BIOMASS_MASH`, built with mipmaps to avoid runtime texture warnings. |
 
 ## Style

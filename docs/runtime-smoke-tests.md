@@ -8,6 +8,7 @@ The goal is to prove that the current Phobos placeables can be bought, placed, f
 
 - Use a disposable save.
 - Enable `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, and Straw Harvest.
+- For Potato Washer compatibility tests, also enable `FS25_BgaExtensions_PotatoWasherCompat` and `FS25_potatoWasher`.
 - Prefer the same map and mod set for repeated tests so new log lines are easier to compare.
 - Do not test against an important career save until the disposable save is clean.
 
@@ -67,6 +68,14 @@ Run these on medium and large yards:
 - Confirm capacities are medium 320,000 l and large 600,000 l.
 - Confirm the visible fill plane looks acceptable for both materials.
 - Confirm the yards do not create production-point storage warnings.
+
+## Optional Add-On Checks
+
+Only run these when the matching optional add-on and provider mod are installed.
+
+| Add-on | Minimum check | Expected result |
+| --- | --- | --- |
+| Potato Washer Compat | Enable `FS25_BgaExtensions_PotatoWasherCompat` with `FS25_potatoWasher`, buy Phobos Washed Potato Prep, unload `POTATO_WASHED`, and start washed potato mash. | `PHB_WET_BIOMASS_MASH` is produced and can be loaded out for the normal Wet Substrate Prep route. |
 
 ## Log Review
 

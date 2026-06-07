@@ -8,7 +8,13 @@ Run `tools/package.ps1` from PowerShell to create `dist/FS25_BgaExtensions.zip`.
 
 The archive contains the contents of `mod/` at the zip root, which is the layout Farming Simulator expects.
 
-GitHub CI uses `tools/package_mod.py` for the same zip layout on hosted Linux runners.
+Optional add-ons can be packaged from their source folder:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\package.ps1 -SourcePath addons\FS25_BgaExtensions_PotatoWasherCompat
+```
+
+GitHub CI uses `tools/package_mod.py` for the same zip layout on hosted Linux runners and validates both the core package and active add-on packages.
 
 ## Validation
 
@@ -25,6 +31,12 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 - l10n reference checks
 - recipe count target checks
 - package layout and size checks when `--package` is provided
+
+For an add-on package, pass its source folder:
+
+```powershell
+python tools\validate_mod.py --mod-source addons\FS25_BgaExtensions_PotatoWasherCompat
+```
 
 ## Log Measurement
 

@@ -27,6 +27,7 @@ The helper script:
 
 - reads the version from `modDesc.xml` if `-Version` is omitted
 - builds a versioned zip in `dist/`
+- can attach extra prebuilt add-on packages with `-AdditionalAsset`
 - creates a `vX.Y.Z.W` tag
 - pushes the tag
 - creates a GitHub pre-release by default
@@ -35,6 +36,8 @@ The helper script:
 GitHub CI currently builds validation artifacts only. It does not create releases, because `tools/release.ps1` remains the release owner. Do not add a release-creating tag workflow until the local helper is retired or changed to delegate release creation to GitHub Actions.
 
 Use `-Stable` only when the project is genuinely ready to leave pre-release for that version. Use `-Draft` when notes need manual editing before publication.
+
+When a release includes optional add-ons, build and validate each add-on package before running `tools/release.ps1`, then pass the add-on zip with `-AdditionalAsset`.
 
 ## Release Notes Checklist
 

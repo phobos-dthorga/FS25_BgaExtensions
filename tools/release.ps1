@@ -1,6 +1,7 @@
 param(
     [string]$Version,
     [string]$NotesFile,
+    [string[]]$AdditionalAsset,
     [switch]$Stable,
     [switch]$Draft,
     [switch]$DryRun
@@ -96,8 +97,22 @@ $changes
     git tag -a $tag -m "FS25 BGA Extensions $tag"
     git push origin $tag
 
+    $releaseAssets = @($assetPath)
+    foreach ($asset in $AdditionalAsset) {
+        if ([string]::IsNullOrWhiteSpace($asset)) {
+            continue
+        }
+        $resolvedAsset = Resolve-Path -LiteralPath $asset
+        $releaseAssets += $resolvedAsset.Path
+    }
+
     $releaseArgs = @(
-        "release", "create", $tag, $assetPath,
+        "release", "create", $tag
+    )
+
+    $releaseArgs += $releaseAssets
+
+    $releaseArgs += @(
         "--title", "FS25 BGA Extensions $tag",
         "--verify-tag"
     )

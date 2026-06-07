@@ -26,9 +26,10 @@ Current log checked on 2026-06-07:
 
 ## Pending Test Targets
 
-For `v0.2.10.0`, smoke-test the dry fuel processor split, Wet Substrate Prep, medium and large dry fuel yard sizes, the custom construction tabs, the doubled capacities, and the HUD texture hotfix:
+For `v0.2.11.0`, smoke-test the Potato Washer compatibility add-on plus the existing dry fuel processor split, Wet Substrate Prep, medium and large dry fuel yard sizes, the custom construction tabs, the doubled capacities, and the HUD texture hotfix:
 
 - confirm the small dry fuel yard no longer appears in the shop
+- confirm core FS25_BgaExtensions loads as version `0.2.11.0`
 - confirm Wet Substrate Prep appears under `Production > Phobos BGA`
 - confirm Dry Fuel Processor appears under `Production > Phobos Fuel Processing`
 - confirm biomass intakes no longer show wet/root/produce recipes
@@ -45,6 +46,8 @@ For `v0.2.10.0`, smoke-test the dry fuel processor split, Wet Substrate Prep, me
 - confirm dry fuel yards appear under `Buildings > Phobos Fuel Storage`
 - confirm intake storage accepts the larger capacity values without UI or log issues
 - confirm dry fuel yard capacities are medium 320,000 l and large 600,000 l
+- with `FS25_BgaExtensions_PotatoWasherCompat` and `FS25_potatoWasher` enabled, confirm Phobos Washed Potato Prep appears under `Production > Phobos BGA Compat`
+- confirm Phobos Washed Potato Prep accepts `POTATO_WASHED` and produces `PHB_WET_BIOMASS_MASH`
 - confirm no `hud_fill_phbWetBiomassMash` raw-format or mip-generation warnings appear
 - check the log for Phobos-owned warnings or errors
 

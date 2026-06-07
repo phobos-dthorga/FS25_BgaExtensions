@@ -41,14 +41,58 @@ VANILLA_FILLTYPES = {
 }
 
 DEPENDENCY_FILLTYPES = {
+    "FS25_BgaExtensions": {
+        "PHB_WET_BIOMASS_MASH",
+    },
     "FS25_PlanET_BGA_Modular": {
         "LIQUIDMANURE1",
         "MANURE_IN",
         "SILAGE_IN",
         "SUGARBEETCUT_IN",
     },
+    "FS25_potatoWasher": {
+        "POTATO_WASHED",
+    },
+    "FS25_RicePackagingFactory": {
+        "RICE_HUSK",
+    },
+    "FS25_orchardsAndGreenhouses_crossplay": {
+        "COMPOST",
+        "ORGANICWASTE",
+    },
+    "FS25_Nordkirchen_x4": {
+        "COMPOST",
+    },
+    "FS25_The_Mechet": {
+        "COMPOST",
+        "COMPOST_RAW",
+    },
+    "FS25_Potato_Chips_Factory_MF": {
+        "ORGANICWASTE",
+    },
     "pdlc_strawHarvestPack": {
         "STRAW_PELLETS",
+    },
+}
+
+OPTIONAL_FILLTYPE_PROVIDERS = {
+    "COMPOST": {
+        "FS25_Nordkirchen_x4",
+        "FS25_orchardsAndGreenhouses_crossplay",
+        "FS25_The_Mechet",
+    },
+    "COMPOST_RAW": {
+        "FS25_The_Mechet",
+    },
+    "ORGANICWASTE": {
+        "FS25_orchardsAndGreenhouses_crossplay",
+        "FS25_Potato_Chips_Factory_MF",
+    },
+    "POTATO_WASHED": {
+        "FS25_potatoWasher",
+    },
+    "RICE_HUSK": {
+        "FS25_RicePackagingFactory",
     },
 }
 
@@ -56,6 +100,7 @@ OPTIONAL_FILLTYPE_DENYLIST = {
     "ALFALFA_WINDROW",
     "CLOVER_WINDROW",
     "COMPOST",
+    "COMPOST_RAW",
     "DRYALFALFA_WINDROW",
     "DRYCLOVER_WINDROW",
     "ORGANICWASTE",
@@ -65,12 +110,6 @@ OPTIONAL_FILLTYPE_DENYLIST = {
 
 GLOBAL_L10N_KEYS = {
     "unit_literShort",
-}
-
-EXPECTED_PACKAGE_ROOT_FILES = {
-    "icon.dds",
-    "modDesc.xml",
-    "xml/phobosFillTypes.xml",
 }
 
 FORBIDDEN_PACKAGE_PREFIXES = (
@@ -276,8 +315,9 @@ def validate_construction_tabs(
             )
 
 
-def validate_source(repo_root: Path, validation: Validation) -> None:
-    mod_root = repo_root / "mod"
+def validate_source(repo_root: Path, mod_source: str, validation: Validation) -> None:
+    source_path = Path(mod_source)
+    mod_root = source_path if source_path.is_absolute() else repo_root / source_path
     if not mod_root.is_dir():
         validation.error(f"Missing mod source directory: {mod_root}")
         return
@@ -288,16 +328,21 @@ def validate_source(repo_root: Path, validation: Validation) -> None:
         return
 
     dependencies, l10n_keys, construction_tabs = moddesc_data(mod_root, validation)
+    local_types = local_filltypes(mod_root, validation)
     known_filltypes = set(VANILLA_FILLTYPES)
-    known_filltypes.update(local_filltypes(mod_root, validation))
+    known_filltypes.update(local_types)
     for dependency in dependencies:
         known_filltypes.update(DEPENDENCY_FILLTYPES.get(dependency, set()))
 
     for dependency, filltypes in DEPENDENCY_FILLTYPES.items():
+        dependency_owned_filltypes = filltypes - local_types
+        if not dependency_owned_filltypes:
+            continue
+
         used = False
         for path in sorted((mod_root / "placeables").rglob("*.xml")):
             tree = parse_xml_file(path, validation)
-            if tree is not None and collect_filltype_refs(path, tree).intersection(filltypes):
+            if tree is not None and collect_filltype_refs(path, tree).intersection(dependency_owned_filltypes):
                 used = True
         if used and dependency not in dependencies:
             validation.error(f"Dependency fillType used but dependency is not declared: {dependency}")
@@ -325,9 +370,12 @@ def validate_source(repo_root: Path, validation: Validation) -> None:
 
         denied = sorted(refs.intersection(OPTIONAL_FILLTYPE_DENYLIST))
         for fill_type in denied:
-            validation.error(
-                f"Optional fillType '{fill_type}' appears in core placeable XML: {path.relative_to(repo_root)}"
-            )
+            providers = OPTIONAL_FILLTYPE_PROVIDERS.get(fill_type, set())
+            if not providers.intersection(dependencies):
+                validation.error(
+                    f"Optional fillType '{fill_type}' appears without a declared provider dependency "
+                    f"in {path.relative_to(repo_root)}"
+                )
 
         validate_construction_tabs(path, repo_root, tree, construction_tabs, validation)
 
@@ -344,11 +392,39 @@ def validate_source(repo_root: Path, validation: Validation) -> None:
         elif recipe_count > 18:
             validation.warn(f"{path.relative_to(repo_root)} has {recipe_count} recipes; soft target is 18")
 
-    custom_filltype_count = len(local_filltypes(mod_root, validation))
+    custom_filltype_count = len(local_types)
     if custom_filltype_count > 5:
         validation.error(f"{custom_filltype_count} Phobos-owned fillTypes defined; hard target is 5")
     elif custom_filltype_count > 3:
         validation.warn(f"{custom_filltype_count} Phobos-owned fillTypes defined; soft target is 3")
+
+
+def package_expected_entries(names: set[str], archive: zipfile.ZipFile, validation: Validation) -> set[str]:
+    expected = {"modDesc.xml"}
+    if "modDesc.xml" not in names:
+        return expected
+
+    try:
+        root = ET.fromstring(archive.read("modDesc.xml"))
+    except ET.ParseError as exc:
+        validation.error(f"Package modDesc.xml parse failed: {exc}")
+        return expected
+
+    icon_filename = (root.findtext("iconFilename") or "").strip()
+    if icon_filename:
+        expected.add(icon_filename.replace("\\", "/"))
+
+    for node in root.findall("./fillTypes"):
+        filename = node.get("filename", "").strip()
+        if filename:
+            expected.add(filename.replace("\\", "/"))
+
+    for node in root.findall("./storeItems/storeItem"):
+        filename = node.get("xmlFilename", "").strip()
+        if filename:
+            expected.add(filename.replace("\\", "/"))
+
+    return expected
 
 
 def validate_package(package_path: Path, validation: Validation, soft_size_limit: int) -> None:
@@ -365,13 +441,15 @@ def validate_package(package_path: Path, validation: Validation, soft_size_limit
     try:
         with zipfile.ZipFile(package_path) as archive:
             names = sorted(info.filename for info in archive.infolist())
+            name_set = set(names)
+            expected_entries = package_expected_entries(name_set, archive, validation)
     except zipfile.BadZipFile as exc:
         validation.error(f"Invalid zip file: {package_path}: {exc}")
         return
 
-    missing = sorted(EXPECTED_PACKAGE_ROOT_FILES - set(names))
+    missing = sorted(expected_entries - set(names))
     for entry in missing:
-        validation.error(f"Package is missing expected root entry: {entry}")
+        validation.error(f"Package is missing expected entry referenced by modDesc.xml: {entry}")
 
     for name in names:
         if "\\" in name:
@@ -385,6 +463,7 @@ def validate_package(package_path: Path, validation: Validation, soft_size_limit
 def main() -> int:
     parser = argparse.ArgumentParser(description="Validate FS25_BgaExtensions source or package")
     parser.add_argument("--repo-root", default=".", help="Repository root")
+    parser.add_argument("--mod-source", default="mod", help="Mod source folder relative to the repository root")
     parser.add_argument("--package", help="Optional package zip to validate")
     parser.add_argument(
         "--package-size-soft-limit",
@@ -397,7 +476,7 @@ def main() -> int:
     validation = Validation()
     repo_root = Path(args.repo_root).resolve()
 
-    validate_source(repo_root, validation)
+    validate_source(repo_root, args.mod_source, validation)
     if args.package:
         validate_package(Path(args.package).resolve(), validation, args.package_size_soft_limit)
 
