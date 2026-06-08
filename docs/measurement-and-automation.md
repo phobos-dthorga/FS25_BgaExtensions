@@ -6,11 +6,11 @@ This document explains how `FS25_BgaExtensions` performance and health measureme
 
 | Layer | Where it runs | Current status | What it can prove |
 | --- | --- | --- | --- |
-| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, Phobos-owned asset references resolve, core fillTypes are known, optional fillTypes require declared provider dependencies, trigger coverage is present for production inputs/outputs, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target, and core fermentation-priority rules hold. |
+| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, GBW-owned asset references resolve, core fillTypes are known, optional fillTypes require declared provider dependencies, trigger coverage is present for production inputs/outputs, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target, and core fermentation-priority rules hold. |
 | Package validation | GitHub Actions and local tools | Implemented | Core and active add-on zips have FS25's expected root layout, avoid repository-only folders, stay under the XML-only package size target, and match active package-set versions. |
-| Log triage | Local machine after an FS25 test | Implemented | Phobos-owned warnings/errors are separated from external mod noise. |
+| Log triage | Local machine after an FS25 test | Implemented | GBW-owned warnings/errors are separated from external mod noise. |
 | Runtime smoke test | Local FS25 disposable save | Manual, documented in `docs/runtime-smoke-tests.md` | The placeable can be bought, placed, filled, activated, unloaded, and connected to the intended PlanET or Straw Harvest loop. |
-| Load-time comparison | Local FS25 disposable save | Manual with light scripting | A Phobos-enabled test can be compared with a baseline test using the same map/mod stack. |
+| Load-time comparison | Local FS25 disposable save | Manual with light scripting | A GBW-enabled test can be compared with a baseline test using the same map/mod stack. |
 | Hitching/UI feel | Local FS25 disposable save | Manual | Whether production UI size, yard use, or repeated interactions feel bad in actual play. |
 | Full game automation | Local self-hosted runner only, if ever | Not implemented | Hosted GitHub runners cannot launch the user's installed FS25, DLCs, mods, maps, or saves. |
 
@@ -77,16 +77,16 @@ Summarize the FS25 log after a disposable-save test:
 powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1
 ```
 
-Fail the command when Phobos-owned warnings or errors are present:
+Fail the command when GBW-owned warnings or errors are present:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -FailOnPhobosWarning
+powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -FailOnGBWWarning
 ```
 
 If FS25 stores `log.txt` outside the usual Windows Documents path, pass it explicitly:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -LogPath "D:\path\to\FarmingSimulator2025\log.txt" -FailOnPhobosWarning
+powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -LogPath "D:\path\to\FarmingSimulator2025\log.txt" -FailOnGBWWarning
 ```
 
 ## Measurement Recipes
@@ -108,12 +108,12 @@ Use this when a feature changes gameplay:
 1. Build or download the latest package.
 2. Install it beside the declared dependencies.
 3. Start a disposable save with the target map and dependency set.
-4. Buy and place each changed Phobos placeable.
+4. Buy and place each changed GBW placeable.
 5. Deliver each intended input class.
 6. Activate the changed productions.
 7. Confirm outputs can be loaded or consumed downstream.
 8. Exit the game and run `tools/measure_log.py`.
-9. Record any Phobos-owned warning/error in `docs/known-log-lines.md`.
+9. Record any GBW-owned warning/error in `docs/known-log-lines.md`.
 
 ### Load-Time Comparison
 
@@ -145,7 +145,7 @@ Recommended method:
 6. Watch for recurring pauses, not one-time shader or asset load hitches.
 7. Review `log.txt` afterwards.
 
-Repeated hitching attributable to Phobos is a hard miss even if the log is clean.
+Repeated hitching attributable to GBW is a hard miss even if the log is clean.
 
 ## What GitHub Cannot Prove
 

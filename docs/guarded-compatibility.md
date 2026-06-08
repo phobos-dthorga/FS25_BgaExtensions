@@ -10,8 +10,8 @@ Optional compatibility packages are active:
 
 | Package | Provider dependency | Route |
 | --- | --- | --- |
-| `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_potatoWasher` | `POTATO_WASHED` -> `PHB_WET_BIOMASS_MASH` |
-| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` -> `PHB_WET_BIOMASS_MASH` or `COMPOST` |
+| `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_potatoWasher` | `POTATO_WASHED` -> `GBW_ROOT_MASH` |
+| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` -> `GBW_RESIDUE_MASH` or `COMPOST` |
 
 `POTATO_WASHED` still must not be referenced by the core mod. It is safe only inside the add-on because that add-on declares `FS25_potatoWasher` as a hard dependency.
 
@@ -47,7 +47,7 @@ For uncertain or unstable ecosystems, document the candidate and do not ship act
 
 | Candidate | Intended route | Guard requirement |
 | --- | --- | --- |
-| `POTATO_WASHED` | `POTATO_WASHED` -> `PHB_WET_BIOMASS_MASH` | Implemented in `FS25_BgaExtensions_PotatoWasherCompat`, which requires `FS25_potatoWasher`. |
+| `POTATO_WASHED` | `POTATO_WASHED` -> `GBW_ROOT_MASH` | Implemented in `FS25_BgaExtensions_PotatoWasherCompat`, which requires `FS25_potatoWasher`. |
 
 Current balance matches the normal potato wet-mash route. Washing already has its own upstream cost and should not turn potatoes into premium energy crop magic.
 
@@ -65,8 +65,8 @@ A guarded compatibility slice is not done until:
 
 - missing provider mod produces no error or warning
 - present provider mod exposes the intended recipe or module
-- the produced material can enter the existing Phobos/PlanET path
-- the game log is clean of new Phobos warnings
+- the produced material can enter the existing GBW/PlanET path
+- the game log is clean of new GBW warnings
 - the release notes name the optional provider clearly
 
 Maize+/MaizePlus remains parked and is not part of this pattern until a future explicit decision.

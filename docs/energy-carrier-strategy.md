@@ -17,7 +17,7 @@ Each building family should own one clear process type. This keeps the in-game p
 | `STRAW` | Raw dry residue | Active. Can become low-grade PlanET substrate or `STRAW_PELLETS`. Better as fuel feedstock than premium BGA material. |
 | `METHANE` | BGA energy product | Observe and integrate carefully. Base-game/PlanET BGAs commonly sell it directly. Do not feed it back into biomass prep. |
 | `ELECTRICCHARGE` | BGA energy product | Observe and integrate carefully. Base-game/PlanET BGAs commonly sell it directly. Do not treat it as a biomass fuel source. |
-| `DIGESTATE` | BGA residue/fertilizer | Let the BGA layer own it. Phobos prep modules should not duplicate digestate output unless they become a real digester. |
+| `DIGESTATE` | BGA residue/fertilizer | Let the BGA layer own it. GBW prep modules should not duplicate digestate output unless they become a real digester. |
 | `DIESEL` | Fossil fuel | Out of scope unless a future emergency generator feature has a strong gameplay reason. |
 
 ## Building Families
@@ -39,8 +39,8 @@ Purpose: keep wet, starchy, sugary, root, and produce-waste flows separate from 
 
 Current route:
 
-- wet crops to `PHB_WET_BIOMASS_MASH`
-- wet mash conditioning to `SUGARBEETCUT_IN`
+- wet crops and produce residues to the appropriate GBW mash family
+- mash-family conditioning to `SUGARBEETCUT_IN`
 
 Good future candidates:
 
@@ -86,7 +86,7 @@ Outputs belong here:
 - `ELECTRICCHARGE`
 - `DIGESTATE`
 
-PlanET and base-game BGAs already use this layer. Phobos should not duplicate it until there is a clear reason, such as a companion gas engine, energy buffer, or export module that works cleanly with existing fillType handling.
+PlanET and base-game BGAs already use this layer. GBW should not duplicate it until there is a clear reason, such as a companion gas engine, energy buffer, or export module that works cleanly with existing fillType handling.
 
 ## Process Split Rule
 
@@ -110,7 +110,7 @@ Before using either as an input or stored commodity, verify:
 1. Whether it can be stored by a normal placeable without log warnings.
 2. Whether it can be loaded, unloaded, transported, or only sold directly.
 3. Whether using it creates a money loop with existing BGA outputs.
-4. Whether PlanET already sells it directly, making a Phobos route redundant.
+4. Whether PlanET already sells it directly, making a GBW route redundant.
 5. Whether a separate energy export module is more readable than adding recipes to existing intakes.
 
 Default answer until proven otherwise: let PlanET sell methane and electricity directly.

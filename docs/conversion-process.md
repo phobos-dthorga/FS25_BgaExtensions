@@ -10,7 +10,7 @@ Some materials genuinely belong in a silage pathway. Others are better represent
 
 For the first proof of concept, prefer the smallest useful compatibility layer. The installed PlanET modular BGA already uses internal feedstocks, so forage and manure lanes feed those internal PlanET lanes directly.
 
-The wet crop lane now uses a dedicated Wet Substrate Prep placeable and one Phobos-owned intermediary, `PHB_WET_BIOMASS_MASH`, before handing material to PlanET as `SUGARBEETCUT_IN`. This avoids presenting spinach, peas, roots, and produce waste as if they were sugar beet.
+The wet crop lane now uses a dedicated Wet Substrate Prep placeable and four GBW-owned mash-family intermediaries before handing material to PlanET as `SUGARBEETCUT_IN`. This avoids presenting spinach, peas, roots, sugar crops, and produce waste as if they were all sugar beet.
 
 ## Fermentation Priority
 
@@ -40,7 +40,7 @@ Use this for materials that already fit the FS25 bunker silo model or are close 
 Preferred behavior:
 
 - Reuse vanilla bunker silo behavior where possible.
-- Add optional Phobos-owned production recipes only where a map/mod crop cannot enter the vanilla bunker route safely.
+- Add optional GBW-owned production recipes only where a map/mod crop cannot enter the vanilla bunker route safely.
 - Output should be `SILAGE` when the input is truly ensiled forage.
 
 ### Lane 2: Wet Biomass Substrate
@@ -56,9 +56,9 @@ Use this for wet, sugary, starchy, or produce-waste materials:
 
 Preferred behavior:
 
-- Process through a Phobos-owned biomass preparation production.
-- Output should be a Phobos-owned intermediate substrate, not vanilla `SILAGE`, unless testing proves vanilla silage is the better gameplay compromise.
-- The substrate then feeds a Phobos-owned BGA intake or a guarded optional BGA integration.
+- Process through a GBW-owned biomass preparation production.
+- Output should be a GBW-owned intermediate substrate, not vanilla `SILAGE`, unless testing proves vanilla silage is the better gameplay compromise.
+- The substrate then feeds a GBW-owned BGA intake or a guarded optional BGA integration.
 - Prefer `COMPOST` when present because maps may already support it as a handled/spreadable material. Treat `COMPOST_RAW` and `ORGANICWASTE` as detected aliases or fallback inputs, not as fillTypes this mod should define separately.
 
 ### Lane 3: Whole-Crop And Grain Mash
@@ -98,12 +98,12 @@ Preferred behavior:
 
 The first implementation should be deliberately narrow:
 
-1. Add Phobos-owned companion production points: PlanET Biomass Intake, Wet Substrate Prep, and Dry Fuel Processor.
+1. Add GBW-owned companion production points: PlanET Biomass Intake, Wet Substrate Prep, and Dry Fuel Processor.
 2. Depend on `FS25_PlanET_BGA_Modular` and `pdlc_strawHarvestPack` for the proof of concept.
 3. Convert selected high-confidence vanilla inputs into PlanET internal feedstocks.
 4. Use `SILAGE_IN` for forage-like biomass and `SUGARBEETCUT_IN` for wet/starchy/root biomass.
 5. Use existing `STRAW_PELLETS` for the dry heat route to the HALLSYS Pellet Heat Plant.
-6. Avoid adding any new fillTypes until a standalone or non-PlanET pathway genuinely needs one.
+6. Keep GBW-owned fillTypes constrained to the current mash-family intermediaries unless a standalone or non-PlanET pathway genuinely needs another one.
 
 Initial input set:
 
@@ -111,10 +111,14 @@ Initial input set:
 - `DRYGRASS_WINDROW`
 - `CHAFF`
 - `SUGARBEET_CUT`
+- `SUGARCANE`
 - `POTATO`
 - `BEETROOT`
 - `CARROT`
 - `PARSNIP`
+- `SPINACH`
+- `PEA`
+- `GREENBEAN`
 
 Current biomass intake recipes:
 
@@ -132,17 +136,17 @@ Current Dry Fuel Processor recipes:
 
 Current Wet Substrate Prep recipes:
 
-- `SUGARBEET_CUT` -> `PHB_WET_BIOMASS_MASH`
-- `SUGARCANE` -> `PHB_WET_BIOMASS_MASH`
-- `POTATO` -> `PHB_WET_BIOMASS_MASH`
-- `BEETROOT` -> `PHB_WET_BIOMASS_MASH`
-- `CARROT` -> `PHB_WET_BIOMASS_MASH`
-- `PARSNIP` -> `PHB_WET_BIOMASS_MASH`
-- `SPINACH` -> `PHB_WET_BIOMASS_MASH`
-- `PEA` -> `PHB_WET_BIOMASS_MASH`
-- `GREENBEAN` -> `PHB_WET_BIOMASS_MASH`
-- `PHB_WET_BIOMASS_MASH` -> `SUGARBEETCUT_IN`
-- `PHB_WET_BIOMASS_MASH` + `SILAGE_ADDITIVE` -> improved `SUGARBEETCUT_IN`
+- `SUGARBEET_CUT` -> `GBW_SWEET_MASH`
+- `SUGARCANE` -> `GBW_SWEET_MASH`
+- `POTATO` -> `GBW_ROOT_MASH`
+- `BEETROOT` -> `GBW_ROOT_MASH`
+- `CARROT` -> `GBW_ROOT_MASH`
+- `PARSNIP` -> `GBW_ROOT_MASH`
+- `SPINACH` -> `GBW_GREEN_MASH`
+- `PEA` -> `GBW_GREEN_MASH`
+- `GREENBEAN` -> `GBW_GREEN_MASH`
+- each GBW mash family -> `SUGARBEETCUT_IN`
+- each GBW mash family + `SILAGE_ADDITIVE` -> improved `SUGARBEETCUT_IN`
 
 Current dry fuel yard storage:
 
@@ -162,8 +166,8 @@ Optional detected inputs for the first expansion:
 
 Active optional add-on inputs:
 
-- `POTATO_WASHED` -> `PHB_WET_BIOMASS_MASH` in `FS25_BgaExtensions_PotatoWasherCompat`
-- `ORGANICWASTE` -> `PHB_WET_BIOMASS_MASH` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
+- `POTATO_WASHED` -> `GBW_ROOT_MASH` in `FS25_BgaExtensions_PotatoWasherCompat`
+- `ORGANICWASTE` -> `GBW_RESIDUE_MASH` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
 - `ORGANICWASTE` -> `COMPOST` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
 
 Generated waste should be conservative:
@@ -189,17 +193,17 @@ Patching existing BGAs sounds attractive, but it makes the mod fragile:
 - load order can affect custom fill types and related systems
 - players may stack multiple BGA mods
 
-The safer path is to ship a self-contained Phobos conversion chain first, then add optional integrations once the substrate and balancing model are proven.
+The safer path is to ship a self-contained GBW conversion chain first, then add optional integrations once the substrate and balancing model are proven.
 
 ## Fill Type Caution
 
-The first proof of concept does not add a broad `PHB_BGA_SUBSTRATE`.
+The first proof of concept does not add a broad `GBW_BGA_SUBSTRATE`.
 
-If `PHB_BGA_SUBSTRATE` is added later, it should not require custom bales in its first version.
+If `GBW_BGA_SUBSTRATE` is added later, it should not require custom bales in its first version.
 
 If a custom fill type is added, keep it tightly scoped:
 
-- used by Phobos-owned production/storage/placeable paths
+- used by GBW-owned production/storage/placeable paths
 - no custom bale dependency
 - no animal food dependency
 - no forage mixer dependency
@@ -221,11 +225,11 @@ The exact numbers should be tuned against vanilla BGA recipes after the first XM
 
 ## Current By-Product Guidance
 
-The current implementation now uses one Phobos-owned wet intermediary, `PHB_WET_BIOMASS_MASH`, in the Wet Substrate Prep placeable for wet/root/produce substrates before handing them to PlanET as `SUGARBEETCUT_IN`.
+The current implementation now uses four GBW-owned wet intermediaries, `GBW_SWEET_MASH`, `GBW_ROOT_MASH`, `GBW_GREEN_MASH`, and `GBW_RESIDUE_MASH`, before handing them to PlanET as `SUGARBEETCUT_IN`.
 
 For by-products and farm-adjacent outputs, follow `docs/byproduct-integration-audit.md`:
 
 - prefer existing fillTypes such as `COMPOST`, `DIGESTATE`, `STRAW_PELLETS`, `WOODCHIPS`, `ORGANICWASTE`, and `RICE_HUSK` when they already exist
 - avoid defining one-off waste fillTypes unless the gameplay need is clear
-- keep PlanET internal fillTypes as PlanET handoffs, not general Phobos farm commodities
+- keep PlanET internal fillTypes as PlanET handoffs, not general GBW farm commodities
 - keep Maize+/MaizePlus integration parked until a future explicit decision

@@ -44,7 +44,10 @@ VANILLA_FILLTYPES = {
 
 DEPENDENCY_FILLTYPES = {
     "FS25_BgaExtensions": {
-        "PHB_WET_BIOMASS_MASH",
+        "GBW_GREEN_MASH",
+        "GBW_RESIDUE_MASH",
+        "GBW_ROOT_MASH",
+        "GBW_SWEET_MASH",
     },
     "FS25_PlanET_BGA_Modular": {
         "LIQUIDMANURE1",
@@ -112,10 +115,10 @@ OPTIONAL_FILLTYPE_DENYLIST = {
 
 DEPENDENCY_CONSTRUCTION_TABS = {
     "FS25_BgaExtensions": {
-        "phobosBgaCompatibility": "production",
-        "phobosBgaProduction": "production",
-        "phobosFuelProcessing": "production",
-        "phobosFuelStorage": "buildings",
+        "gbwBgaCompatibility": "production",
+        "gbwBgaProduction": "production",
+        "gbwFuelProcessing": "production",
+        "gbwFuelStorage": "buildings",
     },
 }
 
@@ -248,13 +251,13 @@ def validate_filltype_icons(mod_root: Path, repo_root: Path, validation: Validat
             label = f"{name} in {path.relative_to(repo_root)}"
 
             if not hud_ref:
-                validation.error(f"Phobos-owned fillType is missing a HUD icon: {label}")
+                validation.error(f"GBW-owned fillType is missing a HUD icon: {label}")
                 continue
             if not hud_ref.lower().endswith(".dds"):
                 validation.error(f"FillType HUD icon must reference a DDS file: {label}")
                 continue
             if not hud_ref.startswith(SELF_MOD_ASSET_PREFIX):
-                validation.error(f"FillType HUD icon must be a Phobos-owned asset: {label}")
+                validation.error(f"FillType HUD icon must be a GBW-owned asset: {label}")
                 continue
 
             relative_asset = hud_ref[len(SELF_MOD_ASSET_PREFIX) :]
@@ -337,11 +340,11 @@ def validate_self_mod_refs(path: Path, mod_root: Path, repo_root: Path, validati
         referenced = match.group(1)
         if not (mod_root / referenced).is_file():
             validation.error(
-                f"Missing Phobos-owned asset reference '{referenced}' in {path.relative_to(repo_root)}"
+                f"Missing GBW-owned asset reference '{referenced}' in {path.relative_to(repo_root)}"
             )
         if referenced.lower().startswith("hud/") and referenced.lower().endswith(".png"):
             validation.error(
-                f"Phobos HUD texture should be DDS with mipmaps, not PNG: {path.relative_to(repo_root)}"
+                f"GBW HUD texture should be DDS with mipmaps, not PNG: {path.relative_to(repo_root)}"
             )
 
 
@@ -463,9 +466,9 @@ def validate_fermentation_priority_rules(
 ) -> None:
     filename = path.name
     size_prefix_by_file = {
-        "planetBiomassIntakeSmall.xml": "phbSmall",
-        "planetBiomassIntakeMedium.xml": "phbMedium",
-        "planetBiomassIntakeLarge.xml": "phbLarge",
+        "planetBiomassIntakeSmall.xml": "gbwSmall",
+        "planetBiomassIntakeMedium.xml": "gbwMedium",
+        "planetBiomassIntakeLarge.xml": "gbwLarge",
     }
     size_prefix = size_prefix_by_file.get(filename)
     if size_prefix is not None:
@@ -532,25 +535,45 @@ def validate_fermentation_priority_rules(
 
     if filename == "planetWetSubstratePrep.xml":
         relative_path = path.relative_to(repo_root)
-        plain = require_record(path, repo_root, tree, "phbWetPrepWetMashToPlanetBeet", validation)
-        additive = require_record(path, repo_root, tree, "phbWetPrepWetMashAdditiveToPlanetBeet", validation)
-        if plain is not None and additive is not None:
+        mash_pairs = [
+            ("Sweet", "sweet"),
+            ("Root", "root"),
+            ("Green", "green"),
+            ("Residue", "residue"),
+        ]
+        for production_prefix, message_prefix in mash_pairs:
+            plain = require_record(
+                path,
+                repo_root,
+                tree,
+                f"gbwWetPrep{production_prefix}MashToPlanetBeet",
+                validation,
+            )
+            additive = require_record(
+                path,
+                repo_root,
+                tree,
+                f"gbwWetPrep{production_prefix}MashAdditiveToPlanetBeet",
+                validation,
+            )
+            if plain is None or additive is None:
+                continue
             require_greater(
                 float(additive["cycles"]),
                 float(plain["cycles"]),
-                f"Wet mash with additive must run faster than plain wet mash in {relative_path}",
+                f"{message_prefix.title()} mash with additive must run faster than plain {message_prefix} mash in {relative_path}",
                 validation,
             )
             require_greater(
                 float(additive["sugarbeetcut_in"]),
                 float(plain["sugarbeetcut_in"]),
-                f"Wet mash with additive must yield more usable substrate than plain wet mash in {relative_path}",
+                f"{message_prefix.title()} mash with additive must yield more usable substrate than plain {message_prefix} mash in {relative_path}",
                 validation,
             )
             require_greater(
                 float(additive["silage_additive"]),
                 0.0,
-                f"Wet mash additive recipe must consume SILAGE_ADDITIVE in {relative_path}",
+                f"{message_prefix.title()} mash additive recipe must consume SILAGE_ADDITIVE in {relative_path}",
                 validation,
             )
 
@@ -590,21 +613,21 @@ def validate_construction_tabs(
         relative_path = path.relative_to(repo_root)
 
         if not tab:
-            validation.error(f"Phobos placeable is missing a construction brush tab: {relative_path}")
+            validation.error(f"GBW placeable is missing a construction brush tab: {relative_path}")
             continue
 
-        if not tab.startswith("phobos"):
+        if not tab.startswith("gbw"):
             validation.error(
-                f"Phobos placeable uses non-Phobos construction tab '{tab}': {relative_path}"
+                f"GBW placeable uses non-GBW construction tab '{tab}': {relative_path}"
             )
             continue
 
         declared_category = construction_tabs.get(tab)
         if declared_category is None:
-            validation.error(f"Phobos construction tab '{tab}' is not declared in modDesc.xml: {relative_path}")
+            validation.error(f"GBW construction tab '{tab}' is not declared in modDesc.xml: {relative_path}")
         elif category and declared_category != category:
             validation.error(
-                f"Phobos construction tab '{tab}' is declared for '{declared_category}' "
+                f"GBW construction tab '{tab}' is declared for '{declared_category}' "
                 f"but used under '{category}': {relative_path}"
             )
 
@@ -684,9 +707,9 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
 
     custom_filltype_count = len(local_types)
     if custom_filltype_count > 5:
-        validation.error(f"{custom_filltype_count} Phobos-owned fillTypes defined; hard target is 5")
-    elif custom_filltype_count > 3:
-        validation.warn(f"{custom_filltype_count} Phobos-owned fillTypes defined; soft target is 3")
+        validation.error(f"{custom_filltype_count} GBW-owned fillTypes defined; hard target is 5")
+    elif custom_filltype_count > 4:
+        validation.warn(f"{custom_filltype_count} GBW-owned fillTypes defined; soft target is 4")
 
 
 def package_expected_entries(names: set[str], archive: zipfile.ZipFile, validation: Validation) -> set[str]:

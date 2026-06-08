@@ -4,18 +4,21 @@ This document records what `FS25_BgaExtensions` expects from required dependenci
 
 ## Required Dependencies
 
-| Dependency | Why it is required | Contract used by Phobos | Verification source |
+| Dependency | Why it is required | Contract used by GBW | Verification source |
 | --- | --- | --- | --- |
 | `FS25_PlanET_BGA_Modular` | PlanET-specific intake and prep modules use PlanET internal feedstocks and PlanET bunker assets. | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, plus referenced PlanET bunker models and store icons. | Local mod XML and game log on 2026-06-07: loaded as version `1.0.0.1`, with 9 fillTypes loaded. |
 | `pdlc_strawHarvestPack` | Straw pellet output and dry fuel storage target the HALLSYS Pellet Heat Plant ecosystem. | `STRAW_PELLETS` and installed pDLC runtime support for straw pellet handling. | Game log on 2026-06-07: available pDLC version `1.1.0.0`, with 3 fillTypes loaded. |
 
-## Phobos-Owned Contract
+## GBW-Owned Contract
 
 | FillType | Owner | Use |
 | --- | --- | --- |
-| `PHB_WET_BIOMASS_MASH` | `FS25_BgaExtensions` | Internal Wet Substrate Prep staging material before handoff to PlanET `SUGARBEETCUT_IN`. |
+| `GBW_SWEET_MASH` | `FS25_BgaExtensions` | Sweet wet substrate family for sugar beet cut and sugarcane before handoff to PlanET `SUGARBEETCUT_IN`. |
+| `GBW_ROOT_MASH` | `FS25_BgaExtensions` | Root/starchy wet substrate family for potatoes and root crops before handoff to PlanET `SUGARBEETCUT_IN`. |
+| `GBW_GREEN_MASH` | `FS25_BgaExtensions` | Leafy/green produce wet substrate family before handoff to PlanET `SUGARBEETCUT_IN`. |
+| `GBW_RESIDUE_MASH` | `FS25_BgaExtensions` | Organic residue wet substrate family, currently produced by the Orchards/Greenhouses add-on before handoff to PlanET `SUGARBEETCUT_IN`. |
 
-`PHB_WET_BIOMASS_MASH` is not meant to become a broad farm commodity yet. It exists to avoid pretending every wet crop is sugar beet while still keeping the PlanET handoff simple.
+These GBW mash fillTypes are not meant to become broad farm commodities yet. They exist to avoid pretending every wet crop is sugar beet while still keeping the PlanET handoff simple.
 
 ## Base Game Materials
 
@@ -31,7 +34,7 @@ These are not core dependencies and must not appear in core XML unless their pro
 | --- | --- | --- |
 | `POTATO_WASHED` | `FS25_potatoWasher` | First guarded compatibility candidate. |
 | `COMPOST` | Maps and greenhouse/orchard packs | Optional compatibility only. Prefer because other systems may already handle it. |
-| `ORGANICWASTE` | Greenhouse/orchard and potato-chip packs | Optional compatibility only. Do not define in Phobos. |
+| `ORGANICWASTE` | Greenhouse/orchard and potato-chip packs | Optional compatibility only. Do not define in GBW. |
 | `RICE_HUSK` | Rice packaging factory | Optional low-value residue route. |
 
 ## Rule
@@ -48,7 +51,7 @@ Do not put optional fillTypes directly into the core placeable XML. The current 
 
 ## Active Optional Add-Ons
 
-| Add-on package | Required dependencies | Contract used by Phobos |
+| Add-on package | Required dependencies | Contract used by GBW |
 | --- | --- | --- |
-| `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_potatoWasher` | `POTATO_WASHED` from Potato Washing System, `PHB_WET_BIOMASS_MASH` from core Phobos, and the small PlanET bunker model. |
-| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` and `COMPOST` from Orchards And Greenhouses, `PHB_WET_BIOMASS_MASH` from core Phobos, and the small PlanET bunker model. |
+| `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_potatoWasher` | `POTATO_WASHED` from Potato Washing System, `GBW_ROOT_MASH` from core GBW, and the small PlanET bunker model. |
+| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` and `COMPOST` from Orchards And Greenhouses, `GBW_RESIDUE_MASH` from core GBW, and the small PlanET bunker model. |

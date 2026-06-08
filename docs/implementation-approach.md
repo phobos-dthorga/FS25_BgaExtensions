@@ -10,7 +10,7 @@ The preferred player experience is simple:
 
 1. Install the required dependency mod when a feature needs one.
 2. Install `FS25_BgaExtensions` as its own mod.
-3. Place Phobos-owned companion modules in-game.
+3. Place GBW-owned companion modules in-game.
 4. Feed additional biomass through those modules into the target BGA system.
 
 Players should not need to edit, rebuild, or replace another author's mod.
@@ -19,14 +19,14 @@ Players should not need to edit, rebuild, or replace another author's mod.
 
 Use companion modules first.
 
-The mod should add its own placeables, recipes, and compatibility behavior beside the systems it integrates with. For PlanET support, this means Phobos-owned intake or preprocessing modules that output PlanET-compatible internal feedstocks.
+The mod should add its own placeables, recipes, and compatibility behavior beside the systems it integrates with. For PlanET support, this means GBW-owned intake or preprocessing modules that output PlanET-compatible internal feedstocks.
 
 Prefer this order:
 
 1. Existing vanilla fillTypes and base-game behavior.
 2. Dependency-provided runtime fillTypes, when the dependency is declared.
-3. Phobos-owned placeables and recipes.
-4. Phobos-owned custom fillTypes only when existing fillTypes cannot represent the gameplay cleanly.
+3. GBW-owned placeables and recipes.
+4. GBW-owned custom fillTypes only when existing fillTypes cannot represent the gameplay cleanly.
 5. Lua hooks only when data-driven XML cannot safely express the feature.
 
 Avoid this by default:
@@ -49,10 +49,10 @@ Current method:
 - use its registered internal fillTypes as the contract, especially `SILAGE_IN` and `SUGARBEETCUT_IN`
 - use Straw Harvest `STRAW_PELLETS` as the dry fuel handoff when bridging straw residues to the HALLSYS Pellet Heat Plant
 - keep vanilla `WOODCHIPS` out of the production-point intake; handle it through the dedicated dry fuel yard silo
-- add Phobos-owned modules that convert expanded biomass inputs into those internal fillTypes
+- add GBW-owned modules that convert expanded biomass inputs into those internal fillTypes
 - let PlanET's own fermenters, generators, storages, and distributors continue doing their normal work
 - let the HALLSYS Pellet Heat Plant remain the destination for pellet fuel
-- keep all Phobos balancing and recipes in `FS25_BgaExtensions`
+- keep all GBW balancing and recipes in `FS25_BgaExtensions`
 
 This gives compatibility without touching the PlanET or Straw Harvest packages.
 
@@ -87,15 +87,15 @@ For dependency mods such as PlanET:
 - reference installed dependency assets from XML only when the dependency is required and the path is tested
 - do not copy dependency assets or source files into this repository without clear license permission
 
-For the current PlanET proof of concept, the dependency resources are internal fillTypes plus referenced PlanET bunker models and store icons. The placeable XML remains Phobos-owned and the dependency remains the source of truth for its own assets.
+For the current PlanET proof of concept, the dependency resources are internal fillTypes plus referenced PlanET bunker models and store icons. The placeable XML remains GBW-owned and the dependency remains the source of truth for its own assets.
 
 ### Reference Policy
 
 Referencing is allowed; vendoring is not.
 
-Use references such as `$data/...` or `$moddir$RequiredMod/...` when they point to content the player must already have installed. This keeps ownership clear and avoids duplicating third-party or DLC files inside the Phobos package.
+Use references such as `$data/...` or `$moddir$RequiredMod/...` when they point to content the player must already have installed. This keeps ownership clear and avoids duplicating third-party or DLC files inside the GBW package.
 
-The Phobos release zip should contain only Phobos-owned files. A required dependency should remain the source of truth for its own assets, fillTypes, placeables, and scripts.
+The GBW release zip should contain only GBW-owned files. A required dependency should remain the source of truth for its own assets, fillTypes, placeables, and scripts.
 
 ### Project Resources
 
@@ -107,7 +107,7 @@ The Phobos release zip should contain only Phobos-owned files. A required depend
 - `docs/performance-targets.md` defines performance tripwires and the required action when a target is missed.
 - `docs/measurement-and-automation.md` defines how the performance targets are measured and what CI can automate.
 - `docs/energy-carrier-strategy.md` defines which building family owns combustion fuels, BGA energy products, and digestate.
-- `docs/construction-menu-categories.md` defines where Phobos placeables appear in the FS25 construction menu.
+- `docs/construction-menu-categories.md` defines where GBW placeables appear in the FS25 construction menu.
 - `docs/model-fit-decisions.md` records model choices that are hidden or retired because their visual language misleads the player.
 - `docs/visual-assets.md` defines the custom visual asset policy.
 - `docs/known-log-lines.md` records observed log messages and actions.
@@ -132,9 +132,9 @@ Use existing fillTypes wherever they are technically and thematically close enou
 
 Maize+/MaizePlus integration is out of scope until the FS25 releases are production-ready, locally installed, and explicitly chosen as a target. Do not add Maize+/MaizePlus recipes, dependency entries, registry placeholders, compatibility packages, or tests before that decision.
 
-`FS25_cornProductionPack` remains an observation source only. Do not target its fillTypes or naming model in shipped Phobos content.
+`FS25_cornProductionPack` remains an observation source only. Do not target its fillTypes or naming model in shipped GBW content.
 
-Add a Phobos custom fillType only when it provides a clear gameplay boundary that cannot be represented well by vanilla or dependency-provided types.
+Add a GBW custom fillType only when it provides a clear gameplay boundary that cannot be represented well by vanilla or dependency-provided types.
 
 ### First-Use Verification
 
@@ -142,11 +142,11 @@ Do not introduce a fillType into recipes, storage, triggers, ranking tables, reg
 
 Before first use, verify:
 
-1. Where it is defined: vanilla data, a declared dependency, a map, another optional mod, or Phobos XML.
+1. Where it is defined: vanilla data, a declared dependency, a map, another optional mod, or GBW XML.
 2. What it represents in-game and what its real-world analogue is.
 3. Whether it is a usable material or an internal-only handoff.
 4. What handling support exists: bulk, liquid, pallet, bale, heap, forage wagon, mixer wagon, shovel/fork, tanker, hayloft, sell point, or production input/output.
-5. Whether it needs runtime detection, a hard dependency, or a Phobos-owned fallback.
+5. Whether it needs runtime detection, a hard dependency, or a GBW-owned fallback.
 6. Whether bales, ground tipping, animal food, forage mixing, or map-owned recipes create load-order or compatibility risk.
 
 Good verification sources include `data/maps/maps_fillTypes.xml`, `data/maps/maps_densityMapHeightTypes.xml`, bale XML, vehicle fillUnits/additives, placeable storage/loading XML, local dependency XML, and observed game-log behavior.
@@ -166,7 +166,7 @@ Use this workflow for each feature:
 1. Define the target gameplay loop.
 2. Identify whether the feature is standalone, vanilla-compatible, or dependency-specific.
 3. Confirm every required fillType exists and verify its actual role using the first-use checklist above.
-4. Prefer a Phobos-owned companion placeable over patching an existing one.
+4. Prefer a GBW-owned companion placeable over patching an existing one.
 5. Choose the correct process building family from `docs/energy-carrier-strategy.md`.
 6. Place the store item in the correct tab from `docs/construction-menu-categories.md`.
 7. Keep recipes small and readable.
@@ -188,6 +188,8 @@ Do not abstract or generate those files until balancing has settled and the repe
 `modDesc.xml` is the current shop surface. A placeable XML file may still remain packaged after it is removed from `storeItems` when keeping that path helps early disposable saves load cleanly.
 
 Do not delete legacy placeable XML just to tidy the package. First confirm no published prerelease used the path, or intentionally break compatibility in a documented release.
+
+`v0.2.15.0` is an intentional breaking pre-release cleanup: old pre-GBW placeable paths, legacy hidden all-in-one intake XML, and the hidden small dry fuel yard XML were removed while the project moved to GBW identifiers and the four mash-family fillTypes.
 
 ## Testing Method
 
@@ -229,7 +231,7 @@ Do not release patched versions of dependencies. Do not ask players to rebuild a
 
 Release packages should contain only:
 
-- Phobos-owned XML, scripts, docs, and assets
+- GBW-owned XML, scripts, docs, and assets
 - allowed base-game references via `$data` paths
 - allowed dependency references via `$moddir$...` paths when that dependency is explicit
 - no copied third-party mod assets unless licensing has been checked and recorded
@@ -240,7 +242,7 @@ Lua is appropriate when XML cannot express a feature safely, such as:
 
 - runtime fillType detection for optional map/mod crops
 - guarded optional compatibility when a dependency may or may not be present
-- shared helper behavior that belongs in `FS25_PhobosLib`
+- shared helper behavior that belongs in `FS25_GBWLib`
 - diagnostics for in-game testing
 
 Lua should remain thin and boring. Data-driven XML should carry simple recipes and placeables whenever it can.
@@ -252,7 +254,7 @@ After the PlanET proof of concept is tested, expand in small steps:
 1. Add more vanilla inputs to the PlanET intake if balance supports them.
 2. Add optional common-map forage inputs such as alfalfa and clover through guarded compatibility.
 3. Add compost-aware waste intake only where `COMPOST` is detected.
-4. Consider a standalone Phobos substrate path only if PlanET-specific routing is too narrow.
+4. Consider a standalone GBW substrate path only if PlanET-specific routing is too narrow.
 5. Add custom fillTypes only after existing types stop being good enough.
 
-Every expansion should preserve the same rule: Phobos modules work alongside other systems; they do not overwrite them.
+Every expansion should preserve the same rule: GBW modules work alongside other systems; they do not overwrite them.

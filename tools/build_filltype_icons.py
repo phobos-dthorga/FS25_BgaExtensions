@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Phobos-owned fillType HUD DDS icons from source PNG artwork."""
+"""Build GBW-owned fillType HUD DDS icons from source PNG artwork."""
 
 from __future__ import annotations
 
@@ -76,7 +76,7 @@ def build_icon(source_path: Path, output_path: Path, size: int) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build Phobos fillType HUD DDS icons")
+    parser = argparse.ArgumentParser(description="Build GBW fillType HUD DDS icons")
     parser.add_argument("--repo-root", default=".", help="Repository root")
     parser.add_argument("--size", type=int, default=256, help="Output icon size in pixels")
     args = parser.parse_args()
@@ -84,9 +84,21 @@ def main() -> int:
     repo_root = Path(args.repo_root).resolve()
     icons = [
         (
-            repo_root / "assets/source/fillTypes/hud_fill_phbWetBiomassMash.png",
-            repo_root / "mod/hud/fillTypes/hud_fill_phbWetBiomassMash.dds",
-        )
+            repo_root / "assets/source/fillTypes/hud_fill_gbwSweetMash.png",
+            repo_root / "mod/hud/fillTypes/hud_fill_gbwSweetMash.dds",
+        ),
+        (
+            repo_root / "assets/source/fillTypes/hud_fill_gbwRootMash.png",
+            repo_root / "mod/hud/fillTypes/hud_fill_gbwRootMash.dds",
+        ),
+        (
+            repo_root / "assets/source/fillTypes/hud_fill_gbwGreenMash.png",
+            repo_root / "mod/hud/fillTypes/hud_fill_gbwGreenMash.dds",
+        ),
+        (
+            repo_root / "assets/source/fillTypes/hud_fill_gbwResidueMash.png",
+            repo_root / "mod/hud/fillTypes/hud_fill_gbwResidueMash.dds",
+        ),
     ]
 
     for source_path, output_path in icons:

@@ -8,7 +8,7 @@ For the full build workflow, validation method, and resource policy, see `docs/i
 
 Ship companion modules, not edits to other mods.
 
-`FS25_BgaExtensions` should work alongside supported mods by adding Phobos-owned placeables, recipes, and compatibility logic. It should not modify, repackage, or redistribute another author's mod files.
+`FS25_BgaExtensions` should work alongside supported mods by adding GBW-owned placeables, recipes, and compatibility logic. It should not modify, repackage, or redistribute another author's mod files.
 
 ## PlanET Integration
 
@@ -16,11 +16,11 @@ For PlanET-specific features, treat `FS25_PlanET_BGA_Modular` as the BGA framewo
 
 - declare a dependency when a feature requires PlanET fillTypes or behavior
 - use PlanET's registered fillTypes as integration points, such as `SILAGE_IN` and `SUGARBEETCUT_IN`
-- add Phobos-owned intake, preprocessing, storage, or routing modules that feed PlanET's existing modules
-- keep Phobos recipes and balancing in this repository
+- add GBW-owned intake, preprocessing, storage, or routing modules that feed PlanET's existing modules
+- keep GBW recipes and balancing in this repository
 - avoid monkey-patching PlanET's existing placeables unless in-game testing proves a stable, release-safe API exists
 
-The current proof of concept follows this model by adding Phobos PlanET Biomass Intake and Wet Substrate Prep modules that convert selected vanilla biomass into PlanET internal feedstocks.
+The current proof of concept follows this model by adding GBW PlanET Biomass Intake and Wet Substrate Prep modules that convert selected vanilla biomass into PlanET internal feedstocks.
 
 ## Straw Harvest / HALLSYS Integration
 
@@ -42,13 +42,13 @@ Allowed by default:
 
 - depending on another mod by filename
 - using fillTypes or gameplay registrations that exist at runtime
-- referencing installed base-game, DLC, or dependency-owned assets from Phobos XML when the owning content is required
+- referencing installed base-game, DLC, or dependency-owned assets from GBW XML when the owning content is required
 - documenting compatibility behavior and required dependencies
 
 Not allowed without clear license permission:
 
 - copying another mod's XML, models, textures, icons, scripts, or sounds into this repository
-- redistributing another mod's assets inside a Phobos package
+- redistributing another mod's assets inside a GBW package
 - publishing a patched version of another author's mod
 
 ## Reference, Do Not Vendor
@@ -65,12 +65,12 @@ Requirements for dependency-owned references:
 
 - the dependency must be declared or the feature must be guarded
 - the referenced path must be tested in-game
-- the Phobos package must still contain only Phobos-owned files
+- the GBW package must still contain only GBW-owned files
 - attribution should be documented when a dependency meaningfully enables a feature
 
 Do not copy dependency XML, models, textures, icons, scripts, or sounds into this repository merely because they can be referenced. Keep the original package as the insular safety net.
 
-Prefer base-game assets or Phobos-owned assets for release packages. Use dependency-owned references only when they are technically useful and the dependency relationship is explicit.
+Prefer base-game assets or GBW-owned assets for release packages. Use dependency-owned references only when they are technically useful and the dependency relationship is explicit.
 
 ## Rebuild Policy
 

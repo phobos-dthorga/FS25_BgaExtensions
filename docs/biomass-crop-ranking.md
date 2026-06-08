@@ -18,7 +18,7 @@ Installed mod observations are recorded in `docs/installed-mod-observations.md`.
 
 - Prefer bulk substrate and placeable production paths before custom bales.
 - Use base-game `SILAGE` where the material naturally fits the vanilla bunker silo model.
-- Use a future intermediate substrate for materials that are wet, starchy, sugary, oily, or otherwise fermentable but not really silage.
+- Use GBW mash-family intermediaries for materials that are wet, starchy, sugary, oily, or otherwise fermentable but not really silage.
 - Prefer fermented or conditioned products over raw shortcuts in both throughput and usable downstream output. Silage additive can soften the penalty for raw lanes, but should not beat proper fermentation.
 - Treat recipe output as gameplay-normalized usable BGA value. Keep ratios plausible, but do not require strict conservation of mass when FS25-style economy and clarity benefit from a modestly gamey conversion.
 - Treat common map-maker crops as optional integrations. Register them only when their fill types exist.
@@ -84,6 +84,6 @@ FillTypes are a scarce resource, so waste streams should reuse vanilla or alread
 Start with the least fragile path:
 
 1. Use vanilla-compatible silage materials: `CHAFF`, `GRASS_WINDROW`, `DRYGRASS_WINDROW`, `SILAGE`, `SUGARBEET_CUT`.
-2. Add a Phobos-owned bulk substrate path for wet/starchy/sugary biomass.
+2. Add GBW-owned mash-family paths for wet/starchy/sugary biomass.
 3. Add optional common map integrations for `ALFALFA`, `CLOVER`, `RYE`, `TRITICALE`, `SPELT`, `MILLET`, `FIELDPEA`, and similar fill types only after runtime detection exists.
 4. Avoid custom biomass bales until custom bale loading behavior has been tested on an unmodified map.

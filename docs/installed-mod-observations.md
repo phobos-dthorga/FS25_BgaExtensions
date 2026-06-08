@@ -2,7 +2,7 @@
 
 Observed against:
 
-`D:\synologydrive\phobosdthorga\cloudstation drive\google drive\gekko-data\Documents\My Games\FarmingSimulator2025\mods`
+Local FS25 mods folder supplied by the maintainer.
 
 Scan date: 2026-06-06.
 

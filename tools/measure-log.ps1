@@ -2,7 +2,7 @@ param(
     [string]$LogPath,
     [string]$GameUserDir,
     [string]$SummaryJson = "dist\current-log-summary.json",
-    [switch]$FailOnPhobosWarning
+    [switch]$FailOnGBWWarning
 )
 
 $ErrorActionPreference = "Stop"
@@ -95,7 +95,7 @@ function Resolve-FS25LogPath {
     return @($existing | Sort-Object { (Get-Item -LiteralPath $_).LastWriteTimeUtc } -Descending)[0]
 }
 
-function Test-PhobosLine {
+function Test-GBWLine {
     param(
         [string]$Line,
         [string]$ModName = "FS25_BgaExtensions"
@@ -104,8 +104,8 @@ function Test-PhobosLine {
     $lowered = $Line.ToLowerInvariant().Replace("\", "/")
     return (
         $lowered.Contains($ModName.ToLowerInvariant()) -or
-        $lowered.Contains("/placeables/phobos/") -or
-        $lowered.Contains("phb_")
+        $lowered.Contains("/placeables/gbw/") -or
+        $lowered.Contains("gbw_")
     )
 }
 
@@ -123,7 +123,7 @@ function Invoke-PowerShellLogSummary {
     param(
         [string]$ResolvedLogPath,
         [string]$ResolvedSummaryJson,
-        [switch]$ShouldFailOnPhobosWarning
+        [switch]$ShouldFailOnGBWWarning
     )
 
     $lines = Get-Content -LiteralPath $ResolvedLogPath -Encoding UTF8 -ErrorAction Stop
@@ -141,8 +141,8 @@ function Invoke-PowerShellLogSummary {
         last_timestamp = $null
         mod_available_lines = @()
         mod_load_lines = @()
-        phobos_errors = @()
-        phobos_warnings = @()
+        gbw_errors = @()
+        gbw_warnings = @()
         external_errors = @()
         external_warnings = @()
     }
@@ -170,11 +170,11 @@ function Invoke-PowerShellLogSummary {
             continue
         }
 
-        $isPhobos = Test-PhobosLine -Line $line
-        if ($isPhobos -and $isError) {
-            Add-Line -Summary $summary -Key "phobos_errors" -Line $line
-        } elseif ($isPhobos -and $isWarning) {
-            Add-Line -Summary $summary -Key "phobos_warnings" -Line $line
+        $isGBW = Test-GBWLine -Line $line
+        if ($isGBW -and $isError) {
+            Add-Line -Summary $summary -Key "gbw_errors" -Line $line
+        } elseif ($isGBW -and $isWarning) {
+            Add-Line -Summary $summary -Key "gbw_warnings" -Line $line
         } elseif ($isError) {
             Add-Line -Summary $summary -Key "external_errors" -Line $line
         } else {
@@ -191,8 +191,8 @@ function Invoke-PowerShellLogSummary {
     foreach ($entry in @(
         @("Mod available lines", "mod_available_lines"),
         @("Mod load lines", "mod_load_lines"),
-        @("Phobos errors", "phobos_errors"),
-        @("Phobos warnings", "phobos_warnings"),
+        @("GBW errors", "gbw_errors"),
+        @("GBW warnings", "gbw_warnings"),
         @("External errors", "external_errors"),
         @("External warnings", "external_warnings")
     )) {
@@ -217,7 +217,7 @@ function Invoke-PowerShellLogSummary {
         Write-Output "Wrote $ResolvedSummaryJson"
     }
 
-    if ($ShouldFailOnPhobosWarning -and (@($summary.phobos_errors).Count -gt 0 -or @($summary.phobos_warnings).Count -gt 0)) {
+    if ($ShouldFailOnGBWWarning -and (@($summary.gbw_errors).Count -gt 0 -or @($summary.gbw_warnings).Count -gt 0)) {
         exit 1
     }
 }
@@ -243,9 +243,9 @@ function Test-CommandRuns {
 function Get-PythonCandidates {
     $candidates = @()
 
-    if (-not [string]::IsNullOrWhiteSpace($env:PHOBOS_PYTHON_PATH)) {
+    if (-not [string]::IsNullOrWhiteSpace($env:GBW_PYTHON_PATH)) {
         $candidates += [ordered]@{
-            Command = $env:PHOBOS_PYTHON_PATH
+            Command = $env:GBW_PYTHON_PATH
             PrefixArgs = @()
             VersionArgs = @("--version")
         }
@@ -331,8 +331,8 @@ if (-not [string]::IsNullOrWhiteSpace($SummaryJson)) {
     $measureArgs += @("--summary-json", $summaryPath)
 }
 
-if ($FailOnPhobosWarning) {
-    $measureArgs += "--fail-on-phobos-warning"
+if ($FailOnGBWWarning) {
+    $measureArgs += "--fail-on-gbw-warning"
 }
 
 if ($pythonCommand) {
@@ -350,4 +350,4 @@ if (-not [string]::IsNullOrWhiteSpace($SummaryJson)) {
         $resolvedSummary = Join-Path $repoRoot $SummaryJson
     }
 }
-Invoke-PowerShellLogSummary -ResolvedLogPath $resolvedLog -ResolvedSummaryJson $resolvedSummary -ShouldFailOnPhobosWarning:$FailOnPhobosWarning
+Invoke-PowerShellLogSummary -ResolvedLogPath $resolvedLog -ResolvedSummaryJson $resolvedSummary -ShouldFailOnGBWWarning:$FailOnGBWWarning

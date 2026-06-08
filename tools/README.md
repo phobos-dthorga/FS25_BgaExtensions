@@ -31,7 +31,7 @@ python tools\package_set.py --versioned --validate --write-sha256 --write-json
 
 ## FillType Icons
 
-Build Phobos-owned fillType HUD DDS icons from source PNG artwork:
+Build GBW-owned fillType HUD DDS icons from source PNG artwork:
 
 ```powershell
 python tools\build_filltype_icons.py
@@ -45,15 +45,15 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 
 - XML parse checks
 - `modDesc.xml` referenced file checks
-- Phobos-owned `$moddir$FS25_BgaExtensions/...` asset reference checks
-- Phobos HUD texture references use DDS rather than runtime PNG files
-- Phobos-owned fillType HUD icons are 256x256 uncompressed 32-bit DDS files with alpha and a complete mipmap chain
+- GBW-owned `$moddir$FS25_BgaExtensions/...` asset reference checks
+- GBW HUD texture references use DDS rather than runtime PNG files
+- GBW-owned fillType HUD icons are 256x256 uncompressed 32-bit DDS files with alpha and a complete mipmap chain
 - active fillType reference checks
 - optional fillType guard checks
 - production input/output trigger coverage checks
 - core fermentation-priority balance checks
 - storage-only production-point guard checks
-- Phobos construction tab checks
+- GBW construction tab checks
 - l10n reference checks
 - recipe count target checks
 - package layout and size checks when `--package` is provided
@@ -67,18 +67,18 @@ python tools\validate_mod.py --mod-source addons\FS25_BgaExtensions_OrchardsGree
 
 ## Log Measurement
 
-Run `tools/measure-log.ps1` after an in-game disposable-save test to separate Phobos-owned warnings/errors from external mod noise. It uses the Python triage script when Python is available, falls back to a small PowerShell summary when it is not, and writes `dist/current-log-summary.json` by default.
+Run `tools/measure-log.ps1` after an in-game disposable-save test to separate GBW-owned warnings/errors from external mod noise. It uses the Python triage script when Python is available, falls back to a small PowerShell summary when it is not, and writes `dist/current-log-summary.json` by default.
 
-The wrapper checks `PHOBOS_PYTHON_PATH`, common per-user Python install paths, every discovered `python`, and then every discovered `py`. This avoids the Microsoft Store Python alias when a real Python install is also present.
+The wrapper checks `GBW_PYTHON_PATH`, common per-user Python install paths, every discovered `python`, and then every discovered `py`. This avoids the Microsoft Store Python alias when a real Python install is also present.
 
 If the FS25 log is not in the usual Windows Documents path, pass it explicitly:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -LogPath "D:\path\to\FarmingSimulator2025\log.txt" -FailOnPhobosWarning
+powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -LogPath "D:\path\to\FarmingSimulator2025\log.txt" -FailOnGBWWarning
 ```
 
 The underlying Python script can also be run directly:
 
 ```powershell
-python tools/measure_log.py --log "D:\path\to\FarmingSimulator2025\log.txt" --fail-on-phobos-warning
+python tools/measure_log.py --log "D:\path\to\FarmingSimulator2025\log.txt" --fail-on-gbw-warning
 ```

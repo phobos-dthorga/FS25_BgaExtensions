@@ -37,7 +37,7 @@ The same class of issue can apply anywhere FS25 loads definitions in a specific 
 - `animalFood.xml` and husbandry feed recipes.
 - Forage mixer recipes and map-specific mixing rules.
 - Placeable storage and loading stations that whitelist fill types.
-- Production points when trying to modify existing vanilla/map productions instead of defining a Phobos-owned placeable.
+- Production points when trying to modify existing vanilla/map productions instead of defining a GBW-owned placeable.
 
 For this project, prefer adding our own placeable production path first. Patch existing map or third-party systems only through guarded optional integrations.
 

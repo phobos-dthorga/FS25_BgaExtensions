@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<map xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../shared/xml/schema/fillTypes.xsd">
+    <fillTypes>
+        <fillType name="GBW_SWEET_MASH" title="$l10n_fillType_gbwSweetMash" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+            <physics massPerLiter="0.00" maxPhysicalSurfaceAngle="0"/>
+            <economy pricePerLiter="0.001"/>
+            <image hud="$moddir$FS25_BgaExtensions/hud/fillTypes/hud_fill_gbwSweetMash.dds"/>
+        </fillType>
+        <fillType name="GBW_ROOT_MASH" title="$l10n_fillType_gbwRootMash" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+            <physics massPerLiter="0.00" maxPhysicalSurfaceAngle="0"/>
+            <economy pricePerLiter="0.001"/>
+            <image hud="$moddir$FS25_BgaExtensions/hud/fillTypes/hud_fill_gbwRootMash.dds"/>
+        </fillType>
+        <fillType name="GBW_GREEN_MASH" title="$l10n_fillType_gbwGreenMash" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+            <physics massPerLiter="0.00" maxPhysicalSurfaceAngle="0"/>
+            <economy pricePerLiter="0.001"/>
+            <image hud="$moddir$FS25_BgaExtensions/hud/fillTypes/hud_fill_gbwGreenMash.dds"/>
+        </fillType>
+        <fillType name="GBW_RESIDUE_MASH" title="$l10n_fillType_gbwResidueMash" showOnPriceTable="false" unitShort="$l10n_unit_literShort">
+            <physics massPerLiter="0.00" maxPhysicalSurfaceAngle="0"/>
+            <economy pricePerLiter="0.001"/>
+            <image hud="$moddir$FS25_BgaExtensions/hud/fillTypes/hud_fill_gbwResidueMash.dds"/>
+        </fillType>
+    </fillTypes>
+
+    <fillTypeCategories>
+        <fillTypeCategory name="GBW_BGA_INTERMEDIATES">GBW_SWEET_MASH GBW_ROOT_MASH GBW_GREEN_MASH GBW_RESIDUE_MASH</fillTypeCategory>
+    </fillTypeCategories>
+</map>

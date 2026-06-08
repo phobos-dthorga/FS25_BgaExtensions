@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <placeable type="productionPoint" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
     <storeData>
-        <name>$l10n_storeItem_phobosPlanetBiomassIntakeLarge</name>
+        <name>$l10n_storeItem_gbwPlanetBiomassIntakeLarge</name>
         <functions>
-            <function>$l10n_function_phobosPlanetSolidBiomassIntake</function>
+            <function>$l10n_function_gbwPlanetSolidBiomassIntake</function>
         </functions>
         <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerGross.dds</image>
         <price>145000</price>
@@ -16,7 +16,7 @@
         <brush>
             <type>placeable</type>
             <category>production</category>
-            <tab>phobosBgaProduction</tab>
+            <tab>gbwBgaProduction</tab>
         </brush>
     </storeData>
 
@@ -73,41 +73,41 @@
 
     <productionPoint>
         <productions sharedThroughputCapacity="false">
-            <production id="phbLargeChaffToPlanetSilage" name="$l10n_production_phbChaffToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3">
+            <production id="gbwLargeChaffToPlanetSilage" name="$l10n_production_gbwChaffToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3">
                 <inputs><input fillType="CHAFF" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="760"/></outputs>
             </production>
-            <production id="phbLargeChaffAdditiveToPlanetSilage" name="$l10n_production_phbChaffAdditiveToPlanetSilage" cyclesPerHour="14" costsPerActiveHour="3.5">
+            <production id="gbwLargeChaffAdditiveToPlanetSilage" name="$l10n_production_gbwChaffAdditiveToPlanetSilage" cyclesPerHour="14" costsPerActiveHour="3.5">
                 <inputs>
                     <input fillType="CHAFF" amount="840"/>
                     <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
                 </inputs>
                 <outputs><output fillType="SILAGE_IN" amount="810"/></outputs>
             </production>
-            <production id="phbLargeSilageToPlanetSilage" name="$l10n_production_phbSilageToPlanetSilage" cyclesPerHour="24" costsPerActiveHour="2.5">
+            <production id="gbwLargeSilageToPlanetSilage" name="$l10n_production_gbwSilageToPlanetSilage" cyclesPerHour="24" costsPerActiveHour="2.5">
                 <inputs><input fillType="SILAGE" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="840"/></outputs>
             </production>
-            <production id="phbLargeGrassToPlanetSilage" name="$l10n_production_phbGrassToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="3">
+            <production id="gbwLargeGrassToPlanetSilage" name="$l10n_production_gbwGrassToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="3">
                 <inputs><input fillType="GRASS_WINDROW" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="600"/></outputs>
             </production>
-            <production id="phbLargeGrassAdditiveToPlanetSilage" name="$l10n_production_phbGrassAdditiveToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3.5">
+            <production id="gbwLargeGrassAdditiveToPlanetSilage" name="$l10n_production_gbwGrassAdditiveToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3.5">
                 <inputs>
                     <input fillType="GRASS_WINDROW" amount="840"/>
                     <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
                 </inputs>
                 <outputs><output fillType="SILAGE_IN" amount="700"/></outputs>
             </production>
-            <production id="phbLargeHayToPlanetSilage" name="$l10n_production_phbHayToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="3">
+            <production id="gbwLargeHayToPlanetSilage" name="$l10n_production_gbwHayToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="3">
                 <inputs><input fillType="DRYGRASS_WINDROW" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="660"/></outputs>
             </production>
-            <production id="phbLargeStrawToPlanetSilage" name="$l10n_production_phbStrawToPlanetSilage" cyclesPerHour="7" costsPerActiveHour="4">
+            <production id="gbwLargeStrawToPlanetSilage" name="$l10n_production_gbwStrawToPlanetSilage" cyclesPerHour="7" costsPerActiveHour="4">
                 <inputs><input fillType="STRAW" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="420"/></outputs>
             </production>
-            <production id="phbLargeManureToPlanetManure" name="$l10n_production_phbManureToPlanetManure" cyclesPerHour="20" costsPerActiveHour="2.5">
+            <production id="gbwLargeManureToPlanetManure" name="$l10n_production_gbwManureToPlanetManure" cyclesPerHour="20" costsPerActiveHour="2.5">
                 <inputs><input fillType="MANURE" amount="400"/></inputs>
                 <outputs><output fillType="MANURE_IN" amount="400"/></outputs>
             </production>

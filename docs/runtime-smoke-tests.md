@@ -2,7 +2,7 @@
 
 Use these checks after installing a prerelease package in a disposable FS25 save.
 
-The goal is to prove only what static validation cannot prove: FS25 accepts the placeables at runtime, the UI remains readable, triggers feel right in-game, and no Phobos-owned log warnings or errors appear. Full balance testing can wait until the basic runtime path is quiet.
+The goal is to prove only what static validation cannot prove: FS25 accepts the placeables at runtime, the UI remains readable, triggers feel right in-game, and no GBW-owned log warnings or errors appear. Full balance testing can wait until the basic runtime path is quiet.
 
 ## Reduced Testing Rule
 
@@ -31,7 +31,7 @@ For a normal XML recipe or placeable change:
 2. Buy and place only the changed placeable family.
 3. Test one representative changed input and one representative changed output.
 4. Open the production UI once and confirm the changed recipe is readable.
-5. Exit and run the log triage command with `-FailOnPhobosWarning`.
+5. Exit and run the log triage command with `-FailOnGBWWarning`.
 
 If that pass is clean and CI passed, broader personal testing can wait until the next gameplay session.
 
@@ -46,15 +46,15 @@ If that pass is clean and CI passed, broader personal testing can wait until the
 
 ## Startup Checks
 
-- The save loads without a Phobos-owned `Error:` or `Warning`.
+- The save loads without a GBW-owned `Error:` or `Warning`.
 - The shop shows:
-  - Phobos PlanET Biomass Intake - Small
-  - Phobos PlanET Biomass Intake - Medium
-  - Phobos PlanET Biomass Intake - Large
-  - Phobos PlanET Wet Substrate Prep
-  - Phobos PlanET Dry Fuel Processor
-  - Phobos PlanET Dry Fuel Yard - Medium
-  - Phobos PlanET Dry Fuel Yard - Large
+  - GBW PlanET Biomass Intake - Small
+  - GBW PlanET Biomass Intake - Medium
+  - GBW PlanET Biomass Intake - Large
+  - GBW Wet Substrate Prep
+  - GBW Dry Fuel Processor
+  - GBW PlanET Dry Fuel Yard - Medium
+  - GBW PlanET Dry Fuel Yard - Large
 - The small dry fuel yard does not appear in the shop.
 - All listed items can be placed and sold in the disposable save.
 
@@ -78,11 +78,11 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 
 | Route | Minimum check | Expected result |
 | --- | --- | --- |
-| Root mash | Unload one root crop such as `POTATO`, `BEETROOT`, `CARROT`, or `PARSNIP`. | `PHB_WET_BIOMASS_MASH` is produced. |
-| Produce mash | Unload one produce crop such as `SPINACH`, `PEA`, or `GREENBEAN`. | `PHB_WET_BIOMASS_MASH` is produced. |
-| Beet cut mash | Unload `SUGARBEET_CUT`. | `PHB_WET_BIOMASS_MASH` is produced. |
-| Wet mash conditioning | Start wet mash conditioning. | `SUGARBEETCUT_IN` is produced and can be loaded out. |
-| Wet mash additive conditioning | Unload `SILAGE_ADDITIVE`, start wet mash conditioning with additive. | `SUGARBEETCUT_IN` is produced at the improved additive rate. |
+| Sweet mash | Unload `SUGARBEET_CUT` or `SUGARCANE`. | `GBW_SWEET_MASH` is produced. |
+| Root mash | Unload one root crop such as `POTATO`, `BEETROOT`, `CARROT`, or `PARSNIP`. | `GBW_ROOT_MASH` is produced. |
+| Green mash | Unload one produce crop such as `SPINACH`, `PEA`, or `GREENBEAN`. | `GBW_GREEN_MASH` is produced. |
+| Mash conditioning | Start conditioning for each available mash family. | `SUGARBEETCUT_IN` is produced and can be loaded out. |
+| Mash additive conditioning | Unload `SILAGE_ADDITIVE`, start an additive conditioning route. | `SUGARBEETCUT_IN` is produced at the improved additive rate. |
 
 ## Dry Fuel Processor Checks
 
@@ -108,8 +108,8 @@ Only run these when the matching optional add-on and provider mod are installed.
 
 | Add-on | Minimum check | Expected result |
 | --- | --- | --- |
-| Potato Washer Compat | Enable `FS25_BgaExtensions_PotatoWasherCompat` with `FS25_potatoWasher`, buy Phobos Washed Potato Prep, unload `POTATO_WASHED`, and start washed potato mash. | `PHB_WET_BIOMASS_MASH` is produced and can be loaded out for the normal Wet Substrate Prep route. |
-| Orchards/Greenhouses Compat | Enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` with `FS25_orchardsAndGreenhouses_crossplay`, buy Phobos Organic Residue Prep, unload `ORGANICWASTE`, and start organic waste mash. | `PHB_WET_BIOMASS_MASH` is produced and can be loaded out for the normal Wet Substrate Prep route. |
+| Potato Washer Compat | Enable `FS25_BgaExtensions_PotatoWasherCompat` with `FS25_potatoWasher`, buy GBW Washed Potato Prep, unload `POTATO_WASHED`, and start washed potato mash. | `GBW_ROOT_MASH` is produced and can be loaded out for the normal Wet Substrate Prep route. |
+| Orchards/Greenhouses Compat | Enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` with `FS25_orchardsAndGreenhouses_crossplay`, buy GBW Organic Residue Prep, unload `ORGANICWASTE`, and start organic waste mash. | `GBW_RESIDUE_MASH` is produced and can be loaded out for the normal Wet Substrate Prep route. |
 | Orchards/Greenhouses Compat | Start organic waste composting. | `COMPOST` is produced and can be loaded out for the provider's normal compost/farm loop. |
 
 ## Log Review
@@ -117,13 +117,13 @@ Only run these when the matching optional add-on and provider mod are installed.
 After exiting the game, run:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -FailOnPhobosWarning
+powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -FailOnGBWWarning
 ```
 
 If your FS25 user folder is not in the usual Windows Documents location, pass the log path explicitly:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -LogPath "D:\path\to\FarmingSimulator2025\log.txt" -FailOnPhobosWarning
+powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -LogPath "D:\path\to\FarmingSimulator2025\log.txt" -FailOnGBWWarning
 ```
 
 The command writes a JSON summary to `dist/current-log-summary.json` by default. Do not upload full logs publicly unless needed, because logs can include local paths and installed mod lists.
@@ -136,8 +136,8 @@ A prerelease is ready for broader personal testing when:
 - intended inputs are accepted
 - intended outputs can be loaded or consumed downstream
 - production UI remains readable
-- no recurring Phobos-owned hitching is visible
-- no Phobos HUD texture raw-format or mip-generation warnings appear
-- no Phobos-owned warnings or errors appear in the log
+- no recurring GBW-owned hitching is visible
+- no GBW HUD texture raw-format or mip-generation warnings appear
+- no GBW-owned warnings or errors appear in the log
 
-If a Phobos-owned warning or error appears, stop expanding that feature and record the line in `docs/known-log-lines.md`.
+If a GBW-owned warning or error appears, stop expanding that feature and record the line in `docs/known-log-lines.md`.

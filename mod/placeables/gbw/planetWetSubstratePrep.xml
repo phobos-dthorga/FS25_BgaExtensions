@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <placeable type="productionPoint" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
     <storeData>
-        <name>$l10n_storeItem_phobosPlanetWetSubstratePrep</name>
+        <name>$l10n_storeItem_gbwPlanetWetSubstratePrep</name>
         <functions>
-            <function>$l10n_function_phobosPlanetWetSubstratePrep</function>
+            <function>$l10n_function_gbwPlanetWetSubstratePrep</function>
         </functions>
         <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerKlein.dds</image>
         <price>56000</price>
@@ -16,7 +16,7 @@
         <brush>
             <type>placeable</type>
             <category>production</category>
-            <tab>phobosBgaProduction</tab>
+            <tab>gbwBgaProduction</tab>
         </brush>
     </storeData>
 
@@ -73,49 +73,82 @@
 
     <productionPoint>
         <productions sharedThroughputCapacity="false">
-            <production id="phbWetPrepSugarbeetCutToWetMash" name="$l10n_production_phbSugarbeetCutToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="2.5">
+            <production id="gbwWetPrepSugarbeetCutToSweetMash" name="$l10n_production_gbwSugarbeetCutToSweetMash" cyclesPerHour="12" costsPerActiveHour="2.5">
                 <inputs><input fillType="SUGARBEET_CUT" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="200"/></outputs>
+                <outputs><output fillType="GBW_SWEET_MASH" amount="200"/></outputs>
             </production>
-            <production id="phbWetPrepSugarcaneToWetMash" name="$l10n_production_phbSugarcaneToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+            <production id="gbwWetPrepSugarcaneToSweetMash" name="$l10n_production_gbwSugarcaneToSweetMash" cyclesPerHour="8" costsPerActiveHour="3">
                 <inputs><input fillType="SUGARCANE" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="170"/></outputs>
+                <outputs><output fillType="GBW_SWEET_MASH" amount="170"/></outputs>
             </production>
-            <production id="phbWetPrepPotatoToWetMash" name="$l10n_production_phbPotatoToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+            <production id="gbwWetPrepPotatoToRootMash" name="$l10n_production_gbwPotatoToRootMash" cyclesPerHour="8" costsPerActiveHour="3">
                 <inputs><input fillType="POTATO" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
+                <outputs><output fillType="GBW_ROOT_MASH" amount="150"/></outputs>
             </production>
-            <production id="phbWetPrepBeetrootToWetMash" name="$l10n_production_phbBeetrootToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+            <production id="gbwWetPrepBeetrootToRootMash" name="$l10n_production_gbwBeetrootToRootMash" cyclesPerHour="8" costsPerActiveHour="3">
                 <inputs><input fillType="BEETROOT" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
+                <outputs><output fillType="GBW_ROOT_MASH" amount="150"/></outputs>
             </production>
-            <production id="phbWetPrepCarrotToWetMash" name="$l10n_production_phbCarrotToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+            <production id="gbwWetPrepCarrotToRootMash" name="$l10n_production_gbwCarrotToRootMash" cyclesPerHour="8" costsPerActiveHour="3">
                 <inputs><input fillType="CARROT" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
+                <outputs><output fillType="GBW_ROOT_MASH" amount="150"/></outputs>
             </production>
-            <production id="phbWetPrepParsnipToWetMash" name="$l10n_production_phbParsnipToPlanetBeet" cyclesPerHour="8" costsPerActiveHour="3">
+            <production id="gbwWetPrepParsnipToRootMash" name="$l10n_production_gbwParsnipToRootMash" cyclesPerHour="8" costsPerActiveHour="3">
                 <inputs><input fillType="PARSNIP" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="150"/></outputs>
+                <outputs><output fillType="GBW_ROOT_MASH" amount="150"/></outputs>
             </production>
-            <production id="phbWetPrepSpinachToWetMash" name="$l10n_production_phbSpinachToWetMash" cyclesPerHour="8" costsPerActiveHour="3">
+            <production id="gbwWetPrepSpinachToGreenMash" name="$l10n_production_gbwSpinachToGreenMash" cyclesPerHour="8" costsPerActiveHour="3">
                 <inputs><input fillType="SPINACH" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="130"/></outputs>
+                <outputs><output fillType="GBW_GREEN_MASH" amount="130"/></outputs>
             </production>
-            <production id="phbWetPrepPeaToWetMash" name="$l10n_production_phbPeaToWetMash" cyclesPerHour="8" costsPerActiveHour="3">
+            <production id="gbwWetPrepPeaToGreenMash" name="$l10n_production_gbwPeaToGreenMash" cyclesPerHour="8" costsPerActiveHour="3">
                 <inputs><input fillType="PEA" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="140"/></outputs>
+                <outputs><output fillType="GBW_GREEN_MASH" amount="140"/></outputs>
             </production>
-            <production id="phbWetPrepGreenBeanToWetMash" name="$l10n_production_phbGreenBeanToWetMash" cyclesPerHour="8" costsPerActiveHour="3">
+            <production id="gbwWetPrepGreenBeanToGreenMash" name="$l10n_production_gbwGreenBeanToGreenMash" cyclesPerHour="8" costsPerActiveHour="3">
                 <inputs><input fillType="GREENBEAN" amount="200"/></inputs>
-                <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="140"/></outputs>
+                <outputs><output fillType="GBW_GREEN_MASH" amount="140"/></outputs>
             </production>
-            <production id="phbWetPrepWetMashToPlanetBeet" name="$l10n_production_phbWetMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
-                <inputs><input fillType="PHB_WET_BIOMASS_MASH" amount="200"/></inputs>
+            <production id="gbwWetPrepSweetMashToPlanetBeet" name="$l10n_production_gbwSweetMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs><input fillType="GBW_SWEET_MASH" amount="200"/></inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
             </production>
-            <production id="phbWetPrepWetMashAdditiveToPlanetBeet" name="$l10n_production_phbWetMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
+            <production id="gbwWetPrepSweetMashAdditiveToPlanetBeet" name="$l10n_production_gbwSweetMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
                 <inputs>
-                    <input fillType="PHB_WET_BIOMASS_MASH" amount="200"/>
+                    <input fillType="GBW_SWEET_MASH" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
+                </inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
+            </production>
+            <production id="gbwWetPrepRootMashToPlanetBeet" name="$l10n_production_gbwRootMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs><input fillType="GBW_ROOT_MASH" amount="200"/></inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
+            </production>
+            <production id="gbwWetPrepRootMashAdditiveToPlanetBeet" name="$l10n_production_gbwRootMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
+                <inputs>
+                    <input fillType="GBW_ROOT_MASH" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
+                </inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
+            </production>
+            <production id="gbwWetPrepGreenMashToPlanetBeet" name="$l10n_production_gbwGreenMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs><input fillType="GBW_GREEN_MASH" amount="200"/></inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
+            </production>
+            <production id="gbwWetPrepGreenMashAdditiveToPlanetBeet" name="$l10n_production_gbwGreenMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
+                <inputs>
+                    <input fillType="GBW_GREEN_MASH" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
+                </inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
+            </production>
+            <production id="gbwWetPrepResidueMashToPlanetBeet" name="$l10n_production_gbwResidueMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs><input fillType="GBW_RESIDUE_MASH" amount="200"/></inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
+            </production>
+            <production id="gbwWetPrepResidueMashAdditiveToPlanetBeet" name="$l10n_production_gbwResidueMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
+                <inputs>
+                    <input fillType="GBW_RESIDUE_MASH" amount="200"/>
                     <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
                 </inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
@@ -123,12 +156,12 @@
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN PHB_WET_BIOMASS_MASH SILAGE_ADDITIVE"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN GBW_SWEET_MASH GBW_ROOT_MASH GBW_GREEN_MASH GBW_RESIDUE_MASH SILAGE_ADDITIVE"/>
             <baleTrigger triggerNode="baleTrigger" fillTypes="SUGARBEET_CUT"/>
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="PHB_WET_BIOMASS_MASH SUGARBEETCUT_IN" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="GBW_SWEET_MASH GBW_ROOT_MASH GBW_GREEN_MASH GBW_RESIDUE_MASH SUGARBEETCUT_IN" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
@@ -141,7 +174,10 @@
             <capacity fillType="SPINACH" capacity="40000"/>
             <capacity fillType="PEA" capacity="40000"/>
             <capacity fillType="GREENBEAN" capacity="40000"/>
-            <capacity fillType="PHB_WET_BIOMASS_MASH" capacity="80000"/>
+            <capacity fillType="GBW_SWEET_MASH" capacity="80000"/>
+            <capacity fillType="GBW_ROOT_MASH" capacity="80000"/>
+            <capacity fillType="GBW_GREEN_MASH" capacity="80000"/>
+            <capacity fillType="GBW_RESIDUE_MASH" capacity="80000"/>
             <capacity fillType="SILAGE_ADDITIVE" capacity="120"/>
             <capacity fillType="SUGARBEETCUT_IN" capacity="80000"/>
 

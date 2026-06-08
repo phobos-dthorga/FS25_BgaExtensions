@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local FS25 log triage for Phobos testing."""
+"""Local FS25 log triage for GBW testing."""
 
 from __future__ import annotations
 
@@ -78,12 +78,12 @@ def resolve_log_path(log_arg: str | None, game_user_dir: str | None) -> tuple[Pa
     return max(existing, key=lambda path: path.stat().st_mtime).resolve(), searched
 
 
-def is_phobos_line(line: str, mod_name: str) -> bool:
+def is_gbw_line(line: str, mod_name: str) -> bool:
     lowered = line.lower().replace("\\", "/")
     return (
         mod_name.lower() in lowered
-        or "/placeables/phobos/" in lowered
-        or "phb_" in lowered
+        or "/placeables/gbw/" in lowered
+        or "gbw_" in lowered
     )
 
 
@@ -96,8 +96,8 @@ def summarize_log(log_path: Path, mod_name: str) -> dict[str, object]:
         "last_timestamp": None,
         "mod_available_lines": [],
         "mod_load_lines": [],
-        "phobos_errors": [],
-        "phobos_warnings": [],
+        "gbw_errors": [],
+        "gbw_warnings": [],
         "external_errors": [],
         "external_warnings": [],
     }
@@ -121,8 +121,8 @@ def summarize_log(log_path: Path, mod_name: str) -> dict[str, object]:
             continue
 
         target = None
-        if is_phobos_line(line, mod_name):
-            target = "phobos_errors" if is_error else "phobos_warnings"
+        if is_gbw_line(line, mod_name):
+            target = "gbw_errors" if is_error else "gbw_warnings"
         else:
             target = "external_errors" if is_error else "external_warnings"
         summary[target].append(line)
@@ -143,8 +143,8 @@ def print_human_summary(summary: dict[str, object]) -> None:
     for label, key in [
         ("Mod available lines", "mod_available_lines"),
         ("Mod load lines", "mod_load_lines"),
-        ("Phobos errors", "phobos_errors"),
-        ("Phobos warnings", "phobos_warnings"),
+        ("GBW errors", "gbw_errors"),
+        ("GBW warnings", "gbw_warnings"),
         ("External errors", "external_errors"),
         ("External warnings", "external_warnings"),
     ]:
@@ -166,7 +166,7 @@ def main() -> int:
     )
     parser.add_argument("--mod-name", default="FS25_BgaExtensions", help="Mod name to search for")
     parser.add_argument("--summary-json", help="Optional path to write JSON summary")
-    parser.add_argument("--fail-on-phobos-warning", action="store_true", help="Exit non-zero for Phobos warnings/errors")
+    parser.add_argument("--fail-on-gbw-warning", action="store_true", help="Exit non-zero for GBW warnings/errors")
     args = parser.parse_args()
 
     log_path, searched = resolve_log_path(args.log, args.game_user_dir)
@@ -188,7 +188,7 @@ def main() -> int:
         output.write_text(json.dumps(summary, indent=2), encoding="utf-8")
         print(f"Wrote {output}")
 
-    if args.fail_on_phobos_warning and (summary["phobos_errors"] or summary["phobos_warnings"]):
+    if args.fail_on_gbw_warning and (summary["gbw_errors"] or summary["gbw_warnings"]):
         return 1
     return 0
 

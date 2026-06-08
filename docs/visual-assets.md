@@ -7,13 +7,16 @@ This document records the custom visual assets used by `FS25_BgaExtensions`.
 | Asset | Path | Purpose |
 | --- | --- | --- |
 | Mod icon | `mod/icon.dds` | FS25 mod list icon. |
-| Potato Washer Compat icon | `addons/FS25_BgaExtensions_PotatoWasherCompat/icon.dds` | Reuses the Phobos mod icon for the optional add-on package. |
-| Orchards/Greenhouses Compat icon | `addons/FS25_BgaExtensions_OrchardsGreenhousesCompat/icon.dds` | Reuses the Phobos mod icon for the optional add-on package. |
-| Wet biomass mash HUD icon | `mod/hud/fillTypes/hud_fill_phbWetBiomassMash.dds` | ChatGPT-generated custom HUD image for `PHB_WET_BIOMASS_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
-| Wet biomass mash source image | `assets/source/fillTypes/hud_fill_phbWetBiomassMash.png` | Transparent PNG source used to build the DDS HUD icon. |
+| Potato Washer Compat icon | `addons/FS25_BgaExtensions_PotatoWasherCompat/icon.dds` | Reuses the GBW mod icon for the optional add-on package. |
+| Orchards/Greenhouses Compat icon | `addons/FS25_BgaExtensions_OrchardsGreenhousesCompat/icon.dds` | Reuses the GBW mod icon for the optional add-on package. |
+| Sweet Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwSweetMash.dds` | ChatGPT-generated custom HUD image for `GBW_SWEET_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
+| Root Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwRootMash.dds` | ChatGPT-generated custom HUD image for `GBW_ROOT_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
+| Green Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwGreenMash.dds` | ChatGPT-generated custom HUD image for `GBW_GREEN_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
+| Residue Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwResidueMash.dds` | ChatGPT-generated custom HUD image for `GBW_RESIDUE_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
+| Mash source images | `assets/source/fillTypes/hud_fill_gbw*Mash.png` | Transparent PNG sources used to build the DDS HUD icons. |
 
 The previous fillType HUD art was preserved on branch `asset-backup/original-filltype-icons` before replacement.
-The original pink chroma-key ChatGPT source was preserved on branch `asset-backup/ai-chroma-source-v0.2.14.0`; `main` keeps only the transparent source and the game-facing DDS.
+The original pink chroma-key ChatGPT sources were preserved on branch `asset-backup/ai-chroma-source-v0.2.15.0`; `main` keeps only transparent sources and game-facing DDS files.
 
 ## Style
 
@@ -21,7 +24,7 @@ Visual additions should be small, legible at FS25 HUD sizes, and clear about wha
 
 For now:
 
-- use custom icons for Phobos-owned fillTypes
+- use custom icons for GBW-owned fillTypes
 - use DDS with built mipmaps for runtime HUD textures
 - keep source artwork under `assets/source/` and build game-facing DDS files with `tools/build_filltype_icons.py`
 - keep PlanET store icons when the placeable reuses PlanET models through the declared dependency
@@ -34,10 +37,10 @@ See `docs/model-fit-decisions.md` for retired or hidden placeables whose models 
 
 ## Asset Licensing
 
-Phobos-owned visual assets are covered by the repository asset license, CC BY-NC-SA 4.0, unless a file states otherwise.
+GBW-owned visual assets are covered by the repository asset license, CC BY-NC-SA 4.0, unless a file states otherwise.
 
-The wet biomass mash icon was generated with ChatGPT image generation, then chroma-keyed locally to transparency and converted to DDS. The raw chroma-key source is intentionally kept out of `main` to avoid mistaking it for a game-facing asset. Prompt:
+The mash-family icons were generated with ChatGPT image generation, then chroma-keyed locally to transparency and converted to DDS. The raw chroma-key sources are intentionally kept out of `main` to avoid mistaking them for game-facing assets. Prompt pattern:
 
 ```text
-Square Farming Simulator 25 HUD icon for a custom fillType named Wet Biomass Mash. Centered clean agricultural biogas icon: green plant mash, teal wet droplet, small fermentation bubbles, subtle leaf swirl. Polished readable game icon, no text, no logos, no frame, no watermark. Perfectly flat solid #ff00ff background only for chroma-key removal, no shadows or gradients, subject must not contain #ff00ff.
+Square Farming Simulator 25 HUD icon source for a custom GBW mash fillType. Centered clean agricultural biogas substrate mash with material-specific crop cues, small fermentation bubbles, and subtle wet shine. Polished readable game icon, no text, no logos, no frame, no watermark. Perfectly flat solid #ff00ff background only for chroma-key removal, no shadows or gradients, subject must not contain #ff00ff.
 ```

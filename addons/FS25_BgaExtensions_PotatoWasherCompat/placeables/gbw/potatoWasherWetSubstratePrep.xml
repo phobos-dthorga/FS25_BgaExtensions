@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <placeable type="productionPoint" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
     <storeData>
-        <name>$l10n_storeItem_phobosPlanetBiomassIntakeMedium</name>
+        <name>$l10n_storeItem_gbwPotatoWasherWetSubstratePrep</name>
         <functions>
-            <function>$l10n_function_phobosPlanetSolidBiomassIntake</function>
+            <function>$l10n_function_gbwPotatoWasherWetSubstratePrep</function>
         </functions>
-        <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerMittel.dds</image>
-        <price>88000</price>
-        <dailyUpkeep>35</dailyUpkeep>
+        <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerKlein.dds</image>
+        <price>36000</price>
+        <dailyUpkeep>16</dailyUpkeep>
         <lifetime>1000</lifetime>
         <rotation>0</rotation>
         <brand>PLANET</brand>
@@ -16,12 +16,12 @@
         <brush>
             <type>placeable</type>
             <category>production</category>
-            <tab>phobosBgaProduction</tab>
+            <tab>gbwBgaCompatibility</tab>
         </brush>
     </storeData>
 
     <base>
-        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Bunker_Mittel.i3d</filename>
+        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Bunker_Klein.i3d</filename>
         <canBeRenamed>true</canBeRenamed>
         <boughtWithFarmland>true</boughtWithFarmland>
     </base>
@@ -73,67 +73,25 @@
 
     <productionPoint>
         <productions sharedThroughputCapacity="false">
-            <production id="phbMediumChaffToPlanetSilage" name="$l10n_production_phbChaffToPlanetSilage" cyclesPerHour="9" costsPerActiveHour="3">
-                <inputs><input fillType="CHAFF" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="760"/></outputs>
-            </production>
-            <production id="phbMediumChaffAdditiveToPlanetSilage" name="$l10n_production_phbChaffAdditiveToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="3.5">
-                <inputs>
-                    <input fillType="CHAFF" amount="840"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
-                </inputs>
-                <outputs><output fillType="SILAGE_IN" amount="810"/></outputs>
-            </production>
-            <production id="phbMediumSilageToPlanetSilage" name="$l10n_production_phbSilageToPlanetSilage" cyclesPerHour="18" costsPerActiveHour="2.5">
-                <inputs><input fillType="SILAGE" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="840"/></outputs>
-            </production>
-            <production id="phbMediumGrassToPlanetSilage" name="$l10n_production_phbGrassToPlanetSilage" cyclesPerHour="8" costsPerActiveHour="3">
-                <inputs><input fillType="GRASS_WINDROW" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="600"/></outputs>
-            </production>
-            <production id="phbMediumGrassAdditiveToPlanetSilage" name="$l10n_production_phbGrassAdditiveToPlanetSilage" cyclesPerHour="9" costsPerActiveHour="3.5">
-                <inputs>
-                    <input fillType="GRASS_WINDROW" amount="840"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
-                </inputs>
-                <outputs><output fillType="SILAGE_IN" amount="700"/></outputs>
-            </production>
-            <production id="phbMediumHayToPlanetSilage" name="$l10n_production_phbHayToPlanetSilage" cyclesPerHour="8" costsPerActiveHour="3">
-                <inputs><input fillType="DRYGRASS_WINDROW" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="660"/></outputs>
-            </production>
-            <production id="phbMediumStrawToPlanetSilage" name="$l10n_production_phbStrawToPlanetSilage" cyclesPerHour="5" costsPerActiveHour="4">
-                <inputs><input fillType="STRAW" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="420"/></outputs>
-            </production>
-            <production id="phbMediumManureToPlanetManure" name="$l10n_production_phbManureToPlanetManure" cyclesPerHour="15" costsPerActiveHour="2.5">
-                <inputs><input fillType="MANURE" amount="400"/></inputs>
-                <outputs><output fillType="MANURE_IN" amount="400"/></outputs>
+            <production id="gbwCompatWashedPotatoToRootMash" name="$l10n_production_gbwWashedPotatoToRootMash" cyclesPerHour="8" costsPerActiveHour="3">
+                <inputs><input fillType="POTATO_WASHED" amount="200"/></inputs>
+                <outputs><output fillType="GBW_ROOT_MASH" amount="150"/></outputs>
             </production>
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SILAGE_ADDITIVE"/>
-            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="POTATO_WASHED"/>
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="GBW_ROOT_MASH" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
-            <capacity fillType="CHAFF" capacity="120000"/>
-            <capacity fillType="SILAGE" capacity="120000"/>
-            <capacity fillType="GRASS_WINDROW" capacity="120000"/>
-            <capacity fillType="DRYGRASS_WINDROW" capacity="120000"/>
-            <capacity fillType="STRAW" capacity="60000"/>
-            <capacity fillType="MANURE" capacity="50000"/>
-            <capacity fillType="SILAGE_ADDITIVE" capacity="240"/>
-            <capacity fillType="SILAGE_IN" capacity="160000"/>
-            <capacity fillType="MANURE_IN" capacity="50000"/>
+            <capacity fillType="POTATO_WASHED" capacity="40000"/>
+            <capacity fillType="GBW_ROOT_MASH" capacity="80000"/>
 
-            <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="SILAGE"/>
+            <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="POTATO_WASHED"/>
         </storage>
 
         <playerTrigger node="playerTrigger"/>
@@ -162,7 +120,6 @@
         <i3dMapping id="loadTriggerMarker" node="0>11|0|1"/>
         <i3dMapping id="loadTriggerAiNode" node="0>11|0|2"/>
         <i3dMapping id="bunkerFillVolume" node="0>11|2|0"/>
-        <i3dMapping id="baleTrigger" node="0>11|2|1"/>
         <i3dMapping id="unloadTriggerMixer" node="0>11|2|2"/>
         <i3dMapping id="unloadTriggerMixerMarker" node="0>11|2|3"/>
         <i3dMapping id="playerTrigger" node="0>11|4"/>

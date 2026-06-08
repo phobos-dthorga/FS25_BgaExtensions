@@ -33,7 +33,7 @@ The broader design remains registry-driven for later optional integrations. Opti
 
 ## Author
 
-phobosgekko
+Gekko BioWorks
 
 ## License
 

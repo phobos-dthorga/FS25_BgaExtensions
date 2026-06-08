@@ -1,135 +1,153 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
-    <author>phobosgekko</author>
-    <version>0.2.14.0</version>
+    <author>Gekko BioWorks</author>
+    <version>0.2.15.0</version>
     <title>
-        <en>FS25 BGA Extensions</en>
+        <en>GBW BGA Extensions</en>
     </title>
     <description>
-        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. Adds modular PlanET-compatible biomass intakes, wet substrate prep, dry fuel processing, and dry fuel yard storage for heat-plant logistics.</en>
+        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. Adds Gekko BioWorks PlanET-compatible biomass intakes, wet substrate prep, dry fuel processing, and dry fuel yard storage for heat-plant logistics.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
 
     <l10n>
-        <text name="storeItem_phobosPlanetBiomassIntake">
-            <en>Phobos PlanET Energy Yard Intake</en>
+        <text name="storeItem_gbwPlanetBiomassIntakeSmall">
+            <en>GBW PlanET Biomass Intake - Small</en>
         </text>
-        <text name="storeItem_phobosPlanetBiomassIntakeSmall">
-            <en>Phobos PlanET Biomass Intake - Small</en>
+        <text name="storeItem_gbwPlanetBiomassIntakeMedium">
+            <en>GBW PlanET Biomass Intake - Medium</en>
         </text>
-        <text name="storeItem_phobosPlanetBiomassIntakeMedium">
-            <en>Phobos PlanET Biomass Intake - Medium</en>
+        <text name="storeItem_gbwPlanetBiomassIntakeLarge">
+            <en>GBW PlanET Biomass Intake - Large</en>
         </text>
-        <text name="storeItem_phobosPlanetBiomassIntakeLarge">
-            <en>Phobos PlanET Biomass Intake - Large</en>
+        <text name="storeItem_gbwPlanetWetSubstratePrep">
+            <en>GBW Wet Substrate Prep</en>
         </text>
-        <text name="storeItem_phobosPlanetWetSubstratePrep">
-            <en>Phobos PlanET Wet Substrate Prep</en>
+        <text name="storeItem_gbwPlanetDryFuelProcessor">
+            <en>GBW Dry Fuel Processor</en>
         </text>
-        <text name="storeItem_phobosPlanetDryFuelProcessor">
-            <en>Phobos PlanET Dry Fuel Processor</en>
+        <text name="storeItem_gbwPlanetDryFuelYardMedium">
+            <en>GBW Dry Fuel Yard - Medium</en>
         </text>
-        <text name="storeItem_phobosPlanetDryFuelYardSmall">
-            <en>Phobos PlanET Dry Fuel Yard - Small</en>
+        <text name="storeItem_gbwPlanetDryFuelYardLarge">
+            <en>GBW Dry Fuel Yard - Large</en>
         </text>
-        <text name="storeItem_phobosPlanetDryFuelYardMedium">
-            <en>Phobos PlanET Dry Fuel Yard - Medium</en>
-        </text>
-        <text name="storeItem_phobosPlanetDryFuelYardLarge">
-            <en>Phobos PlanET Dry Fuel Yard - Large</en>
-        </text>
-        <text name="function_phobosPlanetBiomassIntake">
-            <en>Converts additional biomass into PlanET BGA feedstock or straw pellet fuel.</en>
-        </text>
-        <text name="function_phobosPlanetSolidBiomassIntake">
+        <text name="function_gbwPlanetSolidBiomassIntake">
             <en>Converts forage, straw, and manure into PlanET feedstock.</en>
         </text>
-        <text name="function_phobosPlanetDryFuelYard">
+        <text name="function_gbwPlanetDryFuelYard">
             <en>Stores wood chips and straw pellets for combustion heat logistics.</en>
         </text>
-        <text name="function_phobosPlanetWetSubstratePrep">
+        <text name="function_gbwPlanetWetSubstratePrep">
             <en>Prepares wet, root, and produce crops into PlanET-compatible beet substrate.</en>
         </text>
-        <text name="function_phobosPlanetDryFuelProcessor">
+        <text name="function_gbwPlanetDryFuelProcessor">
             <en>Converts straw into straw pellet fuel for combustion heat logistics.</en>
         </text>
-        <text name="construction_tab_phobosBgaProduction">
-            <en>Phobos BGA</en>
+        <text name="construction_tab_gbwBgaProduction">
+            <en>GBW BGA</en>
         </text>
-        <text name="construction_tab_phobosBgaCompatibility">
-            <en>Phobos BGA Compat</en>
+        <text name="construction_tab_gbwBgaCompatibility">
+            <en>GBW Compat</en>
         </text>
-        <text name="construction_tab_phobosFuelStorage">
-            <en>Phobos Fuel Storage</en>
+        <text name="construction_tab_gbwFuelStorage">
+            <en>GBW Fuel Storage</en>
         </text>
-        <text name="construction_tab_phobosFuelProcessing">
-            <en>Phobos Fuel Processing</en>
+        <text name="construction_tab_gbwFuelProcessing">
+            <en>GBW Fuel Processing</en>
         </text>
-        <text name="fillType_phbWetBiomassMash">
-            <en>Wet biomass mash</en>
+        <text name="fillType_gbwSweetMash">
+            <en>Sweet Mash</en>
         </text>
-        <text name="production_phbChaffToPlanetSilage">
+        <text name="fillType_gbwRootMash">
+            <en>Root Mash</en>
+        </text>
+        <text name="fillType_gbwGreenMash">
+            <en>Green Mash</en>
+        </text>
+        <text name="fillType_gbwResidueMash">
+            <en>Residue Mash</en>
+        </text>
+        <text name="production_gbwChaffToPlanetSilage">
             <en>Chaff substrate</en>
         </text>
-        <text name="production_phbChaffAdditiveToPlanetSilage">
+        <text name="production_gbwChaffAdditiveToPlanetSilage">
             <en>Chaff substrate with additive</en>
         </text>
-        <text name="production_phbSilageToPlanetSilage">
+        <text name="production_gbwSilageToPlanetSilage">
             <en>Prepared silage intake</en>
         </text>
-        <text name="production_phbGrassToPlanetSilage">
+        <text name="production_gbwGrassToPlanetSilage">
             <en>Fresh grass substrate</en>
         </text>
-        <text name="production_phbGrassAdditiveToPlanetSilage">
+        <text name="production_gbwGrassAdditiveToPlanetSilage">
             <en>Fresh grass substrate with additive</en>
         </text>
-        <text name="production_phbHayToPlanetSilage">
+        <text name="production_gbwHayToPlanetSilage">
             <en>Hay substrate</en>
         </text>
-        <text name="production_phbStrawToPlanetSilage">
+        <text name="production_gbwStrawToPlanetSilage">
             <en>Straw pretreatment</en>
         </text>
-        <text name="production_phbStrawToPellets">
+        <text name="production_gbwStrawToPellets">
             <en>Straw pelletizing</en>
         </text>
-        <text name="production_phbManureToPlanetManure">
+        <text name="production_gbwManureToPlanetManure">
             <en>Manure intake</en>
         </text>
-        <text name="production_phbLiquidManureToPlanetFermenter">
+        <text name="production_gbwLiquidManureToPlanetFermenter">
             <en>Liquid manure transfer</en>
         </text>
-        <text name="production_phbSugarbeetCutToPlanetBeet">
-            <en>Beet pulp mash</en>
+        <text name="production_gbwSugarbeetCutToSweetMash">
+            <en>Beet pulp sweet mash</en>
         </text>
-        <text name="production_phbSugarcaneToPlanetBeet">
-            <en>Sugarcane mash</en>
+        <text name="production_gbwSugarcaneToSweetMash">
+            <en>Sugarcane sweet mash</en>
         </text>
-        <text name="production_phbPotatoToPlanetBeet">
-            <en>Potato mash</en>
+        <text name="production_gbwPotatoToRootMash">
+            <en>Potato root mash</en>
         </text>
-        <text name="production_phbBeetrootToPlanetBeet">
-            <en>Beetroot mash</en>
+        <text name="production_gbwBeetrootToRootMash">
+            <en>Beetroot root mash</en>
         </text>
-        <text name="production_phbCarrotToPlanetBeet">
-            <en>Carrot mash</en>
+        <text name="production_gbwCarrotToRootMash">
+            <en>Carrot root mash</en>
         </text>
-        <text name="production_phbParsnipToPlanetBeet">
-            <en>Parsnip mash</en>
+        <text name="production_gbwParsnipToRootMash">
+            <en>Parsnip root mash</en>
         </text>
-        <text name="production_phbSpinachToWetMash">
-            <en>Spinach mash</en>
+        <text name="production_gbwSpinachToGreenMash">
+            <en>Spinach green mash</en>
         </text>
-        <text name="production_phbPeaToWetMash">
-            <en>Pea mash</en>
+        <text name="production_gbwPeaToGreenMash">
+            <en>Pea green mash</en>
         </text>
-        <text name="production_phbGreenBeanToWetMash">
+        <text name="production_gbwGreenBeanToGreenMash">
             <en>Green bean mash</en>
         </text>
-        <text name="production_phbWetMashToPlanetBeet">
-            <en>Wet mash conditioning</en>
+        <text name="production_gbwSweetMashToPlanetBeet">
+            <en>Sweet mash conditioning</en>
         </text>
-        <text name="production_phbWetMashAdditiveToPlanetBeet">
-            <en>Wet mash conditioning with additive</en>
+        <text name="production_gbwSweetMashAdditiveToPlanetBeet">
+            <en>Sweet mash conditioning with additive</en>
+        </text>
+        <text name="production_gbwRootMashToPlanetBeet">
+            <en>Root mash conditioning</en>
+        </text>
+        <text name="production_gbwRootMashAdditiveToPlanetBeet">
+            <en>Root mash conditioning with additive</en>
+        </text>
+        <text name="production_gbwGreenMashToPlanetBeet">
+            <en>Green mash conditioning</en>
+        </text>
+        <text name="production_gbwGreenMashAdditiveToPlanetBeet">
+            <en>Green mash conditioning with additive</en>
+        </text>
+        <text name="production_gbwResidueMashToPlanetBeet">
+            <en>Residue mash conditioning</en>
+        </text>
+        <text name="production_gbwResidueMashAdditiveToPlanetBeet">
+            <en>Residue mash conditioning with additive</en>
         </text>
     </l10n>
 
@@ -140,22 +158,22 @@
 
     <multiplayer supported="true"/>
 
-    <fillTypes filename="xml/phobosFillTypes.xml"/>
+    <fillTypes filename="xml/gbwFillTypes.xml"/>
 
     <constructionCategories>
-        <tab categoryName="production" name="phobosBgaProduction" title="$l10n_construction_tab_phobosBgaProduction"/>
-        <tab categoryName="production" name="phobosBgaCompatibility" title="$l10n_construction_tab_phobosBgaCompatibility"/>
-        <tab categoryName="production" name="phobosFuelProcessing" title="$l10n_construction_tab_phobosFuelProcessing"/>
-        <tab categoryName="buildings" name="phobosFuelStorage" title="$l10n_construction_tab_phobosFuelStorage"/>
+        <tab categoryName="production" name="gbwBgaProduction" title="$l10n_construction_tab_gbwBgaProduction"/>
+        <tab categoryName="production" name="gbwBgaCompatibility" title="$l10n_construction_tab_gbwBgaCompatibility"/>
+        <tab categoryName="production" name="gbwFuelProcessing" title="$l10n_construction_tab_gbwFuelProcessing"/>
+        <tab categoryName="buildings" name="gbwFuelStorage" title="$l10n_construction_tab_gbwFuelStorage"/>
     </constructionCategories>
 
     <storeItems>
-        <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeSmall.xml"/>
-        <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeMedium.xml"/>
-        <storeItem xmlFilename="placeables/phobos/planetBiomassIntakeLarge.xml"/>
-        <storeItem xmlFilename="placeables/phobos/planetWetSubstratePrep.xml"/>
-        <storeItem xmlFilename="placeables/phobos/planetDryFuelProcessor.xml"/>
-        <storeItem xmlFilename="placeables/phobos/planetDryFuelYardMedium.xml"/>
-        <storeItem xmlFilename="placeables/phobos/planetDryFuelYardLarge.xml"/>
+        <storeItem xmlFilename="placeables/gbw/planetBiomassIntakeSmall.xml"/>
+        <storeItem xmlFilename="placeables/gbw/planetBiomassIntakeMedium.xml"/>
+        <storeItem xmlFilename="placeables/gbw/planetBiomassIntakeLarge.xml"/>
+        <storeItem xmlFilename="placeables/gbw/planetWetSubstratePrep.xml"/>
+        <storeItem xmlFilename="placeables/gbw/planetDryFuelProcessor.xml"/>
+        <storeItem xmlFilename="placeables/gbw/planetDryFuelYardMedium.xml"/>
+        <storeItem xmlFilename="placeables/gbw/planetDryFuelYardLarge.xml"/>
     </storeItems>
 </modDesc>

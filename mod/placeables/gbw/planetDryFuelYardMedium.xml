@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<placeable type="productionPoint" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
+<placeable type="silo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
     <storeData>
-        <name>$l10n_storeItem_phobosPlanetDryFuelProcessor</name>
+        <name>$l10n_storeItem_gbwPlanetDryFuelYardMedium</name>
         <functions>
-            <function>$l10n_function_phobosPlanetDryFuelProcessor</function>
+            <function>$l10n_function_gbwPlanetDryFuelYard</function>
         </functions>
-        <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerKlein.dds</image>
-        <price>48000</price>
-        <dailyUpkeep>20</dailyUpkeep>
+        <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerMittel.dds</image>
+        <price>62000</price>
+        <dailyUpkeep>18</dailyUpkeep>
         <lifetime>1000</lifetime>
         <rotation>0</rotation>
         <brand>PLANET</brand>
         <species>PLACEABLE</species>
-        <category>productionPoints</category>
+        <category>storages</category>
         <brush>
             <type>placeable</type>
-            <category>production</category>
-            <tab>phobosFuelProcessing</tab>
+            <category>buildings</category>
+            <tab>gbwFuelStorage</tab>
         </brush>
     </storeData>
 
     <base>
-        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Bunker_Klein.i3d</filename>
+        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Bunker_Mittel.i3d</filename>
         <canBeRenamed>true</canBeRenamed>
         <boughtWithFarmland>true</boughtWithFarmland>
     </base>
@@ -64,44 +64,28 @@
     <triggerMarkers>
         <triggerMarker node="unloadTriggerMixerMarker" filename="$data/shared/assets/marker/markerIconUnload.i3d" id="UNLOAD" adjustToGround="false"/>
         <triggerMarker node="loadTriggerMarker" filename="$data/shared/assets/marker/markerIconLoad.i3d" id="LOAD" adjustToGround="true"/>
-        <triggerMarker node="playerTriggerMarker" filename="$data/shared/assets/marker/markerIconWrench.i3d" id="WRENCH" adjustToGround="true"/>
     </triggerMarkers>
 
     <hotspots>
-        <hotspot type="PRODUCTION_POINT" linkNode="hotspotMarker" teleportNode="teleportNode"/>
+        <hotspot type="LOADING" linkNode="hotspotMarker" teleportNode="teleportNode"/>
     </hotspots>
 
-    <productionPoint>
-        <productions sharedThroughputCapacity="false">
-            <production id="phbDryFuelStrawToPellets" name="$l10n_production_phbStrawToPellets" cyclesPerHour="10" costsPerActiveHour="6">
-                <inputs><input fillType="STRAW" amount="1000"/></inputs>
-                <outputs><output fillType="STRAW_PELLETS" amount="250"/></outputs>
-            </production>
-        </productions>
-
-        <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="STRAW"/>
-            <baleTrigger triggerNode="baleTrigger" fillTypes="STRAW"/>
-        </sellingStation>
-
+    <silo>
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="WOODCHIPS STRAW_PELLETS" fillLitersPerSecond="2500" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
-        <storage isExtension="false" fillLevelSyncThreshold="100">
-            <capacity fillType="STRAW" capacity="60000"/>
-            <capacity fillType="STRAW_PELLETS" capacity="60000"/>
+        <unloadingStation supportsExtension="false">
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="WOODCHIPS STRAW_PELLETS"/>
+            <baleTrigger triggerNode="baleTrigger" fillTypes="WOODCHIPS"/>
+        </unloadingStation>
 
-            <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="STRAW"/>
-        </storage>
-
-        <playerTrigger node="playerTrigger"/>
-
-        <sounds>
-            <idle template="dairyIdle" linkNode="0>" outerRadius="10" volumeScale="0.2"/>
-            <active template="dairyWork" linkNode="0>" outerRadius="10" volumeScale="0.3"/>
-        </sounds>
-    </productionPoint>
+        <storages>
+            <storage node="hotspotMarker" fillTypes="WOODCHIPS STRAW_PELLETS" capacity="320000" isExtension="false">
+                <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="WOODCHIPS"/>
+            </storage>
+        </storages>
+    </silo>
 
     <i3dMappings>
         <i3dMapping id="clearArea1Start" node="0>0|0"/>
@@ -124,7 +108,5 @@
         <i3dMapping id="baleTrigger" node="0>11|2|1"/>
         <i3dMapping id="unloadTriggerMixer" node="0>11|2|2"/>
         <i3dMapping id="unloadTriggerMixerMarker" node="0>11|2|3"/>
-        <i3dMapping id="playerTrigger" node="0>11|4"/>
-        <i3dMapping id="playerTriggerMarker" node="0>11|4|0"/>
     </i3dMappings>
 </placeable>
