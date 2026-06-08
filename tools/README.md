@@ -47,7 +47,7 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 - `modDesc.xml` referenced file checks
 - GBW-owned `$moddir$FS25_BgaExtensions/...` asset reference checks
 - GBW HUD texture references use DDS rather than runtime PNG files
-- GBW-owned fillType HUD icons are 256x256 uncompressed 32-bit DDS files with alpha and a complete mipmap chain
+- GBW-owned fillType HUD icons are 256x256 DXT5-compressed DDS files matching FS25/PlanET HUD texture style
 - active fillType reference checks
 - optional fillType guard checks
 - production input/output trigger coverage checks

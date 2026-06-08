@@ -23,7 +23,7 @@
 - Energy carriers are split by building family before adding methane, electricity, or extra combustion routes.
 - GBW placeables are grouped into custom construction tabs inside vanilla FS25 categories.
 - Intake and dry fuel yard storage capacities were doubled as a logistics-quality pass without changing recipe yields.
-- Runtime HUD textures use DDS with mipmaps after `v0.2.6.0` exposed raw PNG performance warnings.
+- Runtime HUD textures use PlanET-style DXT5 DDS after `v0.2.15.0` proved uncompressed DDS still triggers FS25 raw-format warnings.
 - Wet/root/produce processing is split into Wet Substrate Prep and four GBW mash families so biomass intakes remain focused and under the recipe-count soft target.
 - Straw pelletizing is split into Dry Fuel Processor so biomass intakes remain BGA-focused and dry fuel yards remain storage-only.
 - Potato Washer compatibility is the first separate add-on package, proving the optional-fillType pattern without weakening core XML.

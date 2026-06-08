@@ -186,15 +186,6 @@ def local_filltypes(mod_root: Path, validation: Validation) -> set[str]:
     return result
 
 
-def expected_mipmap_count(width: int, height: int) -> int:
-    levels = 1
-    while width > 1 or height > 1:
-        width = max(1, width // 2)
-        height = max(1, height // 2)
-        levels += 1
-    return levels
-
-
 def validate_dds_hud_icon(path: Path, label: str, validation: Validation) -> None:
     if not path.is_file():
         validation.error(f"FillType HUD icon is missing: {label}")
@@ -205,7 +196,7 @@ def validate_dds_hud_icon(path: Path, label: str, validation: Validation) -> Non
         validation.error(f"FillType HUD icon must be a DDS file: {label}")
         return
 
-    header_size, flags, height, width, pitch, _depth, mipmaps = struct.unpack_from("<7I", data, 4)
+    header_size, flags, height, width, linear_size, _depth, mipmaps = struct.unpack_from("<7I", data, 4)
     pixel_format_size = struct.unpack_from("<I", data, 76)[0]
     pixel_flags = struct.unpack_from("<I", data, 80)[0]
     fourcc = data[84:88]
@@ -216,26 +207,19 @@ def validate_dds_hud_icon(path: Path, label: str, validation: Validation) -> Non
         validation.error(f"FillType HUD icon has an invalid DDS header: {label}")
     if width != 256 or height != 256:
         validation.error(f"FillType HUD icon must be 256x256, found {width}x{height}: {label}")
-    if pitch != width * 4:
-        validation.error(f"FillType HUD icon has an unexpected DDS pitch: {label}")
-    if fourcc != b"\0\0\0\0" or rgb_bits != 32:
-        validation.error(f"FillType HUD icon must be uncompressed 32-bit DDS: {label}")
-    if pixel_flags & 0x1 == 0 or pixel_flags & 0x40 == 0:
-        validation.error(f"FillType HUD icon must include alpha and RGB pixel flags: {label}")
-    if masks != (0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000):
-        validation.error(f"FillType HUD icon must use BGRA-compatible DDS masks: {label}")
+    if fourcc != b"DXT5" or pixel_flags != 0x4 or rgb_bits != 0:
+        validation.error(f"FillType HUD icon must be DXT5-compressed DDS: {label}")
+    if masks != (0, 0, 0, 0):
+        validation.error(f"FillType HUD icon must use DXT5 color masks: {label}")
+    if mipmaps != 1:
+        validation.error(f"FillType HUD icon must match FS25 HUD style with one DDS image level, found {mipmaps}: {label}")
 
-    expected_mips = expected_mipmap_count(width, height)
-    if mipmaps != expected_mips:
-        validation.error(f"FillType HUD icon must include {expected_mips} mipmaps, found {mipmaps}: {label}")
+    expected_linear_size = ((width + 3) // 4) * ((height + 3) // 4) * 16
+    if linear_size != expected_linear_size:
+        validation.error(f"FillType HUD icon has an unexpected DXT5 linear size: {label}")
 
-    expected_size = 128
-    mip_width, mip_height = width, height
-    for _level in range(max(0, mipmaps)):
-        expected_size += mip_width * mip_height * 4
-        mip_width = max(1, mip_width // 2)
-        mip_height = max(1, mip_height // 2)
-    if mipmaps == expected_mips and len(data) != expected_size:
+    expected_size = 128 + expected_linear_size
+    if len(data) != expected_size:
         validation.error(f"FillType HUD icon DDS byte size is unexpected: {label}")
 
 
@@ -344,7 +328,7 @@ def validate_self_mod_refs(path: Path, mod_root: Path, repo_root: Path, validati
             )
         if referenced.lower().startswith("hud/") and referenced.lower().endswith(".png"):
             validation.error(
-                f"GBW HUD texture should be DDS with mipmaps, not PNG: {path.relative_to(repo_root)}"
+                f"GBW HUD texture should be DDS, not PNG: {path.relative_to(repo_root)}"
             )
 
 

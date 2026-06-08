@@ -9,10 +9,10 @@ This document records the custom visual assets used by `FS25_BgaExtensions`.
 | Mod icon | `mod/icon.dds` | FS25 mod list icon. |
 | Potato Washer Compat icon | `addons/FS25_BgaExtensions_PotatoWasherCompat/icon.dds` | Reuses the GBW mod icon for the optional add-on package. |
 | Orchards/Greenhouses Compat icon | `addons/FS25_BgaExtensions_OrchardsGreenhousesCompat/icon.dds` | Reuses the GBW mod icon for the optional add-on package. |
-| Sweet Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwSweetMash.dds` | ChatGPT-generated custom HUD image for `GBW_SWEET_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
-| Root Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwRootMash.dds` | ChatGPT-generated custom HUD image for `GBW_ROOT_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
-| Green Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwGreenMash.dds` | ChatGPT-generated custom HUD image for `GBW_GREEN_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
-| Residue Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwResidueMash.dds` | ChatGPT-generated custom HUD image for `GBW_RESIDUE_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
+| Sweet Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwSweetMash.dds` | ChatGPT-generated custom HUD image for `GBW_SWEET_MASH`, built as PlanET-style DXT5 DDS to avoid runtime texture warnings. |
+| Root Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwRootMash.dds` | ChatGPT-generated custom HUD image for `GBW_ROOT_MASH`, built as PlanET-style DXT5 DDS to avoid runtime texture warnings. |
+| Green Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwGreenMash.dds` | ChatGPT-generated custom HUD image for `GBW_GREEN_MASH`, built as PlanET-style DXT5 DDS to avoid runtime texture warnings. |
+| Residue Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwResidueMash.dds` | ChatGPT-generated custom HUD image for `GBW_RESIDUE_MASH`, built as PlanET-style DXT5 DDS to avoid runtime texture warnings. |
 | Mash source images | `assets/source/fillTypes/hud_fill_gbw*Mash.png` | Transparent PNG sources used to build the DDS HUD icons. |
 
 The previous fillType HUD art was preserved on branch `asset-backup/original-filltype-icons` before replacement.
@@ -25,7 +25,7 @@ Visual additions should be small, legible at FS25 HUD sizes, and clear about wha
 For now:
 
 - use custom icons for GBW-owned fillTypes
-- use DDS with built mipmaps for runtime HUD textures
+- use PlanET-style DXT5 DDS files for runtime HUD textures
 - keep source artwork under `assets/source/` and build game-facing DDS files with `tools/build_filltype_icons.py`
 - keep PlanET store icons when the placeable reuses PlanET models through the declared dependency
 - do not copy or edit dependency-owned icons

@@ -2,7 +2,7 @@
 
 This ledger records FS25 log observations that affect development decisions.
 
-Current log checked on 2026-06-07:
+Current log checked on 2026-06-09:
 
 Local FS25 `log.txt` supplied by the maintainer.
 
@@ -24,16 +24,16 @@ The first entries in this table are pre-GBW historical lines from versions befor
 | --- | --- | --- |
 | Legacy wet-mash unloading-station warning | GBW warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1`; `v0.2.15.0` replaced the legacy wet-mash fillType with family mash fillTypes. |
 | `storage fillType 'WOODCHIPS' not used as a production input or output` | GBW warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by removing storage-only wood chip handling from production-point XML. `v0.2.5.0` added dry fuel yard silos; `v0.2.8.0` keeps only medium and large variants in the shop. |
-| Legacy wet-mash HUD PNG raw-format warning and CPU mip generation | GBW warning found in `v0.2.6.0`. | Fixed in `v0.2.7.1` by replacing runtime PNG HUD references with DDS textures that include mipmaps. |
+| Legacy wet-mash HUD PNG raw-format warning and CPU mip generation | GBW warning found in `v0.2.6.0`. | Fixed in `v0.2.7.1` by replacing runtime PNG HUD references with DDS textures. |
+| `hud_fill_gbw*Mash.dds raw format` | GBW warning found in `v0.2.15.0`; all four mash HUD icons loaded as uncompressed DDS and generated repeated performance warnings. | Fixed in `v0.2.15.1` by rebuilding mash HUD icons as PlanET-style DXT5 DDS files and changing validation to reject uncompressed HUD DDS files. |
 
 ## Pending Test Targets
 
-For `v0.2.15.0`, smoke-test the GBW rebrand, four mash-family fillTypes, ChatGPT-generated mash HUD icons, and the automated icon-format validation rule:
+For `v0.2.15.1`, smoke-test the DXT5 mash HUD icon hotfix:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.15.0`
-- confirm GBW construction tabs and placeable names appear
+- confirm core FS25_BgaExtensions loads as version `0.2.15.1`
 - confirm `GBW_SWEET_MASH`, `GBW_ROOT_MASH`, `GBW_GREEN_MASH`, and `GBW_RESIDUE_MASH` display distinct mash icons
-- confirm no `hud_fill_gbwSweetMash`, `hud_fill_gbwRootMash`, `hud_fill_gbwGreenMash`, or `hud_fill_gbwResidueMash` raw-format or mip-generation warnings appear
+- confirm no `hud_fill_gbwSweetMash`, `hud_fill_gbwRootMash`, `hud_fill_gbwGreenMash`, or `hud_fill_gbwResidueMash` raw-format warnings appear
 - check the log for GBW-owned warnings or errors
 
 ## User Test Confirmation
