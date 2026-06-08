@@ -1,0 +1,19 @@
+{
+  "packages": [
+    {
+      "id": "core",
+      "name": "FS25_BgaExtensions",
+      "source": "mod"
+    },
+    {
+      "id": "potato_washer_compat",
+      "name": "FS25_BgaExtensions_PotatoWasherCompat",
+      "source": "addons/FS25_BgaExtensions_PotatoWasherCompat"
+    },
+    {
+      "id": "orchards_greenhouses_compat",
+      "name": "FS25_BgaExtensions_OrchardsGreenhousesCompat",
+      "source": "addons/FS25_BgaExtensions_OrchardsGreenhousesCompat"
+    }
+  ]
+}

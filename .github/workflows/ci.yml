@@ -29,40 +29,19 @@ jobs:
         with:
           python-version: "3.13"
 
-      - name: Validate source
-        run: python tools/validate_mod.py
+      - name: Compile Python tools
+        run: python -m py_compile tools/*.py
 
-      - name: Validate Potato Washer compatibility add-on
-        run: python tools/validate_mod.py --mod-source addons/FS25_BgaExtensions_PotatoWasherCompat
-
-      - name: Validate Orchards and Greenhouses compatibility add-on
-        run: python tools/validate_mod.py --mod-source addons/FS25_BgaExtensions_OrchardsGreenhousesCompat
-
-      - name: Build package
-        run: python tools/package_mod.py --output dist/FS25_BgaExtensions_ci.zip
-
-      - name: Build Potato Washer compatibility add-on
-        run: python tools/package_mod.py --source addons/FS25_BgaExtensions_PotatoWasherCompat --output dist/FS25_BgaExtensions_PotatoWasherCompat_ci.zip
-
-      - name: Build Orchards and Greenhouses compatibility add-on
-        run: python tools/package_mod.py --source addons/FS25_BgaExtensions_OrchardsGreenhousesCompat --output dist/FS25_BgaExtensions_OrchardsGreenhousesCompat_ci.zip
-
-      - name: Validate package
-        run: python tools/validate_mod.py --package dist/FS25_BgaExtensions_ci.zip
-
-      - name: Validate Potato Washer compatibility package
-        run: python tools/validate_mod.py --mod-source addons/FS25_BgaExtensions_PotatoWasherCompat --package dist/FS25_BgaExtensions_PotatoWasherCompat_ci.zip
-
-      - name: Validate Orchards and Greenhouses compatibility package
-        run: python tools/validate_mod.py --mod-source addons/FS25_BgaExtensions_OrchardsGreenhousesCompat --package dist/FS25_BgaExtensions_OrchardsGreenhousesCompat_ci.zip
+      - name: Build and validate package set
+        run: python tools/package_set.py --suffix ci --validate --write-sha256 --write-json
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v7
         with:
           name: FS25_BgaExtensions-ci-package
           path: |
-            dist/FS25_BgaExtensions_ci.zip
-            dist/FS25_BgaExtensions_PotatoWasherCompat_ci.zip
-            dist/FS25_BgaExtensions_OrchardsGreenhousesCompat_ci.zip
+            dist/*_ci.zip
+            dist/SHA256SUMS.txt
+            dist/package-set.json
           if-no-files-found: error
           retention-days: 14

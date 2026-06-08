@@ -12,7 +12,8 @@
 - Release pages are kept as public-facing changelogs; smoke-test checklists and local handoffs belong in GitHub Issues or internal docs.
 - New issues are created only for majorly new or unique topics; otherwise update the existing issue's version/checklist/status.
 - Performance targets and decisive-action rules are documented.
-- GitHub CI validates source, builds a package artifact, and validates the package.
+- GitHub CI validates source, builds package artifacts, validates packages, and writes package-set metadata plus SHA-256 hashes.
+- `tools/package_manifest.json` is the active package list for core and add-on CI builds.
 - Dependabot is configured to watch GitHub Actions versions.
 - Visual asset policy and the first custom fillType HUD icon are documented.
 - Dry fuel yard storage is offered in medium and large PlanET-style variants; the small variant is retained only as packaged compatibility XML because its rotating blade does not fit passive storage.

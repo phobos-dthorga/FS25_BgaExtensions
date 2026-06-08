@@ -15,7 +15,19 @@ powershell -ExecutionPolicy Bypass -File tools\package.ps1 -SourcePath addons\FS
 powershell -ExecutionPolicy Bypass -File tools\package.ps1 -SourcePath addons\FS25_BgaExtensions_OrchardsGreenhousesCompat
 ```
 
-GitHub CI uses `tools/package_mod.py` for the same zip layout on hosted Linux runners and validates both the core package and active add-on packages.
+GitHub CI uses `tools/package_set.py` and `tools/package_manifest.json` to build and validate the core package plus every active add-on package. Add new active add-ons to the manifest so local package-set builds and CI stay in sync.
+
+Build and validate the whole package set locally:
+
+```powershell
+python tools\package_set.py --suffix ci_local --validate --write-sha256 --write-json
+```
+
+Build versioned packages from the manifest:
+
+```powershell
+python tools\package_set.py --versioned --validate --write-sha256 --write-json
+```
 
 ## Validation
 

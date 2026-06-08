@@ -22,12 +22,13 @@ It performs:
 
 1. Checkout.
 2. Python setup.
-3. Source validation with `tools/validate_mod.py`.
-4. Core and active add-on package builds with `tools/package_mod.py`.
-5. Package validation with `tools/validate_mod.py --package`.
-6. Upload of short-lived CI package artifacts.
+3. Python tool syntax checks.
+4. Manifest-driven source validation, package builds, and package validation with `tools/package_set.py`.
+5. Upload of short-lived CI package artifacts plus SHA-256 and package-set manifests.
 
 The CI packages are for inspection and disposable-save testing. They are not GitHub release artifacts.
+
+Active packages are listed in `tools/package_manifest.json`. When a new optional add-on becomes part of the active package line, add it there first so CI, local package-set builds, and artifact hashes stay aligned.
 
 ## Dependabot
 
@@ -82,8 +83,8 @@ powershell -ExecutionPolicy Bypass -File tools\measure-log.ps1 -LogPath "D:\path
 Run before every commit that changes `mod/`, `tools/`, or GitHub workflow files:
 
 1. `tools/validate_mod.py`
-2. `tools/package_mod.py`
-3. `tools/validate_mod.py --package ...`
+2. `tools/package_set.py --suffix ci_local --validate --write-sha256 --write-json`
+3. Inspect `dist/SHA256SUMS.txt` and `dist/package-set.json` if artifact identity matters.
 
 CI repeats this after push.
 
@@ -153,6 +154,7 @@ Good next steps:
 - Add branch protection once CI has proven stable.
 - Add a pull request checkbox for disposable-save log review.
 - Add a release workflow only after deciding whether GitHub or `tools/release.ps1` owns release creation. Do not run both as release creators.
+- Make the local release helper consume `tools/package_manifest.json` for add-on assets after the manual release flow has had another pass or two.
 - Add a local `measure-baseline` helper if load-time comparisons become frequent.
 - Add Lua syntax/lint checks once Lua enters the repository.
 - Add GIANTS schema validation if a redistributable or easily configured validator becomes available.
