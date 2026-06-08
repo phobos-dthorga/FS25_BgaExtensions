@@ -94,7 +94,7 @@ $changes
         $notesArgs = @("--notes", $notes)
     }
 
-    git tag -a $tag -m "FS25 BGA Extensions $tag"
+    git tag -a $tag -m "GBW BGA Extensions $tag"
     git push origin $tag
 
     $releaseAssets = @($assetPath)
@@ -115,7 +115,7 @@ $changes
     $releaseArgs += $releaseAssets
 
     $releaseArgs += @(
-        "--title", "FS25 BGA Extensions $tag",
+        "--title", "GBW BGA Extensions $tag",
         "--verify-tag"
     )
 
