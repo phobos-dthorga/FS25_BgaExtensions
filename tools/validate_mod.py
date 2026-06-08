@@ -108,6 +108,15 @@ OPTIONAL_FILLTYPE_DENYLIST = {
     "RICE_HUSK",
 }
 
+DEPENDENCY_CONSTRUCTION_TABS = {
+    "FS25_BgaExtensions": {
+        "phobosBgaCompatibility": "production",
+        "phobosBgaProduction": "production",
+        "phobosFuelProcessing": "production",
+        "phobosFuelStorage": "buildings",
+    },
+}
+
 GLOBAL_L10N_KEYS = {
     "unit_literShort",
 }
@@ -328,24 +337,15 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
         return
 
     dependencies, l10n_keys, construction_tabs = moddesc_data(mod_root, validation)
+    known_construction_tabs = dict(construction_tabs)
+    for dependency in dependencies:
+        known_construction_tabs.update(DEPENDENCY_CONSTRUCTION_TABS.get(dependency, {}))
+
     local_types = local_filltypes(mod_root, validation)
     known_filltypes = set(VANILLA_FILLTYPES)
     known_filltypes.update(local_types)
     for dependency in dependencies:
         known_filltypes.update(DEPENDENCY_FILLTYPES.get(dependency, set()))
-
-    for dependency, filltypes in DEPENDENCY_FILLTYPES.items():
-        dependency_owned_filltypes = filltypes - local_types
-        if not dependency_owned_filltypes:
-            continue
-
-        used = False
-        for path in sorted((mod_root / "placeables").rglob("*.xml")):
-            tree = parse_xml_file(path, validation)
-            if tree is not None and collect_filltype_refs(path, tree).intersection(dependency_owned_filltypes):
-                used = True
-        if used and dependency not in dependencies:
-            validation.error(f"Dependency fillType used but dependency is not declared: {dependency}")
 
     for path in xml_files:
         tree = parse_xml_file(path, validation)
@@ -377,7 +377,7 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
                     f"in {path.relative_to(repo_root)}"
                 )
 
-        validate_construction_tabs(path, repo_root, tree, construction_tabs, validation)
+        validate_construction_tabs(path, repo_root, tree, known_construction_tabs, validation)
 
         if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
             storage_only = sorted(storage_filltypes(tree) - production_filltypes(tree))

@@ -135,5 +135,5 @@ Near-term order:
 
 1. Keep dry fuel yard storage as-is.
 2. Keep straw pelletizing in Dry Fuel Processor, not in BGA intakes.
-3. Add optional `ORGANICWASTE` or `COMPOST` routes only when detected safely.
+3. Keep `ORGANICWASTE` and `COMPOST` routes in provider-specific add-ons unless runtime detection is proven safe.
 4. Add future methane/electricity export only as a separate module after proving the fillTypes can be handled without warnings.

@@ -24,6 +24,7 @@
 - Wet/root/produce processing is split into Wet Substrate Prep so biomass intakes remain focused and under the recipe-count soft target.
 - Straw pelletizing is split into Dry Fuel Processor so biomass intakes remain BGA-focused and dry fuel yards remain storage-only.
 - Potato Washer compatibility is the first separate add-on package, proving the optional-fillType pattern without weakening core XML.
+- Orchards/Greenhouses compatibility adds organic waste and compost routing as a second provider-specific add-on.
 
 ## Still To Decide
 

@@ -31,12 +31,15 @@ Starting with `v0.2.10.0`, `placeables/phobos/planetDryFuelProcessor.xml` also u
 
 Starting with `v0.2.11.0`, the optional Potato Washer compatibility add-on uses the same small PlanET bunker model for washed potato mash. This is also an active wet-material preparation process, so the mixer visual language remains appropriate.
 
+Starting with `v0.2.12.0`, the optional Orchards/Greenhouses compatibility add-on uses the same small PlanET bunker model for organic residue preparation. This is acceptable because organic waste mashing and compost routing are active material-handling processes.
+
 ## Current Placeable Model Fit
 
 | Store item | Model | Current fit |
 | --- | --- | --- |
 | Wet Substrate Prep | `PlanET_Bunker_Klein.i3d` | Good active mixing/conditioning fit. |
 | Washed Potato Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit. |
+| Organic Residue Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active residue preparation fit. |
 | Dry Fuel Processor | `PlanET_Bunker_Klein.i3d` | Acceptable active dry-material processing fit. |
 | Medium Dry Fuel Yard | `PlanET_Bunker_Mittel.i3d` | Acceptable passive bunker storage. |
 | Large Dry Fuel Yard | `PlanET_Bunker_Gross.i3d` | Acceptable passive bunker storage. |

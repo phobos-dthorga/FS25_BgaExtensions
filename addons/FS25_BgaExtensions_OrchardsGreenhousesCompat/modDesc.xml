@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
+    <author>phobosgekko</author>
+    <version>0.2.12.0</version>
+    <title>
+        <en>FS25 BGA Extensions - Orchards Greenhouses Compat</en>
+    </title>
+    <description>
+        <en>Optional compatibility add-on for FS25 BGA Extensions and Orchards And Greenhouses. Routes organic waste toward wet biomass mash or compost.</en>
+    </description>
+    <iconFilename>icon.dds</iconFilename>
+
+    <l10n>
+        <text name="storeItem_phobosOrganicResiduePrep">
+            <en>Phobos Organic Residue Prep</en>
+        </text>
+        <text name="function_phobosOrganicResiduePrep">
+            <en>Converts organic waste into wet biomass mash or compost.</en>
+        </text>
+        <text name="production_phbOrganicWasteToWetMash">
+            <en>Organic waste mash</en>
+        </text>
+        <text name="production_phbOrganicWasteToCompost">
+            <en>Organic waste composting</en>
+        </text>
+    </l10n>
+
+    <dependencies>
+        <dependency>FS25_BgaExtensions</dependency>
+        <dependency>FS25_PlanET_BGA_Modular</dependency>
+        <dependency>FS25_orchardsAndGreenhouses_crossplay</dependency>
+    </dependencies>
+
+    <multiplayer supported="true"/>
+
+    <storeItems>
+        <storeItem xmlFilename="placeables/phobos/organicResiduePrep.xml"/>
+    </storeItems>
+</modDesc>

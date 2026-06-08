@@ -41,9 +41,9 @@ These fillTypes or process outputs were found in the current local stack and are
 | `ELECTRICCHARGE` | Vanilla and BGA/generator systems | Sale/charge output from generators | Let generator modules own it. |
 | `STRAW_PELLETS` | Straw Harvest runtime dependency | Dry combustion fuel | Required dependency is acceptable for features that output it. |
 | `WOODCHIPS` | Vanilla sawmills, heating plants, many forestry mods | Combustion fuel, not normal anaerobic substrate | Prefer heating. BGA route should be poor or optional. |
-| `COMPOST` | `FS25_orchardsAndGreenhouses_crossplay`, `FS25_Nordkirchen_x4`, `FS25_The_Mechet` | Greenhouse/fertilizer/organic residual loop | Use when detected or in compatibility modules. Do not define casually. |
+| `COMPOST` | `FS25_orchardsAndGreenhouses_crossplay`, `FS25_Nordkirchen_x4`, `FS25_The_Mechet` | Greenhouse/fertilizer/organic residual loop | Implemented as an optional output in the Orchards/Greenhouses add-on. Do not define casually. |
 | `COMPOST_RAW` | `FS25_The_Mechet` | Map-specific compost precursor | Treat as optional detected input, not a Phobos baseline. |
-| `ORGANICWASTE` | `FS25_orchardsAndGreenhouses_crossplay`, `FS25_Potato_Chips_Factory_MF` | Food/produce processing residue | Consume optionally. Prefer converting toward `COMPOST` or wet substrate. |
+| `ORGANICWASTE` | `FS25_orchardsAndGreenhouses_crossplay`, `FS25_Potato_Chips_Factory_MF` | Food/produce processing residue | Implemented in the optional Orchards/Greenhouses add-on as wet mash or compost input. |
 | `POTATO_WASHED` | `FS25_potatoWasher` | Wet substrate equivalent to potato | Implemented in the optional `FS25_BgaExtensions_PotatoWasherCompat` add-on. |
 | `RICE_HUSK` | `FS25_RicePackagingFactory` | Low-value fibrous residue | Emergency/pretreated dry substrate or combustion candidate. |
 | Maize+/MaizePlus corn residues | Parked | None in active development | Do not implement until a future explicit decision says the FS25 ecosystem is production-ready. Do not target `FS25_cornProductionPack`. |
@@ -110,8 +110,8 @@ Until a future explicit decision changes this:
 
 ## Recommended Priority Order
 
-1. Add optional `ORGANICWASTE` intake where the fillType is detected or in a provider-specific add-on.
-2. Add optional `COMPOST` intake/output routes if the loaded map/mod stack defines `COMPOST`.
+1. Monitor `ORGANICWASTE` and `COMPOST` runtime behavior through the optional Orchards/Greenhouses compatibility add-on.
+2. Consider a separate Potato Chips organic-waste add-on only if that provider is commonly used and its fillType behavior matches.
 3. Monitor `POTATO_WASHED` runtime behavior through the optional Potato Washer compatibility add-on.
 4. Add Rice Packaging residue support for `RICE_HUSK`.
 5. Add optional `ORGANICWASTE` and `COMPOST` routes only after core placeables remain log-clean.

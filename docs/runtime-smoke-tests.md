@@ -9,6 +9,7 @@ The goal is to prove that the current Phobos placeables can be bought, placed, f
 - Use a disposable save.
 - Enable `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, and Straw Harvest.
 - For Potato Washer compatibility tests, also enable `FS25_BgaExtensions_PotatoWasherCompat` and `FS25_potatoWasher`.
+- For Orchards/Greenhouses compatibility tests, also enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` and `FS25_orchardsAndGreenhouses_crossplay`.
 - Prefer the same map and mod set for repeated tests so new log lines are easier to compare.
 - Do not test against an important career save until the disposable save is clean.
 
@@ -76,6 +77,8 @@ Only run these when the matching optional add-on and provider mod are installed.
 | Add-on | Minimum check | Expected result |
 | --- | --- | --- |
 | Potato Washer Compat | Enable `FS25_BgaExtensions_PotatoWasherCompat` with `FS25_potatoWasher`, buy Phobos Washed Potato Prep, unload `POTATO_WASHED`, and start washed potato mash. | `PHB_WET_BIOMASS_MASH` is produced and can be loaded out for the normal Wet Substrate Prep route. |
+| Orchards/Greenhouses Compat | Enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` with `FS25_orchardsAndGreenhouses_crossplay`, buy Phobos Organic Residue Prep, unload `ORGANICWASTE`, and start organic waste mash. | `PHB_WET_BIOMASS_MASH` is produced and can be loaded out for the normal Wet Substrate Prep route. |
+| Orchards/Greenhouses Compat | Start organic waste composting. | `COMPOST` is produced and can be loaded out for the provider's normal compost/farm loop. |
 
 ## Log Review
 

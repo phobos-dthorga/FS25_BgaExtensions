@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>phobosgekko</author>
-    <version>0.2.11.0</version>
+    <version>0.2.12.0</version>
     <title>
         <en>FS25 BGA Extensions - Potato Washer Compat</en>
     </title>
@@ -17,9 +17,6 @@
         <text name="function_phobosPotatoWasherWetSubstratePrep">
             <en>Converts washed potatoes into Phobos wet biomass mash.</en>
         </text>
-        <text name="construction_tab_phobosBgaCompatibility">
-            <en>Phobos BGA Compat</en>
-        </text>
         <text name="production_phbWashedPotatoToWetMash">
             <en>Washed potato mash</en>
         </text>
@@ -32,10 +29,6 @@
     </dependencies>
 
     <multiplayer supported="true"/>
-
-    <constructionCategories>
-        <tab categoryName="production" name="phobosBgaCompatibility" title="$l10n_construction_tab_phobosBgaCompatibility"/>
-    </constructionCategories>
 
     <storeItems>
         <storeItem xmlFilename="placeables/phobos/potatoWasherWetSubstratePrep.xml"/>

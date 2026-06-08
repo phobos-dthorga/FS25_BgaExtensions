@@ -149,6 +149,8 @@ Optional detected inputs for the first expansion:
 Active optional add-on inputs:
 
 - `POTATO_WASHED` -> `PHB_WET_BIOMASS_MASH` in `FS25_BgaExtensions_PotatoWasherCompat`
+- `ORGANICWASTE` -> `PHB_WET_BIOMASS_MASH` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
+- `ORGANICWASTE` -> `COMPOST` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
 
 Generated waste should be conservative:
 

@@ -51,3 +51,4 @@ Do not put optional fillTypes directly into the core placeable XML. The current 
 | Add-on package | Required dependencies | Contract used by Phobos |
 | --- | --- | --- |
 | `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_potatoWasher` | `POTATO_WASHED` from Potato Washing System, `PHB_WET_BIOMASS_MASH` from core Phobos, and the small PlanET bunker model. |
+| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` and `COMPOST` from Orchards And Greenhouses, `PHB_WET_BIOMASS_MASH` from core Phobos, and the small PlanET bunker model. |

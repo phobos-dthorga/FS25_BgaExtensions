@@ -12,6 +12,7 @@ Optional add-ons can be packaged from their source folder:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File tools\package.ps1 -SourcePath addons\FS25_BgaExtensions_PotatoWasherCompat
+powershell -ExecutionPolicy Bypass -File tools\package.ps1 -SourcePath addons\FS25_BgaExtensions_OrchardsGreenhousesCompat
 ```
 
 GitHub CI uses `tools/package_mod.py` for the same zip layout on hosted Linux runners and validates both the core package and active add-on packages.
@@ -36,6 +37,7 @@ For an add-on package, pass its source folder:
 
 ```powershell
 python tools\validate_mod.py --mod-source addons\FS25_BgaExtensions_PotatoWasherCompat
+python tools\validate_mod.py --mod-source addons\FS25_BgaExtensions_OrchardsGreenhousesCompat
 ```
 
 ## Log Measurement

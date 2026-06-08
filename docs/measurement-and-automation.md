@@ -27,7 +27,7 @@ It performs:
 5. Package validation with `tools/validate_mod.py --package`.
 6. Upload of short-lived CI package artifacts.
 
-The CI package is for inspection and disposable-save testing. It is not a GitHub release artifact.
+The CI packages are for inspection and disposable-save testing. They are not GitHub release artifacts.
 
 ## Dependabot
 

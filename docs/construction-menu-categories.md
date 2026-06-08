@@ -17,7 +17,7 @@ That is enough for the current Phobos need. The Corn Production Pack archive als
 | Vanilla category | Phobos tab | Purpose |
 | --- | --- | --- |
 | `production` | `phobosBgaProduction` | Biomass intake and BGA feedstock process buildings. |
-| `production` | `phobosBgaCompatibility` | Optional compatibility add-on process buildings. |
+| `production` | `phobosBgaCompatibility` | Optional compatibility add-on process buildings. Declared in core so multiple add-ons can share one tab. |
 | `production` | `phobosFuelProcessing` | Dry fuel processing buildings such as straw pelletizing. |
 | `buildings` | `phobosFuelStorage` | Dry fuel yards and future fuel-storage buildings. |
 
@@ -27,5 +27,5 @@ That is enough for the current Phobos need. The Corn Production Pack archive als
 - Avoid creating custom top-level construction categories unless the menu truly needs them.
 - Give each Phobos process family a readable tab before adding many more placeables.
 - Keep tab names stable after release so existing saves and player habits are not disturbed.
-- Optional add-ons may declare their own Phobos compatibility tab when the core mod should not expose provider-specific items.
+- Optional add-ons should use `phobosBgaCompatibility` for BGA-adjacent compatibility placeables unless a future add-on truly needs its own family tab.
 - Do not copy third-party menu scripts when FS25 XML can express the category layout.
