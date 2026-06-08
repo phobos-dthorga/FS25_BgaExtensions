@@ -47,6 +47,7 @@ Current method:
 - declare `FS25_PlanET_BGA_Modular` as a dependency for PlanET-specific modules
 - declare `pdlc_strawHarvestPack` when a feature uses Straw Harvest pellet fillTypes or HALLSYS heat-plant routing
 - use its registered internal fillTypes as the contract, especially `SILAGE_IN` and `SUGARBEETCUT_IN`
+- use PlanET models by dependency reference when their visual role matches the GBW process
 - use Straw Harvest `STRAW_PELLETS` as the dry fuel handoff when bridging straw residues to the HALLSYS Pellet Heat Plant
 - keep vanilla `WOODCHIPS` out of the production-point intake; handle it through the dedicated dry fuel yard silo
 - add GBW-owned modules that convert expanded biomass inputs into those internal fillTypes
@@ -87,7 +88,7 @@ For dependency mods such as PlanET:
 - reference installed dependency assets from XML only when the dependency is required and the path is tested
 - do not copy dependency assets or source files into this repository without clear license permission
 
-For the current PlanET proof of concept, the dependency resources are internal fillTypes plus referenced PlanET bunker models and store icons. The placeable XML remains GBW-owned and the dependency remains the source of truth for its own assets.
+For the current PlanET proof of concept, the dependency resources are internal fillTypes plus referenced PlanET bunker, fermenter, and store-icon assets. The placeable XML remains GBW-owned and the dependency remains the source of truth for its own assets.
 
 ### Reference Policy
 

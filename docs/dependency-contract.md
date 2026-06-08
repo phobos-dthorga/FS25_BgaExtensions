@@ -6,19 +6,21 @@ This document records what `FS25_BgaExtensions` expects from required dependenci
 
 | Dependency | Why it is required | Contract used by GBW | Verification source |
 | --- | --- | --- | --- |
-| `FS25_PlanET_BGA_Modular` | PlanET-specific intake and prep modules use PlanET internal feedstocks and PlanET bunker assets. | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, plus referenced PlanET bunker models and store icons. | Local mod XML and game log on 2026-06-07: loaded as version `1.0.0.1`, with 9 fillTypes loaded. |
+| `FS25_PlanET_BGA_Modular` | PlanET-specific intake, prep, and fermentation modules use PlanET internal feedstocks and PlanET assets. | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, plus referenced PlanET bunker and fermenter models and store icons. | Local mod XML and game log on 2026-06-07: loaded as version `1.0.0.1`, with 9 fillTypes loaded. |
 | `pdlc_strawHarvestPack` | Straw pellet output and dry fuel storage target the HALLSYS Pellet Heat Plant ecosystem. | `STRAW_PELLETS` and installed pDLC runtime support for straw pellet handling. | Game log on 2026-06-07: available pDLC version `1.1.0.0`, with 3 fillTypes loaded. |
 
 ## GBW-Owned Contract
 
 | FillType | Owner | Use |
 | --- | --- | --- |
-| `GBW_SWEET_MASH` | `FS25_BgaExtensions` | Sweet wet substrate family for sugar beet cut and sugarcane before handoff to PlanET `SUGARBEETCUT_IN`. |
-| `GBW_ROOT_MASH` | `FS25_BgaExtensions` | Root/starchy wet substrate family for potatoes and root crops before handoff to PlanET `SUGARBEETCUT_IN`. |
-| `GBW_GREEN_MASH` | `FS25_BgaExtensions` | Leafy/green produce wet substrate family before handoff to PlanET `SUGARBEETCUT_IN`. |
-| `GBW_RESIDUE_MASH` | `FS25_BgaExtensions` | Organic residue wet substrate family, currently produced by the Orchards/Greenhouses add-on before handoff to PlanET `SUGARBEETCUT_IN`. |
+| `GBW_SWEET_MASH` | `FS25_BgaExtensions` | Sweet wet substrate family for sugar beet cut and sugarcane before Fermentation Vessel handoff to PlanET `SUGARBEETCUT_IN`. |
+| `GBW_ROOT_MASH` | `FS25_BgaExtensions` | Root/starchy wet substrate family for potatoes and root crops before Fermentation Vessel handoff to PlanET `SUGARBEETCUT_IN`. |
+| `GBW_GREEN_MASH` | `FS25_BgaExtensions` | Leafy/green produce wet substrate family before Fermentation Vessel handoff to PlanET `SUGARBEETCUT_IN`. |
+| `GBW_RESIDUE_MASH` | `FS25_BgaExtensions` | Organic residue wet substrate family, currently produced by the Orchards/Greenhouses add-on before Fermentation Vessel handoff to PlanET `SUGARBEETCUT_IN`. |
 
 These GBW mash fillTypes are not meant to become broad farm commodities yet. They exist to avoid pretending every wet crop is sugar beet while still keeping the PlanET handoff simple.
+
+GBW may reference PlanET model and icon paths only while `FS25_PlanET_BGA_Modular` remains a declared dependency. The GBW package must not vendor PlanET assets.
 
 ## Base Game Materials
 

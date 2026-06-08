@@ -52,6 +52,7 @@ If that pass is clean and CI passed, broader personal testing can wait until the
   - GBW PlanET Biomass Intake - Medium
   - GBW PlanET Biomass Intake - Large
   - GBW Wet Substrate Prep
+  - GBW Fermentation Vessel
   - GBW Dry Fuel Processor
   - GBW PlanET Dry Fuel Yard - Medium
   - GBW PlanET Dry Fuel Yard - Large
@@ -81,8 +82,14 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 | Sweet mash | Unload `SUGARBEET_CUT` or `SUGARCANE`. | `GBW_SWEET_MASH` is produced. |
 | Root mash | Unload one root crop such as `POTATO`, `BEETROOT`, `CARROT`, or `PARSNIP`. | `GBW_ROOT_MASH` is produced. |
 | Green mash | Unload one produce crop such as `SPINACH`, `PEA`, or `GREENBEAN`. | `GBW_GREEN_MASH` is produced. |
-| Mash conditioning | Start conditioning for each available mash family. | `SUGARBEETCUT_IN` is produced and can be loaded out. |
-| Mash additive conditioning | Unload `SILAGE_ADDITIVE`, start an additive conditioning route. | `SUGARBEETCUT_IN` is produced at the improved additive rate. |
+
+## Fermentation Vessel Checks
+
+| Route | Minimum check | Expected result |
+| --- | --- | --- |
+| Mash fermentation | Unload each available mash family into GBW Fermentation Vessel. | `SUGARBEETCUT_IN` is produced and can be loaded out. |
+| Additive-assisted fermentation | Unload a mash family plus `SILAGE_ADDITIVE`, start the matching additive route. | `SUGARBEETCUT_IN` is produced at the improved additive rate. |
+| Visual fit | Place the vessel beside a PlanET BGA layout. | The PlanET fermenter model reads as a fermentation step, not a crop-prep bunker. |
 
 ## Dry Fuel Processor Checks
 
@@ -108,8 +115,8 @@ Only run these when the matching optional add-on and provider mod are installed.
 
 | Add-on | Minimum check | Expected result |
 | --- | --- | --- |
-| Potato Washer Compat | Enable `FS25_BgaExtensions_PotatoWasherCompat` with `FS25_potatoWasher`, buy GBW Washed Potato Prep, unload `POTATO_WASHED`, and start washed potato mash. | `GBW_ROOT_MASH` is produced and can be loaded out for the normal Wet Substrate Prep route. |
-| Orchards/Greenhouses Compat | Enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` with `FS25_orchardsAndGreenhouses_crossplay`, buy GBW Organic Residue Prep, unload `ORGANICWASTE`, and start organic waste mash. | `GBW_RESIDUE_MASH` is produced and can be loaded out for the normal Wet Substrate Prep route. |
+| Potato Washer Compat | Enable `FS25_BgaExtensions_PotatoWasherCompat` with `FS25_potatoWasher`, buy GBW Washed Potato Prep, unload `POTATO_WASHED`, and start washed potato mash. | `GBW_ROOT_MASH` is produced and can be loaded out for the normal Fermentation Vessel route. |
+| Orchards/Greenhouses Compat | Enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` with `FS25_orchardsAndGreenhouses_crossplay`, buy GBW Organic Residue Prep, unload `ORGANICWASTE`, and start organic waste mash. | `GBW_RESIDUE_MASH` is produced and can be loaded out for the normal Fermentation Vessel route. |
 | Orchards/Greenhouses Compat | Start organic waste composting. | `COMPOST` is produced and can be loaded out for the provider's normal compost/farm loop. |
 
 ## Log Review

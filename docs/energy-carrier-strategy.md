@@ -40,7 +40,6 @@ Purpose: keep wet, starchy, sugary, root, and produce-waste flows separate from 
 Current route:
 
 - wet crops and produce residues to the appropriate GBW mash family
-- mash-family conditioning to `SUGARBEETCUT_IN`
 
 Good future candidates:
 
@@ -49,6 +48,17 @@ Good future candidates:
 - orchard/greenhouse organic residuals when safely detected
 
 This family now has its own Wet Substrate Prep placeable. Keep it separate from forage/manure/straw intake recipes unless a future model or gameplay loop proves a shared module is clearer.
+
+### Fermentation Vessel
+
+Purpose: represent the tank-based biological step between GBW mash preparation and PlanET BGA feedstock.
+
+Current route:
+
+- mash-family fermentation to `SUGARBEETCUT_IN`
+- additive-assisted mash fermentation where `SILAGE_ADDITIVE` helps biology along with better throughput and yield
+
+The first implementation uses PlanET's small fermenter model by dependency reference. Keep this family focused on wet mash fermentation; do not add raw crop chopping, forage intake, dry fuel handling, methane export, or digestate processing here.
 
 ### Dry Fuel Yard
 
@@ -96,6 +106,7 @@ Use this split when adding new features:
 | --- | --- |
 | making BGA feedstock from crops | Biomass Intake |
 | making wet substrate from roots/waste | Wet Substrate Prep |
+| fermenting GBW mash into PlanET wet feedstock | Fermentation Vessel |
 | holding wood chips or pellets | Dry Fuel Yard |
 | making pellets or dry combustion fuel | Dry Fuel Processor |
 | producing methane, electricity, or digestate | BGA Digestion And Energy Export |

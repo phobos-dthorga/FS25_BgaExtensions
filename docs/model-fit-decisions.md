@@ -37,11 +37,28 @@ Starting with `v0.2.11.0`, the optional Potato Washer compatibility add-on uses 
 
 Starting with `v0.2.12.0`, the optional Orchards/Greenhouses compatibility add-on uses the same small PlanET bunker model for organic residue preparation. This is acceptable because organic waste mashing and compost routing are active material-handling processes.
 
+Starting with `v0.2.16.0`, mash fermentation moves from Wet Substrate Prep into `placeables/gbw/planetFermentationVessel.xml`, which references PlanET's `PlanET_Fermenter100.i3d` model and store icon from the required PlanET Modular BGA dependency.
+
+This is a better visual fit because the process is no longer framed as a bunker mixer magically turning mash into downstream BGA substrate. The tank reads as fermentation or digestion equipment, which matches the biological step.
+
+PlanET terms used in source names:
+
+- `Fermenter`: fermenter.
+- `FluessigFermenter`: liquid fermenter.
+- `GaerresteLager`: digestate storage.
+- `GuelleLager`: slurry or liquid manure storage.
+- `Nachgaerer`: secondary or post-digester.
+- `Fackel`: flare.
+- `Strom Verteiler`: power distributor.
+
+Do not copy PlanET model, texture, or store-icon files into GBW unless clear license permission is recorded. Reference them through `$moddir$FS25_PlanET_BGA_Modular/...` while the PlanET dependency is declared.
+
 ## Current Placeable Model Fit
 
 | Store item | Model | Current fit |
 | --- | --- | --- |
-| Wet Substrate Prep | `PlanET_Bunker_Klein.i3d` | Good active mixing/conditioning fit. |
+| Wet Substrate Prep | `PlanET_Bunker_Klein.i3d` | Good active wet-material mixing fit. |
+| Fermentation Vessel | `PlanET_Fermenter100.i3d` | Good fermentation-tank fit for mash fermentation. |
 | Washed Potato Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit. |
 | Organic Residue Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active residue preparation fit. |
 | Dry Fuel Processor | `PlanET_Bunker_Klein.i3d` | Acceptable active dry-material processing fit. |

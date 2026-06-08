@@ -517,7 +517,7 @@ def validate_fermentation_priority_rules(
                 validation,
             )
 
-    if filename == "planetWetSubstratePrep.xml":
+    if filename == "planetFermentationVessel.xml":
         relative_path = path.relative_to(repo_root)
         mash_pairs = [
             ("Sweet", "sweet"),
@@ -530,14 +530,14 @@ def validate_fermentation_priority_rules(
                 path,
                 repo_root,
                 tree,
-                f"gbwWetPrep{production_prefix}MashToPlanetBeet",
+                f"gbwFermenter{production_prefix}MashToPlanetBeet",
                 validation,
             )
             additive = require_record(
                 path,
                 repo_root,
                 tree,
-                f"gbwWetPrep{production_prefix}MashAdditiveToPlanetBeet",
+                f"gbwFermenter{production_prefix}MashAdditiveToPlanetBeet",
                 validation,
             )
             if plain is None or additive is None:

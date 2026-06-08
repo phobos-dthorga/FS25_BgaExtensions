@@ -109,59 +109,15 @@
                 <inputs><input fillType="GREENBEAN" amount="200"/></inputs>
                 <outputs><output fillType="GBW_GREEN_MASH" amount="140"/></outputs>
             </production>
-            <production id="gbwWetPrepSweetMashToPlanetBeet" name="$l10n_production_gbwSweetMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
-                <inputs><input fillType="GBW_SWEET_MASH" amount="200"/></inputs>
-                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
-            </production>
-            <production id="gbwWetPrepSweetMashAdditiveToPlanetBeet" name="$l10n_production_gbwSweetMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs>
-                    <input fillType="GBW_SWEET_MASH" amount="200"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
-                </inputs>
-                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
-            </production>
-            <production id="gbwWetPrepRootMashToPlanetBeet" name="$l10n_production_gbwRootMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
-                <inputs><input fillType="GBW_ROOT_MASH" amount="200"/></inputs>
-                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
-            </production>
-            <production id="gbwWetPrepRootMashAdditiveToPlanetBeet" name="$l10n_production_gbwRootMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs>
-                    <input fillType="GBW_ROOT_MASH" amount="200"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
-                </inputs>
-                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
-            </production>
-            <production id="gbwWetPrepGreenMashToPlanetBeet" name="$l10n_production_gbwGreenMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
-                <inputs><input fillType="GBW_GREEN_MASH" amount="200"/></inputs>
-                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
-            </production>
-            <production id="gbwWetPrepGreenMashAdditiveToPlanetBeet" name="$l10n_production_gbwGreenMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs>
-                    <input fillType="GBW_GREEN_MASH" amount="200"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
-                </inputs>
-                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
-            </production>
-            <production id="gbwWetPrepResidueMashToPlanetBeet" name="$l10n_production_gbwResidueMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
-                <inputs><input fillType="GBW_RESIDUE_MASH" amount="200"/></inputs>
-                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
-            </production>
-            <production id="gbwWetPrepResidueMashAdditiveToPlanetBeet" name="$l10n_production_gbwResidueMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
-                <inputs>
-                    <input fillType="GBW_RESIDUE_MASH" amount="200"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
-                </inputs>
-                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
-            </production>
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN GBW_SWEET_MASH GBW_ROOT_MASH GBW_GREEN_MASH GBW_RESIDUE_MASH SILAGE_ADDITIVE"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN"/>
             <baleTrigger triggerNode="baleTrigger" fillTypes="SUGARBEET_CUT"/>
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="GBW_SWEET_MASH GBW_ROOT_MASH GBW_GREEN_MASH GBW_RESIDUE_MASH SUGARBEETCUT_IN" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="GBW_SWEET_MASH GBW_ROOT_MASH GBW_GREEN_MASH" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
@@ -177,9 +133,6 @@
             <capacity fillType="GBW_SWEET_MASH" capacity="80000"/>
             <capacity fillType="GBW_ROOT_MASH" capacity="80000"/>
             <capacity fillType="GBW_GREEN_MASH" capacity="80000"/>
-            <capacity fillType="GBW_RESIDUE_MASH" capacity="80000"/>
-            <capacity fillType="SILAGE_ADDITIVE" capacity="120"/>
-            <capacity fillType="SUGARBEETCUT_IN" capacity="80000"/>
 
             <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="SUGARBEET_CUT"/>
         </storage>

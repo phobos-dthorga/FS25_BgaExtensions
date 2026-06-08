@@ -21,8 +21,8 @@ The current PlanET-compatible preparation modules produce or handle these materi
 | --- | --- | --- | --- |
 | `SILAGE_IN` | Chaff, silage, grass, hay, low-yield straw pretreatment | PlanET modular fermenter input | Good as a PlanET-owned handoff only. Do not expose as general farm material. |
 | `MANURE_IN` | Manure intake | PlanET modular fermenter input | Good as a PlanET-owned handoff only. |
-| GBW mash families | Wet Substrate Prep from sugar crops, roots, greens, and organic residue | GBW staging materials, then conditioned into `SUGARBEETCUT_IN` | Good internal GBW intermediaries. Keep them internal until a real storage/logistics use appears. |
-| `SUGARBEETCUT_IN` | Wet Substrate Prep mash conditioning | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
+| GBW mash families | Wet Substrate Prep from sugar crops, roots, greens, and organic residue | GBW staging materials, then fermented into `SUGARBEETCUT_IN` | Good internal GBW intermediaries. Keep them internal until a real storage/logistics use appears. |
+| `SUGARBEETCUT_IN` | GBW Fermentation Vessel mash fermentation | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
 | `STRAW_PELLETS` | Dry Fuel Processor straw pelletizing | Straw Harvest HALLSYS Pellet Heat Plant and pellet-compatible systems | Strong cross-mod by-product/fuel route. Keep this meaningful. |
 | `WOODCHIPS` | Player-delivered vanilla material | Medium and large dry fuel yard storage for combustion logistics | Stored outside the BGA intake so it does not trigger production-point storage warnings. |
 

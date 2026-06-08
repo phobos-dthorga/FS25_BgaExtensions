@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<placeable type="productionPoint" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
+    <storeData>
+        <name>$l10n_storeItem_gbwPlanetFermentationVessel</name>
+        <functions>
+            <function>$l10n_function_gbwPlanetFermentationVessel</function>
+        </functions>
+        <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_Fermenter100.dds</image>
+        <price>165000</price>
+        <dailyUpkeep>28</dailyUpkeep>
+        <lifetime>1000</lifetime>
+        <rotation>0</rotation>
+        <brand>PLANET</brand>
+        <species>PLACEABLE</species>
+        <category>productionPoints</category>
+        <brush>
+            <type>placeable</type>
+            <category>production</category>
+            <tab>gbwBgaProduction</tab>
+        </brush>
+    </storeData>
+
+    <base>
+        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Fermenter100.i3d</filename>
+        <canBeRenamed>true</canBeRenamed>
+        <boughtWithFarmland>true</boughtWithFarmland>
+    </base>
+
+    <placement useRandomYRotation="false" useManualYRotation="true">
+        <testAreas>
+            <testArea startNode="testArea1Start" endNode="testArea1End"/>
+        </testAreas>
+        <sounds>
+            <place template="smallImp" pitchScale="1.4"/>
+        </sounds>
+    </placement>
+
+    <clearAreas>
+        <clearArea startNode="clearArea1Start" widthNode="clearArea1Width" heightNode="clearArea1Height"/>
+        <clearArea startNode="clearArea2Start" widthNode="clearArea2Width" heightNode="clearArea2Height"/>
+        <clearArea startNode="clearArea3Start" widthNode="clearArea3Width" heightNode="clearArea3Height"/>
+        <clearArea startNode="clearArea4Start" widthNode="clearArea4Width" heightNode="clearArea4Height"/>
+        <clearArea startNode="clearArea5Start" widthNode="clearArea5Width" heightNode="clearArea5Height"/>
+        <clearArea startNode="clearArea6Start" widthNode="clearArea6Width" heightNode="clearArea6Height"/>
+        <clearArea startNode="clearArea7Start" widthNode="clearArea7Width" heightNode="clearArea7Height"/>
+        <clearArea startNode="clearArea8Start" widthNode="clearArea8Width" heightNode="clearArea8Height"/>
+        <clearArea startNode="clearArea9Start" widthNode="clearArea9Width" heightNode="clearArea9Height"/>
+    </clearAreas>
+
+    <leveling requireLeveling="true" maxSmoothDistance="10" maxSlope="75" maxEdgeAngle="30">
+        <levelAreas>
+            <levelArea startNode="clearArea2Start" widthNode="clearArea2Width" heightNode="clearArea2Height" groundType="gravel"/>
+            <levelArea startNode="clearArea3Start" widthNode="clearArea3Width" heightNode="clearArea3Height" groundType="gravel"/>
+            <levelArea startNode="clearArea4Start" widthNode="clearArea4Width" heightNode="clearArea4Height" groundType="gravel"/>
+            <levelArea startNode="clearArea5Start" widthNode="clearArea5Width" heightNode="clearArea5Height" groundType="gravel"/>
+            <levelArea startNode="clearArea6Start" widthNode="clearArea6Width" heightNode="clearArea6Height" groundType="gravel"/>
+            <levelArea startNode="clearArea7Start" widthNode="clearArea7Width" heightNode="clearArea7Height" groundType="gravel"/>
+            <levelArea startNode="clearArea8Start" widthNode="clearArea8Width" heightNode="clearArea8Height" groundType="gravel"/>
+            <levelArea startNode="clearArea9Start" widthNode="clearArea9Width" heightNode="clearArea9Height" groundType="gravel"/>
+            <levelArea startNode="clearArea1Start" widthNode="clearArea1Width" heightNode="clearArea1Height" groundType="asphalt"/>
+        </levelAreas>
+    </leveling>
+
+    <indoorAreas>
+        <indoorArea startNode="indoorArea1Start" widthNode="indoorArea1Width" heightNode="indoorArea1Height"/>
+    </indoorAreas>
+
+    <tipOcclusionUpdateAreas>
+        <tipOcclusionUpdateArea startNode="tipOcclusionUpdateArea1Start" endNode="tipOcclusionUpdateArea1End"/>
+    </tipOcclusionUpdateAreas>
+
+    <ai>
+        <updateAreas>
+            <updateArea startNode="tipOcclusionUpdateArea1Start" endNode="tipOcclusionUpdateArea1End"/>
+        </updateAreas>
+    </ai>
+
+    <infoTrigger triggerNode="infoTrigger"/>
+
+    <triggerMarkers>
+        <triggerMarker node="unloadTriggerMixerMarker" filename="$data/shared/assets/marker/markerIconUnload.i3d" id="UNLOAD" adjustToGround="false"/>
+        <triggerMarker node="loadTriggerMarker" filename="$data/shared/assets/marker/markerIconLoad.i3d" id="LOAD" adjustToGround="true"/>
+        <triggerMarker node="playerTriggerMarker" filename="$data/shared/assets/marker/markerIconWrench.i3d" id="WRENCH" adjustToGround="true"/>
+    </triggerMarkers>
+
+    <hotspots>
+        <hotspot type="PRODUCTION_POINT" linkNode="hotspotMarker" teleportNode="teleportNode"/>
+    </hotspots>
+
+    <productionPoint>
+        <productions sharedThroughputCapacity="false">
+            <production id="gbwFermenterSweetMashToPlanetBeet" name="$l10n_production_gbwSweetMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs><input fillType="GBW_SWEET_MASH" amount="200"/></inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
+            </production>
+            <production id="gbwFermenterSweetMashAdditiveToPlanetBeet" name="$l10n_production_gbwSweetMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
+                <inputs>
+                    <input fillType="GBW_SWEET_MASH" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
+                </inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
+            </production>
+            <production id="gbwFermenterRootMashToPlanetBeet" name="$l10n_production_gbwRootMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs><input fillType="GBW_ROOT_MASH" amount="200"/></inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
+            </production>
+            <production id="gbwFermenterRootMashAdditiveToPlanetBeet" name="$l10n_production_gbwRootMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
+                <inputs>
+                    <input fillType="GBW_ROOT_MASH" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
+                </inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
+            </production>
+            <production id="gbwFermenterGreenMashToPlanetBeet" name="$l10n_production_gbwGreenMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs><input fillType="GBW_GREEN_MASH" amount="200"/></inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
+            </production>
+            <production id="gbwFermenterGreenMashAdditiveToPlanetBeet" name="$l10n_production_gbwGreenMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
+                <inputs>
+                    <input fillType="GBW_GREEN_MASH" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
+                </inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
+            </production>
+            <production id="gbwFermenterResidueMashToPlanetBeet" name="$l10n_production_gbwResidueMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
+                <inputs><input fillType="GBW_RESIDUE_MASH" amount="200"/></inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
+            </production>
+            <production id="gbwFermenterResidueMashAdditiveToPlanetBeet" name="$l10n_production_gbwResidueMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
+                <inputs>
+                    <input fillType="GBW_RESIDUE_MASH" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
+                </inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
+            </production>
+        </productions>
+
+        <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="GBW_SWEET_MASH GBW_ROOT_MASH GBW_GREEN_MASH GBW_RESIDUE_MASH SILAGE_ADDITIVE"/>
+        </sellingStation>
+
+        <loadingStation supportsExtension="false">
+            <loadTrigger triggerNode="loadTrigger" fillTypes="SUGARBEETCUT_IN" aiNode="loadTriggerAiNode"/>
+        </loadingStation>
+
+        <storage isExtension="false" fillLevelSyncThreshold="100">
+            <capacity fillType="GBW_SWEET_MASH" capacity="160000"/>
+            <capacity fillType="GBW_ROOT_MASH" capacity="160000"/>
+            <capacity fillType="GBW_GREEN_MASH" capacity="160000"/>
+            <capacity fillType="GBW_RESIDUE_MASH" capacity="160000"/>
+            <capacity fillType="SILAGE_ADDITIVE" capacity="240"/>
+            <capacity fillType="SUGARBEETCUT_IN" capacity="160000"/>
+        </storage>
+
+        <playerTrigger node="playerTrigger"/>
+
+        <sounds>
+            <idle template="dairyIdle" linkNode="0>" outerRadius="10" volumeScale="0.2"/>
+            <active template="dairyWork" linkNode="0>" outerRadius="50" volumeScale="0.3"/>
+        </sounds>
+    </productionPoint>
+
+    <i3dMappings>
+        <i3dMapping id="clearArea1Start" node="0>0|0"/>
+        <i3dMapping id="clearArea1Width" node="0>0|0|0"/>
+        <i3dMapping id="clearArea1Height" node="0>0|0|1"/>
+        <i3dMapping id="clearArea2Start" node="0>0|1|0"/>
+        <i3dMapping id="clearArea2Width" node="0>0|1|0|0"/>
+        <i3dMapping id="clearArea2Height" node="0>0|1|0|1"/>
+        <i3dMapping id="clearArea3Start" node="0>0|2|0"/>
+        <i3dMapping id="clearArea3Width" node="0>0|2|0|0"/>
+        <i3dMapping id="clearArea3Height" node="0>0|2|0|1"/>
+        <i3dMapping id="clearArea4Start" node="0>0|3|0"/>
+        <i3dMapping id="clearArea4Width" node="0>0|3|0|0"/>
+        <i3dMapping id="clearArea4Height" node="0>0|3|0|1"/>
+        <i3dMapping id="clearArea5Start" node="0>0|4|0"/>
+        <i3dMapping id="clearArea5Width" node="0>0|4|0|0"/>
+        <i3dMapping id="clearArea5Height" node="0>0|4|0|1"/>
+        <i3dMapping id="clearArea6Start" node="0>0|5|0"/>
+        <i3dMapping id="clearArea6Width" node="0>0|5|0|0"/>
+        <i3dMapping id="clearArea6Height" node="0>0|5|0|1"/>
+        <i3dMapping id="clearArea7Start" node="0>0|6|0"/>
+        <i3dMapping id="clearArea7Width" node="0>0|6|0|0"/>
+        <i3dMapping id="clearArea7Height" node="0>0|6|0|1"/>
+        <i3dMapping id="clearArea8Start" node="0>0|7|0"/>
+        <i3dMapping id="clearArea8Width" node="0>0|7|0|0"/>
+        <i3dMapping id="clearArea8Height" node="0>0|7|0|1"/>
+        <i3dMapping id="clearArea9Start" node="0>0|8|0"/>
+        <i3dMapping id="clearArea9Width" node="0>0|8|0|0"/>
+        <i3dMapping id="clearArea9Height" node="0>0|8|0|1"/>
+        <i3dMapping id="indoorArea1Start" node="0>1|0"/>
+        <i3dMapping id="indoorArea1Width" node="0>1|0|0"/>
+        <i3dMapping id="indoorArea1Height" node="0>1|0|1"/>
+        <i3dMapping id="testArea1Start" node="0>2|0"/>
+        <i3dMapping id="testArea1End" node="0>2|0|0"/>
+        <i3dMapping id="tipOcclusionUpdateArea1Start" node="0>3|0"/>
+        <i3dMapping id="tipOcclusionUpdateArea1End" node="0>3|0|0"/>
+        <i3dMapping id="infoTrigger" node="0>4"/>
+        <i3dMapping id="hotspotMarker" node="0>9"/>
+        <i3dMapping id="teleportNode" node="0>10"/>
+        <i3dMapping id="sellingStation" node="0>11"/>
+        <i3dMapping id="loadTrigger" node="0>11|0|0"/>
+        <i3dMapping id="loadTriggerMarker" node="0>11|0|1"/>
+        <i3dMapping id="loadTriggerAiNode" node="0>11|0|2"/>
+        <i3dMapping id="loadTrigger2" node="0>11|0|4"/>
+        <i3dMapping id="unloadTriggerLiquidManure" node="0>11|1|0"/>
+        <i3dMapping id="unloadTriggerLiquidManureMarker" node="0>11|1|1"/>
+        <i3dMapping id="unloadTriggerLiquidManureAiNode" node="0>11|1|2"/>
+        <i3dMapping id="bunkerFillVolume" node="0>11|2|0"/>
+        <i3dMapping id="baleTrigger" node="0>11|2|1"/>
+        <i3dMapping id="unloadTriggerMixer" node="0>11|2|2"/>
+        <i3dMapping id="unloadTriggerMixerMarker" node="0>11|2|3"/>
+        <i3dMapping id="unloadTriggerInFront" node="0>11|3|0"/>
+        <i3dMapping id="baleTriggerInFront" node="0>11|3|1"/>
+        <i3dMapping id="unloadTriggerInFrontAINode" node="0>11|3|2"/>
+        <i3dMapping id="playerTrigger" node="0>11|4"/>
+        <i3dMapping id="playerTriggerMarker" node="0>11|4|0"/>
+    </i3dMappings>
+</placeable>

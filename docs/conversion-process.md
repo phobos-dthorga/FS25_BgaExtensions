@@ -10,7 +10,7 @@ Some materials genuinely belong in a silage pathway. Others are better represent
 
 For the first proof of concept, prefer the smallest useful compatibility layer. The installed PlanET modular BGA already uses internal feedstocks, so forage and manure lanes feed those internal PlanET lanes directly.
 
-The wet crop lane now uses a dedicated Wet Substrate Prep placeable and four GBW-owned mash-family intermediaries before handing material to PlanET as `SUGARBEETCUT_IN`. This avoids presenting spinach, peas, roots, sugar crops, and produce waste as if they were all sugar beet.
+The wet crop lane now uses a dedicated Wet Substrate Prep placeable, four GBW-owned mash-family intermediaries, and a PlanET fermenter-based Fermentation Vessel before handing material to PlanET as `SUGARBEETCUT_IN`. This avoids presenting spinach, peas, roots, sugar crops, and produce waste as if they were all sugar beet, and keeps fermentation out of the prep mixer.
 
 ## Fermentation Priority
 
@@ -98,7 +98,7 @@ Preferred behavior:
 
 The first implementation should be deliberately narrow:
 
-1. Add GBW-owned companion production points: PlanET Biomass Intake, Wet Substrate Prep, and Dry Fuel Processor.
+1. Add GBW-owned companion production points: PlanET Biomass Intake, Wet Substrate Prep, Fermentation Vessel, and Dry Fuel Processor.
 2. Depend on `FS25_PlanET_BGA_Modular` and `pdlc_strawHarvestPack` for the proof of concept.
 3. Convert selected high-confidence vanilla inputs into PlanET internal feedstocks.
 4. Use `SILAGE_IN` for forage-like biomass and `SUGARBEETCUT_IN` for wet/starchy/root biomass.
@@ -145,8 +145,13 @@ Current Wet Substrate Prep recipes:
 - `SPINACH` -> `GBW_GREEN_MASH`
 - `PEA` -> `GBW_GREEN_MASH`
 - `GREENBEAN` -> `GBW_GREEN_MASH`
+
+Current Fermentation Vessel recipes:
+
 - each GBW mash family -> `SUGARBEETCUT_IN`
 - each GBW mash family + `SILAGE_ADDITIVE` -> improved `SUGARBEETCUT_IN`
+
+The Fermentation Vessel uses the PlanET `PlanET_Fermenter100.i3d` model by dependency reference. The model is not copied into GBW. The dependency remains the source of truth for its assets.
 
 Current dry fuel yard storage:
 
@@ -225,7 +230,7 @@ The exact numbers should be tuned against vanilla BGA recipes after the first XM
 
 ## Current By-Product Guidance
 
-The current implementation now uses four GBW-owned wet intermediaries, `GBW_SWEET_MASH`, `GBW_ROOT_MASH`, `GBW_GREEN_MASH`, and `GBW_RESIDUE_MASH`, before handing them to PlanET as `SUGARBEETCUT_IN`.
+The current implementation now uses four GBW-owned wet intermediaries, `GBW_SWEET_MASH`, `GBW_ROOT_MASH`, `GBW_GREEN_MASH`, and `GBW_RESIDUE_MASH`, before the Fermentation Vessel hands them to PlanET as `SUGARBEETCUT_IN`.
 
 For by-products and farm-adjacent outputs, follow `docs/byproduct-integration-audit.md`:
 

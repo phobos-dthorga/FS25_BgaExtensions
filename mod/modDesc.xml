@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>Gekko BioWorks</author>
-    <version>0.2.15.1</version>
+    <version>0.2.16.0</version>
     <title>
         <en>GBW BGA Extensions</en>
     </title>
     <description>
-        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. Adds Gekko BioWorks PlanET-compatible biomass intakes, wet substrate prep, dry fuel processing, and dry fuel yard storage for heat-plant logistics.</en>
+        <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. Adds Gekko BioWorks PlanET-compatible biomass intakes, wet substrate prep, fermentation, dry fuel processing, and dry fuel yard storage for heat-plant logistics.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
 
@@ -22,6 +22,9 @@
         </text>
         <text name="storeItem_gbwPlanetWetSubstratePrep">
             <en>GBW Wet Substrate Prep</en>
+        </text>
+        <text name="storeItem_gbwPlanetFermentationVessel">
+            <en>GBW Fermentation Vessel</en>
         </text>
         <text name="storeItem_gbwPlanetDryFuelProcessor">
             <en>GBW Dry Fuel Processor</en>
@@ -39,7 +42,10 @@
             <en>Stores wood chips and straw pellets for combustion heat logistics.</en>
         </text>
         <text name="function_gbwPlanetWetSubstratePrep">
-            <en>Prepares wet, root, and produce crops into PlanET-compatible beet substrate.</en>
+            <en>Prepares wet, root, and produce crops into GBW mash substrates.</en>
+        </text>
+        <text name="function_gbwPlanetFermentationVessel">
+            <en>Ferments GBW mash substrates into PlanET-compatible beet substrate.</en>
         </text>
         <text name="function_gbwPlanetDryFuelProcessor">
             <en>Converts straw into straw pellet fuel for combustion heat logistics.</en>
@@ -126,28 +132,28 @@
             <en>Green bean mash</en>
         </text>
         <text name="production_gbwSweetMashToPlanetBeet">
-            <en>Sweet mash conditioning</en>
+            <en>Sweet mash fermentation</en>
         </text>
         <text name="production_gbwSweetMashAdditiveToPlanetBeet">
-            <en>Sweet mash conditioning with additive</en>
+            <en>Sweet mash fermentation with additive</en>
         </text>
         <text name="production_gbwRootMashToPlanetBeet">
-            <en>Root mash conditioning</en>
+            <en>Root mash fermentation</en>
         </text>
         <text name="production_gbwRootMashAdditiveToPlanetBeet">
-            <en>Root mash conditioning with additive</en>
+            <en>Root mash fermentation with additive</en>
         </text>
         <text name="production_gbwGreenMashToPlanetBeet">
-            <en>Green mash conditioning</en>
+            <en>Green mash fermentation</en>
         </text>
         <text name="production_gbwGreenMashAdditiveToPlanetBeet">
-            <en>Green mash conditioning with additive</en>
+            <en>Green mash fermentation with additive</en>
         </text>
         <text name="production_gbwResidueMashToPlanetBeet">
-            <en>Residue mash conditioning</en>
+            <en>Residue mash fermentation</en>
         </text>
         <text name="production_gbwResidueMashAdditiveToPlanetBeet">
-            <en>Residue mash conditioning with additive</en>
+            <en>Residue mash fermentation with additive</en>
         </text>
     </l10n>
 
@@ -172,6 +178,7 @@
         <storeItem xmlFilename="placeables/gbw/planetBiomassIntakeMedium.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetBiomassIntakeLarge.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetWetSubstratePrep.xml"/>
+        <storeItem xmlFilename="placeables/gbw/planetFermentationVessel.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetDryFuelProcessor.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetDryFuelYardMedium.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetDryFuelYardLarge.xml"/>

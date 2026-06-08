@@ -29,11 +29,13 @@ The first entries in this table are pre-GBW historical lines from versions befor
 
 ## Pending Test Targets
 
-For `v0.2.15.1`, smoke-test the DXT5 mash HUD icon hotfix:
+For `v0.2.16.0`, smoke-test the fermentation vessel split:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.15.1`
-- confirm `GBW_SWEET_MASH`, `GBW_ROOT_MASH`, `GBW_GREEN_MASH`, and `GBW_RESIDUE_MASH` display distinct mash icons
-- confirm no `hud_fill_gbwSweetMash`, `hud_fill_gbwRootMash`, `hud_fill_gbwGreenMash`, or `hud_fill_gbwResidueMash` raw-format warnings appear
+- confirm core FS25_BgaExtensions loads as version `0.2.16.0`
+- confirm GBW Fermentation Vessel appears in the GBW BGA tab and uses the PlanET fermenter model
+- confirm Wet Substrate Prep only produces mash-family substrates
+- confirm GBW Fermentation Vessel accepts each available mash family and produces `SUGARBEETCUT_IN`
+- confirm additive-assisted fermentation remains readable and improved
 - check the log for GBW-owned warnings or errors
 
 ## User Test Confirmation
