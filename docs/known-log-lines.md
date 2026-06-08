@@ -26,10 +26,10 @@ Current log checked on 2026-06-07:
 
 ## Pending Test Targets
 
-For `v0.2.12.0`, smoke-test the Orchards/Greenhouses compatibility add-on, Potato Washer compatibility add-on, existing dry fuel processor split, Wet Substrate Prep, medium and large dry fuel yard sizes, the custom construction tabs, the doubled capacities, and the HUD texture hotfix:
+For `v0.2.13.0`, smoke-test the fermentation-priority balance pass, wet mash additive conditioning, the Orchards/Greenhouses compatibility add-on, Potato Washer compatibility add-on, existing dry fuel processor split, Wet Substrate Prep, medium and large dry fuel yard sizes, the custom construction tabs, the doubled capacities, and the HUD texture hotfix:
 
 - confirm the small dry fuel yard no longer appears in the shop
-- confirm core FS25_BgaExtensions loads as version `0.2.12.0`
+- confirm core FS25_BgaExtensions loads as version `0.2.13.0`
 - confirm Wet Substrate Prep appears under `Production > Phobos BGA`
 - confirm Dry Fuel Processor appears under `Production > Phobos Fuel Processing`
 - confirm biomass intakes no longer show wet/root/produce recipes
@@ -37,6 +37,9 @@ For `v0.2.12.0`, smoke-test the Orchards/Greenhouses compatibility add-on, Potat
 - confirm Dry Fuel Processor accepts `STRAW` and produces `STRAW_PELLETS`
 - confirm Wet Substrate Prep accepts wet/root/produce crops and produces `PHB_WET_BIOMASS_MASH`
 - confirm Wet Substrate Prep conditions `PHB_WET_BIOMASS_MASH` into `SUGARBEETCUT_IN`
+- confirm Wet Substrate Prep accepts `SILAGE_ADDITIVE` and offers wet mash conditioning with additive
+- confirm prepared `SILAGE` is faster and more efficient than unfermented chaff/grass shortcuts
+- confirm chaff/grass additive recipes improve the raw shortcut without exceeding prepared silage
 - buy and place medium and large yards
 - unload `WOODCHIPS`
 - unload `STRAW_PELLETS`

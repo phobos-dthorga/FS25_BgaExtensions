@@ -31,12 +31,12 @@ The goal is to prove that the current Phobos placeables can be bought, placed, f
 
 Test at least one intake size first. If it passes, repeat placement and a smaller sample on the other two sizes.
 
-For `v0.2.7.0` and later, confirm the intake capacity values are visibly larger than the earlier prerelease values. This is a storage/logistics change only; recipe speed and yield should remain unchanged.
+For `v0.2.7.0` and later, confirm the intake capacity values are visibly larger than the earlier prerelease values. For `v0.2.13.0` and later, confirm prepared silage is visibly the fastest and most efficient silage-family route, while direct raw chaff and grass remain useful but lower-yield.
 
 | Route | Minimum check | Expected result |
 | --- | --- | --- |
 | Chaff substrate | Unload `CHAFF`, start chaff substrate. | `SILAGE_IN` is produced and can be loaded out. |
-| Additive bonus | Unload `CHAFF` or `GRASS_WINDROW` plus `SILAGE_ADDITIVE`, start the matching additive recipe. | Output route works and the recipe is readable in the UI. |
+| Additive bonus | Unload `CHAFF` or `GRASS_WINDROW` plus `SILAGE_ADDITIVE`, start the matching additive recipe. | Output route works, the recipe is readable in the UI, and the route remains below prepared silage efficiency. |
 | Prepared silage | Unload `SILAGE`, start prepared silage intake. | `SILAGE_IN` is produced. |
 | Grass and hay | Unload `GRASS_WINDROW` and `DRYGRASS_WINDROW`. | Both accepted by the intake and produce `SILAGE_IN`. |
 | Straw pretreatment | Unload `STRAW`, start straw pretreatment. | Low-yield `SILAGE_IN` route works. |
@@ -51,6 +51,7 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 | Produce mash | Unload one produce crop such as `SPINACH`, `PEA`, or `GREENBEAN`. | `PHB_WET_BIOMASS_MASH` is produced. |
 | Beet cut mash | Unload `SUGARBEET_CUT`. | `PHB_WET_BIOMASS_MASH` is produced. |
 | Wet mash conditioning | Start wet mash conditioning. | `SUGARBEETCUT_IN` is produced and can be loaded out. |
+| Wet mash additive conditioning | Unload `SILAGE_ADDITIVE`, start wet mash conditioning with additive. | `SUGARBEETCUT_IN` is produced at the improved additive rate. |
 
 ## Dry Fuel Processor Checks
 

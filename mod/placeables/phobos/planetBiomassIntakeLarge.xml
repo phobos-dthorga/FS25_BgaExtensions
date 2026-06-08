@@ -73,37 +73,37 @@
 
     <productionPoint>
         <productions sharedThroughputCapacity="false">
-            <production id="phbLargeChaffToPlanetSilage" name="$l10n_production_phbChaffToPlanetSilage" cyclesPerHour="16" costsPerActiveHour="3">
+            <production id="phbLargeChaffToPlanetSilage" name="$l10n_production_phbChaffToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3">
                 <inputs><input fillType="CHAFF" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="840"/></outputs>
+                <outputs><output fillType="SILAGE_IN" amount="760"/></outputs>
             </production>
-            <production id="phbLargeChaffAdditiveToPlanetSilage" name="$l10n_production_phbChaffAdditiveToPlanetSilage" cyclesPerHour="16" costsPerActiveHour="3.5">
+            <production id="phbLargeChaffAdditiveToPlanetSilage" name="$l10n_production_phbChaffAdditiveToPlanetSilage" cyclesPerHour="14" costsPerActiveHour="3.5">
                 <inputs>
                     <input fillType="CHAFF" amount="840"/>
                     <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
                 </inputs>
-                <outputs><output fillType="SILAGE_IN" amount="910"/></outputs>
+                <outputs><output fillType="SILAGE_IN" amount="810"/></outputs>
             </production>
-            <production id="phbLargeSilageToPlanetSilage" name="$l10n_production_phbSilageToPlanetSilage" cyclesPerHour="20" costsPerActiveHour="2.5">
+            <production id="phbLargeSilageToPlanetSilage" name="$l10n_production_phbSilageToPlanetSilage" cyclesPerHour="24" costsPerActiveHour="2.5">
                 <inputs><input fillType="SILAGE" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="840"/></outputs>
             </production>
-            <production id="phbLargeGrassToPlanetSilage" name="$l10n_production_phbGrassToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3">
+            <production id="phbLargeGrassToPlanetSilage" name="$l10n_production_phbGrassToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="3">
                 <inputs><input fillType="GRASS_WINDROW" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="650"/></outputs>
+                <outputs><output fillType="SILAGE_IN" amount="600"/></outputs>
             </production>
             <production id="phbLargeGrassAdditiveToPlanetSilage" name="$l10n_production_phbGrassAdditiveToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3.5">
                 <inputs>
                     <input fillType="GRASS_WINDROW" amount="840"/>
                     <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
                 </inputs>
-                <outputs><output fillType="SILAGE_IN" amount="720"/></outputs>
+                <outputs><output fillType="SILAGE_IN" amount="700"/></outputs>
             </production>
-            <production id="phbLargeHayToPlanetSilage" name="$l10n_production_phbHayToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3">
+            <production id="phbLargeHayToPlanetSilage" name="$l10n_production_phbHayToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="3">
                 <inputs><input fillType="DRYGRASS_WINDROW" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="720"/></outputs>
+                <outputs><output fillType="SILAGE_IN" amount="660"/></outputs>
             </production>
-            <production id="phbLargeStrawToPlanetSilage" name="$l10n_production_phbStrawToPlanetSilage" cyclesPerHour="8" costsPerActiveHour="4">
+            <production id="phbLargeStrawToPlanetSilage" name="$l10n_production_phbStrawToPlanetSilage" cyclesPerHour="7" costsPerActiveHour="4">
                 <inputs><input fillType="STRAW" amount="840"/></inputs>
                 <outputs><output fillType="SILAGE_IN" amount="420"/></outputs>
             </production>

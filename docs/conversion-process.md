@@ -12,6 +12,14 @@ For the first proof of concept, prefer the smallest useful compatibility layer. 
 
 The wet crop lane now uses a dedicated Wet Substrate Prep placeable and one Phobos-owned intermediary, `PHB_WET_BIOMASS_MASH`, before handing material to PlanET as `SUGARBEETCUT_IN`. This avoids presenting spinach, peas, roots, and produce waste as if they were sugar beet.
 
+## Fermentation Priority
+
+Recipe rates treat output amount as usable downstream BGA value, not literal mass preservation.
+
+Fermented or already conditioned materials should be easier for the digester to use. They should therefore run faster and keep more useful output value than unfermented shortcuts.
+
+Unfermented materials that would normally be ensiled, mashed, inoculated, or otherwise conditioned can still be accepted for gameplay convenience, but they should run slower and yield less final BGA feedstock. `SILAGE_ADDITIVE` may restore some of that lost convenience on these lanes, either through slightly better yield, slightly better throughput, or both. It should not make an unfermented lane stronger than using properly fermented material.
+
 See `docs/integration-strategy.md` for the companion-module rule that governs PlanET and future third-party integrations.
 
 See `docs/energy-carrier-strategy.md` for the rule that separates biomass preparation, combustion fuel logistics, BGA digestion, and energy export into different building families.
@@ -109,7 +117,10 @@ Initial input set:
 Current biomass intake recipes:
 
 - `CHAFF` -> `SILAGE_IN`
+- `CHAFF` + `SILAGE_ADDITIVE` -> improved `SILAGE_IN`
+- `SILAGE` -> priority `SILAGE_IN`
 - `GRASS_WINDROW` -> `SILAGE_IN`
+- `GRASS_WINDROW` + `SILAGE_ADDITIVE` -> improved `SILAGE_IN`
 - `DRYGRASS_WINDROW` -> `SILAGE_IN`
 - `STRAW` -> `SILAGE_IN` at poor efficiency
 
@@ -129,6 +140,7 @@ Current Wet Substrate Prep recipes:
 - `PEA` -> `PHB_WET_BIOMASS_MASH`
 - `GREENBEAN` -> `PHB_WET_BIOMASS_MASH`
 - `PHB_WET_BIOMASS_MASH` -> `SUGARBEETCUT_IN`
+- `PHB_WET_BIOMASS_MASH` + `SILAGE_ADDITIVE` -> improved `SUGARBEETCUT_IN`
 
 Current dry fuel yard storage:
 

@@ -98,12 +98,14 @@ $changes
     git push origin $tag
 
     $releaseAssets = @($assetPath)
-    foreach ($asset in $AdditionalAsset) {
-        if ([string]::IsNullOrWhiteSpace($asset)) {
-            continue
+    foreach ($assetGroup in $AdditionalAsset) {
+        foreach ($asset in ($assetGroup -split ",")) {
+            if ([string]::IsNullOrWhiteSpace($asset)) {
+                continue
+            }
+            $resolvedAsset = Resolve-Path -LiteralPath $asset.Trim()
+            $releaseAssets += $resolvedAsset.Path
         }
-        $resolvedAsset = Resolve-Path -LiteralPath $asset
-        $releaseAssets += $resolvedAsset.Path
     }
 
     $releaseArgs = @(

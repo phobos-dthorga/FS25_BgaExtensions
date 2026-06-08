@@ -109,14 +109,21 @@
                 <inputs><input fillType="GREENBEAN" amount="200"/></inputs>
                 <outputs><output fillType="PHB_WET_BIOMASS_MASH" amount="140"/></outputs>
             </production>
-            <production id="phbWetPrepWetMashToPlanetBeet" name="$l10n_production_phbWetMashToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="2.5">
+            <production id="phbWetPrepWetMashToPlanetBeet" name="$l10n_production_phbWetMashToPlanetBeet" cyclesPerHour="10" costsPerActiveHour="2.5">
                 <inputs><input fillType="PHB_WET_BIOMASS_MASH" amount="200"/></inputs>
+                <outputs><output fillType="SUGARBEETCUT_IN" amount="180"/></outputs>
+            </production>
+            <production id="phbWetPrepWetMashAdditiveToPlanetBeet" name="$l10n_production_phbWetMashAdditiveToPlanetBeet" cyclesPerHour="12" costsPerActiveHour="3">
+                <inputs>
+                    <input fillType="PHB_WET_BIOMASS_MASH" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.05"/>
+                </inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
             </production>
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN PHB_WET_BIOMASS_MASH"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="SUGARBEET_CUT SUGARCANE POTATO BEETROOT CARROT PARSNIP SPINACH PEA GREENBEAN PHB_WET_BIOMASS_MASH SILAGE_ADDITIVE"/>
             <baleTrigger triggerNode="baleTrigger" fillTypes="SUGARBEET_CUT"/>
         </sellingStation>
 
@@ -135,6 +142,7 @@
             <capacity fillType="PEA" capacity="40000"/>
             <capacity fillType="GREENBEAN" capacity="40000"/>
             <capacity fillType="PHB_WET_BIOMASS_MASH" capacity="80000"/>
+            <capacity fillType="SILAGE_ADDITIVE" capacity="120"/>
             <capacity fillType="SUGARBEETCUT_IN" capacity="80000"/>
 
             <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="SUGARBEET_CUT"/>
