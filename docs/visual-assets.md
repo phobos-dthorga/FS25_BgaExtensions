@@ -11,9 +11,9 @@ This document records the custom visual assets used by `FS25_BgaExtensions`.
 | Orchards/Greenhouses Compat icon | `addons/FS25_BgaExtensions_OrchardsGreenhousesCompat/icon.dds` | Reuses the Phobos mod icon for the optional add-on package. |
 | Wet biomass mash HUD icon | `mod/hud/fillTypes/hud_fill_phbWetBiomassMash.dds` | ChatGPT-generated custom HUD image for `PHB_WET_BIOMASS_MASH`, built as DDS with mipmaps to avoid runtime texture warnings. |
 | Wet biomass mash source image | `assets/source/fillTypes/hud_fill_phbWetBiomassMash.png` | Transparent PNG source used to build the DDS HUD icon. |
-| Wet biomass mash raw AI source | `assets/source/fillTypes/hud_fill_phbWetBiomassMash_ai_source.png` | Original ChatGPT-generated chroma-key source retained for future reference. |
 
 The previous fillType HUD art was preserved on branch `asset-backup/original-filltype-icons` before replacement.
+The original pink chroma-key ChatGPT source was preserved on branch `asset-backup/ai-chroma-source-v0.2.14.0`; `main` keeps only the transparent source and the game-facing DDS.
 
 ## Style
 
@@ -36,7 +36,7 @@ See `docs/model-fit-decisions.md` for retired or hidden placeables whose models 
 
 Phobos-owned visual assets are covered by the repository asset license, CC BY-NC-SA 4.0, unless a file states otherwise.
 
-The wet biomass mash icon was generated with ChatGPT image generation, then chroma-keyed locally to transparency and converted to DDS. Prompt:
+The wet biomass mash icon was generated with ChatGPT image generation, then chroma-keyed locally to transparency and converted to DDS. The raw chroma-key source is intentionally kept out of `main` to avoid mistaking it for a game-facing asset. Prompt:
 
 ```text
 Square Farming Simulator 25 HUD icon for a custom fillType named Wet Biomass Mash. Centered clean agricultural biogas icon: green plant mash, teal wet droplet, small fermentation bubbles, subtle leaf swirl. Polished readable game icon, no text, no logos, no frame, no watermark. Perfectly flat solid #ff00ff background only for chroma-key removal, no shadows or gradients, subject must not contain #ff00ff.

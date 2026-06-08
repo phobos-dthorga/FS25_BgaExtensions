@@ -17,6 +17,7 @@
 - Dependabot is configured to watch GitHub Actions versions.
 - Visual asset policy and the first custom fillType HUD icon are documented.
 - Original fillType HUD artwork was preserved on branch `asset-backup/original-filltype-icons` before the ChatGPT-generated replacement.
+- Raw pink chroma-key AI icon sources are kept off `main`; the v0.2.14.0 source was preserved on branch `asset-backup/ai-chroma-source-v0.2.14.0`.
 - Dry fuel yard storage is offered in medium and large PlanET-style variants; the small variant is retained only as packaged compatibility XML because its rotating blade does not fit passive storage.
 - Runtime smoke-test and log-triage instructions are documented for disposable-save testing.
 - Energy carriers are split by building family before adding methane, electricity, or extra combustion routes.
