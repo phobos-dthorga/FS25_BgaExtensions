@@ -20,6 +20,7 @@ Installed mod observations are recorded in `docs/installed-mod-observations.md`.
 - Use base-game `SILAGE` where the material naturally fits the vanilla bunker silo model.
 - Use a future intermediate substrate for materials that are wet, starchy, sugary, oily, or otherwise fermentable but not really silage.
 - Prefer fermented or conditioned products over raw shortcuts in both throughput and usable downstream output. Silage additive can soften the penalty for raw lanes, but should not beat proper fermentation.
+- Treat recipe output as gameplay-normalized usable BGA value. Keep ratios plausible, but do not require strict conservation of mass when FS25-style economy and clarity benefit from a modestly gamey conversion.
 - Treat common map-maker crops as optional integrations. Register them only when their fill types exist.
 - Keep custom fill types minimal because fill types, heightTypes, bales, animal food, and map recipes can have loading-order or map-ownership constraints.
 - Keep Maize+/MaizePlus and Corn Production Pack integration out of scope until a future explicit decision.

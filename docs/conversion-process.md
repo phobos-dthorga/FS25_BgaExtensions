@@ -14,7 +14,9 @@ The wet crop lane now uses a dedicated Wet Substrate Prep placeable and one Phob
 
 ## Fermentation Priority
 
-Recipe rates treat output amount as usable downstream BGA value, not literal mass preservation.
+Recipe rates treat output amount as usable downstream BGA value, not literal mass preservation. Real-world chemistry should guide the direction of the balance, but Farming Simulator-style production ratios are allowed to be a little gamey.
+
+Conservation of mass should be lightly respected: avoid absurd transformations, but do not force every recipe to conserve liters or tonnage. If a route is clearer, more fun, or better balanced with a modestly game-friendly ratio, prefer that over strict mass accounting.
 
 Fermented or already conditioned materials should be easier for the digester to use. They should therefore run faster and keep more useful output value than unfermented shortcuts.
 
