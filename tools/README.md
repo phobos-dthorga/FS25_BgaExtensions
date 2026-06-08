@@ -29,6 +29,16 @@ Build versioned packages from the manifest:
 python tools\package_set.py --versioned --validate --write-sha256 --write-json
 ```
 
+## FillType Icons
+
+Build Phobos-owned fillType HUD DDS icons from source PNG artwork:
+
+```powershell
+python tools\build_filltype_icons.py
+```
+
+The source artwork lives under `assets/source/fillTypes/`. The generated DDS files live under `mod/hud/fillTypes/` so they are included in the FS25 package.
+
 ## Validation
 
 Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do not require FS25:
@@ -37,6 +47,7 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 - `modDesc.xml` referenced file checks
 - Phobos-owned `$moddir$FS25_BgaExtensions/...` asset reference checks
 - Phobos HUD texture references use DDS rather than runtime PNG files
+- Phobos-owned fillType HUD icons are 256x256 uncompressed 32-bit DDS files with alpha and a complete mipmap chain
 - active fillType reference checks
 - optional fillType guard checks
 - production input/output trigger coverage checks

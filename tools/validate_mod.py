@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import re
+import struct
 import sys
 import zipfile
 from pathlib import Path
@@ -18,6 +19,7 @@ from xml.etree import ElementTree as ET
 VERSION_RE = re.compile(r"^\d+\.\d+\.\d+\.\d+$")
 L10N_RE = re.compile(r"\$l10n_([A-Za-z0-9_]+)")
 SELF_MOD_REF_RE = re.compile(r"\$moddir\$FS25_BgaExtensions/([^\"'\s<>]+)")
+SELF_MOD_ASSET_PREFIX = "$moddir$FS25_BgaExtensions/"
 
 VANILLA_FILLTYPES = {
     "BEETROOT",
@@ -179,6 +181,85 @@ def local_filltypes(mod_root: Path, validation: Validation) -> set[str]:
             if name:
                 result.add(name.upper())
     return result
+
+
+def expected_mipmap_count(width: int, height: int) -> int:
+    levels = 1
+    while width > 1 or height > 1:
+        width = max(1, width // 2)
+        height = max(1, height // 2)
+        levels += 1
+    return levels
+
+
+def validate_dds_hud_icon(path: Path, label: str, validation: Validation) -> None:
+    if not path.is_file():
+        validation.error(f"FillType HUD icon is missing: {label}")
+        return
+
+    data = path.read_bytes()
+    if len(data) < 128 or data[:4] != b"DDS ":
+        validation.error(f"FillType HUD icon must be a DDS file: {label}")
+        return
+
+    header_size, flags, height, width, pitch, _depth, mipmaps = struct.unpack_from("<7I", data, 4)
+    pixel_format_size = struct.unpack_from("<I", data, 76)[0]
+    pixel_flags = struct.unpack_from("<I", data, 80)[0]
+    fourcc = data[84:88]
+    rgb_bits = struct.unpack_from("<I", data, 88)[0]
+    masks = struct.unpack_from("<4I", data, 92)
+
+    if header_size != 124 or pixel_format_size != 32:
+        validation.error(f"FillType HUD icon has an invalid DDS header: {label}")
+    if width != 256 or height != 256:
+        validation.error(f"FillType HUD icon must be 256x256, found {width}x{height}: {label}")
+    if pitch != width * 4:
+        validation.error(f"FillType HUD icon has an unexpected DDS pitch: {label}")
+    if fourcc != b"\0\0\0\0" or rgb_bits != 32:
+        validation.error(f"FillType HUD icon must be uncompressed 32-bit DDS: {label}")
+    if pixel_flags & 0x1 == 0 or pixel_flags & 0x40 == 0:
+        validation.error(f"FillType HUD icon must include alpha and RGB pixel flags: {label}")
+    if masks != (0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000):
+        validation.error(f"FillType HUD icon must use BGRA-compatible DDS masks: {label}")
+
+    expected_mips = expected_mipmap_count(width, height)
+    if mipmaps != expected_mips:
+        validation.error(f"FillType HUD icon must include {expected_mips} mipmaps, found {mipmaps}: {label}")
+
+    expected_size = 128
+    mip_width, mip_height = width, height
+    for _level in range(max(0, mipmaps)):
+        expected_size += mip_width * mip_height * 4
+        mip_width = max(1, mip_width // 2)
+        mip_height = max(1, mip_height // 2)
+    if mipmaps == expected_mips and len(data) != expected_size:
+        validation.error(f"FillType HUD icon DDS byte size is unexpected: {label}")
+
+
+def validate_filltype_icons(mod_root: Path, repo_root: Path, validation: Validation) -> None:
+    for path in sorted((mod_root / "xml").glob("*.xml")):
+        tree = parse_xml_file(path, validation)
+        if tree is None:
+            continue
+        for fill_type in tree.findall(".//fillType"):
+            name = (fill_type.get("name") or "").strip()
+            image = fill_type.find("./image")
+            hud_ref = (image.get("hud") if image is not None else "") or ""
+            label = f"{name} in {path.relative_to(repo_root)}"
+
+            if not hud_ref:
+                validation.error(f"Phobos-owned fillType is missing a HUD icon: {label}")
+                continue
+            if not hud_ref.lower().endswith(".dds"):
+                validation.error(f"FillType HUD icon must reference a DDS file: {label}")
+                continue
+            if not hud_ref.startswith(SELF_MOD_ASSET_PREFIX):
+                validation.error(f"FillType HUD icon must be a Phobos-owned asset: {label}")
+                continue
+
+            relative_asset = hud_ref[len(SELF_MOD_ASSET_PREFIX) :]
+            icon_path = mod_root / relative_asset
+            validate_dds_hud_icon(icon_path, f"{label}: {relative_asset}", validation)
 
 
 def validate_moddesc_references(mod_root: Path, root: ET.Element, validation: Validation) -> None:
@@ -546,6 +627,8 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
         known_construction_tabs.update(DEPENDENCY_CONSTRUCTION_TABS.get(dependency, {}))
 
     local_types = local_filltypes(mod_root, validation)
+    validate_filltype_icons(mod_root, repo_root, validation)
+
     known_filltypes = set(VANILLA_FILLTYPES)
     known_filltypes.update(local_types)
     for dependency in dependencies:

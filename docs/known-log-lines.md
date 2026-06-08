@@ -26,35 +26,10 @@ Current log checked on 2026-06-07:
 
 ## Pending Test Targets
 
-For `v0.2.13.0`, smoke-test the fermentation-priority balance pass, wet mash additive conditioning, the Orchards/Greenhouses compatibility add-on, Potato Washer compatibility add-on, existing dry fuel processor split, Wet Substrate Prep, medium and large dry fuel yard sizes, the custom construction tabs, the doubled capacities, and the HUD texture hotfix:
+For `v0.2.14.0`, smoke-test the ChatGPT-generated wet biomass mash HUD icon replacement and the automated icon-format validation rule:
 
-- confirm the small dry fuel yard no longer appears in the shop
-- confirm core FS25_BgaExtensions loads as version `0.2.13.0`
-- confirm Wet Substrate Prep appears under `Production > Phobos BGA`
-- confirm Dry Fuel Processor appears under `Production > Phobos Fuel Processing`
-- confirm biomass intakes no longer show wet/root/produce recipes
-- confirm biomass intakes no longer show straw pelletizing
-- confirm Dry Fuel Processor accepts `STRAW` and produces `STRAW_PELLETS`
-- confirm Wet Substrate Prep accepts wet/root/produce crops and produces `PHB_WET_BIOMASS_MASH`
-- confirm Wet Substrate Prep conditions `PHB_WET_BIOMASS_MASH` into `SUGARBEETCUT_IN`
-- confirm Wet Substrate Prep accepts `SILAGE_ADDITIVE` and offers wet mash conditioning with additive
-- confirm prepared `SILAGE` is faster and more efficient than unfermented chaff/grass shortcuts
-- confirm chaff/grass additive recipes improve the raw shortcut without exceeding prepared silage
-- buy and place medium and large yards
-- unload `WOODCHIPS`
-- unload `STRAW_PELLETS`
-- load both materials back out
-- confirm the visible fill plane behaves acceptably
-- confirm biomass intakes appear under `Production > Phobos BGA`
-- confirm dry fuel yards appear under `Buildings > Phobos Fuel Storage`
-- confirm intake storage accepts the larger capacity values without UI or log issues
-- confirm dry fuel yard capacities are medium 320,000 l and large 600,000 l
-- with `FS25_BgaExtensions_PotatoWasherCompat` and `FS25_potatoWasher` enabled, confirm Phobos Washed Potato Prep appears under `Production > Phobos BGA Compat`
-- confirm Phobos Washed Potato Prep accepts `POTATO_WASHED` and produces `PHB_WET_BIOMASS_MASH`
-- with `FS25_BgaExtensions_OrchardsGreenhousesCompat` and `FS25_orchardsAndGreenhouses_crossplay` enabled, confirm Phobos Organic Residue Prep appears under `Production > Phobos BGA Compat`
-- confirm Phobos Organic Residue Prep accepts `ORGANICWASTE`
-- confirm organic waste mash produces `PHB_WET_BIOMASS_MASH`
-- confirm organic waste composting produces `COMPOST`
+- confirm core FS25_BgaExtensions loads as version `0.2.14.0`
+- confirm `PHB_WET_BIOMASS_MASH` displays the new wet biomass mash HUD icon in the production UI or fillType display
 - confirm no `hud_fill_phbWetBiomassMash` raw-format or mip-generation warnings appear
 - check the log for Phobos-owned warnings or errors
 
