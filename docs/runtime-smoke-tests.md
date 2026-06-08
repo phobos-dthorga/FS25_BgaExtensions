@@ -2,7 +2,38 @@
 
 Use these checks after installing a prerelease package in a disposable FS25 save.
 
-The goal is to prove that the current Phobos placeables can be bought, placed, filled, run, unloaded, and closed without Phobos-owned log warnings or errors. Full balance testing can wait until the basic runtime path is quiet.
+The goal is to prove only what static validation cannot prove: FS25 accepts the placeables at runtime, the UI remains readable, triggers feel right in-game, and no Phobos-owned log warnings or errors appear. Full balance testing can wait until the basic runtime path is quiet.
+
+## Reduced Testing Rule
+
+CI now checks the common XML mistakes that previously required extra in-game smoke testing:
+
+- XML parsing and `modDesc.xml` references
+- package layout and forbidden repository paths
+- known and guarded fillTypes
+- l10n references
+- construction tabs
+- storage-only production-point fillTypes
+- production inputs are covered by unload or bale triggers
+- production outputs are covered by load triggers
+- core fermentation-priority balance rules
+- package version alignment and SHA-256 generation
+
+After CI passes, use a targeted disposable-save test instead of retesting every route. Only run the full checklist when a change touches models, triggers, store placement, many recipes, loading stations, shared fillTypes, dependencies, or anything that already produced a runtime warning once.
+
+For documentation-only, tooling-only, or CI-only changes, no in-game test is required.
+
+## Minimum Targeted Pass
+
+For a normal XML recipe or placeable change:
+
+1. Load a disposable save with the changed package and its dependencies.
+2. Buy and place only the changed placeable family.
+3. Test one representative changed input and one representative changed output.
+4. Open the production UI once and confirm the changed recipe is readable.
+5. Exit and run the log triage command with `-FailOnPhobosWarning`.
+
+If that pass is clean and CI passed, broader personal testing can wait until the next gameplay session.
 
 ## Test Setup
 

@@ -276,6 +276,24 @@ def production_filltypes(tree: ET.ElementTree) -> set[str]:
     return refs
 
 
+def production_input_filltypes(tree: ET.ElementTree) -> set[str]:
+    refs: set[str] = set()
+    for node in tree.findall(".//productions/production/inputs/input"):
+        fill_type = node.get("fillType")
+        if fill_type:
+            refs.add(fill_type.upper())
+    return refs
+
+
+def production_output_filltypes(tree: ET.ElementTree) -> set[str]:
+    refs: set[str] = set()
+    for node in tree.findall(".//productions/production/outputs/output"):
+        fill_type = node.get("fillType")
+        if fill_type:
+            refs.add(fill_type.upper())
+    return refs
+
+
 def storage_filltypes(tree: ET.ElementTree) -> set[str]:
     refs: set[str] = set()
     for node in tree.findall(".//storage/capacity"):
@@ -285,11 +303,197 @@ def storage_filltypes(tree: ET.ElementTree) -> set[str]:
     return refs
 
 
+def trigger_filltypes(tree: ET.ElementTree, xpath: str) -> set[str]:
+    refs: set[str] = set()
+    for node in tree.findall(xpath):
+        for name in node.get("fillTypes", "").split():
+            if name:
+                refs.add(name.upper())
+    return refs
+
+
+def unload_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
+    refs = trigger_filltypes(tree, ".//sellingStation/unloadTrigger")
+    refs.update(trigger_filltypes(tree, ".//sellingStation/baleTrigger"))
+    return refs
+
+
+def load_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
+    return trigger_filltypes(tree, ".//loadingStation/loadTrigger")
+
+
 def count_production_recipes(tree: ET.ElementTree) -> int:
     productions = tree.find(".//productions")
     if productions is None:
         return 0
     return len(productions.findall("./production"))
+
+
+def production_record(tree: ET.ElementTree, production_id: str) -> dict[str, object] | None:
+    production = tree.find(f".//productions/production[@id='{production_id}']")
+    if production is None:
+        return None
+
+    def sum_amount(xpath: str, fill_type: str) -> float:
+        result = 0.0
+        for node in production.findall(xpath):
+            if (node.get("fillType") or "").upper() != fill_type.upper():
+                continue
+            result += float(node.get("amount", "0"))
+        return result
+
+    return {
+        "id": production_id,
+        "cycles": float(production.get("cyclesPerHour", "0")),
+        "silage_in": sum_amount("./outputs/output", "SILAGE_IN"),
+        "sugarbeetcut_in": sum_amount("./outputs/output", "SUGARBEETCUT_IN"),
+        "silage_additive": sum_amount("./inputs/input", "SILAGE_ADDITIVE"),
+    }
+
+
+def require_record(
+    path: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    production_id: str,
+    validation: Validation,
+) -> dict[str, object] | None:
+    record = production_record(tree, production_id)
+    if record is None:
+        validation.error(f"Missing expected production '{production_id}' in {path.relative_to(repo_root)}")
+    return record
+
+
+def require_greater(
+    left: float,
+    right: float,
+    message: str,
+    validation: Validation,
+) -> None:
+    if left <= right:
+        validation.error(message)
+
+
+def validate_fermentation_priority_rules(
+    path: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    validation: Validation,
+) -> None:
+    filename = path.name
+    size_prefix_by_file = {
+        "planetBiomassIntakeSmall.xml": "phbSmall",
+        "planetBiomassIntakeMedium.xml": "phbMedium",
+        "planetBiomassIntakeLarge.xml": "phbLarge",
+    }
+    size_prefix = size_prefix_by_file.get(filename)
+    if size_prefix is not None:
+        relative_path = path.relative_to(repo_root)
+        silage = require_record(path, repo_root, tree, f"{size_prefix}SilageToPlanetSilage", validation)
+        chaff = require_record(path, repo_root, tree, f"{size_prefix}ChaffToPlanetSilage", validation)
+        chaff_additive = require_record(
+            path, repo_root, tree, f"{size_prefix}ChaffAdditiveToPlanetSilage", validation
+        )
+        grass = require_record(path, repo_root, tree, f"{size_prefix}GrassToPlanetSilage", validation)
+        grass_additive = require_record(
+            path, repo_root, tree, f"{size_prefix}GrassAdditiveToPlanetSilage", validation
+        )
+
+        if all(record is not None for record in [silage, chaff, chaff_additive, grass, grass_additive]):
+            require_greater(
+                float(silage["cycles"]),
+                float(chaff_additive["cycles"]),
+                f"Prepared silage must run faster than chaff with additive in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(chaff_additive["cycles"]),
+                float(chaff["cycles"]),
+                f"Chaff with additive must run faster than raw chaff in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(silage["silage_in"]),
+                float(chaff_additive["silage_in"]),
+                f"Prepared silage must yield more usable substrate than chaff with additive in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(chaff_additive["silage_in"]),
+                float(chaff["silage_in"]),
+                f"Chaff with additive must yield more usable substrate than raw chaff in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(silage["cycles"]),
+                float(grass_additive["cycles"]),
+                f"Prepared silage must run faster than grass with additive in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(grass_additive["cycles"]),
+                float(grass["cycles"]),
+                f"Grass with additive must run faster than raw grass in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(silage["silage_in"]),
+                float(grass_additive["silage_in"]),
+                f"Prepared silage must yield more usable substrate than grass with additive in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(grass_additive["silage_in"]),
+                float(grass["silage_in"]),
+                f"Grass with additive must yield more usable substrate than raw grass in {relative_path}",
+                validation,
+            )
+
+    if filename == "planetWetSubstratePrep.xml":
+        relative_path = path.relative_to(repo_root)
+        plain = require_record(path, repo_root, tree, "phbWetPrepWetMashToPlanetBeet", validation)
+        additive = require_record(path, repo_root, tree, "phbWetPrepWetMashAdditiveToPlanetBeet", validation)
+        if plain is not None and additive is not None:
+            require_greater(
+                float(additive["cycles"]),
+                float(plain["cycles"]),
+                f"Wet mash with additive must run faster than plain wet mash in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(additive["sugarbeetcut_in"]),
+                float(plain["sugarbeetcut_in"]),
+                f"Wet mash with additive must yield more usable substrate than plain wet mash in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(additive["silage_additive"]),
+                0.0,
+                f"Wet mash additive recipe must consume SILAGE_ADDITIVE in {relative_path}",
+                validation,
+            )
+
+
+def validate_production_trigger_coverage(
+    path: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    validation: Validation,
+) -> None:
+    inputs = production_input_filltypes(tree)
+    outputs = production_output_filltypes(tree)
+    if not inputs and not outputs:
+        return
+
+    accepted_inputs = unload_trigger_filltypes(tree)
+    loadable_outputs = load_trigger_filltypes(tree)
+    relative_path = path.relative_to(repo_root)
+
+    for fill_type in sorted(inputs - accepted_inputs):
+        validation.error(f"Production input '{fill_type}' is not accepted by unload or bale triggers in {relative_path}")
+
+    for fill_type in sorted(outputs - loadable_outputs):
+        validation.error(f"Production output '{fill_type}' is not available from load triggers in {relative_path}")
 
 
 def validate_construction_tabs(
@@ -380,6 +584,9 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
         validate_construction_tabs(path, repo_root, tree, known_construction_tabs, validation)
 
         if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
+            validate_production_trigger_coverage(path, repo_root, tree, validation)
+            validate_fermentation_priority_rules(path, repo_root, tree, validation)
+
             storage_only = sorted(storage_filltypes(tree) - production_filltypes(tree))
             for fill_type in storage_only:
                 validation.error(

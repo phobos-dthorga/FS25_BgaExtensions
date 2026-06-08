@@ -39,6 +39,8 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 - Phobos HUD texture references use DDS rather than runtime PNG files
 - active fillType reference checks
 - optional fillType guard checks
+- production input/output trigger coverage checks
+- core fermentation-priority balance checks
 - storage-only production-point guard checks
 - Phobos construction tab checks
 - l10n reference checks

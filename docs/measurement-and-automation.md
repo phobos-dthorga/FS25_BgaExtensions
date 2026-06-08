@@ -6,8 +6,8 @@ This document explains how `FS25_BgaExtensions` performance and health measureme
 
 | Layer | Where it runs | Current status | What it can prove |
 | --- | --- | --- | --- |
-| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, Phobos-owned asset references resolve, core fillTypes are known, optional fillTypes require declared provider dependencies, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target. |
-| Package validation | GitHub Actions and local tools | Implemented | Core and active add-on zips have FS25's expected root layout, avoid repository-only folders, and stay under the XML-only package size target. |
+| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, Phobos-owned asset references resolve, core fillTypes are known, optional fillTypes require declared provider dependencies, trigger coverage is present for production inputs/outputs, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target, and core fermentation-priority rules hold. |
+| Package validation | GitHub Actions and local tools | Implemented | Core and active add-on zips have FS25's expected root layout, avoid repository-only folders, stay under the XML-only package size target, and match active package-set versions. |
 | Log triage | Local machine after an FS25 test | Implemented | Phobos-owned warnings/errors are separated from external mod noise. |
 | Runtime smoke test | Local FS25 disposable save | Manual, documented in `docs/runtime-smoke-tests.md` | The placeable can be bought, placed, filled, activated, unloaded, and connected to the intended PlanET or Straw Harvest loop. |
 | Load-time comparison | Local FS25 disposable save | Manual with light scripting | A Phobos-enabled test can be compared with a baseline test using the same map/mod stack. |
@@ -29,6 +29,19 @@ It performs:
 The CI packages are for inspection and disposable-save testing. They are not GitHub release artifacts.
 
 Active packages are listed in `tools/package_manifest.json`. When a new optional add-on becomes part of the active package line, add it there first so CI, local package-set builds, and artifact hashes stay aligned.
+
+### In-Game Testing Reduction
+
+The validator intentionally covers checks that are cheap to automate and annoying to rediscover in FS25:
+
+- every production input must be accepted by an unload or bale trigger
+- every production output must be available from a load trigger
+- storage-only production-point fillTypes fail validation
+- optional provider fillTypes must stay in guarded add-on packages
+- fermentation-priority recipe relationships are enforced for current core BGA lanes
+- package versions must match across the active package set
+
+When CI passes, do not repeat these checks manually unless FS25 shows a contradiction. A targeted disposable-save pass is enough for most XML-only changes: place the changed module, run one changed route, check the UI, exit, and run log triage.
 
 ## Dependabot
 
