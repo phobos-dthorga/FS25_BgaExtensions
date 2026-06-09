@@ -13,8 +13,11 @@ Each building family should own one clear process type. This keeps the in-game p
 | Carrier | Role | Current posture |
 | --- | --- | --- |
 | `STRAW_PELLETS` | Dry combustion fuel | Active. Produced by Dry Fuel Processor and stored in dry fuel yards. Intended for Straw Harvest HALLSYS heat logistics. |
+| `HAY_PELLETS` | Dry combustion fuel and assisted BGA substrate | Active. Produced by Dry Fuel Processor, stored in dry fuel yards, and allowed into BGA only with water and silage additive. |
+| `MOLASSES` | Pellet binder/sugar input | Active as a Dry Fuel Processor input for pellet manufacture. Do not repeat it in Fermentation Vessel recipes unless the UI need becomes clear. |
+| `WATER` | Rehydration/process input | Active for pellet manufacture and assisted pellet fermentation. |
 | `WOODCHIPS` | Dry combustion fuel | Active as storage/logistics only. Keep out of BGA digestion by default. |
-| `STRAW` | Raw dry residue | Active. Can become low-grade PlanET substrate or `STRAW_PELLETS`. Better as fuel feedstock than premium BGA material. |
+| `STRAW` | Raw dry residue | Active. Can become assisted low-grade PlanET substrate or `STRAW_PELLETS`. Better as fuel feedstock than premium BGA material. |
 | `METHANE` | BGA energy product | Observe and integrate carefully. Base-game/PlanET BGAs commonly sell it directly. Do not feed it back into biomass prep. |
 | `ELECTRICCHARGE` | BGA energy product | Observe and integrate carefully. Base-game/PlanET BGAs commonly sell it directly. Do not treat it as a biomass fuel source. |
 | `DIGESTATE` | BGA residue/fertilizer | Let the BGA layer own it. GBW prep modules should not duplicate digestate output unless they become a real digester. |
@@ -57,8 +60,9 @@ Current route:
 
 - mash-family fermentation to `SUGARBEETCUT_IN`
 - additive-assisted mash fermentation where `SILAGE_ADDITIVE` helps biology along with better throughput and yield
+- pellet fermentation to `SILAGE_IN`, but only with `WATER` and `SILAGE_ADDITIVE`
 
-The first implementation uses PlanET's small fermenter model by dependency reference. Keep this family focused on wet mash fermentation; do not add raw crop chopping, forage intake, dry fuel handling, methane export, or digestate processing here.
+The first implementation uses PlanET's small fermenter model by dependency reference. Keep this family focused on fermentation. Do not add raw crop chopping, forage intake, dry fuel handling, methane export, or digestate processing here.
 
 ### Dry Fuel Yard
 
@@ -68,6 +72,7 @@ Current materials:
 
 - `WOODCHIPS`
 - `STRAW_PELLETS`
+- `HAY_PELLETS`
 
 This should remain storage/logistics first. If fuel conversion expands, use a separate fuel plant rather than turning the yard into another production wall.
 
@@ -77,7 +82,8 @@ Purpose: convert dry residues into combustion fuel.
 
 Current route:
 
-- `STRAW` -> `STRAW_PELLETS`
+- `STRAW` + `WATER` + `MOLASSES` -> `STRAW_PELLETS`
+- `DRYGRASS_WINDROW` + `WATER` + `MOLASSES` -> `HAY_PELLETS`
 
 Possible future routes:
 
@@ -106,7 +112,7 @@ Use this split when adding new features:
 | --- | --- |
 | making BGA feedstock from crops | Biomass Intake |
 | making wet substrate from roots/waste | Wet Substrate Prep |
-| fermenting GBW mash into PlanET wet feedstock | Fermentation Vessel |
+| fermenting GBW mash or assisted pellets into PlanET feedstock | Fermentation Vessel |
 | holding wood chips or pellets | Dry Fuel Yard |
 | making pellets or dry combustion fuel | Dry Fuel Processor |
 | producing methane, electricity, or digestate | BGA Digestion And Energy Export |
@@ -114,7 +120,7 @@ Use this split when adding new features:
 
 ## Methane And Electricity Caution
 
-`METHANE` and `ELECTRICCHARGE` are valid FS25 BGA product fillTypes, but they are not general farm fuels in the same way that `WOODCHIPS` or `STRAW_PELLETS` are handled materials.
+`METHANE` and `ELECTRICCHARGE` are valid FS25 BGA product fillTypes, but they are not general farm fuels in the same way that `WOODCHIPS`, `STRAW_PELLETS`, or `HAY_PELLETS` are handled materials.
 
 Before using either as an input or stored commodity, verify:
 
@@ -140,11 +146,11 @@ This rule matters more than strict realism. A realistic process that makes the p
 
 Do not add methane/electricity handling yet.
 
-The focused dry fuel processor now exists. The next reasonable gameplay addition is guarded by-product compatibility, not an energy-output loop.
+The focused dry fuel processor now exists and supports Straw Harvest pellet logistics. The next reasonable gameplay addition is guarded by-product compatibility, not an energy-output loop.
 
 Near-term order:
 
-1. Keep dry fuel yard storage as-is.
-2. Keep straw pelletizing in Dry Fuel Processor, not in BGA intakes.
+1. Keep dry fuel yard storage focused on wood chips and pellets.
+2. Keep pelletizing in Dry Fuel Processor, not in BGA intakes.
 3. Keep `ORGANICWASTE` and `COMPOST` routes in provider-specific add-ons unless runtime detection is proven safe.
 4. Add future methane/electricity export only as a separate module after proving the fillTypes can be handled without warnings.

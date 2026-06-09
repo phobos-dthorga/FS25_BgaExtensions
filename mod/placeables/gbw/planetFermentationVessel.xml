@@ -133,14 +133,30 @@
                 </inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
             </production>
+            <production id="gbwFermenterHayPelletsToPlanetSilage" name="$l10n_production_gbwHayPelletsToPlanetSilage" cyclesPerHour="6" costsPerActiveHour="4">
+                <inputs>
+                    <input fillType="HAY_PELLETS" amount="400"/>
+                    <input fillType="WATER" amount="120"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.08"/>
+                </inputs>
+                <outputs><output fillType="SILAGE_IN" amount="220"/></outputs>
+            </production>
+            <production id="gbwFermenterStrawPelletsToPlanetSilage" name="$l10n_production_gbwStrawPelletsToPlanetSilage" cyclesPerHour="4" costsPerActiveHour="4.5">
+                <inputs>
+                    <input fillType="STRAW_PELLETS" amount="400"/>
+                    <input fillType="WATER" amount="120"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.08"/>
+                </inputs>
+                <outputs><output fillType="SILAGE_IN" amount="150"/></outputs>
+            </production>
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="GBW_SWEET_MASH GBW_ROOT_MASH GBW_GREEN_MASH GBW_RESIDUE_MASH SILAGE_ADDITIVE"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="GBW_SWEET_MASH GBW_ROOT_MASH GBW_GREEN_MASH GBW_RESIDUE_MASH HAY_PELLETS STRAW_PELLETS WATER SILAGE_ADDITIVE"/>
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="SUGARBEETCUT_IN" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="SUGARBEETCUT_IN SILAGE_IN" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
@@ -148,8 +164,12 @@
             <capacity fillType="GBW_ROOT_MASH" capacity="160000"/>
             <capacity fillType="GBW_GREEN_MASH" capacity="160000"/>
             <capacity fillType="GBW_RESIDUE_MASH" capacity="160000"/>
+            <capacity fillType="HAY_PELLETS" capacity="80000"/>
+            <capacity fillType="STRAW_PELLETS" capacity="80000"/>
+            <capacity fillType="WATER" capacity="40000"/>
             <capacity fillType="SILAGE_ADDITIVE" capacity="240"/>
             <capacity fillType="SUGARBEETCUT_IN" capacity="160000"/>
+            <capacity fillType="SILAGE_IN" capacity="160000"/>
         </storage>
 
         <playerTrigger node="playerTrigger"/>

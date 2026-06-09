@@ -104,8 +104,11 @@
                 <outputs><output fillType="SILAGE_IN" amount="660"/></outputs>
             </production>
             <production id="gbwSmallStrawToPlanetSilage" name="$l10n_production_gbwStrawToPlanetSilage" cyclesPerHour="3" costsPerActiveHour="4">
-                <inputs><input fillType="STRAW" amount="840"/></inputs>
-                <outputs><output fillType="SILAGE_IN" amount="420"/></outputs>
+                <inputs>
+                    <input fillType="STRAW" amount="840"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
+                </inputs>
+                <outputs><output fillType="SILAGE_IN" amount="500"/></outputs>
             </production>
             <production id="gbwSmallManureToPlanetManure" name="$l10n_production_gbwManureToPlanetManure" cyclesPerHour="10" costsPerActiveHour="2.5">
                 <inputs><input fillType="MANURE" amount="400"/></inputs>

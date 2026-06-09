@@ -20,19 +20,19 @@ For PlanET-specific features, treat `FS25_PlanET_BGA_Modular` as the BGA framewo
 - keep GBW recipes and balancing in this repository
 - avoid monkey-patching PlanET's existing placeables unless in-game testing proves a stable, release-safe API exists
 
-The current proof of concept follows this model by adding GBW PlanET Biomass Intake and Wet Substrate Prep modules that convert selected vanilla biomass into PlanET internal feedstocks.
+The current proof of concept follows this model by adding GBW PlanET Biomass Intake, Wet Substrate Prep, Fermentation Vessel, and fuel-logistics modules that convert selected vanilla biomass into PlanET internal feedstocks.
 
 ## Straw Harvest / HALLSYS Integration
 
-For straw pellet heat features, treat `pdlc_strawHarvestPack` as the owner of the HALLSYS Pellet Heat Plant and pellet fillTypes.
+For pellet heat features, treat `pdlc_strawHarvestPack` as the owner of the HALLSYS Pellet Heat Plant and pellet fillTypes.
 
-- declare `pdlc_strawHarvestPack` when a feature uses `STRAW_PELLETS`
-- output `STRAW_PELLETS` as the dry-fuel handoff to the HALLSYS Pellet Heat Plant
+- declare `pdlc_strawHarvestPack` when a feature uses `STRAW_PELLETS`, `HAY_PELLETS`, or `MOLASSES`
+- output `STRAW_PELLETS` and `HAY_PELLETS` as dry-fuel handoffs to the HALLSYS Pellet Heat Plant ecosystem
 - keep the HALLSYS plant itself dependency-owned and unmodified
 - do not copy Straw Harvest XML, models, textures, icons, scripts, or sounds into this repository
-- keep raw-straw BGA pretreatment weaker than pellet heating, so the heat route remains meaningful
+- keep pellet BGA use additive-gated and weaker than properly fermented material, so the heat route remains meaningful
 
-The current proof of concept keeps low-yield straw BGA pretreatment in the biomass intakes and moves `STRAW_PELLETS` production to a focused Dry Fuel Processor for the HALLSYS heat plant.
+The current proof of concept keeps low-yield assisted straw BGA pretreatment in the biomass intakes, moves pellet production to a focused Dry Fuel Processor, stores pellets in dry fuel yards, and allows pellet BGA use only through water-and-additive-assisted fermentation.
 
 ## Asset And Licensing Boundary
 

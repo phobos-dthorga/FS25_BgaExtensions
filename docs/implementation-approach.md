@@ -48,7 +48,7 @@ Current method:
 - declare `pdlc_strawHarvestPack` when a feature uses Straw Harvest pellet fillTypes or HALLSYS heat-plant routing
 - use its registered internal fillTypes as the contract, especially `SILAGE_IN` and `SUGARBEETCUT_IN`
 - use PlanET models by dependency reference when their visual role matches the GBW process
-- use Straw Harvest `STRAW_PELLETS` as the dry fuel handoff when bridging straw residues to the HALLSYS Pellet Heat Plant
+- use Straw Harvest `STRAW_PELLETS`, `HAY_PELLETS`, and `MOLASSES` for pellet logistics when bridging dry biomass to the HALLSYS Pellet Heat Plant ecosystem
 - keep vanilla `WOODCHIPS` out of the production-point intake; handle it through the dedicated dry fuel yard silo
 - add GBW-owned modules that convert expanded biomass inputs into those internal fillTypes
 - let PlanET's own fermenters, generators, storages, and distributors continue doing their normal work
@@ -125,7 +125,7 @@ Use existing fillTypes wherever they are technically and thematically close enou
 
 - use PlanET `SILAGE_IN` for prepared forage biomass in PlanET-specific modules
 - use PlanET `SUGARBEETCUT_IN` for wet or starchy biomass in PlanET-specific modules
-- use Straw Harvest `STRAW_PELLETS` for dry straw fuel when the pellet heat route is active
+- use Straw Harvest `STRAW_PELLETS` and `HAY_PELLETS` for dry pellet fuel when the pellet heat route is active
 - prefer `COMPOST` if it exists on a map/mod because other equipment may already support it
 - treat `COMPOST_RAW` and `ORGANICWASTE` as detected aliases or fallback inputs, not fillTypes this mod should define casually
 

@@ -25,7 +25,7 @@ Each shipped mod version should get a GitHub release and retain its old releases
 
 ## Current Design Direction
 
-The current implementation provides PlanET-compatible biomass intake modules, a Wet Substrate Prep module, a Dry Fuel Processor, and scaled dry fuel yards. The intake modules convert forage, manure, and low-grade straw routes into the internal feedstocks used by `FS25_PlanET_BGA_Modular`; Wet Substrate Prep handles wet/root/produce crops before handing them to PlanET as beet-cut substrate; Dry Fuel Processor converts straw into `STRAW_PELLETS`; and the dry fuel yards store `WOODCHIPS` and `STRAW_PELLETS` for heat-plant logistics.
+The current implementation provides PlanET-compatible biomass intake modules, Wet Substrate Prep, a Fermentation Vessel, a Dry Fuel Processor, and scaled dry fuel yards. The intake modules convert forage, manure, and assisted low-grade straw routes into the internal feedstocks used by `FS25_PlanET_BGA_Modular`; Wet Substrate Prep makes wet/root/produce mash families; Fermentation Vessel turns mash and assisted pellet substrates into PlanET feedstock; Dry Fuel Processor converts straw and hay into Straw Harvest pellets using water and molasses; and dry fuel yards store `WOODCHIPS`, `STRAW_PELLETS`, and `HAY_PELLETS` for heat-plant logistics.
 
 Maize+/MaizePlus integration is parked until a production-ready FS25 release is installed and explicitly selected as a target. Corn Production Pack remains observation-only.
 

@@ -74,23 +74,39 @@
     <productionPoint>
         <productions sharedThroughputCapacity="false">
             <production id="gbwDryFuelStrawToPellets" name="$l10n_production_gbwStrawToPellets" cyclesPerHour="10" costsPerActiveHour="6">
-                <inputs><input fillType="STRAW" amount="1000"/></inputs>
+                <inputs>
+                    <input fillType="STRAW" amount="1000"/>
+                    <input fillType="WATER" amount="100"/>
+                    <input fillType="MOLASSES" amount="20"/>
+                </inputs>
                 <outputs><output fillType="STRAW_PELLETS" amount="250"/></outputs>
+            </production>
+            <production id="gbwDryFuelHayToPellets" name="$l10n_production_gbwHayToPellets" cyclesPerHour="10" costsPerActiveHour="6">
+                <inputs>
+                    <input fillType="DRYGRASS_WINDROW" amount="1000"/>
+                    <input fillType="WATER" amount="100"/>
+                    <input fillType="MOLASSES" amount="20"/>
+                </inputs>
+                <outputs><output fillType="HAY_PELLETS" amount="300"/></outputs>
             </production>
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="STRAW"/>
-            <baleTrigger triggerNode="baleTrigger" fillTypes="STRAW"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="STRAW DRYGRASS_WINDROW WATER MOLASSES"/>
+            <baleTrigger triggerNode="baleTrigger" fillTypes="STRAW DRYGRASS_WINDROW"/>
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="STRAW_PELLETS" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="STRAW_PELLETS HAY_PELLETS" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
             <capacity fillType="STRAW" capacity="60000"/>
+            <capacity fillType="DRYGRASS_WINDROW" capacity="60000"/>
+            <capacity fillType="WATER" capacity="12000"/>
+            <capacity fillType="MOLASSES" capacity="4000"/>
             <capacity fillType="STRAW_PELLETS" capacity="60000"/>
+            <capacity fillType="HAY_PELLETS" capacity="60000"/>
 
             <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="STRAW"/>
         </storage>

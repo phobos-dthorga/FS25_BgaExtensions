@@ -54,8 +54,8 @@ If that pass is clean and CI passed, broader personal testing can wait until the
   - GBW Wet Substrate Prep
   - GBW Fermentation Vessel
   - GBW Dry Fuel Processor
-  - GBW PlanET Dry Fuel Yard - Medium
-  - GBW PlanET Dry Fuel Yard - Large
+  - GBW Dry Fuel Yard - Medium
+  - GBW Dry Fuel Yard - Large
 - The small dry fuel yard does not appear in the shop.
 - All listed items can be placed and sold in the disposable save.
 
@@ -71,7 +71,7 @@ For `v0.2.7.0` and later, confirm the intake capacity values are visibly larger 
 | Additive bonus | Unload `CHAFF` or `GRASS_WINDROW` plus `SILAGE_ADDITIVE`, start the matching additive recipe. | Output route works, the recipe is readable in the UI, and the route remains below prepared silage efficiency. |
 | Prepared silage | Unload `SILAGE`, start prepared silage intake. | `SILAGE_IN` is produced. |
 | Grass and hay | Unload `GRASS_WINDROW` and `DRYGRASS_WINDROW`. | Both accepted by the intake and produce `SILAGE_IN`. |
-| Straw pretreatment | Unload `STRAW`, start straw pretreatment. | Low-yield `SILAGE_IN` route works. |
+| Straw pretreatment | Unload `STRAW` plus `SILAGE_ADDITIVE`, start assisted straw pretreatment. | Low-yield `SILAGE_IN` route works and remains below grass or hay. |
 | Manure | Unload `MANURE`, start manure intake. | `MANURE_IN` is produced. |
 The biomass intakes no longer accept wet/root/produce crops directly, and they no longer produce straw pellets. Those routes belong to Wet Substrate Prep and Dry Fuel Processor.
 
@@ -89,13 +89,17 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 | --- | --- | --- |
 | Mash fermentation | Unload each available mash family into GBW Fermentation Vessel. | `SUGARBEETCUT_IN` is produced and can be loaded out. |
 | Additive-assisted fermentation | Unload a mash family plus `SILAGE_ADDITIVE`, start the matching additive route. | `SUGARBEETCUT_IN` is produced at the improved additive rate. |
+| Hay pellet fermentation | Unload `HAY_PELLETS`, `WATER`, and `SILAGE_ADDITIVE`, start assisted hay pellet fermentation. | `SILAGE_IN` is produced, the route is readable, and it remains weaker than properly fermented material. |
+| Straw pellet fermentation | Unload `STRAW_PELLETS`, `WATER`, and `SILAGE_ADDITIVE`, start assisted straw pellet fermentation. | `SILAGE_IN` is produced, the route is readable, and it stays weaker than the hay pellet route. |
+| Additive gate | Try to run a pellet fermentation route without `SILAGE_ADDITIVE`. | No plain pellet fermentation route is available. |
 | Visual fit | Place the vessel beside a PlanET BGA layout. | The PlanET fermenter model reads as a fermentation step, not a crop-prep bunker. |
 
 ## Dry Fuel Processor Checks
 
 | Route | Minimum check | Expected result |
 | --- | --- | --- |
-| Straw pelletizing | Unload `STRAW`, start straw pelletizing. | `STRAW_PELLETS` are produced and can be loaded out. |
+| Straw pelletizing | Unload `STRAW`, `WATER`, and `MOLASSES`, start straw pelletizing. | `STRAW_PELLETS` are produced and can be loaded out. |
+| Hay pelletizing | Unload `DRYGRASS_WINDROW`, `WATER`, and `MOLASSES`, start hay pelletizing. | `HAY_PELLETS` are produced and can be loaded out. |
 
 ## Dry Fuel Yard Checks
 
@@ -105,8 +109,10 @@ Run these on medium and large yards:
 - Load `WOODCHIPS` back out.
 - Unload `STRAW_PELLETS`.
 - Load `STRAW_PELLETS` back out.
+- Unload `HAY_PELLETS`.
+- Load `HAY_PELLETS` back out.
 - Confirm capacities are medium 320,000 l and large 600,000 l.
-- Confirm the visible fill plane looks acceptable for both materials.
+- Confirm the visible fill plane looks acceptable for all stored materials.
 - Confirm the yards do not create production-point storage warnings.
 
 ## Optional Add-On Checks

@@ -7,7 +7,7 @@ This document records what `FS25_BgaExtensions` expects from required dependenci
 | Dependency | Why it is required | Contract used by GBW | Verification source |
 | --- | --- | --- | --- |
 | `FS25_PlanET_BGA_Modular` | PlanET-specific intake, prep, and fermentation modules use PlanET internal feedstocks and PlanET assets. | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, plus referenced PlanET bunker and fermenter models and store icons. | Local mod XML and game log on 2026-06-07: loaded as version `1.0.0.1`, with 9 fillTypes loaded. |
-| `pdlc_strawHarvestPack` | Straw pellet output and dry fuel storage target the HALLSYS Pellet Heat Plant ecosystem. | `STRAW_PELLETS` and installed pDLC runtime support for straw pellet handling. | Game log on 2026-06-07: available pDLC version `1.1.0.0`, with 3 fillTypes loaded. |
+| `pdlc_strawHarvestPack` | Pellet output, molasses use, and dry fuel storage target the HALLSYS Pellet Heat Plant ecosystem. | `STRAW_PELLETS`, `HAY_PELLETS`, `MOLASSES`, and installed pDLC runtime support for pellet handling. | Game log and save data on 2026-06-09: pDLC version `1.1.0.0`, 3 fillTypes loaded, plus observed `HAY_PELLETS`, `STRAW_PELLETS`, and `MOLASSES` save entries. |
 
 ## GBW-Owned Contract
 
@@ -24,7 +24,7 @@ GBW may reference PlanET model and icon paths only while `FS25_PlanET_BGA_Modula
 
 ## Base Game Materials
 
-The core placeables may reference vanilla materials such as `CHAFF`, `SILAGE`, `GRASS_WINDROW`, `DRYGRASS_WINDROW`, `STRAW`, `MANURE`, `SUGARBEET_CUT`, `SUGARCANE`, `POTATO`, `BEETROOT`, `CARROT`, `PARSNIP`, `SPINACH`, `PEA`, `GREENBEAN`, and `SILAGE_ADDITIVE`.
+The core placeables may reference vanilla materials such as `CHAFF`, `SILAGE`, `GRASS_WINDROW`, `DRYGRASS_WINDROW`, `STRAW`, `MANURE`, `SUGARBEET_CUT`, `SUGARCANE`, `POTATO`, `BEETROOT`, `CARROT`, `PARSNIP`, `SPINACH`, `PEA`, `GREENBEAN`, `WATER`, and `SILAGE_ADDITIVE`.
 
 Before a new vanilla-looking name is added, still verify it in local game data. The name being familiar is not enough.
 

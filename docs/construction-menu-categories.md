@@ -18,7 +18,7 @@ That is enough for the current GBW need. The Corn Production Pack archive also c
 | --- | --- | --- |
 | `production` | `gbwBgaProduction` | Biomass intake and BGA feedstock process buildings. |
 | `production` | `gbwBgaCompatibility` | Optional compatibility add-on process buildings. Declared in core so multiple add-ons can share one tab. |
-| `production` | `gbwFuelProcessing` | Dry fuel processing buildings such as straw pelletizing. |
+| `production` | `gbwFuelProcessing` | Dry fuel processing buildings such as pelletizing. |
 | `buildings` | `gbwFuelStorage` | Dry fuel yards and future fuel-storage buildings. |
 
 ## Rules

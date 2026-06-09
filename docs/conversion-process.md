@@ -22,6 +22,8 @@ Fermented or already conditioned materials should be easier for the digester to 
 
 Unfermented materials that would normally be ensiled, mashed, inoculated, or otherwise conditioned can still be accepted for gameplay convenience, but they should run slower and yield less final BGA feedstock. `SILAGE_ADDITIVE` may restore some of that lost convenience on these lanes, either through slightly better yield, slightly better throughput, or both. It should not make an unfermented lane stronger than using properly fermented material.
 
+Difficult real-world fermentation routes should require `SILAGE_ADDITIVE` by default. This includes pelletized fibrous feedstocks and assisted raw-straw pretreatment. Pelleting improves handling and surface area, but dry pellets still need water and inoculation help before they make sense as BGA substrate. Molasses belongs in pellet manufacture, where Straw Harvest already treats it as a pellet-system input, rather than being repeated in the Fermentation Vessel UI.
+
 See `docs/integration-strategy.md` for the companion-module rule that governs PlanET and future third-party integrations.
 
 See `docs/energy-carrier-strategy.md` for the rule that separates biomass preparation, combustion fuel logistics, BGA digestion, and energy export into different building families.
@@ -102,7 +104,7 @@ The first implementation should be deliberately narrow:
 2. Depend on `FS25_PlanET_BGA_Modular` and `pdlc_strawHarvestPack` for the proof of concept.
 3. Convert selected high-confidence vanilla inputs into PlanET internal feedstocks.
 4. Use `SILAGE_IN` for forage-like biomass and `SUGARBEETCUT_IN` for wet/starchy/root biomass.
-5. Use existing `STRAW_PELLETS` for the dry heat route to the HALLSYS Pellet Heat Plant.
+5. Use existing Straw Harvest pellets for the dry heat route to the HALLSYS Pellet Heat Plant.
 6. Keep GBW-owned fillTypes constrained to the current mash-family intermediaries unless a standalone or non-PlanET pathway genuinely needs another one.
 
 Initial input set:
@@ -128,11 +130,12 @@ Current biomass intake recipes:
 - `GRASS_WINDROW` -> `SILAGE_IN`
 - `GRASS_WINDROW` + `SILAGE_ADDITIVE` -> improved `SILAGE_IN`
 - `DRYGRASS_WINDROW` -> `SILAGE_IN`
-- `STRAW` -> `SILAGE_IN` at poor efficiency
+- `STRAW` + `SILAGE_ADDITIVE` -> `SILAGE_IN` at poor efficiency
 
 Current Dry Fuel Processor recipes:
 
-- `STRAW` -> `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant
+- `STRAW` + `WATER` + `MOLASSES` -> `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant
+- `DRYGRASS_WINDROW` + `WATER` + `MOLASSES` -> `HAY_PELLETS` for Straw Harvest pellet logistics
 
 Current Wet Substrate Prep recipes:
 
@@ -150,12 +153,14 @@ Current Fermentation Vessel recipes:
 
 - each GBW mash family -> `SUGARBEETCUT_IN`
 - each GBW mash family + `SILAGE_ADDITIVE` -> improved `SUGARBEETCUT_IN`
+- `HAY_PELLETS` + `WATER` + `SILAGE_ADDITIVE` -> low-to-moderate `SILAGE_IN`
+- `STRAW_PELLETS` + `WATER` + `SILAGE_ADDITIVE` -> low-yield `SILAGE_IN`
 
 The Fermentation Vessel uses the PlanET `PlanET_Fermenter100.i3d` model by dependency reference. The model is not copied into GBW. The dependency remains the source of truth for its assets.
 
 Current dry fuel yard storage:
 
-- `WOODCHIPS` and `STRAW_PELLETS` -> medium or large dry fuel yard storage for heat-plant logistics
+- `WOODCHIPS`, `STRAW_PELLETS`, and `HAY_PELLETS` -> medium or large dry fuel yard storage for heat-plant logistics
 
 Optional detected inputs for the first expansion:
 
@@ -234,7 +239,7 @@ The current implementation now uses four GBW-owned wet intermediaries, `GBW_SWEE
 
 For by-products and farm-adjacent outputs, follow `docs/byproduct-integration-audit.md`:
 
-- prefer existing fillTypes such as `COMPOST`, `DIGESTATE`, `STRAW_PELLETS`, `WOODCHIPS`, `ORGANICWASTE`, and `RICE_HUSK` when they already exist
+- prefer existing fillTypes such as `COMPOST`, `DIGESTATE`, `STRAW_PELLETS`, `HAY_PELLETS`, `WOODCHIPS`, `ORGANICWASTE`, and `RICE_HUSK` when they already exist
 - avoid defining one-off waste fillTypes unless the gameplay need is clear
 - keep PlanET internal fillTypes as PlanET handoffs, not general GBW farm commodities
 - keep Maize+/MaizePlus integration parked until a future explicit decision

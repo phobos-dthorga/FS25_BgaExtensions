@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>Gekko BioWorks</author>
-    <version>0.2.16.0</version>
+    <version>0.2.17.0</version>
     <title>
         <en>GBW BGA Extensions</en>
     </title>
@@ -39,16 +39,16 @@
             <en>Converts forage, straw, and manure into PlanET feedstock.</en>
         </text>
         <text name="function_gbwPlanetDryFuelYard">
-            <en>Stores wood chips and straw pellets for combustion heat logistics.</en>
+            <en>Stores wood chips, straw pellets, and hay pellets for combustion heat logistics.</en>
         </text>
         <text name="function_gbwPlanetWetSubstratePrep">
             <en>Prepares wet, root, and produce crops into GBW mash substrates.</en>
         </text>
         <text name="function_gbwPlanetFermentationVessel">
-            <en>Ferments GBW mash substrates into PlanET-compatible beet substrate.</en>
+            <en>Ferments GBW mash substrates and assisted pellet substrates into PlanET-compatible feedstock.</en>
         </text>
         <text name="function_gbwPlanetDryFuelProcessor">
-            <en>Converts straw into straw pellet fuel for combustion heat logistics.</en>
+            <en>Converts straw and hay into pellet fuel for combustion heat logistics.</en>
         </text>
         <text name="construction_tab_gbwBgaProduction">
             <en>GBW BGA</en>
@@ -93,10 +93,13 @@
             <en>Hay substrate</en>
         </text>
         <text name="production_gbwStrawToPlanetSilage">
-            <en>Straw pretreatment</en>
+            <en>Assisted straw pretreatment</en>
         </text>
         <text name="production_gbwStrawToPellets">
             <en>Straw pelletizing</en>
+        </text>
+        <text name="production_gbwHayToPellets">
+            <en>Hay pelletizing</en>
         </text>
         <text name="production_gbwManureToPlanetManure">
             <en>Manure intake</en>
@@ -154,6 +157,12 @@
         </text>
         <text name="production_gbwResidueMashAdditiveToPlanetBeet">
             <en>Residue mash fermentation with additive</en>
+        </text>
+        <text name="production_gbwHayPelletsToPlanetSilage">
+            <en>Assisted hay pellet fermentation</en>
+        </text>
+        <text name="production_gbwStrawPelletsToPlanetSilage">
+            <en>Assisted straw pellet fermentation</en>
         </text>
     </l10n>
 

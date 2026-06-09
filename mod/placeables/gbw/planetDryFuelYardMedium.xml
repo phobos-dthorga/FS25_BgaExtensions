@@ -72,16 +72,16 @@
 
     <silo>
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="WOODCHIPS STRAW_PELLETS" fillLitersPerSecond="2500" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="WOODCHIPS STRAW_PELLETS HAY_PELLETS" fillLitersPerSecond="2500" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <unloadingStation supportsExtension="false">
-            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="WOODCHIPS STRAW_PELLETS"/>
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="WOODCHIPS STRAW_PELLETS HAY_PELLETS"/>
             <baleTrigger triggerNode="baleTrigger" fillTypes="WOODCHIPS"/>
         </unloadingStation>
 
         <storages>
-            <storage node="hotspotMarker" fillTypes="WOODCHIPS STRAW_PELLETS" capacity="320000" isExtension="false">
+            <storage node="hotspotMarker" fillTypes="WOODCHIPS STRAW_PELLETS HAY_PELLETS" capacity="320000" isExtension="false">
                 <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="WOODCHIPS"/>
             </storage>
         </storages>

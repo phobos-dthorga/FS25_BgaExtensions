@@ -39,6 +39,7 @@ VANILLA_FILLTYPES = {
     "STRAW",
     "SUGARCANE",
     "SUGARBEET_CUT",
+    "WATER",
     "WOODCHIPS",
 }
 
@@ -76,6 +77,8 @@ DEPENDENCY_FILLTYPES = {
         "ORGANICWASTE",
     },
     "pdlc_strawHarvestPack": {
+        "HAY_PELLETS",
+        "MOLASSES",
         "STRAW_PELLETS",
     },
 }
@@ -413,9 +416,17 @@ def production_record(tree: ET.ElementTree, production_id: str) -> dict[str, obj
     return {
         "id": production_id,
         "cycles": float(production.get("cyclesPerHour", "0")),
+        "drygrass_windrow": sum_amount("./inputs/input", "DRYGRASS_WINDROW"),
+        "hay_pellets_input": sum_amount("./inputs/input", "HAY_PELLETS"),
+        "hay_pellets_output": sum_amount("./outputs/output", "HAY_PELLETS"),
+        "molasses": sum_amount("./inputs/input", "MOLASSES"),
         "silage_in": sum_amount("./outputs/output", "SILAGE_IN"),
         "sugarbeetcut_in": sum_amount("./outputs/output", "SUGARBEETCUT_IN"),
         "silage_additive": sum_amount("./inputs/input", "SILAGE_ADDITIVE"),
+        "straw": sum_amount("./inputs/input", "STRAW"),
+        "straw_pellets_input": sum_amount("./inputs/input", "STRAW_PELLETS"),
+        "straw_pellets_output": sum_amount("./outputs/output", "STRAW_PELLETS"),
+        "water": sum_amount("./inputs/input", "WATER"),
     }
 
 
@@ -466,8 +477,9 @@ def validate_fermentation_priority_rules(
         grass_additive = require_record(
             path, repo_root, tree, f"{size_prefix}GrassAdditiveToPlanetSilage", validation
         )
+        straw = require_record(path, repo_root, tree, f"{size_prefix}StrawToPlanetSilage", validation)
 
-        if all(record is not None for record in [silage, chaff, chaff_additive, grass, grass_additive]):
+        if all(record is not None for record in [silage, chaff, chaff_additive, grass, grass_additive, straw]):
             require_greater(
                 float(silage["cycles"]),
                 float(chaff_additive["cycles"]),
@@ -516,9 +528,41 @@ def validate_fermentation_priority_rules(
                 f"Grass with additive must yield more usable substrate than raw grass in {relative_path}",
                 validation,
             )
+            require_greater(
+                float(straw["silage_additive"]),
+                0.0,
+                f"Straw pretreatment must consume SILAGE_ADDITIVE in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(grass["silage_in"]),
+                float(straw["silage_in"]),
+                f"Fresh grass must yield more usable substrate than assisted straw pretreatment in {relative_path}",
+                validation,
+            )
 
     if filename == "planetFermentationVessel.xml":
         relative_path = path.relative_to(repo_root)
+        for production in tree.findall(".//productions/production"):
+            production_id = production.get("id", "")
+            record = production_record(tree, production_id)
+            if record is None:
+                continue
+            if float(record["hay_pellets_input"]) <= 0 and float(record["straw_pellets_input"]) <= 0:
+                continue
+            require_greater(
+                float(record["water"]),
+                0.0,
+                f"Pellet fermentation '{production_id}' must consume WATER in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(record["silage_additive"]),
+                0.0,
+                f"Pellet fermentation '{production_id}' must consume SILAGE_ADDITIVE in {relative_path}",
+                validation,
+            )
+
         mash_pairs = [
             ("Sweet", "sweet"),
             ("Root", "root"),
@@ -558,6 +602,76 @@ def validate_fermentation_priority_rules(
                 float(additive["silage_additive"]),
                 0.0,
                 f"{message_prefix.title()} mash additive recipe must consume SILAGE_ADDITIVE in {relative_path}",
+                validation,
+            )
+
+        hay_pellets = require_record(
+            path, repo_root, tree, "gbwFermenterHayPelletsToPlanetSilage", validation
+        )
+        straw_pellets = require_record(
+            path, repo_root, tree, "gbwFermenterStrawPelletsToPlanetSilage", validation
+        )
+        if hay_pellets is not None and straw_pellets is not None:
+            for record, label in [(hay_pellets, "Hay pellets"), (straw_pellets, "Straw pellets")]:
+                require_greater(
+                    float(record["water"]),
+                    0.0,
+                    f"{label} fermentation must consume WATER in {relative_path}",
+                    validation,
+                )
+                require_greater(
+                    float(record["silage_additive"]),
+                    0.0,
+                    f"{label} fermentation must consume SILAGE_ADDITIVE in {relative_path}",
+                    validation,
+                )
+            require_greater(
+                float(hay_pellets["cycles"]),
+                float(straw_pellets["cycles"]),
+                f"Hay pellet fermentation must run faster than straw pellet fermentation in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(hay_pellets["silage_in"]),
+                float(straw_pellets["silage_in"]),
+                f"Hay pellet fermentation must yield more usable substrate than straw pellet fermentation in {relative_path}",
+                validation,
+            )
+
+    if filename == "planetDryFuelProcessor.xml":
+        relative_path = path.relative_to(repo_root)
+        straw = require_record(path, repo_root, tree, "gbwDryFuelStrawToPellets", validation)
+        hay = require_record(path, repo_root, tree, "gbwDryFuelHayToPellets", validation)
+        if straw is not None and hay is not None:
+            for record, label in [(straw, "Straw pelletizing"), (hay, "Hay pelletizing")]:
+                require_greater(
+                    float(record["water"]),
+                    0.0,
+                    f"{label} must consume WATER in {relative_path}",
+                    validation,
+                )
+                require_greater(
+                    float(record["molasses"]),
+                    0.0,
+                    f"{label} must consume MOLASSES in {relative_path}",
+                    validation,
+                )
+            require_greater(
+                float(hay["hay_pellets_output"]),
+                0.0,
+                f"Hay pelletizing must output HAY_PELLETS in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(straw["straw_pellets_output"]),
+                0.0,
+                f"Straw pelletizing must output STRAW_PELLETS in {relative_path}",
+                validation,
+            )
+            require_greater(
+                float(hay["hay_pellets_output"]),
+                float(straw["straw_pellets_output"]),
+                f"Hay pelletizing should yield more pellet material than straw pelletizing in {relative_path}",
                 validation,
             )
 

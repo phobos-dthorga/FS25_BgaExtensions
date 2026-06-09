@@ -23,7 +23,8 @@ The current PlanET-compatible preparation modules produce or handle these materi
 | `MANURE_IN` | Manure intake | PlanET modular fermenter input | Good as a PlanET-owned handoff only. |
 | GBW mash families | Wet Substrate Prep from sugar crops, roots, greens, and organic residue | GBW staging materials, then fermented into `SUGARBEETCUT_IN` | Good internal GBW intermediaries. Keep them internal until a real storage/logistics use appears. |
 | `SUGARBEETCUT_IN` | GBW Fermentation Vessel mash fermentation | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
-| `STRAW_PELLETS` | Dry Fuel Processor straw pelletizing | Straw Harvest HALLSYS Pellet Heat Plant and pellet-compatible systems | Strong cross-mod by-product/fuel route. Keep this meaningful. |
+| `STRAW_PELLETS` | Dry Fuel Processor straw pelletizing | Straw Harvest HALLSYS Pellet Heat Plant, pellet-compatible systems, and assisted GBW fermentation | Strong cross-mod by-product/fuel route. Keep heat logistics meaningful and BGA use additive-gated. |
+| `HAY_PELLETS` | Dry Fuel Processor hay pelletizing | Straw Harvest pellet-compatible systems and assisted GBW fermentation | Useful dual-purpose route; better BGA substrate than straw pellets, but still below prepared silage. |
 | `WOODCHIPS` | Player-delivered vanilla material | Medium and large dry fuel yard storage for combustion logistics | Stored outside the BGA intake so it does not trigger production-point storage warnings. |
 
 The mod does not yet produce a farm-wide residue such as `COMPOST` or `DIGESTATE` directly. That is probably correct for now: PlanET should own BGA digestion outputs, while GBW owns preparation and routing.
@@ -39,7 +40,9 @@ These fillTypes or process outputs were found in the current local stack and are
 | `DIGESTATE` | Vanilla BGAs and medium BGA package | Fertilizer output from true BGA digestion | Do not duplicate. Use only when GBW owns a standalone digester later. |
 | `METHANE` | Vanilla BGA systems and PlanET output stages | Sale/fuel output from BGA modules | Let PlanET/vanilla own it unless adding standalone gas handling. |
 | `ELECTRICCHARGE` | Vanilla and BGA/generator systems | Sale/charge output from generators | Let generator modules own it. |
-| `STRAW_PELLETS` | Straw Harvest runtime dependency | Dry combustion fuel | Required dependency is acceptable for features that output it. |
+| `STRAW_PELLETS` | Straw Harvest runtime dependency | Dry combustion fuel and assisted BGA substrate | Required dependency is acceptable for features that output it. |
+| `HAY_PELLETS` | Straw Harvest runtime dependency | Dry combustion fuel and assisted BGA substrate | Verified through save data and Straw Harvest hay pellet pallets. |
+| `MOLASSES` | Straw Harvest runtime dependency | Pellet manufacture input | Keep in Dry Fuel Processor, not Fermentation Vessel, to avoid UI clutter. |
 | `WOODCHIPS` | Vanilla sawmills, heating plants, many forestry mods | Combustion fuel, not normal anaerobic substrate | Prefer heating. BGA route should be poor or optional. |
 | `COMPOST` | `FS25_orchardsAndGreenhouses_crossplay`, `FS25_Nordkirchen_x4`, `FS25_The_Mechet` | Greenhouse/fertilizer/organic residual loop | Implemented as an optional output in the Orchards/Greenhouses add-on. Do not define casually. |
 | `COMPOST_RAW` | `FS25_The_Mechet` | Map-specific compost precursor | Treat as optional detected input, not a GBW baseline. |
@@ -67,7 +70,7 @@ Recommended routes:
 
 3. Dry fuel route
 
-`STRAW_PELLETS` and `WOODCHIPS` form a credible combustion family. Straw pellets are produced by the Dry Fuel Processor, and the dry fuel yards store both fuel materials without putting wood chips inside a BGA intake production point.
+`STRAW_PELLETS`, `HAY_PELLETS`, and `WOODCHIPS` form a credible combustion family. Straw and hay pellets are produced by the Dry Fuel Processor, and the dry fuel yards store all three fuel materials without putting wood chips inside a BGA intake production point.
 
 Recommended posture: combustion first, BGA only as low-value emergency substrate.
 

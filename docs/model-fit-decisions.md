@@ -11,7 +11,7 @@ Reason:
 - it reuses PlanET's small bunker model, `PlanET_Bunker_Klein.i3d`
 - that model includes a rotating blade
 - a rotating blade reads as active mixing, chopping, feeding, or processing
-- the current dry fuel yard is only a passive silo for `WOODCHIPS` and `STRAW_PELLETS`
+- the current dry fuel yard is only a passive silo for `WOODCHIPS`, `STRAW_PELLETS`, and `HAY_PELLETS`
 
 That visual language is a poor fit for combustion fuel storage. It can make the player expect a production point, which is exactly the confusion this mod should avoid.
 
@@ -31,7 +31,7 @@ Starting with `v0.2.9.0`, the same small PlanET bunker model is used by `placeab
 
 That is a better visual fit because Wet Substrate Prep is an active mixing and conditioning process. The rotating blade now reinforces the gameplay role instead of contradicting it.
 
-Starting with `v0.2.10.0`, `placeables/gbw/planetDryFuelProcessor.xml` also uses the small PlanET bunker model. This is acceptable because straw pelletizing is an active dry-material process rather than passive fuel storage.
+Starting with `v0.2.10.0`, `placeables/gbw/planetDryFuelProcessor.xml` also uses the small PlanET bunker model. This is acceptable because pelletizing is an active dry-material process rather than passive fuel storage.
 
 Starting with `v0.2.11.0`, the optional Potato Washer compatibility add-on uses the same small PlanET bunker model for washed potato mash. This is also an active wet-material preparation process, so the mixer visual language remains appropriate.
 

@@ -29,13 +29,14 @@ The first entries in this table are pre-GBW historical lines from versions befor
 
 ## Pending Test Targets
 
-For `v0.2.16.0`, smoke-test the fermentation vessel split:
+For `v0.2.17.0`, smoke-test pellet and difficult-fermentation routes:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.16.0`
-- confirm GBW Fermentation Vessel appears in the GBW BGA tab and uses the PlanET fermenter model
-- confirm Wet Substrate Prep only produces mash-family substrates
-- confirm GBW Fermentation Vessel accepts each available mash family and produces `SUGARBEETCUT_IN`
-- confirm additive-assisted fermentation remains readable and improved
+- confirm core FS25_BgaExtensions loads as version `0.2.17.0`
+- confirm Dry Fuel Processor accepts straw or hay plus `WATER` and `MOLASSES`
+- confirm Dry Fuel Processor produces `STRAW_PELLETS` and `HAY_PELLETS`
+- confirm Dry Fuel Yards accept and load `HAY_PELLETS`
+- confirm GBW Fermentation Vessel accepts pellet routes only with `WATER` and `SILAGE_ADDITIVE`
+- confirm pellet fermentation produces `SILAGE_IN`
 - check the log for GBW-owned warnings or errors
 
 ## User Test Confirmation
