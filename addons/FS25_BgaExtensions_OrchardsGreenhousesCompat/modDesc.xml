@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>Gekko BioWorks</author>
-    <version>0.2.19.4</version>
+    <version>0.2.20.0</version>
     <title>
         <en>GBW BGA Extensions - Orchards Greenhouses Compat</en>
     </title>
     <description>
-        <en>Optional compatibility add-on for FS25 BGA Extensions and Orchards And Greenhouses. Routes organic waste toward Residue Mash or compost.</en>
+        <en>Optional compatibility add-on for FS25 BGA Extensions and Orchards And Greenhouses. Routes organic waste toward Residue Mash or compost and adds a GBW Compost Bay.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
 
@@ -16,6 +16,12 @@
         </text>
         <text name="function_gbwOrganicResiduePrep">
             <en>Converts organic waste into Residue Mash or compost.</en>
+        </text>
+        <text name="storeItem_gbwCompostBay">
+            <en>GBW Compost Bay</en>
+        </text>
+        <text name="function_gbwCompostBay">
+            <en>Composts organic waste and crop residues into compost.</en>
         </text>
         <text name="production_gbwOrganicWasteToResidueMash">
             <en>Organic waste residue mash</en>
@@ -35,5 +41,6 @@
 
     <storeItems>
         <storeItem xmlFilename="placeables/gbw/organicResiduePrep.xml"/>
+        <storeItem xmlFilename="placeables/gbw/compostBay.xml"/>
     </storeItems>
 </modDesc>

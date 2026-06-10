@@ -27,9 +27,11 @@ VANILLA_FILLTYPES = {
     "CHAFF",
     "DRYGRASS_WINDROW",
     "GREENBEAN",
+    "GRAPE",
     "GRASS_WINDROW",
     "LIQUIDMANURE",
     "MANURE",
+    "OLIVE",
     "PARSNIP",
     "PEA",
     "POTATO",
@@ -38,6 +40,7 @@ VANILLA_FILLTYPES = {
     "SPINACH",
     "STRAW",
     "SUGARCANE",
+    "SUGARBEET",
     "SUGARBEET_CUT",
     "WATER",
     "WOODCHIPS",
@@ -147,6 +150,37 @@ DATA_PACK_ROUTE_ATTRS = {"id", "inputFillType", "target", "template", "tier"}
 
 PROCESS_SUPPLY_HUB_FILE = "planetProcessSupplyHub.xml"
 PROCESS_PALLET_DOCK_FILE = "processPalletDock.xml"
+ORCHARDS_GREENHOUSES_COMPAT_MOD = "FS25_BgaExtensions_OrchardsGreenhousesCompat"
+COMPOST_BAY_FILE = "compostBay.xml"
+COMPOST_BAY_ACCEPTED_FILLTYPES = {
+    "BEETROOT",
+    "CARROT",
+    "DRYGRASS_WINDROW",
+    "GRAPE",
+    "GRASS_WINDROW",
+    "GREENBEAN",
+    "MANURE",
+    "OLIVE",
+    "ORGANICWASTE",
+    "PARSNIP",
+    "PEA",
+    "POTATO",
+    "SPINACH",
+    "STRAW",
+    "SUGARCANE",
+    "SUGARBEET",
+    "SUGARBEET_CUT",
+}
+FORBIDDEN_ORCHARDS_COMPOST_ASSETS = {
+    "compostSilo.i3d",
+    "compostSilo.i3d.shapes",
+    "store_compostSilo.dds",
+}
+CORE_FORBIDDEN_PROVIDER_XML_TOKENS = {
+    "COMPOST",
+    "COMPOST_RAW",
+    "ORGANICWASTE",
+}
 IDENTITY_DISPATCHER_PRODUCTIONS = {
     (PROCESS_SUPPLY_HUB_FILE, "gbwProcessSupplyWaterDispatch"): {"WATER": 500.0},
     (PROCESS_PALLET_DOCK_FILE, "gbwProcessSupplyAdditiveDispatch"): {"SILAGE_ADDITIVE": 1.0},
@@ -353,7 +387,16 @@ def collect_filltype_refs(path: Path, tree: ET.ElementTree) -> set[str]:
     refs: set[str] = set()
     for node in tree.iter():
         for attr_name, value in node.attrib.items():
-            if attr_name.lower() not in {"filltype", "filltypes"}:
+            if attr_name.lower() not in {
+                "acceptedfilltypes",
+                "defaultfilltype",
+                "filltype",
+                "filltypes",
+                "inputfilltype",
+                "outputfilltype",
+                "aliases",
+                "preferredfilltype",
+            }:
                 continue
             for name in value.split():
                 if name:
@@ -452,6 +495,15 @@ def unload_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
 
 def load_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
     return trigger_filltypes(tree, ".//loadingStation/loadTrigger")
+
+
+def bunker_silo_filltypes(tree: ET.ElementTree, attr_name: str) -> set[str]:
+    refs: set[str] = set()
+    for node in tree.findall(".//bunkerSilo"):
+        for name in node.get(attr_name, "").split():
+            if name:
+                refs.add(name.upper())
+    return refs
 
 
 def i3d_mapping_ids(tree: ET.ElementTree) -> set[str]:
@@ -1031,6 +1083,89 @@ def validate_process_pallet_dock_rules(
         validation.error(f"Process Pallet Dock loadingStation must expose MOLASSES and SILAGE_ADDITIVE in {relative_path}")
 
 
+def validate_compost_bay_rules(
+    path: Path,
+    mod_root: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    validation: Validation,
+) -> None:
+    if path.name != COMPOST_BAY_FILE:
+        return
+
+    relative_path = path.relative_to(repo_root)
+    if mod_root.name != ORCHARDS_GREENHOUSES_COMPAT_MOD:
+        validation.error(f"GBW Compost Bay may only be shipped in {ORCHARDS_GREENHOUSES_COMPAT_MOD}: {relative_path}")
+
+    if tree.getroot().get("type") != "bunkerSilo":
+        validation.error(f"GBW Compost Bay must be a bunkerSilo placeable in {relative_path}")
+
+    base_filename = (tree.findtext("./base/filename") or "").strip()
+    expected_base = "$moddir$FS25_orchardsAndGreenhouses_crossplay/placeables/compostSilo/compostSilo.i3d"
+    if base_filename != expected_base:
+        validation.error(f"GBW Compost Bay must reference the Orchards/Greenhouses compost silo model in {relative_path}")
+
+    store_image = (tree.findtext("./storeData/image") or "").strip()
+    expected_image = "$moddir$FS25_orchardsAndGreenhouses_crossplay/placeables/compostSilo/store_compostSilo.dds"
+    if store_image != expected_image:
+        validation.error(f"GBW Compost Bay must reference the Orchards/Greenhouses compost silo store icon in {relative_path}")
+
+    price = (tree.findtext("./storeData/price") or "").strip()
+    daily_upkeep = (tree.findtext("./storeData/dailyUpkeep") or "").strip()
+    if price != "45000" or daily_upkeep != "8":
+        validation.error(f"GBW Compost Bay balance must be price 45000 and dailyUpkeep 8 in {relative_path}")
+
+    bunker_nodes = tree.findall(".//bunkerSilo")
+    if len(bunker_nodes) != 1:
+        validation.error(f"GBW Compost Bay must define exactly one bunkerSilo node in {relative_path}")
+        return
+
+    accepted = bunker_silo_filltypes(tree, "acceptedFillTypes")
+    if accepted != COMPOST_BAY_ACCEPTED_FILLTYPES:
+        validation.error(f"GBW Compost Bay acceptedFillTypes must match the provider compost silo baseline in {relative_path}")
+
+    if bunker_silo_filltypes(tree, "inputFillType") != {"ORGANICWASTE"}:
+        validation.error(f"GBW Compost Bay inputFillType must be ORGANICWASTE in {relative_path}")
+    if bunker_silo_filltypes(tree, "outputFillType") != {"COMPOST"}:
+        validation.error(f"GBW Compost Bay outputFillType must be COMPOST in {relative_path}")
+
+
+def validate_orchards_compost_asset_policy(mod_root: Path, repo_root: Path, validation: Validation) -> None:
+    if mod_root.name != ORCHARDS_GREENHOUSES_COMPAT_MOD:
+        return
+
+    compost_bay = mod_root / "placeables" / "gbw" / COMPOST_BAY_FILE
+    if not compost_bay.is_file():
+        validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must include placeables/gbw/{COMPOST_BAY_FILE}")
+
+    for path in mod_root.rglob("*"):
+        if path.is_file() and path.name in FORBIDDEN_ORCHARDS_COMPOST_ASSETS:
+            validation.error(
+                f"Do not copy Orchards/Greenhouses compost silo asset '{path.name}' into "
+                f"{path.relative_to(repo_root)}; reference it through $moddir$ instead"
+            )
+
+
+def validate_core_provider_xml_policy(
+    mod_root: Path,
+    repo_root: Path,
+    xml_files: list[Path],
+    validation: Validation,
+) -> None:
+    is_core = (mod_root / "config" / "biomassCropRegistry.xml").is_file()
+    if not is_core:
+        return
+
+    for path in xml_files:
+        text = path.read_text(encoding="utf-8")
+        for token in sorted(CORE_FORBIDDEN_PROVIDER_XML_TOKENS):
+            if re.search(rf"(?<![A-Z0-9_]){re.escape(token)}(?![A-Z0-9_])", text):
+                validation.error(
+                    f"Provider-owned fillType token '{token}' must not appear in core XML: "
+                    f"{path.relative_to(repo_root)}"
+                )
+
+
 def validate_construction_tabs(
     path: Path,
     repo_root: Path,
@@ -1186,6 +1321,8 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
     local_types = local_filltypes(mod_root, validation)
     validate_filltype_icons(mod_root, repo_root, validation)
     validate_data_pack_files(mod_root, repo_root, validation)
+    validate_orchards_compost_asset_policy(mod_root, repo_root, validation)
+    validate_core_provider_xml_policy(mod_root, repo_root, xml_files, validation)
 
     known_filltypes = set(VANILLA_FILLTYPES)
     known_filltypes.update(local_types)
@@ -1223,6 +1360,7 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
                 )
 
         validate_construction_tabs(path, repo_root, tree, known_construction_tabs, validation)
+        validate_compost_bay_rules(path, mod_root, repo_root, tree, validation)
 
         if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
             validate_identity_dispatcher_rules(path, repo_root, tree, validation)

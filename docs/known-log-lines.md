@@ -34,22 +34,18 @@ The first entries in this table are pre-GBW historical lines from versions befor
 
 ## Pending Test Targets
 
-For `v0.2.19.4`, smoke-test the Process Pallet Dock loading-station hotfix:
+For `v0.2.20.0`, smoke-test the GBW Compost Bay add-on slice:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.19.4`
-- confirm `GBW Process Supply Hub` and `GBW Process Pallet Dock` appear under `GBW BGA`
-- confirm the water unload marker is visible and accessible outside the object
-- confirm `WATER` unloads from a water carrier
-- confirm the pallet dock places without `Could not load item`
-- confirm no `No loading station or pallet spawner` error appears for `processPalletDock.xml`
-- confirm the pallet dock uses the pallet icon, not the bulk trailer unload icon
-- confirm `SILAGE_ADDITIVE` and `MOLASSES` unload through pallet/container handling at the dock
-- confirm no unsupported-unloading-station warning appears for `MOLASSES` or `SILAGE_ADDITIVE`
-- confirm dispatcher outputs can be set to distributing
-- confirm distributed supplies feed the Dry Fuel Processor, Fermentation Vessel, and biomass-intake additive routes
+- confirm core FS25_BgaExtensions loads as version `0.2.20.0`
+- confirm `GBW Compost Bay` appears under `GBW Compat` when the Orchards/Greenhouses compat add-on is enabled
+- confirm the compost silo model and store icon load from `FS25_orchardsAndGreenhouses_crossplay`
+- confirm `ORGANICWASTE` can be unloaded into the bay
+- confirm one ordinary compostable material, such as `STRAW` or `MANURE`, can be unloaded into the bay
+- confirm the bay behaves like a composting bunker and produces `COMPOST`
+- confirm `GBW Organic Residue Prep` still works unchanged
 - confirm no GBW-owned warnings or errors appear in the FS25 log
 
-The user reported `v0.2.18.0` testing complete before the Process Supply Hub slice. A follow-up log scan showed no GBW-owned warnings or errors; observed errors and warnings were external to GBW.
+The user reported `v0.2.19.4` testing complete before the Compost Bay slice. Previous Process Supply Hub and Process Pallet Dock behavior is accepted unless a new log line says otherwise.
 
 ## User Test Confirmation
 

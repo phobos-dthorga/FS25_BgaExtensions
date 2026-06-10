@@ -44,7 +44,7 @@ These fillTypes or process outputs were found in the current local stack and are
 | `HAY_PELLETS` | Straw Harvest runtime dependency | Dry combustion fuel and assisted BGA substrate | Verified through save data and Straw Harvest hay pellet pallets. |
 | `MOLASSES` | Straw Harvest runtime dependency | Pellet manufacture input | Keep in Dry Fuel Processor, not Fermentation Vessel, to avoid UI clutter. |
 | `WOODCHIPS` | Vanilla sawmills, heating plants, many forestry mods | Combustion fuel, not normal anaerobic substrate | Prefer heating. BGA route should be poor or optional. |
-| `COMPOST` | `FS25_orchardsAndGreenhouses_crossplay`, `FS25_Nordkirchen_x4`, `FS25_The_Mechet` | Greenhouse/fertilizer/organic residual loop | Implemented as an optional output in the Orchards/Greenhouses add-on. Do not define casually. |
+| `COMPOST` | `FS25_orchardsAndGreenhouses_crossplay`, `FS25_Nordkirchen_x4`, `FS25_The_Mechet` | Greenhouse/fertilizer/organic residual loop | Implemented as an optional output and compost-bay logistics route in the Orchards/Greenhouses add-on. Do not define casually. |
 | `COMPOST_RAW` | `FS25_The_Mechet` | Map-specific compost precursor | Treat as optional detected input, not a GBW baseline. |
 | `ORGANICWASTE` | `FS25_orchardsAndGreenhouses_crossplay`, `FS25_Potato_Chips_Factory_MF` | Food/produce processing residue | Implemented in the optional Orchards/Greenhouses add-on as wet mash or compost input. |
 | `POTATO_WASHED` | `FS25_potatoWasher` | Wet substrate equivalent to potato | Implemented in the optional `FS25_BgaExtensions_PotatoWasherCompat` add-on. |
@@ -55,9 +55,9 @@ These fillTypes or process outputs were found in the current local stack and are
 
 1. Compost-aware residual loop
 
-`COMPOST` is the best general-purpose by-product candidate because it already appears in your local map/mod stack and is useful around the farm, especially with advanced greenhouses. A future GBW compost module could accept wet organic by-products and output `COMPOST` only when a dependency or map already provides it.
+`COMPOST` is the best general-purpose by-product candidate because it already appears in your local map/mod stack and is useful around the farm, especially with advanced greenhouses. GBW handles this through the optional Orchards/Greenhouses add-on, including Organic Residue Prep for quick routing and a Compost Bay for physical composting/logistics.
 
-Recommended posture: optional compatibility module or guarded recipes.
+Recommended posture: keep compost provider-specific and logistics-first.
 
 2. Organic waste intake
 
@@ -66,7 +66,7 @@ Recommended posture: optional compatibility module or guarded recipes.
 Recommended routes:
 
 - `ORGANICWASTE` -> `GBW_RESIDUE_MASH` for BGA co-digestion
-- `ORGANICWASTE` -> `COMPOST` when `COMPOST` exists
+- `ORGANICWASTE` -> `COMPOST` when `COMPOST` exists, preferably through the Compost Bay when a physical bunker workflow is desired
 
 3. Dry fuel route
 
@@ -113,7 +113,7 @@ Until a future explicit decision changes this:
 
 ## Recommended Priority Order
 
-1. Monitor `ORGANICWASTE` and `COMPOST` runtime behavior through the optional Orchards/Greenhouses compatibility add-on.
+1. Monitor `ORGANICWASTE` and `COMPOST` runtime behavior through Organic Residue Prep and GBW Compost Bay in the optional Orchards/Greenhouses compatibility add-on.
 2. Consider a separate Potato Chips organic-waste add-on only if that provider is commonly used and its fillType behavior matches.
 3. Monitor `POTATO_WASHED` runtime behavior through the optional Potato Washer compatibility add-on.
 4. Add Rice Packaging residue support for `RICE_HUSK`.

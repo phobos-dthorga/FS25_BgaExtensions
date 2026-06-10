@@ -37,6 +37,8 @@ Starting with `v0.2.11.0`, the optional Potato Washer compatibility add-on uses 
 
 Starting with `v0.2.12.0`, the optional Orchards/Greenhouses compatibility add-on uses the same small PlanET bunker model for organic residue preparation. This is acceptable because organic waste mashing and compost routing are active material-handling processes.
 
+Starting with `v0.2.20.0`, the same add-on adds `placeables/gbw/compostBay.xml`, which references the Orchards/Greenhouses compost silo model and store icon. This avoids using another PlanET bunker for compost. The visual language should read as a physical composting bay or heap, not as BGA machinery.
+
 Starting with `v0.2.16.0`, mash fermentation moves from Wet Substrate Prep into `placeables/gbw/planetFermentationVessel.xml`, which references PlanET's `PlanET_Fermenter100.i3d` model and store icon from the required PlanET Modular BGA dependency.
 
 This is a better visual fit because the process is no longer framed as a bunker mixer magically turning mash into downstream BGA substrate. The tank reads as fermentation or digestion equipment, which matches the biological step.
@@ -63,6 +65,8 @@ PlanET terms used in source names:
 
 Do not copy PlanET model, texture, or store-icon binary files into GBW unless clear license permission is recorded. Reference them through `$moddir$FS25_PlanET_BGA_Modular/...` while the PlanET dependency is declared. Do not use a GBW wrapper I3D around remote PlanET shape resources unless a future isolated test proves that pattern renders correctly.
 
+The same dependency-reference rule applies to Orchards/Greenhouses assets. Do not copy the compost silo model, shape file, or store icon into GBW while `FS25_orchardsAndGreenhouses_crossplay` is a declared dependency.
+
 ## Current Placeable Model Fit
 
 | Store item | Model | Current fit |
@@ -73,6 +77,7 @@ Do not copy PlanET model, texture, or store-icon binary files into GBW unless cl
 | Process Pallet Dock | `sellingStationProducts.i3d` | Plain but reliable pallet/container supply point for `SILAGE_ADDITIVE` and `MOLASSES`; includes a minimal loading station because FS25 requires an output mechanism for dispatcher productions. |
 | Washed Potato Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit. |
 | Organic Residue Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active residue preparation fit. |
+| Compost Bay add-on | Orchards/Greenhouses `compostSilo.i3d` | Good physical composting/logistics fit; avoids another generic PlanET bunker. |
 | Dry Fuel Processor | `PlanET_Bunker_Klein.i3d` | Acceptable active dry-material processing fit. |
 | Medium Dry Fuel Yard | `PlanET_Bunker_Mittel.i3d` | Acceptable passive bunker storage. |
 | Large Dry Fuel Yard | `PlanET_Bunker_Gross.i3d` | Acceptable passive bunker storage. |

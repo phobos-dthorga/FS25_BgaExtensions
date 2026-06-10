@@ -11,7 +11,7 @@ Optional compatibility packages are active:
 | Package | Provider dependency | Route |
 | --- | --- | --- |
 | `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_potatoWasher` | `POTATO_WASHED` -> `GBW_ROOT_MASH` |
-| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` -> `GBW_RESIDUE_MASH` or `COMPOST` |
+| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` -> `GBW_RESIDUE_MASH` or `COMPOST`, plus GBW Compost Bay logistics |
 
 `POTATO_WASHED` still must not be referenced by the core mod. It is safe only inside the add-on because that add-on declares `FS25_potatoWasher` as a hard dependency.
 
@@ -60,7 +60,7 @@ Current balance matches the normal potato wet-mash route. Washing already has it
 | Candidate | Intended route | Notes |
 | --- | --- | --- |
 | `ORGANICWASTE` | Wet substrate or compost route | Implemented in `FS25_BgaExtensions_OrchardsGreenhousesCompat`, which requires `FS25_orchardsAndGreenhouses_crossplay`. |
-| `COMPOST` | Waste substrate or farm loop | Implemented as an output in `FS25_BgaExtensions_OrchardsGreenhousesCompat`; keep broader compost routes provider-specific. |
+| `COMPOST` | Waste substrate or farm loop | Implemented as an output and compost-bay workflow in `FS25_BgaExtensions_OrchardsGreenhousesCompat`; keep broader compost routes provider-specific. |
 | `RICE_HUSK` | Low-value fibrous residue | Emergency route only. Better as cleanup gameplay than premium energy. |
 
 ## Definition Of Done

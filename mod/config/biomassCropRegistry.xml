@@ -15,7 +15,6 @@
         <crop id="starchy_roots" fillTypes="POTATO POTATO_WASHED SWEETPOTATO" pathway="wetSubstrate" source="mixed"/>
         <crop id="root_vegetables" fillTypes="BEETROOT CARROT PARSNIP ONION" pathway="wetSubstrate" source="mixed"/>
         <crop id="sugarcane" fillTypes="SUGARCANE" pathway="wetSubstrate" source="baseGame"/>
-        <crop id="compost_organic_residuals" fillTypes="COMPOST COMPOST_RAW ORGANICWASTE" pathway="wasteSubstrate" source="commonMap"/>
     </tier>
 
     <tier id="good" bgaValue="0.45 0.75">
@@ -44,11 +43,9 @@
 
     <wasteMaterials>
         <!-- Prefer existing fillTypes. These are routing hints, not new fillType declarations. -->
-        <waste id="food_rejects" preferredFillType="COMPOST" fallback="directOriginalCrop" aliases="COMPOST_RAW ORGANICWASTE" pathway="wasteSubstrate"/>
         <waste id="beet_vegetable_trimmings" preferredFillType="GBW_ROOT_MASH" fallback="directOriginalCrop" pathway="wetSubstrate"/>
         <waste id="grain_screenings" preferredFillType="CHAFF" fallback="directOriginalCrop" pathway="grainMashSubstrate"/>
         <waste id="forage_sweepings" preferredFillType="GRASS_WINDROW" fallback="CHAFF" pathway="windrowToSilage"/>
-        <waste id="fruit_pomace" preferredFillType="COMPOST" fallback="directOriginalCrop" aliases="COMPOST_RAW ORGANICWASTE" pathway="wasteSubstrate"/>
         <waste id="rice_husk" preferredFillType="RICE_HUSK" fallback="STRAW" pathway="pretreatedDrySubstrate"/>
         <waste id="woody_contamination" preferredFillType="WOODCHIPS" fallback="exclude" pathway="combustionFuelStorage"/>
         <waste id="bga_residue" preferredFillType="DIGESTATE" fallback="none" pathway="outputOnly"/>

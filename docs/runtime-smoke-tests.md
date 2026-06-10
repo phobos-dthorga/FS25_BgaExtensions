@@ -150,6 +150,7 @@ Only run these when the matching optional add-on and provider mod are installed.
 | Potato Washer Compat | Enable `FS25_BgaExtensions_PotatoWasherCompat` with `FS25_potatoWasher`, buy GBW Washed Potato Prep, unload `POTATO_WASHED`, and start washed potato mash. | `GBW_ROOT_MASH` is produced and can be loaded out for the normal Fermentation Vessel route. |
 | Orchards/Greenhouses Compat | Enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` with `FS25_orchardsAndGreenhouses_crossplay`, buy GBW Organic Residue Prep, unload `ORGANICWASTE`, and start organic waste mash. | `GBW_RESIDUE_MASH` is produced and can be loaded out for the normal Fermentation Vessel route. |
 | Orchards/Greenhouses Compat | Start organic waste composting. | `COMPOST` is produced and can be loaded out for the provider's normal compost/farm loop. |
+| Orchards/Greenhouses Compat | Buy GBW Compost Bay, unload `ORGANICWASTE`, then unload one ordinary compostable material such as `STRAW` or `MANURE`. | The bay uses the Orchards/Greenhouses compost-silo model, behaves like a composting bunker, and produces `COMPOST` without GBW-owned log warnings. |
 
 ## Data Pack API Checks
 
