@@ -17,7 +17,7 @@ CI now checks the common XML mistakes that previously required extra in-game smo
 - production inputs are covered by unload, bale, or pallet triggers
 - production outputs are covered by load triggers
 - same-fillType dispatcher recipes are allowed only for the Process Supply Hub
-- the Process Supply Hub uses water-marker and pallet-trigger handling rather than mixer unloading
+- the Process Supply Hub uses water-marker and dedicated pallet-trigger handling rather than mixer or bale-trigger unloading
 - core fermentation-priority balance rules
 - package version alignment and SHA-256 generation
 
@@ -103,7 +103,7 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 | Route | Minimum check | Expected result |
 | --- | --- | --- |
 | Water unload | Unload `WATER` from a water carrier at the water marker. | The marker and trigger are outside the object and water enters storage. |
-| Pallet unload | Unload `SILAGE_ADDITIVE` and `MOLASSES` through pallet/container handling. | Both supplies enter storage without using the old mixer unload trigger. |
+| Pallet unload | Place a fresh hub, then unload `SILAGE_ADDITIVE` and `MOLASSES` through pallet/container handling at the pallet marker. | The marker and trigger are outside the object, both supplies enter storage, no unsupported-unloading-station warning appears, and the old mixer/bale trigger nodes are not used. |
 | Water dispatch | Start process water dispatch and set the output to distributing. | Water can supply the Dry Fuel Processor and Fermentation Vessel without a new GBW fillType. |
 | Additive dispatch | Start silage additive dispatch and set the output to distributing. | Additive can supply biomass-intake additive routes and Fermentation Vessel additive routes. |
 | Molasses dispatch | Start molasses dispatch and set the output to distributing. | Molasses can supply Dry Fuel Processor pelletizing routes. |

@@ -56,11 +56,14 @@ Trigger names are not just labels. Their node placement and trigger type need to
 
 - Water logistics may need the water marker, `$data/shared/assets/marker/markerIconWater.i3d`, and a water-specific unload trigger positioned for tankers or water carriers.
 - Pallet, container, and big-bag materials should use `palletTrigger` support when the player is expected to deliver them as pallets or containers.
+- Production-point inputs may still need a matching `unloadTrigger` entry even when delivered by pallet. Greenhouses use both: an unload root for the material and a pallet trigger for the physical pallet/container handoff.
+- A pallet marker can be separate from the actual `palletTrigger` shape. This is useful when the trigger volume should sit at pallet height, while the marker should be easy to see at ground level.
+- Bale trigger nodes are not a safe substitute for pallet handling. They can have the wrong collision mask, size, or visual placement even if the XML shape looks similar.
 - Bunker or mixer unload trigger nodes can be visually wrong on a tank/storage model, even when the XML validates.
 
 ### Design Implication For This Mod
 
-When adding a new placeable that accepts supplies, inspect a working vanilla, DLC, or local-mod example for that material class before selecting trigger nodes. For the Process Supply Hub, `WATER` should use a water-marked unload path, while `SILAGE_ADDITIVE` and `MOLASSES` should remain pallet/container-friendly through a pallet trigger.
+When adding a new placeable that accepts supplies, inspect a working vanilla, DLC, or local-mod example for that material class before selecting trigger nodes. For the Process Supply Hub, `WATER` should use a water-marked unload path, while `SILAGE_ADDITIVE` and `MOLASSES` should have both an unload-root entry and a dedicated pallet trigger/marker.
 
 ## Open Verification Tasks
 

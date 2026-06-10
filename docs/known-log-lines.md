@@ -26,17 +26,22 @@ The first entries in this table are pre-GBW historical lines from versions befor
 | `storage fillType 'WOODCHIPS' not used as a production input or output` | GBW warning found in `v0.2.3.0`. | Fixed in `v0.2.3.1` by removing storage-only wood chip handling from production-point XML. `v0.2.5.0` added dry fuel yard silos; `v0.2.8.0` keeps only medium and large variants in the shop. |
 | Legacy wet-mash HUD PNG raw-format warning and CPU mip generation | GBW warning found in `v0.2.6.0`. | Fixed in `v0.2.7.1` by replacing runtime PNG HUD references with DDS textures. |
 | `hud_fill_gbw*Mash.dds raw format` | GBW warning found in `v0.2.15.0`; all four mash HUD icons loaded as uncompressed DDS and generated repeated performance warnings. | Fixed in `v0.2.15.1` by rebuilding mash HUD icons as PlanET-style DXT5 DDS files and changing validation to reject uncompressed HUD DDS files. |
-| Process Supply Hub unload trigger was too small, too low, and inside the object | Runtime visual/interaction issue reported in `v0.2.19.0`. | Fixed in `v0.2.19.1` by replacing mixer unloading with a water-marked unload trigger and a pallet trigger. |
+| Root `icon.dds raw format` warnings for GBW packages | GBW performance warning found during `v0.2.19.1` log triage. | Fixed in `v0.2.19.2` by rebuilding core, add-on, and data-pack-template mod icons as DXT5 DDS files and extending validation to reject raw `modDesc.xml` icons. |
+| Process Supply Hub unload trigger was too small, too low, and inside the object | Runtime visual/interaction issue reported in `v0.2.19.0`. | Water side fixed in `v0.2.19.1` by replacing mixer unloading with a water-marked unload trigger. |
+| Process Supply Hub pallet trigger still used a poor visual/interaction point | Runtime visual/interaction issue reported in `v0.2.19.1`. | Fixed in `v0.2.19.2` by moving to a GBW wrapper I3D with a dedicated pallet trigger shape and separate marker. |
+| `Input filltype 'MOLASSES' is not supported by unloading station` and same for `SILAGE_ADDITIVE` | GBW warning found in `v0.2.19.1` log triage. | Fixed in `v0.2.19.2` by pairing the pallet trigger with an exact-fill unload root for pallet-supplied materials. |
 
 ## Pending Test Targets
 
-For `v0.2.19.1`, smoke-test the Process Supply Hub trigger hotfix:
+For `v0.2.19.2`, smoke-test the Process Supply Hub pallet trigger hotfix:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.19.1`
+- confirm core FS25_BgaExtensions loads as version `0.2.19.2`
 - confirm `GBW Process Supply Hub` appears under `GBW BGA`
 - confirm the water unload marker is visible and accessible outside the object
 - confirm `WATER` unloads from a water carrier
+- confirm the pallet unload marker is visible and accessible outside the object on a freshly placed hub
 - confirm `SILAGE_ADDITIVE` and `MOLASSES` unload through pallet/container handling
+- confirm no unsupported-unloading-station warning appears for `MOLASSES` or `SILAGE_ADDITIVE`
 - confirm `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES` can be loaded
 - confirm dispatcher outputs can be set to distributing
 - confirm distributed supplies feed the Dry Fuel Processor, Fermentation Vessel, and biomass-intake additive routes

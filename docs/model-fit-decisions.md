@@ -45,7 +45,11 @@ Starting with `v0.2.19.0`, process supply logistics move into `placeables/gbw/pl
 
 This is a good fit because the building already reads as a liquid or process-material storage point. GBW uses it as a production-style distributor for `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES` so those materials can be routed automatically to nearby process buildings.
 
-`v0.2.19.0` reused the model's mixer unload trigger for all three materials. In-game testing showed that trigger was too small, too low, and visually inside the object. Starting with `v0.2.19.1`, the hub uses a water-marked liquid unload path for `WATER` and a separate pallet trigger for `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES`, following the pattern observed in the Orchards/Greenhouses advanced greenhouse XML.
+`v0.2.19.0` reused the model's mixer unload trigger for all three materials. In-game testing showed that trigger was too small, too low, and visually inside the object. Starting with `v0.2.19.1`, the hub uses a water-marked liquid unload path for `WATER`, following the pattern observed in the Orchards/Greenhouses advanced greenhouse XML.
+
+The first pallet implementation still reused PlanET's front bale trigger. In-game testing showed that this was still a poor fit for pallet/container delivery because the marker and usable trigger area did not present as a clear external service point. Log triage also showed that FS25 did not count the pallet route as full unloading-station coverage for `MOLASSES` and `SILAGE_ADDITIVE`. Starting with `v0.2.19.2`, the hub uses a small GBW wrapper I3D that keeps the PlanET slurry-storage scene and shape resources by dependency reference, but adds a dedicated pallet collision trigger, exact-fill unload root, and separate unload marker in front of the model.
+
+Do not use bale trigger nodes as a stand-in for pallet or container logistics. Pallet routes need a pallet-capable trigger shape and a separate, visible marker transform when the model does not already provide a suitable service node.
 
 PlanET terms used in source names:
 
@@ -57,7 +61,7 @@ PlanET terms used in source names:
 - `Fackel`: flare.
 - `Strom Verteiler`: power distributor.
 
-Do not copy PlanET model, texture, or store-icon files into GBW unless clear license permission is recorded. Reference them through `$moddir$FS25_PlanET_BGA_Modular/...` while the PlanET dependency is declared.
+Do not copy PlanET model, texture, or store-icon binary files into GBW unless clear license permission is recorded. Reference them through `$moddir$FS25_PlanET_BGA_Modular/...` while the PlanET dependency is declared. A GBW wrapper I3D may add project-owned trigger nodes when the dependency model's built-in trigger nodes are not suitable, provided the wrapper continues to reference PlanET resources rather than vendoring their binary assets.
 
 ## Current Placeable Model Fit
 
@@ -65,7 +69,7 @@ Do not copy PlanET model, texture, or store-icon files into GBW unless clear lic
 | --- | --- | --- |
 | Wet Substrate Prep | `PlanET_Bunker_Klein.i3d` | Good active wet-material mixing fit. |
 | Fermentation Vessel | `PlanET_Fermenter100.i3d` | Good fermentation-tank fit for mash fermentation. |
-| Process Supply Hub | `PlanET_GuelleLager.i3d` | Good process-supply storage and distribution fit; requires water/pallet trigger handling rather than mixer unloading. |
+| Process Supply Hub | GBW wrapper around `PlanET_GuelleLager.i3d` resources | Good process-supply storage and distribution fit; requires water/pallet trigger handling rather than mixer or bale-trigger unloading. |
 | Washed Potato Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit. |
 | Organic Residue Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active residue preparation fit. |
 | Dry Fuel Processor | `PlanET_Bunker_Klein.i3d` | Acceptable active dry-material processing fit. |

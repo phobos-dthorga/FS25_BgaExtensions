@@ -225,14 +225,14 @@ def local_filltypes(mod_root: Path, validation: Validation) -> set[str]:
     return result
 
 
-def validate_dds_hud_icon(path: Path, label: str, validation: Validation) -> None:
+def validate_dds_icon(path: Path, label: str, validation: Validation, icon_kind: str) -> None:
     if not path.is_file():
-        validation.error(f"FillType HUD icon is missing: {label}")
+        validation.error(f"{icon_kind} icon is missing: {label}")
         return
 
     data = path.read_bytes()
     if len(data) < 128 or data[:4] != b"DDS ":
-        validation.error(f"FillType HUD icon must be a DDS file: {label}")
+        validation.error(f"{icon_kind} icon must be a DDS file: {label}")
         return
 
     header_size, flags, height, width, linear_size, _depth, mipmaps = struct.unpack_from("<7I", data, 4)
@@ -243,23 +243,27 @@ def validate_dds_hud_icon(path: Path, label: str, validation: Validation) -> Non
     masks = struct.unpack_from("<4I", data, 92)
 
     if header_size != 124 or pixel_format_size != 32:
-        validation.error(f"FillType HUD icon has an invalid DDS header: {label}")
+        validation.error(f"{icon_kind} icon has an invalid DDS header: {label}")
     if width != 256 or height != 256:
-        validation.error(f"FillType HUD icon must be 256x256, found {width}x{height}: {label}")
+        validation.error(f"{icon_kind} icon must be 256x256, found {width}x{height}: {label}")
     if fourcc != b"DXT5" or pixel_flags != 0x4 or rgb_bits != 0:
-        validation.error(f"FillType HUD icon must be DXT5-compressed DDS: {label}")
+        validation.error(f"{icon_kind} icon must be DXT5-compressed DDS: {label}")
     if masks != (0, 0, 0, 0):
-        validation.error(f"FillType HUD icon must use DXT5 color masks: {label}")
+        validation.error(f"{icon_kind} icon must use DXT5 color masks: {label}")
     if mipmaps != 1:
-        validation.error(f"FillType HUD icon must match FS25 HUD style with one DDS image level, found {mipmaps}: {label}")
+        validation.error(f"{icon_kind} icon must match FS25 style with one DDS image level, found {mipmaps}: {label}")
 
     expected_linear_size = ((width + 3) // 4) * ((height + 3) // 4) * 16
     if linear_size != expected_linear_size:
-        validation.error(f"FillType HUD icon has an unexpected DXT5 linear size: {label}")
+        validation.error(f"{icon_kind} icon has an unexpected DXT5 linear size: {label}")
 
     expected_size = 128 + expected_linear_size
     if len(data) != expected_size:
-        validation.error(f"FillType HUD icon DDS byte size is unexpected: {label}")
+        validation.error(f"{icon_kind} icon DDS byte size is unexpected: {label}")
+
+
+def validate_dds_hud_icon(path: Path, label: str, validation: Validation) -> None:
+    validate_dds_icon(path, label, validation, "FillType HUD")
 
 
 def validate_filltype_icons(mod_root: Path, repo_root: Path, validation: Validation) -> None:
@@ -294,6 +298,8 @@ def validate_moddesc_references(mod_root: Path, root: ET.Element, validation: Va
         validation.error("modDesc.xml is missing required iconFilename")
     elif not (mod_root / icon_filename).is_file():
         validation.error(f"modDesc.xml references missing iconFilename: {icon_filename}")
+    else:
+        validate_dds_icon(mod_root / icon_filename, f"{mod_root.name}: {icon_filename}", validation, "modDesc")
 
     for node in root.findall("./fillTypes"):
         filename = node.get("filename", "").strip()
@@ -450,6 +456,14 @@ def load_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
 def i3d_mapping_ids(tree: ET.ElementTree) -> set[str]:
     return {
         node.get("id", "")
+        for node in tree.findall(".//i3dMapping")
+        if node.get("id")
+    }
+
+
+def i3d_mapping_nodes(tree: ET.ElementTree) -> dict[str, str]:
+    return {
+        node.get("id", ""): node.get("node", "")
         for node in tree.findall(".//i3dMapping")
         if node.get("id")
     }
@@ -809,6 +823,7 @@ def validate_identity_dispatcher_rules(
 
 def validate_process_supply_hub_trigger_rules(
     path: Path,
+    mod_root: Path,
     repo_root: Path,
     tree: ET.ElementTree,
     validation: Validation,
@@ -818,10 +833,13 @@ def validate_process_supply_hub_trigger_rules(
 
     relative_path = path.relative_to(repo_root)
     expected_supplies = {"MOLASSES", "SILAGE_ADDITIVE", "WATER"}
-    mapping_ids = i3d_mapping_ids(tree)
+    mapping_nodes = i3d_mapping_nodes(tree)
+    mapping_ids = set(mapping_nodes)
 
     required_mappings = {
+        "palletSupplyUnloadTrigger",
         "palletTrigger",
+        "palletTriggerMarker",
         "unloadTriggerWater",
         "unloadTriggerWaterAiNode",
         "unloadTriggerWaterMarker",
@@ -833,13 +851,37 @@ def validate_process_supply_hub_trigger_rules(
     for mapping_id in sorted(forbidden_mappings.intersection(mapping_ids)):
         validation.error(f"Process Supply Hub must not use mixer unload mapping '{mapping_id}' in {relative_path}")
 
+    expected_mapping_nodes = {
+        "palletSupplyUnloadTrigger": "0>11|5|2",
+        "palletTrigger": "0>11|5|0",
+        "palletTriggerMarker": "0>11|5|1",
+        "unloadTriggerWater": "0>11|1|0",
+        "unloadTriggerWaterAiNode": "0>11|1|2",
+        "unloadTriggerWaterMarker": "0>11|1|1",
+    }
+    for mapping_id, expected_node in expected_mapping_nodes.items():
+        actual_node = mapping_nodes.get(mapping_id)
+        if actual_node and actual_node != expected_node:
+            validation.error(
+                f"Process Supply Hub i3d mapping '{mapping_id}' must point to {expected_node}, "
+                f"not {actual_node}, in {relative_path}"
+            )
+
+    base_filename = (tree.findtext("./base/filename") or "").strip()
+    if base_filename != "placeables/gbw/planetProcessSupplyHub.i3d":
+        validation.error(
+            f"Process Supply Hub must use the GBW wrapper i3d, not '{base_filename}', in {relative_path}"
+        )
+    else:
+        validate_process_supply_hub_i3d(mod_root / base_filename, repo_root, validation)
+
     water_marker = None
     pallet_marker = None
     for marker in tree.findall("./triggerMarkers/triggerMarker"):
         node = marker.get("node", "")
         if node == "unloadTriggerWaterMarker":
             water_marker = marker
-        elif node == "palletTrigger":
+        elif node == "palletTriggerMarker":
             pallet_marker = marker
 
     if water_marker is None:
@@ -857,6 +899,8 @@ def validate_process_supply_hub_trigger_rules(
         marker_file = pallet_marker.get("filename", "")
         if marker_file != "$data/shared/assets/marker/markerIconUnload.i3d":
             validation.error(f"Process Supply Hub pallet marker must use markerIconUnload.i3d in {relative_path}")
+        if pallet_marker.get("adjustToGround", "") != "true":
+            validation.error(f"Process Supply Hub pallet marker must adjust to ground in {relative_path}")
 
     water_unloads = [
         node
@@ -876,6 +920,21 @@ def validate_process_supply_hub_trigger_rules(
         if node.get("exactFillRootNode") == "unloadTriggerMixer":
             validation.error(f"Process Supply Hub must not use the mixer unload trigger in {relative_path}")
 
+    pallet_unloads = [
+        node
+        for node in tree.findall(".//sellingStation/unloadTrigger")
+        if node.get("exactFillRootNode") == "palletSupplyUnloadTrigger"
+    ]
+    if len(pallet_unloads) != 1:
+        validation.error(f"Process Supply Hub must have exactly one pallet supply unloadTrigger in {relative_path}")
+    else:
+        pallet_unload_filltypes = set(pallet_unloads[0].get("fillTypes", "").split())
+        if pallet_unload_filltypes != {"MOLASSES", "SILAGE_ADDITIVE"}:
+            validation.error(
+                f"Process Supply Hub pallet supply unloadTrigger must accept MOLASSES and "
+                f"SILAGE_ADDITIVE in {relative_path}"
+            )
+
     pallet_triggers = [
         node
         for node in tree.findall(".//sellingStation/palletTrigger")
@@ -889,6 +948,68 @@ def validate_process_supply_hub_trigger_rules(
             validation.error(
                 f"Process Supply Hub palletTrigger must accept "
                 f"{', '.join(sorted(expected_supplies))} in {relative_path}"
+            )
+
+
+def validate_process_supply_hub_i3d(
+    path: Path,
+    repo_root: Path,
+    validation: Validation,
+) -> None:
+    relative_path = path.relative_to(repo_root)
+    tree = parse_xml_file(path, validation)
+    if tree is None:
+        return
+
+    shapes = tree.find("./Shapes")
+    expected_shapes = "$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_GuelleLager.i3d.shapes"
+    if shapes is None or shapes.get("externalShapesFile", "") != expected_shapes:
+        validation.error(f"Process Supply Hub wrapper must reference PlanET GuelleLager shapes in {relative_path}")
+
+    pallet_shape = tree.find(".//Shape[@name='gbwPalletTrigger']")
+    if pallet_shape is None:
+        validation.error(f"Process Supply Hub wrapper is missing gbwPalletTrigger in {relative_path}")
+    else:
+        if pallet_shape.get("trigger", "") != "true":
+            validation.error(f"gbwPalletTrigger must be a trigger in {relative_path}")
+        if pallet_shape.get("collisionFilterGroup", "") != "0x20000000":
+            validation.error(f"gbwPalletTrigger must use pallet collision group 0x20000000 in {relative_path}")
+        if pallet_shape.get("collisionFilterMask", "") != "0x10000":
+            validation.error(f"gbwPalletTrigger must use pallet collision mask 0x10000 in {relative_path}")
+        translation = [float(value) for value in pallet_shape.get("translation", "0 0 0").split()]
+        if len(translation) != 3 or translation[1] < 1.0 or translation[2] > -3.0:
+            validation.error(
+                f"gbwPalletTrigger must be raised and placed in front of the hub in {relative_path}"
+            )
+
+    pallet_marker = tree.find(".//TransformGroup[@name='gbwPalletTriggerMarker']")
+    if pallet_marker is None:
+        validation.error(f"Process Supply Hub wrapper is missing gbwPalletTriggerMarker in {relative_path}")
+    else:
+        translation = [float(value) for value in pallet_marker.get("translation", "0 0 0").split()]
+        if len(translation) != 3 or translation[2] > -3.0:
+            validation.error(
+                f"gbwPalletTriggerMarker must be placed in front of the hub in {relative_path}"
+            )
+
+    unload_shape = tree.find(".//Shape[@name='gbwPalletSupplyUnloadTrigger']")
+    if unload_shape is None:
+        validation.error(f"Process Supply Hub wrapper is missing gbwPalletSupplyUnloadTrigger in {relative_path}")
+    else:
+        if unload_shape.get("trigger", "") != "true":
+            validation.error(f"gbwPalletSupplyUnloadTrigger must be a trigger in {relative_path}")
+        if unload_shape.get("collisionFilterGroup", "") != "0x40000000":
+            validation.error(
+                f"gbwPalletSupplyUnloadTrigger must use exact-fill collision group 0x40000000 in {relative_path}"
+            )
+        if unload_shape.get("collisionFilterMask", "") != "0x20000000":
+            validation.error(
+                f"gbwPalletSupplyUnloadTrigger must use exact-fill collision mask 0x20000000 in {relative_path}"
+            )
+        translation = [float(value) for value in unload_shape.get("translation", "0 0 0").split()]
+        if len(translation) != 3 or translation[2] > -3.0:
+            validation.error(
+                f"gbwPalletSupplyUnloadTrigger must be placed in front of the hub in {relative_path}"
             )
 
 
@@ -1087,7 +1208,7 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
 
         if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
             validate_identity_dispatcher_rules(path, repo_root, tree, validation)
-            validate_process_supply_hub_trigger_rules(path, repo_root, tree, validation)
+            validate_process_supply_hub_trigger_rules(path, mod_root, repo_root, tree, validation)
             validate_production_trigger_coverage(path, repo_root, tree, validation)
             validate_fermentation_priority_rules(path, repo_root, tree, validation)
 

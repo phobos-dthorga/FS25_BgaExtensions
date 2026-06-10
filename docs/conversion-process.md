@@ -164,7 +164,9 @@ Current Process Supply Hub dispatcher recipes:
 - `SILAGE_ADDITIVE` -> `SILAGE_ADDITIVE`
 - `MOLASSES` -> `MOLASSES`
 
-The Process Supply Hub uses PlanET's `PlanET_GuelleLager.i3d` model by dependency reference. It is a production-style distribution point rather than a passive silo because FS25 production distribution acts on production outputs. These identity dispatcher recipes intentionally use existing vanilla or dependency fillTypes so GBW does not spend custom fillTypes on internal supply buffers.
+The Process Supply Hub uses a small GBW wrapper around PlanET's `PlanET_GuelleLager.i3d` resources by dependency reference. It is a production-style distribution point rather than a passive silo because FS25 production distribution acts on production outputs. These identity dispatcher recipes intentionally use existing vanilla or dependency fillTypes so GBW does not spend custom fillTypes on internal supply buffers.
+
+The wrapper exists only to add a pallet-capable unloading trigger and visible marker in a model-appropriate location. Do not use it as permission to vendor PlanET model, texture, shape, or store-icon binaries into GBW.
 
 If FS25 rejects or mishandles the same-fillType dispatcher pattern, stop and revisit the design before adding GBW-owned internal buffer fillTypes. That would change the fillType budget and should not happen as an automatic hotfix.
 
