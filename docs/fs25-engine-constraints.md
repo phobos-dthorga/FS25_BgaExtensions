@@ -60,10 +60,13 @@ Trigger names are not just labels. Their node placement and trigger type need to
 - A pallet marker can be separate from the actual `palletTrigger` shape. This is useful when the trigger volume should sit at pallet height, while the marker should be easy to see at ground level.
 - Bale trigger nodes are not a safe substitute for pallet handling. They can have the wrong collision mask, size, or visual placement even if the XML shape looks similar.
 - Bunker or mixer unload trigger nodes can be visually wrong on a tank/storage model, even when the XML validates.
+- When a placeable's base I3D, trigger node mapping, or trigger geometry changes, test with a freshly placed instance. Existing savegame instances may keep old placement state or make it harder to tell whether the new scene nodes are being used.
 
 ### Design Implication For This Mod
 
 When adding a new placeable that accepts supplies, inspect a working vanilla, DLC, or local-mod example for that material class before selecting trigger nodes. For the Process Supply Hub, `WATER` should use a water-marked unload path, while `SILAGE_ADDITIVE` and `MOLASSES` should have both an unload-root entry and a dedicated pallet trigger/marker.
+
+The `v0.2.19.1` test proved that a visible pallet marker plus `palletTrigger` entry was not enough for the Process Supply Hub: FS25 still logged unsupported-unloading-station warnings for pallet-supplied production inputs. The `v0.2.19.2` fix pairs the physical pallet trigger with an exact-fill unload root for `SILAGE_ADDITIVE` and `MOLASSES`.
 
 ## Open Verification Tasks
 

@@ -24,9 +24,11 @@
 - GBW placeables are grouped into custom construction tabs inside vanilla FS25 categories.
 - Intake and dry fuel yard storage capacities were doubled as a logistics-quality pass without changing recipe yields.
 - Runtime HUD textures use PlanET-style DXT5 DDS after `v0.2.15.0` proved uncompressed DDS still triggers FS25 raw-format warnings.
+- Root `modDesc.xml` icons also use DXT5 DDS after `v0.2.19.1` log triage proved raw root icons create GBW-owned texture warnings.
 - Wet/root/produce processing is split into Wet Substrate Prep and four GBW mash families so biomass intakes remain focused and under the recipe-count soft target.
 - Pelletizing is split into Dry Fuel Processor so biomass intakes remain BGA-focused and dry fuel yards remain storage-only.
 - Process supplies are handled by a PlanET-style Process Supply Hub using existing `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES` fillTypes instead of adding GBW buffer fillTypes.
+- The Process Supply Hub uses a GBW wrapper I3D around PlanET slurry-storage resources so it can add project-owned trigger geometry without copying PlanET binary assets.
 - Potato Washer compatibility is the first separate add-on package, proving the optional-fillType pattern without weakening core XML.
 - Orchards/Greenhouses compatibility adds organic waste and compost routing as a second provider-specific add-on.
 - The Stage 1 GBW data-pack API validates community route packs and ships a copyable template, but does not inject gameplay recipes until the runtime hook is proven.

@@ -150,6 +150,7 @@ Before first use, verify:
 4. What handling support exists: bulk, liquid, pallet, bale, heap, forage wagon, mixer wagon, shovel/fork, tanker, hayloft, sell point, or production input/output.
 5. Whether it needs runtime detection, a hard dependency, or a GBW-owned fallback.
 6. Whether bales, ground tipping, animal food, forage mixing, or map-owned recipes create load-order or compatibility risk.
+7. For production-point inputs, whether FS25 needs both a material unload root and a physical delivery trigger such as `palletTrigger`; do not assume one implies the other.
 
 Good verification sources include `data/maps/maps_fillTypes.xml`, `data/maps/maps_densityMapHeightTypes.xml`, bale XML, vehicle fillUnits/additives, placeable storage/loading XML, local dependency XML, and observed game-log behavior.
 
@@ -160,6 +161,8 @@ If a fillType is safe only in a narrow context, document that boundary. For exam
 Do not add storage-only materials to production-point storage merely to make a yard buffer. FS25 warns when a production point stores a fillType that is not used as a production input or output.
 
 The `v0.2.3.0` wood chip experiment proved this. `WOODCHIPS` now belongs in the dry fuel yard silo, not inside the PlanET biomass intake production point.
+
+The `v0.2.19.1` Process Supply Hub test also proved that a production input can look visually deliverable while still failing FS25's unloading-station coverage check. Validate trigger coverage statically, then confirm it with the game log after a freshly placed runtime test.
 
 ## Implementation Workflow
 
