@@ -41,6 +41,7 @@ If that pass is clean and CI passed, broader personal testing can wait until the
 - Enable `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, and Straw Harvest.
 - For Potato Washer compatibility tests, also enable `FS25_BgaExtensions_PotatoWasherCompat` and `FS25_potatoWasher`.
 - For Orchards/Greenhouses compatibility tests, also enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` and `FS25_orchardsAndGreenhouses_crossplay`.
+- For data-pack API tests, also enable `FS25_GBWDataPack_Template`.
 - Prefer the same map and mod set for repeated tests so new log lines are easier to compare.
 - Do not test against an important career save until the disposable save is clean.
 
@@ -124,6 +125,17 @@ Only run these when the matching optional add-on and provider mod are installed.
 | Potato Washer Compat | Enable `FS25_BgaExtensions_PotatoWasherCompat` with `FS25_potatoWasher`, buy GBW Washed Potato Prep, unload `POTATO_WASHED`, and start washed potato mash. | `GBW_ROOT_MASH` is produced and can be loaded out for the normal Fermentation Vessel route. |
 | Orchards/Greenhouses Compat | Enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` with `FS25_orchardsAndGreenhouses_crossplay`, buy GBW Organic Residue Prep, unload `ORGANICWASTE`, and start organic waste mash. | `GBW_RESIDUE_MASH` is produced and can be loaded out for the normal Fermentation Vessel route. |
 | Orchards/Greenhouses Compat | Start organic waste composting. | `COMPOST` is produced and can be loaded out for the provider's normal compost/farm loop. |
+
+## Data Pack API Checks
+
+Only run these when testing the Stage 1 data-pack API.
+
+| Route | Minimum check | Expected result |
+| --- | --- | --- |
+| API load | Enable `FS25_GBWDataPack_Template` beside GBW. | The save loads and the template data pack registers. |
+| Known fillType route | Leave the template `GRASS_WINDROW` route enabled. | GBW logs that one active route was prepared. No gameplay recipe should appear yet. |
+| Missing fillType route | Leave the template `GBW_MISSING_EXAMPLE` route enabled. | GBW logs an info-level skip, not a warning or error. |
+| Stage 1 boundary | Open GBW production UIs. | No data-pack recipes are injected in this version. |
 
 ## Log Review
 

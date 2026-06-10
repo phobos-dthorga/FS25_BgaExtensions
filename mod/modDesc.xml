@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>Gekko BioWorks</author>
-    <version>0.2.17.0</version>
+    <version>0.2.18.0</version>
     <title>
         <en>GBW BGA Extensions</en>
     </title>
@@ -9,6 +9,10 @@
         <en>Early staging mod for extending Farming Simulator 25 biogas plant gameplay. Adds Gekko BioWorks PlanET-compatible biomass intakes, wet substrate prep, fermentation, dry fuel processing, and dry fuel yard storage for heat-plant logistics.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
+
+    <extraSourceFiles>
+        <sourceFile filename="scripts/GBWDataPacks.lua"/>
+    </extraSourceFiles>
 
     <l10n>
         <text name="storeItem_gbwPlanetBiomassIntakeSmall">

@@ -116,6 +116,35 @@ OPTIONAL_FILLTYPE_DENYLIST = {
     "RICE_HUSK",
 }
 
+DATA_PACK_API_VERSION = "1"
+DATA_PACK_ROUTE_CAP = 12
+DATA_PACK_TARGET_CAPS = {
+    "biomassIntake": 6,
+    "wetSubstratePrep": 8,
+    "dryFuelProcessor": 6,
+}
+DATA_PACK_TIERS = {
+    "emergency",
+    "exceptional",
+    "excellent",
+    "fair",
+    "good",
+}
+DATA_PACK_TEMPLATE_TARGETS = {
+    "forageSilage": "biomassIntake",
+    "greenMash": "wetSubstratePrep",
+    "hayPelletFuel": "dryFuelProcessor",
+    "residueMash": "wetSubstratePrep",
+    "rootMash": "wetSubstratePrep",
+    "strawPelletFuel": "dryFuelProcessor",
+    "strawPretreatment": "biomassIntake",
+    "sweetMash": "wetSubstratePrep",
+}
+DATA_PACK_ID_RE = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
+DATA_PACK_FILLTYPE_RE = re.compile(r"^[A-Z0-9_]+$")
+DATA_PACK_ROOT_ATTRS = {"apiVersion", "author", "packId", "title"}
+DATA_PACK_ROUTE_ATTRS = {"id", "inputFillType", "target", "template", "tier"}
+
 DEPENDENCY_CONSTRUCTION_TABS = {
     "FS25_BgaExtensions": {
         "gbwBgaCompatibility": "production",
@@ -254,13 +283,20 @@ def validate_filltype_icons(mod_root: Path, repo_root: Path, validation: Validat
 
 def validate_moddesc_references(mod_root: Path, root: ET.Element, validation: Validation) -> None:
     icon_filename = (root.findtext("iconFilename") or "").strip()
-    if icon_filename and not (mod_root / icon_filename).is_file():
+    if not icon_filename:
+        validation.error("modDesc.xml is missing required iconFilename")
+    elif not (mod_root / icon_filename).is_file():
         validation.error(f"modDesc.xml references missing iconFilename: {icon_filename}")
 
     for node in root.findall("./fillTypes"):
         filename = node.get("filename", "").strip()
         if filename and not (mod_root / filename).is_file():
             validation.error(f"modDesc.xml references missing fillTypes file: {filename}")
+
+    for node in root.findall("./extraSourceFiles/sourceFile"):
+        filename = node.get("filename", "").strip()
+        if filename and not (mod_root / filename).is_file():
+            validation.error(f"modDesc.xml references missing sourceFile: {filename}")
 
     for node in root.findall("./storeItems/storeItem"):
         filename = node.get("xmlFilename", "").strip()
@@ -730,6 +766,109 @@ def validate_construction_tabs(
             )
 
 
+def validate_data_pack_file(path: Path, repo_root: Path, validation: Validation) -> None:
+    tree = parse_xml_file(path, validation)
+    if tree is None:
+        return
+
+    root = tree.getroot()
+    relative_path = path.relative_to(repo_root)
+    if root.tag != "gbwDataPack":
+        validation.error(f"Data pack XML root must be gbwDataPack: {relative_path}")
+        return
+
+    for attr in root.attrib:
+        if attr not in DATA_PACK_ROOT_ATTRS:
+            validation.error(f"Unknown gbwDataPack attribute '{attr}' in {relative_path}")
+
+    api_version = (root.get("apiVersion") or "").strip()
+    if api_version != DATA_PACK_API_VERSION:
+        validation.error(
+            f"Data pack apiVersion must be '{DATA_PACK_API_VERSION}', found '{api_version}' in {relative_path}"
+        )
+
+    pack_id = (root.get("packId") or "").strip()
+    if not DATA_PACK_ID_RE.match(pack_id):
+        validation.error(f"Data pack packId must match {DATA_PACK_ID_RE.pattern}: {relative_path}")
+
+    if not (root.get("title") or "").strip():
+        validation.error(f"Data pack title is required: {relative_path}")
+    if not (root.get("author") or "").strip():
+        validation.error(f"Data pack author is required: {relative_path}")
+
+    allowed_children = {"routes"}
+    for child in root:
+        if child.tag not in allowed_children:
+            validation.error(f"Unknown gbwDataPack child '{child.tag}' in {relative_path}")
+
+    routes_node = root.find("./routes")
+    if routes_node is None:
+        validation.error(f"Data pack requires a routes node: {relative_path}")
+        return
+
+    route_ids: set[str] = set()
+    route_count = 0
+    target_counts = {target: 0 for target in DATA_PACK_TARGET_CAPS}
+
+    for child in routes_node:
+        if child.tag != "route":
+            validation.error(f"Unknown routes child '{child.tag}' in {relative_path}")
+            continue
+
+        route_count += 1
+        for attr in child.attrib:
+            if attr not in DATA_PACK_ROUTE_ATTRS:
+                validation.error(f"Unknown data-pack route attribute '{attr}' in {relative_path}")
+
+        route_id = (child.get("id") or "").strip()
+        if not DATA_PACK_ID_RE.match(route_id):
+            validation.error(f"Data-pack route id must match {DATA_PACK_ID_RE.pattern}: {relative_path}")
+        elif route_id in route_ids:
+            validation.error(f"Duplicate data-pack route id '{route_id}' in {relative_path}")
+        else:
+            route_ids.add(route_id)
+
+        fill_type = (child.get("inputFillType") or "").strip()
+        if not DATA_PACK_FILLTYPE_RE.match(fill_type):
+            validation.error(f"Data-pack route '{route_id}' has invalid inputFillType '{fill_type}' in {relative_path}")
+
+        target = (child.get("target") or "").strip()
+        if target not in DATA_PACK_TARGET_CAPS:
+            validation.error(f"Data-pack route '{route_id}' has unknown target '{target}' in {relative_path}")
+        else:
+            target_counts[target] += 1
+
+        template = (child.get("template") or "").strip()
+        expected_target = DATA_PACK_TEMPLATE_TARGETS.get(template)
+        if expected_target is None:
+            validation.error(f"Data-pack route '{route_id}' has unknown template '{template}' in {relative_path}")
+        elif target and target != expected_target:
+            validation.error(
+                f"Data-pack route '{route_id}' template '{template}' requires target '{expected_target}', found '{target}' in {relative_path}"
+            )
+
+        tier = (child.get("tier") or "").strip()
+        if tier not in DATA_PACK_TIERS:
+            validation.error(f"Data-pack route '{route_id}' has unknown tier '{tier}' in {relative_path}")
+
+    if route_count == 0:
+        validation.error(f"Data pack must define at least one route: {relative_path}")
+    if route_count > DATA_PACK_ROUTE_CAP:
+        validation.error(f"Data pack has {route_count} routes; hard cap is {DATA_PACK_ROUTE_CAP}: {relative_path}")
+
+    for target, count in sorted(target_counts.items()):
+        cap = DATA_PACK_TARGET_CAPS[target]
+        if count > cap:
+            validation.error(
+                f"Data pack target '{target}' has {count} routes; hard cap is {cap}: {relative_path}"
+            )
+
+
+def validate_data_pack_files(mod_root: Path, repo_root: Path, validation: Validation) -> None:
+    for path in sorted(mod_root.rglob("gbwDataPack.xml")):
+        validate_data_pack_file(path, repo_root, validation)
+
+
 def validate_source(repo_root: Path, mod_source: str, validation: Validation) -> None:
     source_path = Path(mod_source)
     mod_root = source_path if source_path.is_absolute() else repo_root / source_path
@@ -749,6 +888,7 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
 
     local_types = local_filltypes(mod_root, validation)
     validate_filltype_icons(mod_root, repo_root, validation)
+    validate_data_pack_files(mod_root, repo_root, validation)
 
     known_filltypes = set(VANILLA_FILLTYPES)
     known_filltypes.update(local_types)
@@ -830,10 +970,18 @@ def package_expected_entries(names: set[str], archive: zipfile.ZipFile, validati
         if filename:
             expected.add(filename.replace("\\", "/"))
 
+    for node in root.findall("./extraSourceFiles/sourceFile"):
+        filename = node.get("filename", "").strip()
+        if filename:
+            expected.add(filename.replace("\\", "/"))
+
     for node in root.findall("./storeItems/storeItem"):
         filename = node.get("xmlFilename", "").strip()
         if filename:
             expected.add(filename.replace("\\", "/"))
+
+    if "gbwDataPack.xml" in names:
+        expected.add("gbwDataPack.xml")
 
     return expected
 

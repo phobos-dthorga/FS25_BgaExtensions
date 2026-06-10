@@ -29,8 +29,20 @@ jobs:
         with:
           python-version: "3.13"
 
+      - name: Set up Lua
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.4
+
       - name: Compile Python tools
         run: python -m py_compile tools/*.py
+
+      - name: Compile Lua scripts
+        run: |
+          files="$(git ls-files '*.lua')"
+          if [ -n "$files" ]; then
+            luac5.4 -p $files
+          fi
 
       - name: Build and validate package set
         run: python tools/package_set.py --suffix ci --validate --write-sha256 --write-json

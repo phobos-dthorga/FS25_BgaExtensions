@@ -29,15 +29,14 @@ The first entries in this table are pre-GBW historical lines from versions befor
 
 ## Pending Test Targets
 
-For `v0.2.17.0`, smoke-test pellet and difficult-fermentation routes:
+For `v0.2.18.0`, smoke-test the Stage 1 data-pack API:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.17.0`
-- confirm Dry Fuel Processor accepts straw or hay plus `WATER` and `MOLASSES`
-- confirm Dry Fuel Processor produces `STRAW_PELLETS` and `HAY_PELLETS`
-- confirm Dry Fuel Yards accept and load `HAY_PELLETS`
-- confirm GBW Fermentation Vessel accepts pellet routes only with `WATER` and `SILAGE_ADDITIVE`
-- confirm pellet fermentation produces `SILAGE_IN`
-- check the log for GBW-owned warnings or errors
+- confirm core FS25_BgaExtensions loads as version `0.2.18.0`
+- confirm `FS25_GBWDataPack_Template` registers through `GBWDataPacks.registerPack`
+- confirm the template `GRASS_WINDROW` route is prepared
+- confirm the template missing fillType route is skipped with an info line, not a warning
+- confirm no data-pack gameplay recipes are injected in Stage 1
+- confirm no GBW-owned warnings or errors appear in the FS25 log
 
 ## User Test Confirmation
 

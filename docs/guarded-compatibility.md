@@ -39,7 +39,11 @@ Use Lua only after the relevant FS25 APIs are verified against local source or p
 - update production-chain mappings safely in multiplayer
 - produce no log warnings when the provider is absent
 
-3. Documentation-only holding state
+3. GBW data pack
+
+Use the Stage 1 data-pack API when a route can be described as a simple input fillType plus a GBW-owned template. This is intended for community extension packs, but Stage 1 validates route data only and does not inject gameplay recipes yet.
+
+4. Documentation-only holding state
 
 For uncertain or unstable ecosystems, document the candidate and do not ship active behavior yet.
 
@@ -68,5 +72,7 @@ A guarded compatibility slice is not done until:
 - the produced material can enter the existing GBW/PlanET path
 - the game log is clean of new GBW warnings
 - the release notes name the optional provider clearly
+
+For data packs, the pack must also pass the `gbwDataPack.xml` validator and use only documented templates, targets, and tiers.
 
 Maize+/MaizePlus remains parked and is not part of this pattern until a future explicit decision.

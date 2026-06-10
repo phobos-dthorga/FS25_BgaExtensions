@@ -6,7 +6,7 @@ This document explains how `FS25_BgaExtensions` performance and health measureme
 
 | Layer | Where it runs | Current status | What it can prove |
 | --- | --- | --- | --- |
-| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, GBW-owned asset references resolve, core fillTypes are known, optional fillTypes require declared provider dependencies, trigger coverage is present for production inputs/outputs, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target, and core fermentation-priority rules hold. |
+| Static validation | GitHub Actions and local tools | Implemented | XML is well-formed, `modDesc.xml` references exist, GBW-owned asset references resolve, core fillTypes are known, optional fillTypes require declared provider dependencies, data-pack route XML is valid, trigger coverage is present for production inputs/outputs, storage-only production warnings are prevented, l10n references resolve, recipe count stays below the hard target, and core fermentation-priority rules hold. |
 | Package validation | GitHub Actions and local tools | Implemented | Core and active add-on zips have FS25's expected root layout, avoid repository-only folders, stay under the XML-only package size target, and match active package-set versions. |
 | Log triage | Local machine after an FS25 test | Implemented | GBW-owned warnings/errors are separated from external mod noise. |
 | Runtime smoke test | Local FS25 disposable save | Manual, documented in `docs/runtime-smoke-tests.md` | The placeable can be bought, placed, filled, activated, unloaded, and connected to the intended PlanET or Straw Harvest loop. |
@@ -23,8 +23,9 @@ It performs:
 1. Checkout.
 2. Python setup.
 3. Python tool syntax checks.
-4. Manifest-driven source validation, package builds, and package validation with `tools/package_set.py`.
-5. Upload of short-lived CI package artifacts plus SHA-256 and package-set manifests.
+4. Lua syntax checks for GBW and template scripts.
+5. Manifest-driven source validation, package builds, and package validation with `tools/package_set.py`.
+6. Upload of short-lived CI package artifacts plus SHA-256 and package-set manifests.
 
 The CI packages are for inspection and disposable-save testing. They are not GitHub release artifacts.
 
@@ -38,6 +39,7 @@ The validator intentionally covers checks that are cheap to automate and annoyin
 - every production output must be available from a load trigger
 - storage-only production-point fillTypes fail validation
 - optional provider fillTypes must stay in guarded add-on packages
+- data-pack XML must use documented targets, templates, tiers, route caps, and stable IDs
 - fermentation-priority recipe relationships are enforced for current core BGA lanes
 - package versions must match across the active package set
 

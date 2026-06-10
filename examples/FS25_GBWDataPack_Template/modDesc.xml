@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
+    <author>Gekko BioWorks</author>
+    <version>0.2.18.0</version>
+    <title>
+        <en>GBW Data Pack Template</en>
+    </title>
+    <description>
+        <en>Copyable template for adding GBW biomass data-pack routes. Replace the example routes before publishing your own pack.</en>
+    </description>
+    <iconFilename>icon.dds</iconFilename>
+
+    <extraSourceFiles>
+        <sourceFile filename="register.lua"/>
+    </extraSourceFiles>
+
+    <dependencies>
+        <dependency>FS25_BgaExtensions</dependency>
+    </dependencies>
+
+    <multiplayer supported="true"/>
+</modDesc>

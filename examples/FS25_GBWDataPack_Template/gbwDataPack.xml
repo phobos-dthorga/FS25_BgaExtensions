@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<gbwDataPack apiVersion="1" packId="gbwTemplate" title="GBW Data Pack Template" author="Gekko BioWorks">
+    <!-- Replace these examples before publishing your own data pack. -->
+    <routes>
+        <route id="exampleGrassRoute" inputFillType="GRASS_WINDROW" target="biomassIntake" template="forageSilage" tier="good"/>
+        <route id="exampleMissingQuietSkip" inputFillType="GBW_MISSING_EXAMPLE" target="wetSubstratePrep" template="greenMash" tier="fair"/>
+    </routes>
+</gbwDataPack>

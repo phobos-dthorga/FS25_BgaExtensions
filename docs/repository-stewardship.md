@@ -28,6 +28,7 @@
 - Pelletizing is split into Dry Fuel Processor so biomass intakes remain BGA-focused and dry fuel yards remain storage-only.
 - Potato Washer compatibility is the first separate add-on package, proving the optional-fillType pattern without weakening core XML.
 - Orchards/Greenhouses compatibility adds organic waste and compost routing as a second provider-specific add-on.
+- The Stage 1 GBW data-pack API validates community route packs and ships a copyable template, but does not inject gameplay recipes until the runtime hook is proven.
 
 ## Still To Decide
 

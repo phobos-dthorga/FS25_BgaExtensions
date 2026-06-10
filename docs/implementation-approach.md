@@ -105,6 +105,7 @@ The GBW release zip should contain only GBW-owned files. A required dependency s
 - `docs/integration-strategy.md` defines the companion-module rule.
 - `docs/dependency-contract.md` defines required dependency fillTypes and asset contracts.
 - `docs/guarded-compatibility.md` defines how optional fillTypes are allowed to enter the project.
+- `docs/data-pack-api.md` defines the public Stage 1 route-registration API for third-party data packs.
 - `docs/performance-targets.md` defines performance tripwires and the required action when a target is missed.
 - `docs/measurement-and-automation.md` defines how the performance targets are measured and what CI can automate.
 - `docs/energy-carrier-strategy.md` defines which building family owns combustion fuels, BGA energy products, and digestate.
@@ -248,14 +249,17 @@ Lua is appropriate when XML cannot express a feature safely, such as:
 
 Lua should remain thin and boring. Data-driven XML should carry simple recipes and placeables whenever it can.
 
+The GBW data-pack API is the first Lua surface in this repository. Stage 1 may validate and prepare routes only. Do not enable runtime recipe injection until a disposable-save test proves production-point mapping, save/load behavior, and multiplayer synchronization remain clean.
+
 ## Future Expansion
 
 After the PlanET proof of concept is tested, expand in small steps:
 
 1. Add more vanilla inputs to the PlanET intake if balance supports them.
-2. Add optional common-map forage inputs such as alfalfa and clover through guarded compatibility.
-3. Add compost-aware waste intake only where `COMPOST` is detected.
-4. Consider a standalone GBW substrate path only if PlanET-specific routing is too narrow.
-5. Add custom fillTypes only after existing types stop being good enough.
+2. Prove the Stage 1 data-pack loader with a disposable-save test.
+3. Add optional common-map forage inputs such as alfalfa and clover through guarded compatibility or data-pack routes.
+4. Add compost-aware waste intake only where `COMPOST` is detected.
+5. Consider a standalone GBW substrate path only if PlanET-specific routing is too narrow.
+6. Add custom fillTypes only after existing types stop being good enough.
 
 Every expansion should preserve the same rule: GBW modules work alongside other systems; they do not overwrite them.

@@ -9,6 +9,7 @@ This document records the custom visual assets used by `FS25_BgaExtensions`.
 | Mod icon | `mod/icon.dds` | FS25 mod list icon. |
 | Potato Washer Compat icon | `addons/FS25_BgaExtensions_PotatoWasherCompat/icon.dds` | Reuses the GBW mod icon for the optional add-on package. |
 | Orchards/Greenhouses Compat icon | `addons/FS25_BgaExtensions_OrchardsGreenhousesCompat/icon.dds` | Reuses the GBW mod icon for the optional add-on package. |
+| Data Pack Template icon | `examples/FS25_GBWDataPack_Template/icon.dds` | Reuses the GBW mod icon so the copyable template has a normal FS25 mod descriptor. |
 | Sweet Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwSweetMash.dds` | ChatGPT-generated custom HUD image for `GBW_SWEET_MASH`, built as PlanET-style DXT5 DDS to avoid runtime texture warnings. |
 | Root Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwRootMash.dds` | ChatGPT-generated custom HUD image for `GBW_ROOT_MASH`, built as PlanET-style DXT5 DDS to avoid runtime texture warnings. |
 | Green Mash HUD icon | `mod/hud/fillTypes/hud_fill_gbwGreenMash.dds` | ChatGPT-generated custom HUD image for `GBW_GREEN_MASH`, built as PlanET-style DXT5 DDS to avoid runtime texture warnings. |
