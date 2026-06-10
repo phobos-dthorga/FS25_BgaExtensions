@@ -152,6 +152,7 @@ PROCESS_SUPPLY_HUB_FILE = "planetProcessSupplyHub.xml"
 PROCESS_PALLET_DOCK_FILE = "processPalletDock.xml"
 ORCHARDS_GREENHOUSES_COMPAT_MOD = "FS25_BgaExtensions_OrchardsGreenhousesCompat"
 COMPOST_BAY_FILE = "compostBay.xml"
+WASTE_AWARE_WET_PREP_FILE = "wasteAwareWetSubstratePrep.xml"
 COMPOST_BAY_ACCEPTED_FILLTYPES = {
     "BEETROOT",
     "CARROT",
@@ -175,6 +176,80 @@ FORBIDDEN_ORCHARDS_COMPOST_ASSETS = {
     "compostSilo.i3d",
     "compostSilo.i3d.shapes",
     "store_compostSilo.dds",
+}
+WASTE_AWARE_WET_PREP_RECIPES = {
+    "gbwCompatWasteAwareBeetrootToRootMash": {
+        "input": "BEETROOT",
+        "mash": "GBW_ROOT_MASH",
+        "mash_amount": 140.0,
+        "waste_amount": 15.0,
+        "cycles": "8",
+        "cost": "3",
+    },
+    "gbwCompatWasteAwareCarrotToRootMash": {
+        "input": "CARROT",
+        "mash": "GBW_ROOT_MASH",
+        "mash_amount": 140.0,
+        "waste_amount": 15.0,
+        "cycles": "8",
+        "cost": "3",
+    },
+    "gbwCompatWasteAwareGreenBeanToGreenMash": {
+        "input": "GREENBEAN",
+        "mash": "GBW_GREEN_MASH",
+        "mash_amount": 130.0,
+        "waste_amount": 15.0,
+        "cycles": "8",
+        "cost": "3",
+    },
+    "gbwCompatWasteAwareParsnipToRootMash": {
+        "input": "PARSNIP",
+        "mash": "GBW_ROOT_MASH",
+        "mash_amount": 140.0,
+        "waste_amount": 15.0,
+        "cycles": "8",
+        "cost": "3",
+    },
+    "gbwCompatWasteAwarePeaToGreenMash": {
+        "input": "PEA",
+        "mash": "GBW_GREEN_MASH",
+        "mash_amount": 130.0,
+        "waste_amount": 15.0,
+        "cycles": "8",
+        "cost": "3",
+    },
+    "gbwCompatWasteAwarePotatoToRootMash": {
+        "input": "POTATO",
+        "mash": "GBW_ROOT_MASH",
+        "mash_amount": 140.0,
+        "waste_amount": 15.0,
+        "cycles": "8",
+        "cost": "3",
+    },
+    "gbwCompatWasteAwareSpinachToGreenMash": {
+        "input": "SPINACH",
+        "mash": "GBW_GREEN_MASH",
+        "mash_amount": 120.0,
+        "waste_amount": 20.0,
+        "cycles": "8",
+        "cost": "3",
+    },
+    "gbwCompatWasteAwareSugarbeetCutToSweetMash": {
+        "input": "SUGARBEET_CUT",
+        "mash": "GBW_SWEET_MASH",
+        "mash_amount": 190.0,
+        "waste_amount": 10.0,
+        "cycles": "12",
+        "cost": "2.5",
+    },
+    "gbwCompatWasteAwareSugarcaneToSweetMash": {
+        "input": "SUGARCANE",
+        "mash": "GBW_SWEET_MASH",
+        "mash_amount": 160.0,
+        "waste_amount": 15.0,
+        "cycles": "8",
+        "cost": "3",
+    },
 }
 CORE_FORBIDDEN_PROVIDER_XML_TOKENS = {
     "COMPOST",
@@ -1083,6 +1158,88 @@ def validate_process_pallet_dock_rules(
         validation.error(f"Process Pallet Dock loadingStation must expose MOLASSES and SILAGE_ADDITIVE in {relative_path}")
 
 
+def validate_waste_aware_wet_prep_rules(
+    path: Path,
+    mod_root: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    validation: Validation,
+) -> None:
+    if path.name != WASTE_AWARE_WET_PREP_FILE:
+        return
+
+    relative_path = path.relative_to(repo_root)
+    if mod_root.name != ORCHARDS_GREENHOUSES_COMPAT_MOD:
+        validation.error(
+            f"GBW Waste-Aware Wet Substrate Prep may only be shipped in "
+            f"{ORCHARDS_GREENHOUSES_COMPAT_MOD}: {relative_path}"
+        )
+
+    if tree.getroot().get("type") != "productionPoint":
+        validation.error(f"GBW Waste-Aware Wet Substrate Prep must be a productionPoint in {relative_path}")
+
+    base_filename = (tree.findtext("./base/filename") or "").strip()
+    expected_base = "$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Bunker_Klein.i3d"
+    if base_filename != expected_base:
+        validation.error(f"GBW Waste-Aware Wet Substrate Prep must reference the PlanET small bunker model in {relative_path}")
+
+    brush_tab = (tree.findtext("./storeData/brush/tab") or "").strip()
+    if brush_tab != "gbwBgaCompatibility":
+        validation.error(f"GBW Waste-Aware Wet Substrate Prep must be under the GBW Compat tab in {relative_path}")
+
+    expected_inputs = {str(recipe["input"]) for recipe in WASTE_AWARE_WET_PREP_RECIPES.values()}
+    expected_outputs = {"GBW_GREEN_MASH", "GBW_ROOT_MASH", "GBW_SWEET_MASH", "ORGANICWASTE"}
+
+    if unload_trigger_filltypes(tree) != expected_inputs:
+        validation.error(f"GBW Waste-Aware Wet Substrate Prep unload inputs are not the expected wet crop set in {relative_path}")
+    if load_trigger_filltypes(tree) != expected_outputs:
+        validation.error(f"GBW Waste-Aware Wet Substrate Prep load outputs must expose mash families and ORGANICWASTE in {relative_path}")
+
+    expected_storage = expected_inputs.union(expected_outputs)
+    if storage_filltypes(tree) != expected_storage:
+        validation.error(f"GBW Waste-Aware Wet Substrate Prep storage must contain only its inputs, mash outputs, and ORGANICWASTE in {relative_path}")
+
+    productions = {
+        production.get("id", ""): production
+        for production in tree.findall(".//productions/production")
+    }
+    expected_ids = set(WASTE_AWARE_WET_PREP_RECIPES)
+    actual_ids = set(productions)
+    if actual_ids != expected_ids:
+        missing = sorted(expected_ids - actual_ids)
+        extra = sorted(actual_ids - expected_ids)
+        if missing:
+            validation.error(f"GBW Waste-Aware Wet Substrate Prep is missing recipes {', '.join(missing)} in {relative_path}")
+        if extra:
+            validation.error(f"GBW Waste-Aware Wet Substrate Prep has unexpected recipes {', '.join(extra)} in {relative_path}")
+
+    for production_id, expected in WASTE_AWARE_WET_PREP_RECIPES.items():
+        production = productions.get(production_id)
+        if production is None:
+            continue
+
+        inputs = production_amounts(production, "inputs")
+        outputs = production_amounts(production, "outputs")
+        expected_input = str(expected["input"])
+        expected_mash = str(expected["mash"])
+
+        if inputs != {expected_input: 200.0}:
+            validation.error(f"Recipe '{production_id}' must consume 200 l of {expected_input} in {relative_path}")
+        if outputs.get(expected_mash) != expected["mash_amount"] or outputs.get("ORGANICWASTE") != expected["waste_amount"]:
+            validation.error(
+                f"Recipe '{production_id}' must produce {expected['mash_amount']:g} l of {expected_mash} "
+                f"and {expected['waste_amount']:g} l of ORGANICWASTE in {relative_path}"
+            )
+        if set(outputs) != {expected_mash, "ORGANICWASTE"}:
+            validation.error(f"Recipe '{production_id}' must output only its mash family and ORGANICWASTE in {relative_path}")
+        if float(outputs.get(expected_mash, 0.0)) >= 200.0:
+            validation.error(f"Recipe '{production_id}' must reduce mash yield below the raw input amount in {relative_path}")
+        if float(outputs.get("ORGANICWASTE", 0.0)) <= 0.0:
+            validation.error(f"Recipe '{production_id}' must produce a positive ORGANICWASTE side stream in {relative_path}")
+        if production.get("cyclesPerHour", "") != expected["cycles"] or production.get("costsPerActiveHour", "") != expected["cost"]:
+            validation.error(f"Recipe '{production_id}' must keep the expected core wet-prep speed and cost in {relative_path}")
+
+
 def validate_compost_bay_rules(
     path: Path,
     mod_root: Path,
@@ -1137,6 +1294,10 @@ def validate_orchards_compost_asset_policy(mod_root: Path, repo_root: Path, vali
     compost_bay = mod_root / "placeables" / "gbw" / COMPOST_BAY_FILE
     if not compost_bay.is_file():
         validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must include placeables/gbw/{COMPOST_BAY_FILE}")
+
+    waste_aware_prep = mod_root / "placeables" / "gbw" / WASTE_AWARE_WET_PREP_FILE
+    if not waste_aware_prep.is_file():
+        validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must include placeables/gbw/{WASTE_AWARE_WET_PREP_FILE}")
 
     for path in mod_root.rglob("*"):
         if path.is_file() and path.name in FORBIDDEN_ORCHARDS_COMPOST_ASSETS:
@@ -1361,6 +1522,7 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
 
         validate_construction_tabs(path, repo_root, tree, known_construction_tabs, validation)
         validate_compost_bay_rules(path, mod_root, repo_root, tree, validation)
+        validate_waste_aware_wet_prep_rules(path, mod_root, repo_root, tree, validation)
 
         if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
             validate_identity_dispatcher_rules(path, repo_root, tree, validation)

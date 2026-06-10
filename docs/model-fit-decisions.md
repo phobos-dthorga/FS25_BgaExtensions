@@ -37,6 +37,8 @@ Starting with `v0.2.11.0`, the optional Potato Washer compatibility add-on uses 
 
 Starting with `v0.2.12.0`, the optional Orchards/Greenhouses compatibility add-on uses the same small PlanET bunker model for organic residue preparation. This is acceptable because organic waste mashing and compost routing are active material-handling processes.
 
+Starting with `v0.2.21.0`, the same add-on uses the small PlanET bunker model for Waste-Aware Wet Substrate Prep. This is still an active wet-material preparation process, so the mixer visual language remains appropriate. The `ORGANICWASTE` side-stream is a by-product of prep, not passive storage.
+
 Starting with `v0.2.20.0`, the same add-on adds `placeables/gbw/compostBay.xml`, which references the Orchards/Greenhouses compost silo model and store icon. This avoids using another PlanET bunker for compost. The visual language should read as a physical composting bay or heap, not as BGA machinery.
 
 Starting with `v0.2.16.0`, mash fermentation moves from Wet Substrate Prep into `placeables/gbw/planetFermentationVessel.xml`, which references PlanET's `PlanET_Fermenter100.i3d` model and store icon from the required PlanET Modular BGA dependency.
@@ -77,6 +79,7 @@ The same dependency-reference rule applies to Orchards/Greenhouses assets. Do no
 | Process Pallet Dock | `sellingStationProducts.i3d` | Plain but reliable pallet/container supply point for `SILAGE_ADDITIVE` and `MOLASSES`; includes a minimal loading station because FS25 requires an output mechanism for dispatcher productions. |
 | Washed Potato Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit. |
 | Organic Residue Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active residue preparation fit. |
+| Waste-Aware Wet Substrate Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit; emits provider-owned `ORGANICWASTE` only in the Orchards/Greenhouses add-on. |
 | Compost Bay add-on | Orchards/Greenhouses `compostSilo.i3d` | Good physical composting/logistics fit; avoids another generic PlanET bunker. |
 | Dry Fuel Processor | `PlanET_Bunker_Klein.i3d` | Acceptable active dry-material processing fit. |
 | Medium Dry Fuel Yard | `PlanET_Bunker_Mittel.i3d` | Acceptable passive bunker storage. |

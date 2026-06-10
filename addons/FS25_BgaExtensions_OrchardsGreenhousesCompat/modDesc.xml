@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>Gekko BioWorks</author>
-    <version>0.2.20.0</version>
+    <version>0.2.21.0</version>
     <title>
         <en>GBW BGA Extensions - Orchards Greenhouses Compat</en>
     </title>
     <description>
-        <en>Optional compatibility add-on for FS25 BGA Extensions and Orchards And Greenhouses. Routes organic waste toward Residue Mash or compost and adds a GBW Compost Bay.</en>
+        <en>Optional compatibility add-on for FS25 BGA Extensions and Orchards And Greenhouses. Routes organic waste toward Residue Mash or compost, adds a waste-aware wet substrate prep, and adds a GBW Compost Bay.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
 
@@ -16,6 +16,12 @@
         </text>
         <text name="function_gbwOrganicResiduePrep">
             <en>Converts organic waste into Residue Mash or compost.</en>
+        </text>
+        <text name="storeItem_gbwWasteAwareWetSubstratePrep">
+            <en>GBW Waste-Aware Wet Substrate Prep</en>
+        </text>
+        <text name="function_gbwWasteAwareWetSubstratePrep">
+            <en>Prepares wet crops into mash while collecting organic waste.</en>
         </text>
         <text name="storeItem_gbwCompostBay">
             <en>GBW Compost Bay</en>
@@ -29,6 +35,33 @@
         <text name="production_gbwOrganicWasteToCompost">
             <en>Organic waste composting</en>
         </text>
+        <text name="production_gbwWasteAwareSugarbeetCutToSweetMash">
+            <en>Beet pulp mash + waste</en>
+        </text>
+        <text name="production_gbwWasteAwareSugarcaneToSweetMash">
+            <en>Sugarcane mash + waste</en>
+        </text>
+        <text name="production_gbwWasteAwarePotatoToRootMash">
+            <en>Potato mash + waste</en>
+        </text>
+        <text name="production_gbwWasteAwareBeetrootToRootMash">
+            <en>Beetroot mash + waste</en>
+        </text>
+        <text name="production_gbwWasteAwareCarrotToRootMash">
+            <en>Carrot mash + waste</en>
+        </text>
+        <text name="production_gbwWasteAwareParsnipToRootMash">
+            <en>Parsnip mash + waste</en>
+        </text>
+        <text name="production_gbwWasteAwareSpinachToGreenMash">
+            <en>Spinach mash + waste</en>
+        </text>
+        <text name="production_gbwWasteAwarePeaToGreenMash">
+            <en>Pea mash + waste</en>
+        </text>
+        <text name="production_gbwWasteAwareGreenBeanToGreenMash">
+            <en>Green bean mash + waste</en>
+        </text>
     </l10n>
 
     <dependencies>
@@ -41,6 +74,7 @@
 
     <storeItems>
         <storeItem xmlFilename="placeables/gbw/organicResiduePrep.xml"/>
+        <storeItem xmlFilename="placeables/gbw/wasteAwareWetSubstratePrep.xml"/>
         <storeItem xmlFilename="placeables/gbw/compostBay.xml"/>
     </storeItems>
 </modDesc>

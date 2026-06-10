@@ -34,18 +34,16 @@ The first entries in this table are pre-GBW historical lines from versions befor
 
 ## Pending Test Targets
 
-For `v0.2.20.0`, smoke-test the GBW Compost Bay add-on slice:
+For `v0.2.21.0`, smoke-test the organic waste side-stream add-on slice:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.20.0`
-- confirm `GBW Compost Bay` appears under `GBW Compat` when the Orchards/Greenhouses compat add-on is enabled
-- confirm the compost silo model and store icon load from `FS25_orchardsAndGreenhouses_crossplay`
-- confirm `ORGANICWASTE` can be unloaded into the bay
-- confirm one ordinary compostable material, such as `STRAW` or `MANURE`, can be unloaded into the bay
-- confirm the bay behaves like a composting bunker and produces `COMPOST`
-- confirm `GBW Organic Residue Prep` still works unchanged
+- confirm core FS25_BgaExtensions loads as version `0.2.21.0`
+- confirm `GBW Waste-Aware Wet Substrate Prep` appears under `GBW Compat` when the Orchards/Greenhouses compat add-on is enabled
+- confirm one sweet/root/green recipe produces its mash family plus `ORGANICWASTE`
+- confirm the `ORGANICWASTE` side-stream can be loaded out and routed to GBW Organic Residue Prep or GBW Compost Bay
+- confirm GBW Compost Bay and GBW Organic Residue Prep still work unchanged
 - confirm no GBW-owned warnings or errors appear in the FS25 log
 
-The user reported `v0.2.19.4` testing complete before the Compost Bay slice. Previous Process Supply Hub and Process Pallet Dock behavior is accepted unless a new log line says otherwise.
+The user reported `v0.2.20.0` testing complete before the organic waste side-stream slice. Previous Compost Bay, Process Supply Hub, and Process Pallet Dock behavior is accepted unless a new log line says otherwise.
 
 ## User Test Confirmation
 

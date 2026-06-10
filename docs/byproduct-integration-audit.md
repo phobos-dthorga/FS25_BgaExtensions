@@ -21,7 +21,7 @@ The current PlanET-compatible preparation modules produce or handle these materi
 | --- | --- | --- | --- |
 | `SILAGE_IN` | Chaff, silage, grass, hay, low-yield straw pretreatment | PlanET modular fermenter input | Good as a PlanET-owned handoff only. Do not expose as general farm material. |
 | `MANURE_IN` | Manure intake | PlanET modular fermenter input | Good as a PlanET-owned handoff only. |
-| GBW mash families | Wet Substrate Prep from sugar crops, roots, greens, and organic residue | GBW staging materials, then fermented into `SUGARBEETCUT_IN` | Good internal GBW intermediaries. Keep them internal until a real storage/logistics use appears. |
+| GBW mash families | Wet Substrate Prep from sugar crops, roots, greens, and organic residue | GBW staging materials, then fermented into `SUGARBEETCUT_IN` | Good internal GBW intermediaries. Keep them internal until a real storage/logistics use appears. The Orchards/Greenhouses add-on can use a waste-aware variant that also emits small `ORGANICWASTE` side-streams. |
 | `SUGARBEETCUT_IN` | GBW Fermentation Vessel mash fermentation | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
 | `STRAW_PELLETS` | Dry Fuel Processor straw pelletizing | Straw Harvest HALLSYS Pellet Heat Plant, pellet-compatible systems, and assisted GBW fermentation | Strong cross-mod by-product/fuel route. Keep heat logistics meaningful and BGA use additive-gated. |
 | `HAY_PELLETS` | Dry Fuel Processor hay pelletizing | Straw Harvest pellet-compatible systems and assisted GBW fermentation | Useful dual-purpose route; better BGA substrate than straw pellets, but still below prepared silage. |
@@ -61,12 +61,13 @@ Recommended posture: keep compost provider-specific and logistics-first.
 
 2. Organic waste intake
 
-`ORGANICWASTE` is already produced by the potato chips factory and orchards/greenhouses pack. It should not be a new GBW-defined fillType, but it is a very good optional input.
+`ORGANICWASTE` is already produced by the potato chips factory and orchards/greenhouses pack. It should not be a new GBW-defined fillType, but it is a very good optional input and side-output when the provider add-on is active.
 
 Recommended routes:
 
 - `ORGANICWASTE` -> `GBW_RESIDUE_MASH` for BGA co-digestion
 - `ORGANICWASTE` -> `COMPOST` when `COMPOST` exists, preferably through the Compost Bay when a physical bunker workflow is desired
+- wet/root/green mash prep -> slightly reduced mash output + a small `ORGANICWASTE` stream in the Orchards/Greenhouses add-on
 
 3. Dry fuel route
 
@@ -105,7 +106,7 @@ Until a future explicit decision changes this:
 
 ## Cautions
 
-- Avoid defining `ORGANICWASTE` in GBW. It would fragment compatibility with mods that already define it.
+- Avoid defining `ORGANICWASTE` in GBW. It would fragment compatibility with mods that already define it. Producing it is acceptable only inside a provider-specific add-on that depends on that fillType provider.
 - Avoid making GBW mash fillTypes farm-wide commodities until equipment/storage support is proven useful.
 - Avoid turning woody materials into strong BGA feedstock. Use them for heat unless the player explicitly wants an inefficient emergency digester path.
 - Avoid custom by-product bales for now. The existing FS25 bale/fillType load-order warning still applies.

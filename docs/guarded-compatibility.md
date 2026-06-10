@@ -11,7 +11,7 @@ Optional compatibility packages are active:
 | Package | Provider dependency | Route |
 | --- | --- | --- |
 | `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_potatoWasher` | `POTATO_WASHED` -> `GBW_ROOT_MASH` |
-| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` -> `GBW_RESIDUE_MASH` or `COMPOST`, plus GBW Compost Bay logistics |
+| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` -> `GBW_RESIDUE_MASH` or `COMPOST`, waste-aware mash prep side-streams, plus GBW Compost Bay logistics |
 
 `POTATO_WASHED` still must not be referenced by the core mod. It is safe only inside the add-on because that add-on declares `FS25_potatoWasher` as a hard dependency.
 
@@ -62,6 +62,8 @@ Current balance matches the normal potato wet-mash route. Washing already has it
 | `ORGANICWASTE` | Wet substrate or compost route | Implemented in `FS25_BgaExtensions_OrchardsGreenhousesCompat`, which requires `FS25_orchardsAndGreenhouses_crossplay`. |
 | `COMPOST` | Waste substrate or farm loop | Implemented as an output and compost-bay workflow in `FS25_BgaExtensions_OrchardsGreenhousesCompat`; keep broader compost routes provider-specific. |
 | `RICE_HUSK` | Low-value fibrous residue | Emergency route only. Better as cleanup gameplay than premium energy. |
+
+The Orchards/Greenhouses add-on may also emit small `ORGANICWASTE` side-streams from wet/root/green mash preparation. That does not make `ORGANICWASTE` a GBW-owned fillType; the add-on is safe only because it declares the provider as a hard dependency.
 
 ## Definition Of Done
 
