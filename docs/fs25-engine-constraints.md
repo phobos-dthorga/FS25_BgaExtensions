@@ -41,6 +41,27 @@ The same class of issue can apply anywhere FS25 loads definitions in a specific 
 
 For this project, prefer adding our own placeable production path first. Patch existing map or third-party systems only through guarded optional integrations.
 
+## Trigger Roles And Material Handling
+
+Observed source:
+
+- `FS25_orchardsAndGreenhouses_crossplay.zip`
+- Greenhouse XML uses a water-specific unload marker, a normal unload trigger for `WATER`, and separate `palletTrigger` entries for water, compost, and liquid fertilizer.
+- Base-game `SILAGE_ADDITIVE` is supplied through a pallet fill unit.
+- Observed on 2026-06-10 while fixing the `GBW Process Supply Hub`.
+
+### Constraint To Respect
+
+Trigger names are not just labels. Their node placement and trigger type need to match how the material is normally delivered.
+
+- Water logistics may need the water marker, `$data/shared/assets/marker/markerIconWater.i3d`, and a water-specific unload trigger positioned for tankers or water carriers.
+- Pallet, container, and big-bag materials should use `palletTrigger` support when the player is expected to deliver them as pallets or containers.
+- Bunker or mixer unload trigger nodes can be visually wrong on a tank/storage model, even when the XML validates.
+
+### Design Implication For This Mod
+
+When adding a new placeable that accepts supplies, inspect a working vanilla, DLC, or local-mod example for that material class before selecting trigger nodes. For the Process Supply Hub, `WATER` should use a water-marked unload path, while `SILAGE_ADDITIVE` and `MOLASSES` should remain pallet/container-friendly through a pallet trigger.
+
 ## Open Verification Tasks
 
 - Verify current FS25 behavior for custom bale registration against local LUADOC, sample mods, and an unmodified base-game map.

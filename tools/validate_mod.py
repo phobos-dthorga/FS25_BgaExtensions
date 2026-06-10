@@ -439,11 +439,20 @@ def trigger_filltypes(tree: ET.ElementTree, xpath: str) -> set[str]:
 def unload_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
     refs = trigger_filltypes(tree, ".//sellingStation/unloadTrigger")
     refs.update(trigger_filltypes(tree, ".//sellingStation/baleTrigger"))
+    refs.update(trigger_filltypes(tree, ".//sellingStation/palletTrigger"))
     return refs
 
 
 def load_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
     return trigger_filltypes(tree, ".//loadingStation/loadTrigger")
+
+
+def i3d_mapping_ids(tree: ET.ElementTree) -> set[str]:
+    return {
+        node.get("id", "")
+        for node in tree.findall(".//i3dMapping")
+        if node.get("id")
+    }
 
 
 def count_production_recipes(tree: ET.ElementTree) -> int:
@@ -745,7 +754,7 @@ def validate_production_trigger_coverage(
     relative_path = path.relative_to(repo_root)
 
     for fill_type in sorted(inputs - accepted_inputs):
-        validation.error(f"Production input '{fill_type}' is not accepted by unload or bale triggers in {relative_path}")
+        validation.error(f"Production input '{fill_type}' is not accepted by unload, bale, or pallet triggers in {relative_path}")
 
     for fill_type in sorted(outputs - loadable_outputs):
         validation.error(f"Production output '{fill_type}' is not available from load triggers in {relative_path}")
@@ -795,6 +804,91 @@ def validate_identity_dispatcher_rules(
         if cycles != 60.0:
             validation.error(
                 f"Dispatcher production '{production_id}' must run at 60 cycles/hour in {relative_path}"
+            )
+
+
+def validate_process_supply_hub_trigger_rules(
+    path: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    validation: Validation,
+) -> None:
+    if path.name != IDENTITY_DISPATCHER_FILE:
+        return
+
+    relative_path = path.relative_to(repo_root)
+    expected_supplies = {"MOLASSES", "SILAGE_ADDITIVE", "WATER"}
+    mapping_ids = i3d_mapping_ids(tree)
+
+    required_mappings = {
+        "palletTrigger",
+        "unloadTriggerWater",
+        "unloadTriggerWaterAiNode",
+        "unloadTriggerWaterMarker",
+    }
+    for mapping_id in sorted(required_mappings - mapping_ids):
+        validation.error(f"Process Supply Hub is missing i3d mapping '{mapping_id}' in {relative_path}")
+
+    forbidden_mappings = {"unloadTriggerMixer", "unloadTriggerMixerMarker"}
+    for mapping_id in sorted(forbidden_mappings.intersection(mapping_ids)):
+        validation.error(f"Process Supply Hub must not use mixer unload mapping '{mapping_id}' in {relative_path}")
+
+    water_marker = None
+    pallet_marker = None
+    for marker in tree.findall("./triggerMarkers/triggerMarker"):
+        node = marker.get("node", "")
+        if node == "unloadTriggerWaterMarker":
+            water_marker = marker
+        elif node == "palletTrigger":
+            pallet_marker = marker
+
+    if water_marker is None:
+        validation.error(f"Process Supply Hub needs a water unload marker in {relative_path}")
+    else:
+        marker_file = water_marker.get("filename", "")
+        if marker_file != "$data/shared/assets/marker/markerIconWater.i3d":
+            validation.error(f"Process Supply Hub water marker must use markerIconWater.i3d in {relative_path}")
+        if water_marker.get("adjustToGround", "") != "true":
+            validation.error(f"Process Supply Hub water marker must adjust to ground in {relative_path}")
+
+    if pallet_marker is None:
+        validation.error(f"Process Supply Hub needs a pallet unload marker in {relative_path}")
+    else:
+        marker_file = pallet_marker.get("filename", "")
+        if marker_file != "$data/shared/assets/marker/markerIconUnload.i3d":
+            validation.error(f"Process Supply Hub pallet marker must use markerIconUnload.i3d in {relative_path}")
+
+    water_unloads = [
+        node
+        for node in tree.findall(".//sellingStation/unloadTrigger")
+        if node.get("exactFillRootNode") == "unloadTriggerWater"
+    ]
+    if len(water_unloads) != 1:
+        validation.error(f"Process Supply Hub must have exactly one water unloadTrigger in {relative_path}")
+    else:
+        water_filltypes = set(water_unloads[0].get("fillTypes", "").split())
+        if water_filltypes != {"WATER"}:
+            validation.error(f"Process Supply Hub water unloadTrigger must accept only WATER in {relative_path}")
+        if water_unloads[0].get("aiNode", "") != "unloadTriggerWaterAiNode":
+            validation.error(f"Process Supply Hub water unloadTrigger must use unloadTriggerWaterAiNode in {relative_path}")
+
+    for node in tree.findall(".//sellingStation/unloadTrigger"):
+        if node.get("exactFillRootNode") == "unloadTriggerMixer":
+            validation.error(f"Process Supply Hub must not use the mixer unload trigger in {relative_path}")
+
+    pallet_triggers = [
+        node
+        for node in tree.findall(".//sellingStation/palletTrigger")
+        if node.get("triggerNode") == "palletTrigger"
+    ]
+    if len(pallet_triggers) != 1:
+        validation.error(f"Process Supply Hub must have exactly one palletTrigger in {relative_path}")
+    else:
+        pallet_filltypes = set(pallet_triggers[0].get("fillTypes", "").split())
+        if pallet_filltypes != expected_supplies:
+            validation.error(
+                f"Process Supply Hub palletTrigger must accept "
+                f"{', '.join(sorted(expected_supplies))} in {relative_path}"
             )
 
 
@@ -993,6 +1087,7 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
 
         if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
             validate_identity_dispatcher_rules(path, repo_root, tree, validation)
+            validate_process_supply_hub_trigger_rules(path, repo_root, tree, validation)
             validate_production_trigger_coverage(path, repo_root, tree, validation)
             validate_fermentation_priority_rules(path, repo_root, tree, validation)
 

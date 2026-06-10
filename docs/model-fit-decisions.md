@@ -45,6 +45,8 @@ Starting with `v0.2.19.0`, process supply logistics move into `placeables/gbw/pl
 
 This is a good fit because the building already reads as a liquid or process-material storage point. GBW uses it as a production-style distributor for `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES` so those materials can be routed automatically to nearby process buildings.
 
+`v0.2.19.0` reused the model's mixer unload trigger for all three materials. In-game testing showed that trigger was too small, too low, and visually inside the object. Starting with `v0.2.19.1`, the hub uses a water-marked liquid unload path for `WATER` and a separate pallet trigger for `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES`, following the pattern observed in the Orchards/Greenhouses advanced greenhouse XML.
+
 PlanET terms used in source names:
 
 - `Fermenter`: fermenter.
@@ -63,7 +65,7 @@ Do not copy PlanET model, texture, or store-icon files into GBW unless clear lic
 | --- | --- | --- |
 | Wet Substrate Prep | `PlanET_Bunker_Klein.i3d` | Good active wet-material mixing fit. |
 | Fermentation Vessel | `PlanET_Fermenter100.i3d` | Good fermentation-tank fit for mash fermentation. |
-| Process Supply Hub | `PlanET_GuelleLager.i3d` | Good process-supply storage and distribution fit. |
+| Process Supply Hub | `PlanET_GuelleLager.i3d` | Good process-supply storage and distribution fit; requires water/pallet trigger handling rather than mixer unloading. |
 | Washed Potato Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit. |
 | Organic Residue Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active residue preparation fit. |
 | Dry Fuel Processor | `PlanET_Bunker_Klein.i3d` | Acceptable active dry-material processing fit. |

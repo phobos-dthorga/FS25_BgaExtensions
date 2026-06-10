@@ -14,9 +14,10 @@ CI now checks the common XML mistakes that previously required extra in-game smo
 - l10n references
 - construction tabs
 - storage-only production-point fillTypes
-- production inputs are covered by unload or bale triggers
+- production inputs are covered by unload, bale, or pallet triggers
 - production outputs are covered by load triggers
 - same-fillType dispatcher recipes are allowed only for the Process Supply Hub
+- the Process Supply Hub uses water-marker and pallet-trigger handling rather than mixer unloading
 - core fermentation-priority balance rules
 - package version alignment and SHA-256 generation
 
@@ -101,9 +102,11 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 
 | Route | Minimum check | Expected result |
 | --- | --- | --- |
-| Water dispatch | Unload `WATER`, start process water dispatch, and set the output to distributing. | Water can supply the Dry Fuel Processor and Fermentation Vessel without a new GBW fillType. |
-| Additive dispatch | Unload `SILAGE_ADDITIVE`, start silage additive dispatch, and set the output to distributing. | Additive can supply biomass-intake additive routes and Fermentation Vessel additive routes. |
-| Molasses dispatch | Unload `MOLASSES`, start molasses dispatch, and set the output to distributing. | Molasses can supply Dry Fuel Processor pelletizing routes. |
+| Water unload | Unload `WATER` from a water carrier at the water marker. | The marker and trigger are outside the object and water enters storage. |
+| Pallet unload | Unload `SILAGE_ADDITIVE` and `MOLASSES` through pallet/container handling. | Both supplies enter storage without using the old mixer unload trigger. |
+| Water dispatch | Start process water dispatch and set the output to distributing. | Water can supply the Dry Fuel Processor and Fermentation Vessel without a new GBW fillType. |
+| Additive dispatch | Start silage additive dispatch and set the output to distributing. | Additive can supply biomass-intake additive routes and Fermentation Vessel additive routes. |
+| Molasses dispatch | Start molasses dispatch and set the output to distributing. | Molasses can supply Dry Fuel Processor pelletizing routes. |
 | Manual load-out | Set outputs away from distributing and load each material out. | The hub remains useful as a normal supply buffer when automatic distribution is not desired. |
 | Stop condition | Watch for same-input/same-output recipe warnings, loops, or UI oddities. | If the pattern misbehaves, do not add internal GBW supply fillTypes without a new design decision. |
 
