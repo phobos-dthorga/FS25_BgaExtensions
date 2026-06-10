@@ -169,7 +169,7 @@ Current Process Pallet Dock dispatcher recipes:
 
 The Process Supply Hub directly references PlanET's `PlanET_GuelleLager.i3d` model by dependency reference and handles only process water. The Process Pallet Dock uses the vanilla generic product unloading pad so `SILAGE_ADDITIVE` and `MOLASSES` use a real pallet trigger and pallet marker instead of a bulk trailer unload path.
 
-These are production-style distribution points rather than passive silos because FS25 production distribution acts on production outputs. The identity dispatcher recipes intentionally use existing vanilla or dependency fillTypes so GBW does not spend custom fillTypes on internal supply buffers.
+These are production-style distribution points rather than passive silos because FS25 production distribution acts on production outputs. The identity dispatcher recipes intentionally use existing vanilla or dependency fillTypes so GBW does not spend custom fillTypes on internal supply buffers. The Process Pallet Dock still needs a minimal `loadingStation` for `SILAGE_ADDITIVE` and `MOLASSES`, because FS25 rejects production points that have outputs but no loading station or pallet spawner.
 
 If FS25 rejects or mishandles the same-fillType dispatcher pattern, stop and revisit the design before adding GBW-owned internal buffer fillTypes. That would change the fillType budget and should not happen as an automatic hotfix.
 

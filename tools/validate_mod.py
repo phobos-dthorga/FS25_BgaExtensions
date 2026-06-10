@@ -454,20 +454,6 @@ def load_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
     return trigger_filltypes(tree, ".//loadingStation/loadTrigger")
 
 
-def identity_dispatcher_output_filltypes(path: Path, tree: ET.ElementTree) -> set[str]:
-    result: set[str] = set()
-    for production in tree.findall(".//productions/production"):
-        production_id = production.get("id", "")
-        allowed = IDENTITY_DISPATCHER_PRODUCTIONS.get((path.name, production_id))
-        if allowed is None:
-            continue
-        inputs = production_amounts(production, "inputs")
-        outputs = production_amounts(production, "outputs")
-        if set(inputs) == set(allowed) and set(outputs) == set(allowed):
-            result.update(allowed)
-    return result
-
-
 def i3d_mapping_ids(tree: ET.ElementTree) -> set[str]:
     return {
         node.get("id", "")
@@ -785,8 +771,7 @@ def validate_production_trigger_coverage(
     for fill_type in sorted(inputs - accepted_inputs):
         validation.error(f"Production input '{fill_type}' is not accepted by unload, bale, or pallet triggers in {relative_path}")
 
-    distribution_only_outputs = identity_dispatcher_output_filltypes(path, tree)
-    for fill_type in sorted(outputs - loadable_outputs - distribution_only_outputs):
+    for fill_type in sorted(outputs - loadable_outputs):
         validation.error(f"Production output '{fill_type}' is not available from load triggers in {relative_path}")
 
 
@@ -983,11 +968,12 @@ def validate_process_pallet_dock_rules(
     if store_image != expected_image:
         validation.error(f"Process Pallet Dock must use the generic selling-station store icon in {relative_path}")
 
-    required_mappings = {"palletTrigger", "unloadTriggerAINode", "unloadTriggerMarker"}
+    required_mappings = {"loadTrigger", "palletTrigger", "unloadTriggerAINode", "unloadTriggerMarker"}
     for mapping_id in sorted(required_mappings - mapping_ids):
         validation.error(f"Process Pallet Dock is missing i3d mapping '{mapping_id}' in {relative_path}")
 
     expected_mapping_nodes = {
+        "loadTrigger": "0>2|0",
         "palletTrigger": "0>2|4",
         "unloadTriggerAINode": "0>2|2",
         "unloadTriggerMarker": "0>2|1",
@@ -1041,6 +1027,8 @@ def validate_process_pallet_dock_rules(
         validation.error(f"Process Pallet Dock productions must only pass through MOLASSES and SILAGE_ADDITIVE in {relative_path}")
     if storage_filltypes(tree) != expected_supplies:
         validation.error(f"Process Pallet Dock storage must only contain MOLASSES and SILAGE_ADDITIVE in {relative_path}")
+    if load_trigger_filltypes(tree) != expected_supplies:
+        validation.error(f"Process Pallet Dock loadingStation must expose MOLASSES and SILAGE_ADDITIVE in {relative_path}")
 
 
 def validate_construction_tabs(

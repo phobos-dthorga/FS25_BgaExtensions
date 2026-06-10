@@ -70,7 +70,7 @@ Do not copy PlanET model, texture, or store-icon binary files into GBW unless cl
 | Wet Substrate Prep | `PlanET_Bunker_Klein.i3d` | Good active wet-material mixing fit. |
 | Fermentation Vessel | `PlanET_Fermenter100.i3d` | Good fermentation-tank fit for mash fermentation. |
 | Process Supply Hub | `PlanET_GuelleLager.i3d` | Good process-water storage and distribution fit; water uses a dedicated water-marked unload path. |
-| Process Pallet Dock | `sellingStationProducts.i3d` | Plain but reliable pallet/container supply point for `SILAGE_ADDITIVE` and `MOLASSES`. |
+| Process Pallet Dock | `sellingStationProducts.i3d` | Plain but reliable pallet/container supply point for `SILAGE_ADDITIVE` and `MOLASSES`; includes a minimal loading station because FS25 requires an output mechanism for dispatcher productions. |
 | Washed Potato Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit. |
 | Organic Residue Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active residue preparation fit. |
 | Dry Fuel Processor | `PlanET_Bunker_Klein.i3d` | Acceptable active dry-material processing fit. |

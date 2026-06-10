@@ -60,13 +60,14 @@ Trigger names are not just labels. Their node placement and trigger type need to
 - Pallet, container, and big-bag materials should use `palletTrigger` support when the player is expected to deliver them as pallets or containers.
 - Do not assume a pallet-delivered production input needs a matching bulk `unloadTrigger`. Some greenhouse-style systems combine material unload roots and pallet triggers, while vanilla product stations can use `palletTrigger` directly for pallet-delivered products.
 - A pallet marker can be separate from the actual `palletTrigger` shape. This is useful when the trigger volume should sit at pallet height, while the marker should be easy to see at ground level.
+- Production points with outputs need a real output mechanism. Even a same-fillType dispatcher production that is meant mainly for distribution must expose its output through a `loadingStation` or a pallet spawner, or FS25 can reject placement with `No loading station or pallet spawner for production point`.
 - Bale trigger nodes are not a safe substitute for pallet handling. They can have the wrong collision mask, size, or visual placement even if the XML shape looks similar.
 - Bunker or mixer unload trigger nodes can be visually wrong on a tank/storage model, even when the XML validates.
 - When a placeable's base I3D, trigger node mapping, or trigger geometry changes, test with a freshly placed instance. Existing savegame instances may keep old placement state or make it harder to tell whether the new scene nodes are being used.
 
 ### Design Implication For This Mod
 
-When adding a new placeable that accepts supplies, inspect a working vanilla, DLC, or local-mod example for that material class before selecting trigger nodes. For GBW supply logistics, `WATER` uses a water-marked unload path on the Process Supply Hub, while `SILAGE_ADDITIVE` and `MOLASSES` use a separate Process Pallet Dock with `markerIconPallet.i3d` and `palletTrigger`.
+When adding a new placeable that accepts supplies, inspect a working vanilla, DLC, or local-mod example for that material class before selecting trigger nodes. For GBW supply logistics, `WATER` uses a water-marked unload path on the Process Supply Hub, while `SILAGE_ADDITIVE` and `MOLASSES` use a separate Process Pallet Dock with `markerIconPallet.i3d`, `palletTrigger`, and a minimal output `loadingStation`.
 
 The `v0.2.19.2` wrapper attempt is a negative example: it made the PlanET model invisible and still presented a bulk unload icon for pallet-supplied materials. Do not graft a bulk trailer unload path onto pallet supplies as a shortcut. Split the logistics role or use a proven pallet-capable model.
 

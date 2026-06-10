@@ -2,7 +2,7 @@
 
 This ledger records FS25 log observations that affect development decisions.
 
-Current log checked on 2026-06-10:
+Current log checked on 2026-06-11:
 
 Local FS25 `log.txt` supplied by the maintainer.
 
@@ -29,16 +29,19 @@ The first entries in this table are pre-GBW historical lines from versions befor
 | Root `icon.dds raw format` warnings for GBW packages | GBW performance warning found during `v0.2.19.1` log triage. | Fixed in `v0.2.19.2` by rebuilding core, add-on, and data-pack-template mod icons as DXT5 DDS files and extending validation to reject raw `modDesc.xml` icons. |
 | Process Supply Hub unload trigger was too small, too low, and inside the object | Runtime visual/interaction issue reported in `v0.2.19.0`. | Water side fixed in `v0.2.19.1` by replacing mixer unloading with a water-marked unload trigger. |
 | Process Supply Hub wrapper model became invisible and used a bulk unload icon for pallet supplies | Runtime visual/interaction issue reported in `v0.2.19.2`. | Fixed in `v0.2.19.3` by restoring the direct PlanET water hub and moving `SILAGE_ADDITIVE`/`MOLASSES` to a separate generic pallet dock. |
-| `Input filltype 'MOLASSES' is not supported by unloading station` and same for `SILAGE_ADDITIVE` | GBW warning found in `v0.2.19.1` log triage. | Re-test in `v0.2.19.3` against the separate Process Pallet Dock; do not revive the bulk exact-fill workaround if it fails. |
+| `Input filltype 'MOLASSES' is not supported by unloading station` and same for `SILAGE_ADDITIVE` | GBW warning found in `v0.2.19.1` log triage. | Re-test in `v0.2.19.4` after the Process Pallet Dock placement fix; do not revive the bulk exact-fill workaround if it fails. |
+| `No loading station or pallet spawner for production point` on `processPalletDock.xml` | GBW error found in `v0.2.19.3`; the dock failed placement with `Could not load item`. | Fixed in `v0.2.19.4` by adding a minimal loading station and extending validation so same-fillType dispatcher outputs still need a real output mechanism. |
 
 ## Pending Test Targets
 
-For `v0.2.19.3`, smoke-test the split Process Supply Hub and Process Pallet Dock hotfix:
+For `v0.2.19.4`, smoke-test the Process Pallet Dock loading-station hotfix:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.19.3`
+- confirm core FS25_BgaExtensions loads as version `0.2.19.4`
 - confirm `GBW Process Supply Hub` and `GBW Process Pallet Dock` appear under `GBW BGA`
 - confirm the water unload marker is visible and accessible outside the object
 - confirm `WATER` unloads from a water carrier
+- confirm the pallet dock places without `Could not load item`
+- confirm no `No loading station or pallet spawner` error appears for `processPalletDock.xml`
 - confirm the pallet dock uses the pallet icon, not the bulk trailer unload icon
 - confirm `SILAGE_ADDITIVE` and `MOLASSES` unload through pallet/container handling at the dock
 - confirm no unsupported-unloading-station warning appears for `MOLASSES` or `SILAGE_ADDITIVE`

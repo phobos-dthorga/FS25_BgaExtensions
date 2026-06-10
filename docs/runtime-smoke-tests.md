@@ -15,9 +15,9 @@ CI now checks the common XML mistakes that previously required extra in-game smo
 - construction tabs
 - storage-only production-point fillTypes
 - production inputs are covered by unload, bale, or pallet triggers
-- production outputs are covered by load triggers except explicitly distribution-only supply dispatchers
+- production outputs are covered by load triggers unless the placeable has a real pallet spawner
 - same-fillType dispatcher recipes are allowed only for the Process Supply Hub and Process Pallet Dock
-- the Process Supply Hub uses direct PlanET water handling, while the Process Pallet Dock uses a real pallet marker/trigger rather than bulk unloading
+- the Process Supply Hub uses direct PlanET water handling, while the Process Pallet Dock uses a real pallet marker/trigger plus a load-out station rather than bulk unloading
 - core fermentation-priority balance rules
 - package version alignment and SHA-256 generation
 
@@ -112,8 +112,10 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 
 | Route | Minimum check | Expected result |
 | --- | --- | --- |
+| Placement | Place a fresh dock. | No `Could not load item` overlay appears and the log has no `No loading station or pallet spawner` error. |
 | Pallet marker | Place a fresh dock and inspect the unload marker. | The dock uses the pallet icon, not the trailer/bulk unload icon. |
 | Pallet unload | Unload `SILAGE_ADDITIVE` and `MOLASSES` through pallet/container handling at the dock. | Both supplies enter storage and no unsupported-unloading-station warning appears. |
+| Output mechanism | Inspect loading/distribution behavior after adding supplies. | Additive and molasses are available through the dock's loading station and can be set to distributing. |
 | Additive dispatch | Start silage additive dispatch and set the output to distributing. | Additive can supply biomass-intake additive routes and Fermentation Vessel additive routes. |
 | Molasses dispatch | Start molasses dispatch and set the output to distributing. | Molasses can supply Dry Fuel Processor pelletizing routes. |
 | Stop condition | If pallet supplies still cannot unload at the dock. | Do not revive the bulk exact-fill workaround; pause for a new trigger investigation. |

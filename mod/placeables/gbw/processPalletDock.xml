@@ -69,6 +69,10 @@
             <palletTrigger triggerNode="palletTrigger" aiNode="unloadTriggerAINode" fillTypes="SILAGE_ADDITIVE MOLASSES"/>
         </sellingStation>
 
+        <loadingStation supportsExtension="false">
+            <loadTrigger triggerNode="loadTrigger" aiNode="unloadTriggerAINode" fillTypes="SILAGE_ADDITIVE MOLASSES"/>
+        </loadingStation>
+
         <storage isExtension="false" fillLevelSyncThreshold="100">
             <capacity fillType="SILAGE_ADDITIVE" capacity="5000"/>
             <capacity fillType="MOLASSES" capacity="50000"/>
@@ -82,6 +86,7 @@
         <i3dMapping id="tipOcclusionUpdateAreaStart01" node="0>1|0"/>
         <i3dMapping id="tipOcclusionUpdateAreaEnd01" node="0>1|0|0"/>
         <i3dMapping id="sellingStation" node="0>2"/>
+        <i3dMapping id="loadTrigger" node="0>2|0"/>
         <i3dMapping id="unloadTriggerMarker" node="0>2|1"/>
         <i3dMapping id="unloadTriggerAINode" node="0>2|2"/>
         <i3dMapping id="palletTrigger" node="0>2|4"/>
