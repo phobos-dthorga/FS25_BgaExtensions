@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>Gekko BioWorks</author>
-    <version>0.2.18.0</version>
+    <version>0.2.19.0</version>
     <title>
         <en>GBW BGA Extensions</en>
     </title>
@@ -39,6 +39,9 @@
         <text name="storeItem_gbwPlanetDryFuelYardLarge">
             <en>GBW Dry Fuel Yard - Large</en>
         </text>
+        <text name="storeItem_gbwPlanetProcessSupplyHub">
+            <en>GBW Process Supply Hub</en>
+        </text>
         <text name="function_gbwPlanetSolidBiomassIntake">
             <en>Converts forage, straw, and manure into PlanET feedstock.</en>
         </text>
@@ -53,6 +56,9 @@
         </text>
         <text name="function_gbwPlanetDryFuelProcessor">
             <en>Converts straw and hay into pellet fuel for combustion heat logistics.</en>
+        </text>
+        <text name="function_gbwPlanetProcessSupplyHub">
+            <en>Stores and distributes water, silage additive, and molasses for GBW process logistics.</en>
         </text>
         <text name="construction_tab_gbwBgaProduction">
             <en>GBW BGA</en>
@@ -168,6 +174,15 @@
         <text name="production_gbwStrawPelletsToPlanetSilage">
             <en>Assisted straw pellet fermentation</en>
         </text>
+        <text name="production_gbwProcessSupplyWaterDispatch">
+            <en>Process water dispatch</en>
+        </text>
+        <text name="production_gbwProcessSupplyAdditiveDispatch">
+            <en>Silage additive dispatch</en>
+        </text>
+        <text name="production_gbwProcessSupplyMolassesDispatch">
+            <en>Molasses dispatch</en>
+        </text>
     </l10n>
 
     <dependencies>
@@ -192,6 +207,7 @@
         <storeItem xmlFilename="placeables/gbw/planetBiomassIntakeLarge.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetWetSubstratePrep.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetFermentationVessel.xml"/>
+        <storeItem xmlFilename="placeables/gbw/planetProcessSupplyHub.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetDryFuelProcessor.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetDryFuelYardMedium.xml"/>
         <storeItem xmlFilename="placeables/gbw/planetDryFuelYardLarge.xml"/>

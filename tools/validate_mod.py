@@ -145,6 +145,13 @@ DATA_PACK_FILLTYPE_RE = re.compile(r"^[A-Z0-9_]+$")
 DATA_PACK_ROOT_ATTRS = {"apiVersion", "author", "packId", "title"}
 DATA_PACK_ROUTE_ATTRS = {"id", "inputFillType", "target", "template", "tier"}
 
+IDENTITY_DISPATCHER_PRODUCTIONS = {
+    "gbwProcessSupplyAdditiveDispatch": {"SILAGE_ADDITIVE": 1.0},
+    "gbwProcessSupplyMolassesDispatch": {"MOLASSES": 100.0},
+    "gbwProcessSupplyWaterDispatch": {"WATER": 500.0},
+}
+IDENTITY_DISPATCHER_FILE = "planetProcessSupplyHub.xml"
+
 DEPENDENCY_CONSTRUCTION_TABS = {
     "FS25_BgaExtensions": {
         "gbwBgaCompatibility": "production",
@@ -399,6 +406,16 @@ def production_output_filltypes(tree: ET.ElementTree) -> set[str]:
         if fill_type:
             refs.add(fill_type.upper())
     return refs
+
+
+def production_amounts(production: ET.Element, section: str) -> dict[str, float]:
+    result: dict[str, float] = {}
+    for node in production.findall(f"./{section}/*"):
+        fill_type = (node.get("fillType") or "").upper()
+        if not fill_type:
+            continue
+        result[fill_type] = result.get(fill_type, 0.0) + float(node.get("amount", "0"))
+    return result
 
 
 def storage_filltypes(tree: ET.ElementTree) -> set[str]:
@@ -734,6 +751,53 @@ def validate_production_trigger_coverage(
         validation.error(f"Production output '{fill_type}' is not available from load triggers in {relative_path}")
 
 
+def validate_identity_dispatcher_rules(
+    path: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    validation: Validation,
+) -> None:
+    relative_path = path.relative_to(repo_root)
+
+    for production in tree.findall(".//productions/production"):
+        production_id = production.get("id", "")
+        inputs = production_amounts(production, "inputs")
+        outputs = production_amounts(production, "outputs")
+        shared_filltypes = set(inputs).intersection(outputs)
+        if not shared_filltypes:
+            continue
+
+        allowed = IDENTITY_DISPATCHER_PRODUCTIONS.get(production_id)
+        if path.name != IDENTITY_DISPATCHER_FILE or allowed is None:
+            validation.error(
+                f"Production '{production_id}' has same input/output fillType(s) "
+                f"{', '.join(sorted(shared_filltypes))} in {relative_path}; only "
+                f"{IDENTITY_DISPATCHER_FILE} dispatcher recipes may do this"
+            )
+            continue
+
+        allowed_filltypes = set(allowed)
+        if set(inputs) != allowed_filltypes or set(outputs) != allowed_filltypes:
+            validation.error(
+                f"Dispatcher production '{production_id}' must only pass through "
+                f"{', '.join(sorted(allowed_filltypes))} in {relative_path}"
+            )
+            continue
+
+        for fill_type, expected_amount in allowed.items():
+            if inputs.get(fill_type) != expected_amount or outputs.get(fill_type) != expected_amount:
+                validation.error(
+                    f"Dispatcher production '{production_id}' must pass through {expected_amount:g} l "
+                    f"of {fill_type} per cycle in {relative_path}"
+                )
+
+        cycles = float(production.get("cyclesPerHour", "0"))
+        if cycles != 60.0:
+            validation.error(
+                f"Dispatcher production '{production_id}' must run at 60 cycles/hour in {relative_path}"
+            )
+
+
 def validate_construction_tabs(
     path: Path,
     repo_root: Path,
@@ -928,6 +992,7 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
         validate_construction_tabs(path, repo_root, tree, known_construction_tabs, validation)
 
         if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
+            validate_identity_dispatcher_rules(path, repo_root, tree, validation)
             validate_production_trigger_coverage(path, repo_root, tree, validation)
             validate_fermentation_priority_rules(path, repo_root, tree, validation)
 

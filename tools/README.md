@@ -51,6 +51,7 @@ Run `tools/validate_mod.py` with Python 3.11+ to perform static checks that do n
 - active fillType reference checks
 - optional fillType guard checks
 - production input/output trigger coverage checks
+- same-fillType dispatcher recipe guard checks
 - core fermentation-priority balance checks
 - storage-only production-point guard checks
 - GBW construction tab checks

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<placeable type="productionPoint" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
+    <storeData>
+        <name>$l10n_storeItem_gbwPlanetProcessSupplyHub</name>
+        <functions>
+            <function>$l10n_function_gbwPlanetProcessSupplyHub</function>
+        </functions>
+        <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_GuelleLager.dds</image>
+        <price>65000</price>
+        <dailyUpkeep>20</dailyUpkeep>
+        <lifetime>1000</lifetime>
+        <rotation>0</rotation>
+        <brand>PLANET</brand>
+        <species>PLACEABLE</species>
+        <category>productionPoints</category>
+        <brush>
+            <type>placeable</type>
+            <category>production</category>
+            <tab>gbwBgaProduction</tab>
+        </brush>
+    </storeData>
+
+    <base>
+        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_GuelleLager.i3d</filename>
+        <canBeRenamed>true</canBeRenamed>
+        <boughtWithFarmland>true</boughtWithFarmland>
+    </base>
+
+    <placement useRandomYRotation="false" useManualYRotation="true">
+        <testAreas>
+            <testArea startNode="testArea1Start" endNode="testArea1End"/>
+        </testAreas>
+        <sounds>
+            <place template="smallImp" pitchScale="1.4"/>
+        </sounds>
+    </placement>
+
+    <clearAreas>
+        <clearArea startNode="clearArea1Start" widthNode="clearArea1Width" heightNode="clearArea1Height"/>
+    </clearAreas>
+
+    <leveling requireLeveling="true" maxSmoothDistance="10" maxSlope="75" maxEdgeAngle="30">
+        <levelAreas>
+            <levelArea startNode="clearArea1Start" widthNode="clearArea1Width" heightNode="clearArea1Height" groundType="asphalt"/>
+        </levelAreas>
+    </leveling>
+
+    <indoorAreas>
+        <indoorArea startNode="indoorArea1Start" widthNode="indoorArea1Width" heightNode="indoorArea1Height"/>
+    </indoorAreas>
+
+    <tipOcclusionUpdateAreas>
+        <tipOcclusionUpdateArea startNode="tipOcclusionUpdateArea1Start" endNode="tipOcclusionUpdateArea1End"/>
+    </tipOcclusionUpdateAreas>
+
+    <ai>
+        <updateAreas>
+            <updateArea startNode="tipOcclusionUpdateArea1Start" endNode="tipOcclusionUpdateArea1End"/>
+        </updateAreas>
+    </ai>
+
+    <infoTrigger triggerNode="infoTrigger"/>
+
+    <triggerMarkers>
+        <triggerMarker node="unloadTriggerMixerMarker" filename="$data/shared/assets/marker/markerIconUnload.i3d" id="UNLOAD" adjustToGround="false"/>
+        <triggerMarker node="loadTriggerMarker" filename="$data/shared/assets/marker/markerIconLoad.i3d" id="LOAD" adjustToGround="true"/>
+        <triggerMarker node="playerTriggerMarker" filename="$data/shared/assets/marker/markerIconWrench.i3d" id="WRENCH" adjustToGround="true"/>
+    </triggerMarkers>
+
+    <hotspots>
+        <hotspot type="PRODUCTION_POINT" linkNode="hotspotMarker" teleportNode="teleportNode"/>
+    </hotspots>
+
+    <productionPoint>
+        <productions sharedThroughputCapacity="false">
+            <production id="gbwProcessSupplyWaterDispatch" name="$l10n_production_gbwProcessSupplyWaterDispatch" cyclesPerHour="60" costsPerActiveHour="1">
+                <inputs><input fillType="WATER" amount="500"/></inputs>
+                <outputs><output fillType="WATER" amount="500"/></outputs>
+            </production>
+            <production id="gbwProcessSupplyAdditiveDispatch" name="$l10n_production_gbwProcessSupplyAdditiveDispatch" cyclesPerHour="60" costsPerActiveHour="1">
+                <inputs><input fillType="SILAGE_ADDITIVE" amount="1"/></inputs>
+                <outputs><output fillType="SILAGE_ADDITIVE" amount="1"/></outputs>
+            </production>
+            <production id="gbwProcessSupplyMolassesDispatch" name="$l10n_production_gbwProcessSupplyMolassesDispatch" cyclesPerHour="60" costsPerActiveHour="1">
+                <inputs><input fillType="MOLASSES" amount="100"/></inputs>
+                <outputs><output fillType="MOLASSES" amount="100"/></outputs>
+            </production>
+        </productions>
+
+        <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="WATER SILAGE_ADDITIVE MOLASSES"/>
+        </sellingStation>
+
+        <loadingStation supportsExtension="false">
+            <loadTrigger triggerNode="loadTrigger" fillTypes="WATER SILAGE_ADDITIVE MOLASSES" aiNode="loadTriggerAiNode"/>
+        </loadingStation>
+
+        <storage isExtension="false" fillLevelSyncThreshold="100">
+            <capacity fillType="WATER" capacity="500000"/>
+            <capacity fillType="SILAGE_ADDITIVE" capacity="5000"/>
+            <capacity fillType="MOLASSES" capacity="50000"/>
+        </storage>
+
+        <playerTrigger node="playerTrigger"/>
+
+        <sounds>
+            <idle template="dairyIdle" linkNode="0>" outerRadius="4" volumeScale="0.2"/>
+            <active template="dairyWork" linkNode="0>" outerRadius="8" volumeScale="0.2"/>
+        </sounds>
+    </productionPoint>
+
+    <i3dMappings>
+        <i3dMapping id="clearArea1Start" node="0>0|0"/>
+        <i3dMapping id="clearArea1Width" node="0>0|0|0"/>
+        <i3dMapping id="clearArea1Height" node="0>0|0|1"/>
+        <i3dMapping id="indoorArea1Start" node="0>1|0"/>
+        <i3dMapping id="indoorArea1Width" node="0>1|0|0"/>
+        <i3dMapping id="indoorArea1Height" node="0>1|0|1"/>
+        <i3dMapping id="testArea1Start" node="0>2|0"/>
+        <i3dMapping id="testArea1End" node="0>2|0|0"/>
+        <i3dMapping id="tipOcclusionUpdateArea1Start" node="0>3|0"/>
+        <i3dMapping id="tipOcclusionUpdateArea1End" node="0>3|0|0"/>
+        <i3dMapping id="infoTrigger" node="0>4"/>
+        <i3dMapping id="hotspotMarker" node="0>9"/>
+        <i3dMapping id="teleportNode" node="0>10"/>
+        <i3dMapping id="sellingStation" node="0>11"/>
+        <i3dMapping id="loadTrigger" node="0>11|0|0"/>
+        <i3dMapping id="loadTriggerMarker" node="0>11|0|1"/>
+        <i3dMapping id="loadTriggerAiNode" node="0>11|0|2"/>
+        <i3dMapping id="unloadTriggerMixer" node="0>11|2|2"/>
+        <i3dMapping id="unloadTriggerMixerMarker" node="0>11|2|3"/>
+        <i3dMapping id="playerTrigger" node="0>11|4"/>
+        <i3dMapping id="playerTriggerMarker" node="0>11|4|0"/>
+    </i3dMappings>
+</placeable>

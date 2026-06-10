@@ -2,7 +2,7 @@
 
 This ledger records FS25 log observations that affect development decisions.
 
-Current log checked on 2026-06-09:
+Current log checked on 2026-06-10:
 
 Local FS25 `log.txt` supplied by the maintainer.
 
@@ -29,14 +29,16 @@ The first entries in this table are pre-GBW historical lines from versions befor
 
 ## Pending Test Targets
 
-For `v0.2.18.0`, smoke-test the Stage 1 data-pack API:
+For `v0.2.19.0`, smoke-test the Process Supply Hub:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.18.0`
-- confirm `FS25_GBWDataPack_Template` registers through `GBWDataPacks.registerPack`
-- confirm the template `GRASS_WINDROW` route is prepared
-- confirm the template missing fillType route is skipped with an info line, not a warning
-- confirm no data-pack gameplay recipes are injected in Stage 1
+- confirm core FS25_BgaExtensions loads as version `0.2.19.0`
+- confirm `GBW Process Supply Hub` appears under `GBW BGA`
+- confirm `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES` can be unloaded and loaded
+- confirm dispatcher outputs can be set to distributing
+- confirm distributed supplies feed the Dry Fuel Processor, Fermentation Vessel, and biomass-intake additive routes
 - confirm no GBW-owned warnings or errors appear in the FS25 log
+
+The user reported `v0.2.18.0` testing complete before the Process Supply Hub slice. A follow-up log scan showed no GBW-owned warnings or errors; observed errors and warnings were external to GBW.
 
 ## User Test Confirmation
 

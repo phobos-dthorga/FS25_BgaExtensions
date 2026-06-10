@@ -16,6 +16,7 @@ CI now checks the common XML mistakes that previously required extra in-game smo
 - storage-only production-point fillTypes
 - production inputs are covered by unload or bale triggers
 - production outputs are covered by load triggers
+- same-fillType dispatcher recipes are allowed only for the Process Supply Hub
 - core fermentation-priority balance rules
 - package version alignment and SHA-256 generation
 
@@ -54,6 +55,7 @@ If that pass is clean and CI passed, broader personal testing can wait until the
   - GBW PlanET Biomass Intake - Large
   - GBW Wet Substrate Prep
   - GBW Fermentation Vessel
+  - GBW Process Supply Hub
   - GBW Dry Fuel Processor
   - GBW Dry Fuel Yard - Medium
   - GBW Dry Fuel Yard - Large
@@ -94,6 +96,16 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 | Straw pellet fermentation | Unload `STRAW_PELLETS`, `WATER`, and `SILAGE_ADDITIVE`, start assisted straw pellet fermentation. | `SILAGE_IN` is produced, the route is readable, and it stays weaker than the hay pellet route. |
 | Additive gate | Try to run a pellet fermentation route without `SILAGE_ADDITIVE`. | No plain pellet fermentation route is available. |
 | Visual fit | Place the vessel beside a PlanET BGA layout. | The PlanET fermenter model reads as a fermentation step, not a crop-prep bunker. |
+
+## Process Supply Hub Checks
+
+| Route | Minimum check | Expected result |
+| --- | --- | --- |
+| Water dispatch | Unload `WATER`, start process water dispatch, and set the output to distributing. | Water can supply the Dry Fuel Processor and Fermentation Vessel without a new GBW fillType. |
+| Additive dispatch | Unload `SILAGE_ADDITIVE`, start silage additive dispatch, and set the output to distributing. | Additive can supply biomass-intake additive routes and Fermentation Vessel additive routes. |
+| Molasses dispatch | Unload `MOLASSES`, start molasses dispatch, and set the output to distributing. | Molasses can supply Dry Fuel Processor pelletizing routes. |
+| Manual load-out | Set outputs away from distributing and load each material out. | The hub remains useful as a normal supply buffer when automatic distribution is not desired. |
+| Stop condition | Watch for same-input/same-output recipe warnings, loops, or UI oddities. | If the pattern misbehaves, do not add internal GBW supply fillTypes without a new design decision. |
 
 ## Dry Fuel Processor Checks
 

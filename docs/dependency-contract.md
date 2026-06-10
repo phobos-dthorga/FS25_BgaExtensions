@@ -6,7 +6,7 @@ This document records what `FS25_BgaExtensions` expects from required dependenci
 
 | Dependency | Why it is required | Contract used by GBW | Verification source |
 | --- | --- | --- | --- |
-| `FS25_PlanET_BGA_Modular` | PlanET-specific intake, prep, and fermentation modules use PlanET internal feedstocks and PlanET assets. | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, plus referenced PlanET bunker and fermenter models and store icons. | Local mod XML and game log on 2026-06-07: loaded as version `1.0.0.1`, with 9 fillTypes loaded. |
+| `FS25_PlanET_BGA_Modular` | PlanET-specific intake, prep, fermentation, and supply modules use PlanET internal feedstocks and PlanET assets. | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, plus referenced PlanET bunker, fermenter, slurry-storage models, and store icons. | Local mod XML and game log on 2026-06-07: loaded as version `1.0.0.1`, with 9 fillTypes loaded. |
 | `pdlc_strawHarvestPack` | Pellet output, molasses use, and dry fuel storage target the HALLSYS Pellet Heat Plant ecosystem. | `STRAW_PELLETS`, `HAY_PELLETS`, `MOLASSES`, and installed pDLC runtime support for pellet handling. | Game log and save data on 2026-06-09: pDLC version `1.1.0.0`, 3 fillTypes loaded, plus observed `HAY_PELLETS`, `STRAW_PELLETS`, and `MOLASSES` save entries. |
 
 ## GBW-Owned Contract
@@ -21,6 +21,8 @@ This document records what `FS25_BgaExtensions` expects from required dependenci
 These GBW mash fillTypes are not meant to become broad farm commodities yet. They exist to avoid pretending every wet crop is sugar beet while still keeping the PlanET handoff simple.
 
 GBW may reference PlanET model and icon paths only while `FS25_PlanET_BGA_Modular` remains a declared dependency. The GBW package must not vendor PlanET assets.
+
+The Process Supply Hub may pass through existing `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES` for distribution. These are logistics recipes, not new materials, and must not become GBW-owned fillTypes unless the current same-fillType dispatcher pattern fails in-game and a new design decision approves internal buffers.
 
 ## Base Game Materials
 
