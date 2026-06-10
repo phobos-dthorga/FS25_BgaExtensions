@@ -22,7 +22,7 @@ These GBW mash fillTypes are not meant to become broad farm commodities yet. The
 
 GBW may reference PlanET model and icon paths only while `FS25_PlanET_BGA_Modular` remains a declared dependency. The GBW package must not vendor PlanET assets.
 
-The Process Supply Hub may pass through existing `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES` for distribution. These are logistics recipes, not new materials, and must not become GBW-owned fillTypes unless the current same-fillType dispatcher pattern fails in-game and a new design decision approves internal buffers.
+The Process Supply Hub may pass through existing `WATER` for distribution. The Process Pallet Dock may pass through existing `SILAGE_ADDITIVE` and `MOLASSES` for distribution. These are logistics recipes, not new materials, and must not become GBW-owned fillTypes unless the current same-fillType dispatcher pattern fails in-game and a new design decision approves internal buffers.
 
 ## Base Game Materials
 

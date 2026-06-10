@@ -43,13 +43,13 @@ This is a better visual fit because the process is no longer framed as a bunker 
 
 Starting with `v0.2.19.0`, process supply logistics move into `placeables/gbw/planetProcessSupplyHub.xml`, which references PlanET's `PlanET_GuelleLager.i3d` model and store icon from the same dependency.
 
-This is a good fit because the building already reads as a liquid or process-material storage point. GBW uses it as a production-style distributor for `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES` so those materials can be routed automatically to nearby process buildings.
+This is a good fit for `WATER` because the building already reads as a liquid or process-material storage point. GBW uses it as a production-style distributor so process water can be routed automatically to nearby process buildings.
 
 `v0.2.19.0` reused the model's mixer unload trigger for all three materials. In-game testing showed that trigger was too small, too low, and visually inside the object. Starting with `v0.2.19.1`, the hub uses a water-marked liquid unload path for `WATER`, following the pattern observed in the Orchards/Greenhouses advanced greenhouse XML.
 
-The first pallet implementation still reused PlanET's front bale trigger. In-game testing showed that this was still a poor fit for pallet/container delivery because the marker and usable trigger area did not present as a clear external service point. Log triage also showed that FS25 did not count the pallet route as full unloading-station coverage for `MOLASSES` and `SILAGE_ADDITIVE`. Starting with `v0.2.19.2`, the hub uses a small GBW wrapper I3D that keeps the PlanET slurry-storage scene and shape resources by dependency reference, but adds a dedicated pallet collision trigger, exact-fill unload root, and separate unload marker in front of the model.
+The first pallet implementations reused PlanET's front bale trigger, then tried a small wrapper I3D with custom trigger nodes. In-game testing showed that this was still a poor fit: the wrapper made the PlanET model invisible, and the exact-fill unload root presented a bulk trailer unload icon rather than a pallet handoff for `MOLASSES` and `SILAGE_ADDITIVE`.
 
-Do not use bale trigger nodes as a stand-in for pallet or container logistics. Pallet routes need a pallet-capable trigger shape and a separate, visible marker transform when the model does not already provide a suitable service node.
+Starting with `v0.2.19.3`, `SILAGE_ADDITIVE` and `MOLASSES` move to `placeables/gbw/processPalletDock.xml`, which uses the vanilla generic product unloading pad and `markerIconPallet.i3d`. Do not use bale trigger nodes, wrapper I3Ds, or bulk trailer unload icons as a stand-in for pallet or container logistics.
 
 PlanET terms used in source names:
 
@@ -61,7 +61,7 @@ PlanET terms used in source names:
 - `Fackel`: flare.
 - `Strom Verteiler`: power distributor.
 
-Do not copy PlanET model, texture, or store-icon binary files into GBW unless clear license permission is recorded. Reference them through `$moddir$FS25_PlanET_BGA_Modular/...` while the PlanET dependency is declared. A GBW wrapper I3D may add project-owned trigger nodes when the dependency model's built-in trigger nodes are not suitable, provided the wrapper continues to reference PlanET resources rather than vendoring their binary assets.
+Do not copy PlanET model, texture, or store-icon binary files into GBW unless clear license permission is recorded. Reference them through `$moddir$FS25_PlanET_BGA_Modular/...` while the PlanET dependency is declared. Do not use a GBW wrapper I3D around remote PlanET shape resources unless a future isolated test proves that pattern renders correctly.
 
 ## Current Placeable Model Fit
 
@@ -69,7 +69,8 @@ Do not copy PlanET model, texture, or store-icon binary files into GBW unless cl
 | --- | --- | --- |
 | Wet Substrate Prep | `PlanET_Bunker_Klein.i3d` | Good active wet-material mixing fit. |
 | Fermentation Vessel | `PlanET_Fermenter100.i3d` | Good fermentation-tank fit for mash fermentation. |
-| Process Supply Hub | GBW wrapper around `PlanET_GuelleLager.i3d` resources | Good process-supply storage and distribution fit; requires water/pallet trigger handling rather than mixer or bale-trigger unloading. |
+| Process Supply Hub | `PlanET_GuelleLager.i3d` | Good process-water storage and distribution fit; water uses a dedicated water-marked unload path. |
+| Process Pallet Dock | `sellingStationProducts.i3d` | Plain but reliable pallet/container supply point for `SILAGE_ADDITIVE` and `MOLASSES`. |
 | Washed Potato Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit. |
 | Organic Residue Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active residue preparation fit. |
 | Dry Fuel Processor | `PlanET_Bunker_Klein.i3d` | Acceptable active dry-material processing fit. |

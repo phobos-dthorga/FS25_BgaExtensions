@@ -15,9 +15,9 @@ CI now checks the common XML mistakes that previously required extra in-game smo
 - construction tabs
 - storage-only production-point fillTypes
 - production inputs are covered by unload, bale, or pallet triggers
-- production outputs are covered by load triggers
-- same-fillType dispatcher recipes are allowed only for the Process Supply Hub
-- the Process Supply Hub uses water-marker and dedicated pallet-trigger handling rather than mixer or bale-trigger unloading
+- production outputs are covered by load triggers except explicitly distribution-only supply dispatchers
+- same-fillType dispatcher recipes are allowed only for the Process Supply Hub and Process Pallet Dock
+- the Process Supply Hub uses direct PlanET water handling, while the Process Pallet Dock uses a real pallet marker/trigger rather than bulk unloading
 - core fermentation-priority balance rules
 - package version alignment and SHA-256 generation
 
@@ -57,6 +57,7 @@ If that pass is clean and CI passed, broader personal testing can wait until the
   - GBW Wet Substrate Prep
   - GBW Fermentation Vessel
   - GBW Process Supply Hub
+  - GBW Process Pallet Dock
   - GBW Dry Fuel Processor
   - GBW Dry Fuel Yard - Medium
   - GBW Dry Fuel Yard - Large
@@ -103,12 +104,19 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 | Route | Minimum check | Expected result |
 | --- | --- | --- |
 | Water unload | Unload `WATER` from a water carrier at the water marker. | The marker and trigger are outside the object and water enters storage. |
-| Pallet unload | Place a fresh hub, then unload `SILAGE_ADDITIVE` and `MOLASSES` through pallet/container handling at the pallet marker. | The marker and trigger are outside the object, both supplies enter storage, no unsupported-unloading-station warning appears, and the old mixer/bale trigger nodes are not used. |
 | Water dispatch | Start process water dispatch and set the output to distributing. | Water can supply the Dry Fuel Processor and Fermentation Vessel without a new GBW fillType. |
+| Visual fit | Place a fresh hub. | The PlanET slurry-storage model is visible; no wrapper-model invisibility appears. |
+| Stop condition | Watch for same-input/same-output recipe warnings, loops, or UI oddities. | If the pattern misbehaves, do not add internal GBW supply fillTypes without a new design decision. |
+
+## Process Pallet Dock Checks
+
+| Route | Minimum check | Expected result |
+| --- | --- | --- |
+| Pallet marker | Place a fresh dock and inspect the unload marker. | The dock uses the pallet icon, not the trailer/bulk unload icon. |
+| Pallet unload | Unload `SILAGE_ADDITIVE` and `MOLASSES` through pallet/container handling at the dock. | Both supplies enter storage and no unsupported-unloading-station warning appears. |
 | Additive dispatch | Start silage additive dispatch and set the output to distributing. | Additive can supply biomass-intake additive routes and Fermentation Vessel additive routes. |
 | Molasses dispatch | Start molasses dispatch and set the output to distributing. | Molasses can supply Dry Fuel Processor pelletizing routes. |
-| Manual load-out | Set outputs away from distributing and load each material out. | The hub remains useful as a normal supply buffer when automatic distribution is not desired. |
-| Stop condition | Watch for same-input/same-output recipe warnings, loops, or UI oddities. | If the pattern misbehaves, do not add internal GBW supply fillTypes without a new design decision. |
+| Stop condition | If pallet supplies still cannot unload at the dock. | Do not revive the bulk exact-fill workaround; pause for a new trigger investigation. |
 
 ## Dry Fuel Processor Checks
 

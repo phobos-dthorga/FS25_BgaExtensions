@@ -47,6 +47,8 @@ Observed source:
 
 - `FS25_orchardsAndGreenhouses_crossplay.zip`
 - Greenhouse XML uses a water-specific unload marker, a normal unload trigger for `WATER`, and separate `palletTrigger` entries for water, compost, and liquid fertilizer.
+- Base-game `mapUS/wagonBuilder/wagonBuilder.xml` uses a `palletTrigger` with `$data/shared/assets/marker/markerIconPallet.i3d` for pallet-delivered products.
+- Base-game `$data/placeables/shared/sellingStationGeneric/sellingStationProducts.i3d` provides a compact generic pallet-capable unloading pad.
 - Base-game `SILAGE_ADDITIVE` is supplied through a pallet fill unit.
 - Observed on 2026-06-10 while fixing the `GBW Process Supply Hub`.
 
@@ -56,7 +58,7 @@ Trigger names are not just labels. Their node placement and trigger type need to
 
 - Water logistics may need the water marker, `$data/shared/assets/marker/markerIconWater.i3d`, and a water-specific unload trigger positioned for tankers or water carriers.
 - Pallet, container, and big-bag materials should use `palletTrigger` support when the player is expected to deliver them as pallets or containers.
-- Production-point inputs may still need a matching `unloadTrigger` entry even when delivered by pallet. Greenhouses use both: an unload root for the material and a pallet trigger for the physical pallet/container handoff.
+- Do not assume a pallet-delivered production input needs a matching bulk `unloadTrigger`. Some greenhouse-style systems combine material unload roots and pallet triggers, while vanilla product stations can use `palletTrigger` directly for pallet-delivered products.
 - A pallet marker can be separate from the actual `palletTrigger` shape. This is useful when the trigger volume should sit at pallet height, while the marker should be easy to see at ground level.
 - Bale trigger nodes are not a safe substitute for pallet handling. They can have the wrong collision mask, size, or visual placement even if the XML shape looks similar.
 - Bunker or mixer unload trigger nodes can be visually wrong on a tank/storage model, even when the XML validates.
@@ -64,9 +66,9 @@ Trigger names are not just labels. Their node placement and trigger type need to
 
 ### Design Implication For This Mod
 
-When adding a new placeable that accepts supplies, inspect a working vanilla, DLC, or local-mod example for that material class before selecting trigger nodes. For the Process Supply Hub, `WATER` should use a water-marked unload path, while `SILAGE_ADDITIVE` and `MOLASSES` should have both an unload-root entry and a dedicated pallet trigger/marker.
+When adding a new placeable that accepts supplies, inspect a working vanilla, DLC, or local-mod example for that material class before selecting trigger nodes. For GBW supply logistics, `WATER` uses a water-marked unload path on the Process Supply Hub, while `SILAGE_ADDITIVE` and `MOLASSES` use a separate Process Pallet Dock with `markerIconPallet.i3d` and `palletTrigger`.
 
-The `v0.2.19.1` test proved that a visible pallet marker plus `palletTrigger` entry was not enough for the Process Supply Hub: FS25 still logged unsupported-unloading-station warnings for pallet-supplied production inputs. The `v0.2.19.2` fix pairs the physical pallet trigger with an exact-fill unload root for `SILAGE_ADDITIVE` and `MOLASSES`.
+The `v0.2.19.2` wrapper attempt is a negative example: it made the PlanET model invisible and still presented a bulk unload icon for pallet-supplied materials. Do not graft a bulk trailer unload path onto pallet supplies as a shortcut. Split the logistics role or use a proven pallet-capable model.
 
 ## Open Verification Tasks
 

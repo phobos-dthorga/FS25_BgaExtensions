@@ -28,21 +28,20 @@ The first entries in this table are pre-GBW historical lines from versions befor
 | `hud_fill_gbw*Mash.dds raw format` | GBW warning found in `v0.2.15.0`; all four mash HUD icons loaded as uncompressed DDS and generated repeated performance warnings. | Fixed in `v0.2.15.1` by rebuilding mash HUD icons as PlanET-style DXT5 DDS files and changing validation to reject uncompressed HUD DDS files. |
 | Root `icon.dds raw format` warnings for GBW packages | GBW performance warning found during `v0.2.19.1` log triage. | Fixed in `v0.2.19.2` by rebuilding core, add-on, and data-pack-template mod icons as DXT5 DDS files and extending validation to reject raw `modDesc.xml` icons. |
 | Process Supply Hub unload trigger was too small, too low, and inside the object | Runtime visual/interaction issue reported in `v0.2.19.0`. | Water side fixed in `v0.2.19.1` by replacing mixer unloading with a water-marked unload trigger. |
-| Process Supply Hub pallet trigger still used a poor visual/interaction point | Runtime visual/interaction issue reported in `v0.2.19.1`. | Fixed in `v0.2.19.2` by moving to a GBW wrapper I3D with a dedicated pallet trigger shape and separate marker. |
-| `Input filltype 'MOLASSES' is not supported by unloading station` and same for `SILAGE_ADDITIVE` | GBW warning found in `v0.2.19.1` log triage. | Fixed in `v0.2.19.2` by pairing the pallet trigger with an exact-fill unload root for pallet-supplied materials. |
+| Process Supply Hub wrapper model became invisible and used a bulk unload icon for pallet supplies | Runtime visual/interaction issue reported in `v0.2.19.2`. | Fixed in `v0.2.19.3` by restoring the direct PlanET water hub and moving `SILAGE_ADDITIVE`/`MOLASSES` to a separate generic pallet dock. |
+| `Input filltype 'MOLASSES' is not supported by unloading station` and same for `SILAGE_ADDITIVE` | GBW warning found in `v0.2.19.1` log triage. | Re-test in `v0.2.19.3` against the separate Process Pallet Dock; do not revive the bulk exact-fill workaround if it fails. |
 
 ## Pending Test Targets
 
-For `v0.2.19.2`, smoke-test the Process Supply Hub pallet trigger hotfix:
+For `v0.2.19.3`, smoke-test the split Process Supply Hub and Process Pallet Dock hotfix:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.19.2`
-- confirm `GBW Process Supply Hub` appears under `GBW BGA`
+- confirm core FS25_BgaExtensions loads as version `0.2.19.3`
+- confirm `GBW Process Supply Hub` and `GBW Process Pallet Dock` appear under `GBW BGA`
 - confirm the water unload marker is visible and accessible outside the object
 - confirm `WATER` unloads from a water carrier
-- confirm the pallet unload marker is visible and accessible outside the object on a freshly placed hub
-- confirm `SILAGE_ADDITIVE` and `MOLASSES` unload through pallet/container handling
+- confirm the pallet dock uses the pallet icon, not the bulk trailer unload icon
+- confirm `SILAGE_ADDITIVE` and `MOLASSES` unload through pallet/container handling at the dock
 - confirm no unsupported-unloading-station warning appears for `MOLASSES` or `SILAGE_ADDITIVE`
-- confirm `WATER`, `SILAGE_ADDITIVE`, and `MOLASSES` can be loaded
 - confirm dispatcher outputs can be set to distributing
 - confirm distributed supplies feed the Dry Fuel Processor, Fermentation Vessel, and biomass-intake additive routes
 - confirm no GBW-owned warnings or errors appear in the FS25 log

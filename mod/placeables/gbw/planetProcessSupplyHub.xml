@@ -6,8 +6,8 @@
             <function>$l10n_function_gbwPlanetProcessSupplyHub</function>
         </functions>
         <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_GuelleLager.dds</image>
-        <price>65000</price>
-        <dailyUpkeep>20</dailyUpkeep>
+        <price>45000</price>
+        <dailyUpkeep>15</dailyUpkeep>
         <lifetime>1000</lifetime>
         <rotation>0</rotation>
         <brand>PLANET</brand>
@@ -21,7 +21,7 @@
     </storeData>
 
     <base>
-        <filename>placeables/gbw/planetProcessSupplyHub.i3d</filename>
+        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_GuelleLager.i3d</filename>
         <canBeRenamed>true</canBeRenamed>
         <boughtWithFarmland>true</boughtWithFarmland>
     </base>
@@ -63,7 +63,6 @@
 
     <triggerMarkers>
         <triggerMarker node="unloadTriggerWaterMarker" filename="$data/shared/assets/marker/markerIconWater.i3d" adjustToGround="true"/>
-        <triggerMarker node="palletTriggerMarker" filename="$data/shared/assets/marker/markerIconUnload.i3d" adjustToGround="true"/>
         <triggerMarker node="loadTriggerMarker" filename="$data/shared/assets/marker/markerIconLoad.i3d" id="LOAD" adjustToGround="true"/>
         <triggerMarker node="playerTriggerMarker" filename="$data/shared/assets/marker/markerIconWrench.i3d" id="WRENCH" adjustToGround="true"/>
     </triggerMarkers>
@@ -78,30 +77,18 @@
                 <inputs><input fillType="WATER" amount="500"/></inputs>
                 <outputs><output fillType="WATER" amount="500"/></outputs>
             </production>
-            <production id="gbwProcessSupplyAdditiveDispatch" name="$l10n_production_gbwProcessSupplyAdditiveDispatch" cyclesPerHour="60" costsPerActiveHour="1">
-                <inputs><input fillType="SILAGE_ADDITIVE" amount="1"/></inputs>
-                <outputs><output fillType="SILAGE_ADDITIVE" amount="1"/></outputs>
-            </production>
-            <production id="gbwProcessSupplyMolassesDispatch" name="$l10n_production_gbwProcessSupplyMolassesDispatch" cyclesPerHour="60" costsPerActiveHour="1">
-                <inputs><input fillType="MOLASSES" amount="100"/></inputs>
-                <outputs><output fillType="MOLASSES" amount="100"/></outputs>
-            </production>
         </productions>
 
         <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
             <unloadTrigger exactFillRootNode="unloadTriggerWater" fillTypes="WATER" aiNode="unloadTriggerWaterAiNode"/>
-            <unloadTrigger exactFillRootNode="palletSupplyUnloadTrigger" fillTypes="SILAGE_ADDITIVE MOLASSES"/>
-            <palletTrigger triggerNode="palletTrigger" fillTypes="WATER SILAGE_ADDITIVE MOLASSES"/>
         </sellingStation>
 
         <loadingStation supportsExtension="false">
-            <loadTrigger triggerNode="loadTrigger" fillTypes="WATER SILAGE_ADDITIVE MOLASSES" aiNode="loadTriggerAiNode"/>
+            <loadTrigger triggerNode="loadTrigger" fillTypes="WATER" aiNode="loadTriggerAiNode"/>
         </loadingStation>
 
         <storage isExtension="false" fillLevelSyncThreshold="100">
             <capacity fillType="WATER" capacity="500000"/>
-            <capacity fillType="SILAGE_ADDITIVE" capacity="5000"/>
-            <capacity fillType="MOLASSES" capacity="50000"/>
         </storage>
 
         <playerTrigger node="playerTrigger"/>
@@ -133,9 +120,6 @@
         <i3dMapping id="unloadTriggerWater" node="0>11|1|0"/>
         <i3dMapping id="unloadTriggerWaterMarker" node="0>11|1|1"/>
         <i3dMapping id="unloadTriggerWaterAiNode" node="0>11|1|2"/>
-        <i3dMapping id="palletTrigger" node="0>11|5|0"/>
-        <i3dMapping id="palletTriggerMarker" node="0>11|5|1"/>
-        <i3dMapping id="palletSupplyUnloadTrigger" node="0>11|5|2"/>
         <i3dMapping id="playerTrigger" node="0>11|4"/>
         <i3dMapping id="playerTriggerMarker" node="0>11|4|0"/>
     </i3dMappings>

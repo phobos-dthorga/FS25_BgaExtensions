@@ -145,12 +145,13 @@ DATA_PACK_FILLTYPE_RE = re.compile(r"^[A-Z0-9_]+$")
 DATA_PACK_ROOT_ATTRS = {"apiVersion", "author", "packId", "title"}
 DATA_PACK_ROUTE_ATTRS = {"id", "inputFillType", "target", "template", "tier"}
 
+PROCESS_SUPPLY_HUB_FILE = "planetProcessSupplyHub.xml"
+PROCESS_PALLET_DOCK_FILE = "processPalletDock.xml"
 IDENTITY_DISPATCHER_PRODUCTIONS = {
-    "gbwProcessSupplyAdditiveDispatch": {"SILAGE_ADDITIVE": 1.0},
-    "gbwProcessSupplyMolassesDispatch": {"MOLASSES": 100.0},
-    "gbwProcessSupplyWaterDispatch": {"WATER": 500.0},
+    (PROCESS_SUPPLY_HUB_FILE, "gbwProcessSupplyWaterDispatch"): {"WATER": 500.0},
+    (PROCESS_PALLET_DOCK_FILE, "gbwProcessSupplyAdditiveDispatch"): {"SILAGE_ADDITIVE": 1.0},
+    (PROCESS_PALLET_DOCK_FILE, "gbwProcessSupplyMolassesDispatch"): {"MOLASSES": 100.0},
 }
-IDENTITY_DISPATCHER_FILE = "planetProcessSupplyHub.xml"
 
 DEPENDENCY_CONSTRUCTION_TABS = {
     "FS25_BgaExtensions": {
@@ -451,6 +452,20 @@ def unload_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
 
 def load_trigger_filltypes(tree: ET.ElementTree) -> set[str]:
     return trigger_filltypes(tree, ".//loadingStation/loadTrigger")
+
+
+def identity_dispatcher_output_filltypes(path: Path, tree: ET.ElementTree) -> set[str]:
+    result: set[str] = set()
+    for production in tree.findall(".//productions/production"):
+        production_id = production.get("id", "")
+        allowed = IDENTITY_DISPATCHER_PRODUCTIONS.get((path.name, production_id))
+        if allowed is None:
+            continue
+        inputs = production_amounts(production, "inputs")
+        outputs = production_amounts(production, "outputs")
+        if set(inputs) == set(allowed) and set(outputs) == set(allowed):
+            result.update(allowed)
+    return result
 
 
 def i3d_mapping_ids(tree: ET.ElementTree) -> set[str]:
@@ -770,7 +785,8 @@ def validate_production_trigger_coverage(
     for fill_type in sorted(inputs - accepted_inputs):
         validation.error(f"Production input '{fill_type}' is not accepted by unload, bale, or pallet triggers in {relative_path}")
 
-    for fill_type in sorted(outputs - loadable_outputs):
+    distribution_only_outputs = identity_dispatcher_output_filltypes(path, tree)
+    for fill_type in sorted(outputs - loadable_outputs - distribution_only_outputs):
         validation.error(f"Production output '{fill_type}' is not available from load triggers in {relative_path}")
 
 
@@ -790,12 +806,12 @@ def validate_identity_dispatcher_rules(
         if not shared_filltypes:
             continue
 
-        allowed = IDENTITY_DISPATCHER_PRODUCTIONS.get(production_id)
-        if path.name != IDENTITY_DISPATCHER_FILE or allowed is None:
+        allowed = IDENTITY_DISPATCHER_PRODUCTIONS.get((path.name, production_id))
+        if allowed is None:
             validation.error(
                 f"Production '{production_id}' has same input/output fillType(s) "
                 f"{', '.join(sorted(shared_filltypes))} in {relative_path}; only "
-                f"{IDENTITY_DISPATCHER_FILE} dispatcher recipes may do this"
+                f"explicit GBW supply dispatcher recipes may do this"
             )
             continue
 
@@ -828,18 +844,29 @@ def validate_process_supply_hub_trigger_rules(
     tree: ET.ElementTree,
     validation: Validation,
 ) -> None:
-    if path.name != IDENTITY_DISPATCHER_FILE:
+    if path.name == PROCESS_SUPPLY_HUB_FILE:
+        validate_water_supply_hub_rules(path, repo_root, tree, validation)
+    elif path.name == PROCESS_PALLET_DOCK_FILE:
+        validate_process_pallet_dock_rules(path, repo_root, tree, validation)
+
+
+def validate_water_supply_hub_rules(
+    path: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    validation: Validation,
+) -> None:
+    if path.name != PROCESS_SUPPLY_HUB_FILE:
         return
 
     relative_path = path.relative_to(repo_root)
-    expected_supplies = {"MOLASSES", "SILAGE_ADDITIVE", "WATER"}
     mapping_nodes = i3d_mapping_nodes(tree)
     mapping_ids = set(mapping_nodes)
 
     required_mappings = {
-        "palletSupplyUnloadTrigger",
-        "palletTrigger",
-        "palletTriggerMarker",
+        "loadTrigger",
+        "loadTriggerAiNode",
+        "loadTriggerMarker",
         "unloadTriggerWater",
         "unloadTriggerWaterAiNode",
         "unloadTriggerWaterMarker",
@@ -847,14 +874,20 @@ def validate_process_supply_hub_trigger_rules(
     for mapping_id in sorted(required_mappings - mapping_ids):
         validation.error(f"Process Supply Hub is missing i3d mapping '{mapping_id}' in {relative_path}")
 
-    forbidden_mappings = {"unloadTriggerMixer", "unloadTriggerMixerMarker"}
+    forbidden_mappings = {
+        "palletSupplyUnloadTrigger",
+        "palletTrigger",
+        "palletTriggerMarker",
+        "unloadTriggerMixer",
+        "unloadTriggerMixerMarker",
+    }
     for mapping_id in sorted(forbidden_mappings.intersection(mapping_ids)):
-        validation.error(f"Process Supply Hub must not use mixer unload mapping '{mapping_id}' in {relative_path}")
+        validation.error(f"Water-only Process Supply Hub must not use mapping '{mapping_id}' in {relative_path}")
 
     expected_mapping_nodes = {
-        "palletSupplyUnloadTrigger": "0>11|5|2",
-        "palletTrigger": "0>11|5|0",
-        "palletTriggerMarker": "0>11|5|1",
+        "loadTrigger": "0>11|0|0",
+        "loadTriggerAiNode": "0>11|0|2",
+        "loadTriggerMarker": "0>11|0|1",
         "unloadTriggerWater": "0>11|1|0",
         "unloadTriggerWaterAiNode": "0>11|1|2",
         "unloadTriggerWaterMarker": "0>11|1|1",
@@ -868,21 +901,19 @@ def validate_process_supply_hub_trigger_rules(
             )
 
     base_filename = (tree.findtext("./base/filename") or "").strip()
-    if base_filename != "placeables/gbw/planetProcessSupplyHub.i3d":
+    expected_base = "$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_GuelleLager.i3d"
+    if base_filename != expected_base:
         validation.error(
-            f"Process Supply Hub must use the GBW wrapper i3d, not '{base_filename}', in {relative_path}"
+            f"Process Supply Hub must directly reference PlanET GuelleLager, not '{base_filename}', in {relative_path}"
         )
-    else:
-        validate_process_supply_hub_i3d(mod_root / base_filename, repo_root, validation)
 
     water_marker = None
-    pallet_marker = None
     for marker in tree.findall("./triggerMarkers/triggerMarker"):
         node = marker.get("node", "")
         if node == "unloadTriggerWaterMarker":
             water_marker = marker
-        elif node == "palletTriggerMarker":
-            pallet_marker = marker
+        if marker.get("filename", "") == "$data/shared/assets/marker/markerIconPallet.i3d":
+            validation.error(f"Water-only Process Supply Hub must not expose a pallet marker in {relative_path}")
 
     if water_marker is None:
         validation.error(f"Process Supply Hub needs a water unload marker in {relative_path}")
@@ -892,15 +923,6 @@ def validate_process_supply_hub_trigger_rules(
             validation.error(f"Process Supply Hub water marker must use markerIconWater.i3d in {relative_path}")
         if water_marker.get("adjustToGround", "") != "true":
             validation.error(f"Process Supply Hub water marker must adjust to ground in {relative_path}")
-
-    if pallet_marker is None:
-        validation.error(f"Process Supply Hub needs a pallet unload marker in {relative_path}")
-    else:
-        marker_file = pallet_marker.get("filename", "")
-        if marker_file != "$data/shared/assets/marker/markerIconUnload.i3d":
-            validation.error(f"Process Supply Hub pallet marker must use markerIconUnload.i3d in {relative_path}")
-        if pallet_marker.get("adjustToGround", "") != "true":
-            validation.error(f"Process Supply Hub pallet marker must adjust to ground in {relative_path}")
 
     water_unloads = [
         node
@@ -920,20 +942,83 @@ def validate_process_supply_hub_trigger_rules(
         if node.get("exactFillRootNode") == "unloadTriggerMixer":
             validation.error(f"Process Supply Hub must not use the mixer unload trigger in {relative_path}")
 
-    pallet_unloads = [
+    pallet_triggers = [
         node
-        for node in tree.findall(".//sellingStation/unloadTrigger")
-        if node.get("exactFillRootNode") == "palletSupplyUnloadTrigger"
+        for node in tree.findall(".//sellingStation/palletTrigger")
+        if node.get("triggerNode") == "palletTrigger"
     ]
-    if len(pallet_unloads) != 1:
-        validation.error(f"Process Supply Hub must have exactly one pallet supply unloadTrigger in {relative_path}")
-    else:
-        pallet_unload_filltypes = set(pallet_unloads[0].get("fillTypes", "").split())
-        if pallet_unload_filltypes != {"MOLASSES", "SILAGE_ADDITIVE"}:
+    if pallet_triggers:
+        validation.error(f"Water-only Process Supply Hub must not define palletTrigger entries in {relative_path}")
+
+    expected_supplies = {"WATER"}
+    if production_input_filltypes(tree) != expected_supplies or production_output_filltypes(tree) != expected_supplies:
+        validation.error(f"Process Supply Hub productions must only pass through WATER in {relative_path}")
+    if storage_filltypes(tree) != expected_supplies:
+        validation.error(f"Process Supply Hub storage must only contain WATER in {relative_path}")
+    if load_trigger_filltypes(tree) != expected_supplies:
+        validation.error(f"Process Supply Hub load trigger must only expose WATER in {relative_path}")
+
+
+def validate_process_pallet_dock_rules(
+    path: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    validation: Validation,
+) -> None:
+    if path.name != PROCESS_PALLET_DOCK_FILE:
+        return
+
+    relative_path = path.relative_to(repo_root)
+    expected_supplies = {"MOLASSES", "SILAGE_ADDITIVE"}
+    mapping_nodes = i3d_mapping_nodes(tree)
+    mapping_ids = set(mapping_nodes)
+
+    base_filename = (tree.findtext("./base/filename") or "").strip()
+    expected_base = "$data/placeables/shared/sellingStationGeneric/sellingStationProducts.i3d"
+    if base_filename != expected_base:
+        validation.error(f"Process Pallet Dock must use sellingStationProducts.i3d in {relative_path}")
+
+    store_image = (tree.findtext("./storeData/image") or "").strip()
+    expected_image = "$data/placeables/shared/sellingStationGeneric/store_sellingStationGeneric.dds"
+    if store_image != expected_image:
+        validation.error(f"Process Pallet Dock must use the generic selling-station store icon in {relative_path}")
+
+    required_mappings = {"palletTrigger", "unloadTriggerAINode", "unloadTriggerMarker"}
+    for mapping_id in sorted(required_mappings - mapping_ids):
+        validation.error(f"Process Pallet Dock is missing i3d mapping '{mapping_id}' in {relative_path}")
+
+    expected_mapping_nodes = {
+        "palletTrigger": "0>2|4",
+        "unloadTriggerAINode": "0>2|2",
+        "unloadTriggerMarker": "0>2|1",
+    }
+    for mapping_id, expected_node in expected_mapping_nodes.items():
+        actual_node = mapping_nodes.get(mapping_id)
+        if actual_node and actual_node != expected_node:
             validation.error(
-                f"Process Supply Hub pallet supply unloadTrigger must accept MOLASSES and "
-                f"SILAGE_ADDITIVE in {relative_path}"
+                f"Process Pallet Dock i3d mapping '{mapping_id}' must point to {expected_node}, "
+                f"not {actual_node}, in {relative_path}"
             )
+
+    pallet_markers = [
+        marker for marker in tree.findall("./triggerMarkers/triggerMarker") if marker.get("node", "") == "unloadTriggerMarker"
+    ]
+    if len(pallet_markers) != 1:
+        validation.error(f"Process Pallet Dock must have exactly one pallet marker in {relative_path}")
+    else:
+        marker = pallet_markers[0]
+        if marker.get("filename", "") != "$data/shared/assets/marker/markerIconPallet.i3d":
+            validation.error(f"Process Pallet Dock marker must use markerIconPallet.i3d in {relative_path}")
+        if marker.get("adjustToGround", "") != "true":
+            validation.error(f"Process Pallet Dock marker must adjust to ground in {relative_path}")
+
+    for marker in tree.findall("./triggerMarkers/triggerMarker"):
+        if marker.get("filename", "") == "$data/shared/assets/marker/markerIconUnload.i3d":
+            validation.error(f"Process Pallet Dock must not use the bulk unload marker in {relative_path}")
+
+    unload_triggers = tree.findall(".//sellingStation/unloadTrigger")
+    if unload_triggers:
+        validation.error(f"Process Pallet Dock must not define bulk unloadTrigger entries in {relative_path}")
 
     pallet_triggers = [
         node
@@ -941,76 +1026,21 @@ def validate_process_supply_hub_trigger_rules(
         if node.get("triggerNode") == "palletTrigger"
     ]
     if len(pallet_triggers) != 1:
-        validation.error(f"Process Supply Hub must have exactly one palletTrigger in {relative_path}")
+        validation.error(f"Process Pallet Dock must have exactly one palletTrigger in {relative_path}")
     else:
         pallet_filltypes = set(pallet_triggers[0].get("fillTypes", "").split())
         if pallet_filltypes != expected_supplies:
             validation.error(
-                f"Process Supply Hub palletTrigger must accept "
+                f"Process Pallet Dock palletTrigger must accept "
                 f"{', '.join(sorted(expected_supplies))} in {relative_path}"
             )
+        if pallet_triggers[0].get("aiNode", "") != "unloadTriggerAINode":
+            validation.error(f"Process Pallet Dock palletTrigger must use unloadTriggerAINode in {relative_path}")
 
-
-def validate_process_supply_hub_i3d(
-    path: Path,
-    repo_root: Path,
-    validation: Validation,
-) -> None:
-    relative_path = path.relative_to(repo_root)
-    tree = parse_xml_file(path, validation)
-    if tree is None:
-        return
-
-    shapes = tree.find("./Shapes")
-    expected_shapes = "$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_GuelleLager.i3d.shapes"
-    if shapes is None or shapes.get("externalShapesFile", "") != expected_shapes:
-        validation.error(f"Process Supply Hub wrapper must reference PlanET GuelleLager shapes in {relative_path}")
-
-    pallet_shape = tree.find(".//Shape[@name='gbwPalletTrigger']")
-    if pallet_shape is None:
-        validation.error(f"Process Supply Hub wrapper is missing gbwPalletTrigger in {relative_path}")
-    else:
-        if pallet_shape.get("trigger", "") != "true":
-            validation.error(f"gbwPalletTrigger must be a trigger in {relative_path}")
-        if pallet_shape.get("collisionFilterGroup", "") != "0x20000000":
-            validation.error(f"gbwPalletTrigger must use pallet collision group 0x20000000 in {relative_path}")
-        if pallet_shape.get("collisionFilterMask", "") != "0x10000":
-            validation.error(f"gbwPalletTrigger must use pallet collision mask 0x10000 in {relative_path}")
-        translation = [float(value) for value in pallet_shape.get("translation", "0 0 0").split()]
-        if len(translation) != 3 or translation[1] < 1.0 or translation[2] > -3.0:
-            validation.error(
-                f"gbwPalletTrigger must be raised and placed in front of the hub in {relative_path}"
-            )
-
-    pallet_marker = tree.find(".//TransformGroup[@name='gbwPalletTriggerMarker']")
-    if pallet_marker is None:
-        validation.error(f"Process Supply Hub wrapper is missing gbwPalletTriggerMarker in {relative_path}")
-    else:
-        translation = [float(value) for value in pallet_marker.get("translation", "0 0 0").split()]
-        if len(translation) != 3 or translation[2] > -3.0:
-            validation.error(
-                f"gbwPalletTriggerMarker must be placed in front of the hub in {relative_path}"
-            )
-
-    unload_shape = tree.find(".//Shape[@name='gbwPalletSupplyUnloadTrigger']")
-    if unload_shape is None:
-        validation.error(f"Process Supply Hub wrapper is missing gbwPalletSupplyUnloadTrigger in {relative_path}")
-    else:
-        if unload_shape.get("trigger", "") != "true":
-            validation.error(f"gbwPalletSupplyUnloadTrigger must be a trigger in {relative_path}")
-        if unload_shape.get("collisionFilterGroup", "") != "0x40000000":
-            validation.error(
-                f"gbwPalletSupplyUnloadTrigger must use exact-fill collision group 0x40000000 in {relative_path}"
-            )
-        if unload_shape.get("collisionFilterMask", "") != "0x20000000":
-            validation.error(
-                f"gbwPalletSupplyUnloadTrigger must use exact-fill collision mask 0x20000000 in {relative_path}"
-            )
-        translation = [float(value) for value in unload_shape.get("translation", "0 0 0").split()]
-        if len(translation) != 3 or translation[2] > -3.0:
-            validation.error(
-                f"gbwPalletSupplyUnloadTrigger must be placed in front of the hub in {relative_path}"
-            )
+    if production_input_filltypes(tree) != expected_supplies or production_output_filltypes(tree) != expected_supplies:
+        validation.error(f"Process Pallet Dock productions must only pass through MOLASSES and SILAGE_ADDITIVE in {relative_path}")
+    if storage_filltypes(tree) != expected_supplies:
+        validation.error(f"Process Pallet Dock storage must only contain MOLASSES and SILAGE_ADDITIVE in {relative_path}")
 
 
 def validate_construction_tabs(

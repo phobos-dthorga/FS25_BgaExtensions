@@ -100,7 +100,7 @@ Preferred behavior:
 
 The first implementation should be deliberately narrow:
 
-1. Add GBW-owned companion production points: PlanET Biomass Intake, Wet Substrate Prep, Fermentation Vessel, Process Supply Hub, and Dry Fuel Processor.
+1. Add GBW-owned companion production points: PlanET Biomass Intake, Wet Substrate Prep, Fermentation Vessel, Process Supply Hub, Process Pallet Dock, and Dry Fuel Processor.
 2. Depend on `FS25_PlanET_BGA_Modular` and `pdlc_strawHarvestPack` for the proof of concept.
 3. Convert selected high-confidence vanilla inputs into PlanET internal feedstocks.
 4. Use `SILAGE_IN` for forage-like biomass and `SUGARBEETCUT_IN` for wet/starchy/root biomass.
@@ -158,15 +158,18 @@ Current Fermentation Vessel recipes:
 
 The Fermentation Vessel uses the PlanET `PlanET_Fermenter100.i3d` model by dependency reference. The model is not copied into GBW. The dependency remains the source of truth for its assets.
 
-Current Process Supply Hub dispatcher recipes:
+Current Process Supply Hub dispatcher recipe:
 
 - `WATER` -> `WATER`
+
+Current Process Pallet Dock dispatcher recipes:
+
 - `SILAGE_ADDITIVE` -> `SILAGE_ADDITIVE`
 - `MOLASSES` -> `MOLASSES`
 
-The Process Supply Hub uses a small GBW wrapper around PlanET's `PlanET_GuelleLager.i3d` resources by dependency reference. It is a production-style distribution point rather than a passive silo because FS25 production distribution acts on production outputs. These identity dispatcher recipes intentionally use existing vanilla or dependency fillTypes so GBW does not spend custom fillTypes on internal supply buffers.
+The Process Supply Hub directly references PlanET's `PlanET_GuelleLager.i3d` model by dependency reference and handles only process water. The Process Pallet Dock uses the vanilla generic product unloading pad so `SILAGE_ADDITIVE` and `MOLASSES` use a real pallet trigger and pallet marker instead of a bulk trailer unload path.
 
-The wrapper exists only to add a pallet-capable unloading trigger and visible marker in a model-appropriate location. Do not use it as permission to vendor PlanET model, texture, shape, or store-icon binaries into GBW.
+These are production-style distribution points rather than passive silos because FS25 production distribution acts on production outputs. The identity dispatcher recipes intentionally use existing vanilla or dependency fillTypes so GBW does not spend custom fillTypes on internal supply buffers.
 
 If FS25 rejects or mishandles the same-fillType dispatcher pattern, stop and revisit the design before adding GBW-owned internal buffer fillTypes. That would change the fillType budget and should not happen as an automatic hotfix.
 
