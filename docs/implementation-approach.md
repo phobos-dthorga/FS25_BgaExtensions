@@ -194,7 +194,20 @@ Do not abstract or generate those files until balancing has settled and the repe
 
 Do not delete legacy placeable XML just to tidy the package. First confirm no published prerelease used the path, or intentionally break compatibility in a documented release.
 
+`v0.2.22.0` applies this to `wasteAwareWetSubstratePrep.xml`: the XML and l10n stay packaged so `v0.2.21.0` test saves have the best chance to load, but the placeable is no longer a static `storeItem`.
+
 `v0.2.15.0` is an intentional breaking pre-release cleanup: old pre-GBW placeable paths, legacy hidden all-in-one intake XML, and the hidden small dry fuel yard XML were removed while the project moved to GBW identifiers and the four mash-family fillTypes.
+
+## Runtime-Gated Optional Features
+
+New provider-sensitive GBW features must use this pattern when they are not simply hard-dependency XML inside a proven add-on:
+
+- user setting permits the feature
+- provider mod is active
+- required fillTypes and assets are registered
+- only then register shop items, recipes, or other runtime paths
+
+The setting is a preference, not a runtime guarantee. If the provider or fillType is absent, the feature stays hidden with an info log rather than a warning. Shop and recipe availability changes should apply on the next save load unless live mutation has been separately proven safe.
 
 ## Testing Method
 
@@ -253,6 +266,8 @@ Lua is appropriate when XML cannot express a feature safely, such as:
 Lua should remain thin and boring. Data-driven XML should carry simple recipes and placeables whenever it can.
 
 The GBW data-pack API is the first Lua surface in this repository. Stage 1 may validate and prepare routes only. Do not enable runtime recipe injection until a disposable-save test proves production-point mapping, save/load behavior, and multiplayer synchronization remain clean.
+
+The Orchards/Greenhouses waste-aware prep gate is the first shop-facing runtime gate. It may load a GBW-owned store item, but it must not patch third-party placeables or delete already placed objects.
 
 ## Future Expansion
 

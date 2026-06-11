@@ -58,4 +58,6 @@ Do not put optional fillTypes directly into the core placeable XML. The current 
 | Add-on package | Required dependencies | Contract used by GBW |
 | --- | --- | --- |
 | `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_potatoWasher` | `POTATO_WASHED` from Potato Washing System, `GBW_ROOT_MASH` from core GBW, and the small PlanET bunker model. |
-| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` and `COMPOST` from Orchards And Greenhouses, GBW mash families from core GBW, the small PlanET bunker model for Organic Residue Prep and Waste-Aware Wet Substrate Prep, and the Orchards/Greenhouses compost silo model for GBW Compost Bay. |
+| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` and `COMPOST` from Orchards And Greenhouses, GBW mash families from core GBW, the small PlanET bunker model for Organic Residue Prep and runtime-gated Waste-Aware Wet Substrate Prep, and the Orchards/Greenhouses compost silo model for GBW Compost Bay. |
+
+The waste-aware prep XML remains packaged for compatibility with early test saves, but it is not a static shop item as of `v0.2.22.0`. New shop availability is controlled by the GBW setting plus runtime provider and `ORGANICWASTE` checks.

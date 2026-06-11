@@ -152,5 +152,5 @@ Near-term order:
 
 1. Keep dry fuel yard storage focused on wood chips and pellets.
 2. Keep pelletizing in Dry Fuel Processor, not in BGA intakes.
-3. Keep `ORGANICWASTE` and `COMPOST` routes in provider-specific add-ons unless runtime detection is proven safe.
+3. Keep `ORGANICWASTE` and `COMPOST` routes in provider-specific add-ons. For any shop-facing optional feature, use the proven runtime gate: setting enabled, provider active, and required fillTypes registered.
 4. Add future methane/electricity export only as a separate module after proving the fillTypes can be handled without warnings.

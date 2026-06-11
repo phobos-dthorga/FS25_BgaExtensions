@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>Gekko BioWorks</author>
-    <version>0.2.21.0</version>
+    <version>0.2.22.0</version>
     <title>
         <en>GBW BGA Extensions - Orchards Greenhouses Compat</en>
     </title>
     <description>
-        <en>Optional compatibility add-on for FS25 BGA Extensions and Orchards And Greenhouses. Routes organic waste toward Residue Mash or compost, adds a waste-aware wet substrate prep, and adds a GBW Compost Bay.</en>
+        <en>Optional compatibility add-on for FS25 BGA Extensions and Orchards And Greenhouses. Routes organic waste toward Residue Mash or compost, adds a runtime-gated waste-aware wet substrate prep, and adds a GBW Compost Bay.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
 
+    <extraSourceFiles>
+        <sourceFile filename="scripts/GBWCompatSettings.lua"/>
+        <sourceFile filename="scripts/GBWWasteAwareGate.lua"/>
+    </extraSourceFiles>
+
     <l10n>
+        <text name="settings_header_gbwCompat">
+            <en>Gekko BioWorks</en>
+        </text>
+        <text name="setting_gbwWasteAwareOrganicSideStreams">
+            <en>Waste-aware organic side-streams</en>
+        </text>
+        <text name="setting_gbwWasteAwareOrganicSideStreamsTooltip">
+            <en>Shows waste-aware wet substrate prep when Orchards/Greenhouses support is present. Applies on next save load.</en>
+        </text>
         <text name="storeItem_gbwOrganicResiduePrep">
             <en>GBW Organic Residue Prep</en>
         </text>
@@ -74,7 +88,6 @@
 
     <storeItems>
         <storeItem xmlFilename="placeables/gbw/organicResiduePrep.xml"/>
-        <storeItem xmlFilename="placeables/gbw/wasteAwareWetSubstratePrep.xml"/>
         <storeItem xmlFilename="placeables/gbw/compostBay.xml"/>
     </storeItems>
 </modDesc>

@@ -37,7 +37,7 @@ Starting with `v0.2.11.0`, the optional Potato Washer compatibility add-on uses 
 
 Starting with `v0.2.12.0`, the optional Orchards/Greenhouses compatibility add-on uses the same small PlanET bunker model for organic residue preparation. This is acceptable because organic waste mashing and compost routing are active material-handling processes.
 
-Starting with `v0.2.21.0`, the same add-on uses the small PlanET bunker model for Waste-Aware Wet Substrate Prep. This is still an active wet-material preparation process, so the mixer visual language remains appropriate. The `ORGANICWASTE` side-stream is a by-product of prep, not passive storage.
+Starting with `v0.2.21.0`, the same add-on uses the small PlanET bunker model for Waste-Aware Wet Substrate Prep. This is still an active wet-material preparation process, so the mixer visual language remains appropriate. Starting with `v0.2.22.0`, that placeable is runtime-gated through the GBW setting/provider check instead of being a static shop item. The `ORGANICWASTE` side-stream is a by-product of prep, not passive storage.
 
 Starting with `v0.2.20.0`, the same add-on adds `placeables/gbw/compostBay.xml`, which references the Orchards/Greenhouses compost silo model and store icon. This avoids using another PlanET bunker for compost. The visual language should read as a physical composting bay or heap, not as BGA machinery.
 

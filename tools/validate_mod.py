@@ -153,6 +153,8 @@ PROCESS_PALLET_DOCK_FILE = "processPalletDock.xml"
 ORCHARDS_GREENHOUSES_COMPAT_MOD = "FS25_BgaExtensions_OrchardsGreenhousesCompat"
 COMPOST_BAY_FILE = "compostBay.xml"
 WASTE_AWARE_WET_PREP_FILE = "wasteAwareWetSubstratePrep.xml"
+GBW_COMPAT_SETTINGS_SCRIPT = "scripts/GBWCompatSettings.lua"
+WASTE_AWARE_GATE_SCRIPT = "scripts/GBWWasteAwareGate.lua"
 COMPOST_BAY_ACCEPTED_FILLTYPES = {
     "BEETROOT",
     "CARROT",
@@ -1291,6 +1293,29 @@ def validate_orchards_compost_asset_policy(mod_root: Path, repo_root: Path, vali
     if mod_root.name != ORCHARDS_GREENHOUSES_COMPAT_MOD:
         return
 
+    moddesc_tree = parse_xml_file(mod_root / "modDesc.xml", validation)
+    if moddesc_tree is not None:
+        root = moddesc_tree.getroot()
+        static_store_items = {
+            (node.get("xmlFilename") or "").replace("\\", "/")
+            for node in root.findall("./storeItems/storeItem")
+        }
+        extra_source_files = {
+            (node.get("filename") or "").replace("\\", "/")
+            for node in root.findall("./extraSourceFiles/sourceFile")
+        }
+
+        waste_aware_store_path = f"placeables/gbw/{WASTE_AWARE_WET_PREP_FILE}"
+        if waste_aware_store_path in static_store_items:
+            validation.error(
+                f"{waste_aware_store_path} must not be listed as a static storeItem; "
+                f"GBWWasteAwareGate.lua owns runtime shop registration"
+            )
+
+        for script in (GBW_COMPAT_SETTINGS_SCRIPT, WASTE_AWARE_GATE_SCRIPT):
+            if script not in extra_source_files:
+                validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} modDesc.xml must load {script}")
+
     compost_bay = mod_root / "placeables" / "gbw" / COMPOST_BAY_FILE
     if not compost_bay.is_file():
         validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must include placeables/gbw/{COMPOST_BAY_FILE}")
@@ -1298,6 +1323,41 @@ def validate_orchards_compost_asset_policy(mod_root: Path, repo_root: Path, vali
     waste_aware_prep = mod_root / "placeables" / "gbw" / WASTE_AWARE_WET_PREP_FILE
     if not waste_aware_prep.is_file():
         validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must include placeables/gbw/{WASTE_AWARE_WET_PREP_FILE}")
+
+    settings_script = mod_root / GBW_COMPAT_SETTINGS_SCRIPT
+    if not settings_script.is_file():
+        validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must include {GBW_COMPAT_SETTINGS_SCRIPT}")
+    else:
+        text = settings_script.read_text(encoding="utf-8")
+        required_fragments = {
+            "GBWCompatSettings": "define the GBW compat settings namespace",
+            "wasteAwareOrganicSideStreams": "persist the waste-aware organic side-streams setting",
+            "XMLFile.loadIfExists": "load user settings from mod settings XML",
+            "XMLFile.create": "save user settings to mod settings XML",
+            "InGameMenuSettingsFrame.onFrameOpen": "add the setting to the in-game settings frame",
+        }
+        for fragment, reason in required_fragments.items():
+            if fragment not in text:
+                validation.error(f"{GBW_COMPAT_SETTINGS_SCRIPT} must {reason}")
+
+    gate_script = mod_root / WASTE_AWARE_GATE_SCRIPT
+    if not gate_script.is_file():
+        validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must include {WASTE_AWARE_GATE_SCRIPT}")
+    else:
+        text = gate_script.read_text(encoding="utf-8")
+        required_fragments = {
+            "FS25_orchardsAndGreenhouses_crossplay": "check the Orchards/Greenhouses provider mod",
+            "ORGANICWASTE": "check the provider-owned ORGANICWASTE fillType",
+            "wasteAwareWetSubstratePrep.xml": "own the waste-aware prep shop XML path",
+            "GBWCompatSettings": "respect the user setting before registration",
+            "g_modIsLoaded": "check active mod state",
+            "g_fillTypeManager": "check runtime fillType registration",
+            "g_storeManager:loadItem": "register the shop item at runtime",
+            "showInStore": "hide or show the shop item without deleting placed objects",
+        }
+        for fragment, reason in required_fragments.items():
+            if fragment not in text:
+                validation.error(f"{WASTE_AWARE_GATE_SCRIPT} must {reason}")
 
     for path in mod_root.rglob("*"):
         if path.is_file() and path.name in FORBIDDEN_ORCHARDS_COMPOST_ASSETS:

@@ -149,7 +149,7 @@ Current Wet Substrate Prep recipes:
 - `PEA` -> `GBW_GREEN_MASH`
 - `GREENBEAN` -> `GBW_GREEN_MASH`
 
-The Orchards/Greenhouses compatibility add-on also ships a waste-aware Wet Substrate Prep variant. It mirrors the same wet/root/green crop families, slightly reduces mash output, and emits a small `ORGANICWASTE` side-stream. Keep that behavior out of core XML because `ORGANICWASTE` belongs to the provider add-on, not GBW.
+The Orchards/Greenhouses compatibility add-on also packages a waste-aware Wet Substrate Prep variant. Its shop availability is runtime-gated by the in-game `Waste-aware organic side-streams` setting, the active `FS25_orchardsAndGreenhouses_crossplay` provider, and the registered `ORGANICWASTE` fillType. It mirrors the same wet/root/green crop families, slightly reduces mash output, and emits a small `ORGANICWASTE` side-stream. Keep that behavior out of core XML because `ORGANICWASTE` belongs to the provider add-on, not GBW.
 
 Current Fermentation Vessel recipes:
 
@@ -196,14 +196,14 @@ Active optional add-on inputs:
 - `POTATO_WASHED` -> `GBW_ROOT_MASH` in `FS25_BgaExtensions_PotatoWasherCompat`
 - `ORGANICWASTE` -> `GBW_RESIDUE_MASH` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
 - `ORGANICWASTE` -> `COMPOST` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
-- wet/root/green crops -> GBW mash families + `ORGANICWASTE` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
+- wet/root/green crops -> GBW mash families + `ORGANICWASTE` in `FS25_BgaExtensions_OrchardsGreenhousesCompat` when the runtime gate is enabled
 
 Generated waste should be conservative:
 
 - use `DIGESTATE` as the normal BGA residue
 - use `CHAFF`, `STRAW`, `SUGARBEET_CUT`, or `WOODCHIPS` for coarse byproducts where they are close enough
 - use detected mod fillTypes such as `COMPOST`, `COMPOST_RAW`, `ORGANICWASTE`, or `RICE_HUSK` only when they already exist
-- emit detected mod fillTypes such as `ORGANICWASTE` only from a provider-specific add-on with a hard dependency
+- emit detected mod fillTypes such as `ORGANICWASTE` only from a provider-specific add-on with a hard dependency or a proven runtime gate
 - keep Maize+/MaizePlus and Corn Production Pack residue work out of active development until a future explicit decision
 - avoid adding new one-off waste fillTypes until a real gameplay loop needs them
 
