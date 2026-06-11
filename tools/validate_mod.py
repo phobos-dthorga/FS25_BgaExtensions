@@ -673,6 +673,7 @@ def production_record(tree: ET.ElementTree, production_id: str) -> dict[str, obj
     return {
         "id": production_id,
         "cycles": float(production.get("cyclesPerHour", "0")),
+        "costs": float(production.get("costsPerActiveHour", "0")),
         "drygrass_windrow": sum_amount("./inputs/input", "DRYGRASS_WINDROW"),
         "hay_pellets_input": sum_amount("./inputs/input", "HAY_PELLETS"),
         "hay_pellets_output": sum_amount("./outputs/output", "HAY_PELLETS"),
@@ -708,6 +709,17 @@ def require_greater(
 ) -> None:
     if left <= right:
         validation.error(message)
+
+
+def require_close(
+    left: float,
+    right: float,
+    message: str,
+    validation: Validation,
+    tolerance: float = 0.0001,
+) -> None:
+    if abs(left - right) > tolerance:
+        validation.error(f"{message}: expected {right:g}, found {left:g}")
 
 
 def validate_fermentation_priority_rules(
@@ -880,6 +892,62 @@ def validate_fermentation_priority_rules(
                     float(record["silage_additive"]),
                     0.0,
                     f"{label} fermentation must consume SILAGE_ADDITIVE in {relative_path}",
+                    validation,
+                )
+                require_close(
+                    float(record["molasses"]),
+                    0.0,
+                    f"{label} fermentation must keep MOLASSES out of the Fermentation Vessel in {relative_path}",
+                    validation,
+                )
+            expected_pellet_specs = [
+                (
+                    hay_pellets,
+                    "Hay pellets",
+                    {
+                        "hay_pellets_input": 400.0,
+                        "water": 200.0,
+                        "silage_additive": 0.12,
+                        "silage_in": 1250.0,
+                        "cycles": 6.0,
+                        "costs": 5.0,
+                    },
+                    660.0 * 10.0,
+                ),
+                (
+                    straw_pellets,
+                    "Straw pellets",
+                    {
+                        "straw_pellets_input": 400.0,
+                        "water": 200.0,
+                        "silage_additive": 0.12,
+                        "silage_in": 1050.0,
+                        "cycles": 4.0,
+                        "costs": 5.5,
+                    },
+                    500.0 * 7.0,
+                ),
+            ]
+            prepared_silage_throughput = 840.0 * 24.0
+            for record, label, expected_values, raw_throughput in expected_pellet_specs:
+                for key, expected_value in expected_values.items():
+                    require_close(
+                        float(record[key]),
+                        expected_value,
+                        f"{label} fermentation must match the v0.2.24 premium pellet balance for {key} in {relative_path}",
+                        validation,
+                    )
+                pellet_throughput = float(record["silage_in"]) * float(record["cycles"])
+                require_greater(
+                    pellet_throughput,
+                    raw_throughput,
+                    f"{label} fermentation must outperform the matching raw straw/hay route by throughput in {relative_path}",
+                    validation,
+                )
+                require_greater(
+                    prepared_silage_throughput,
+                    pellet_throughput,
+                    f"{label} fermentation must remain below prepared silage throughput in {relative_path}",
                     validation,
                 )
             require_greater(

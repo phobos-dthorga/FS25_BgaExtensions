@@ -133,21 +133,21 @@
                 </inputs>
                 <outputs><output fillType="SUGARBEETCUT_IN" amount="200"/></outputs>
             </production>
-            <production id="gbwFermenterHayPelletsToPlanetSilage" name="$l10n_production_gbwHayPelletsToPlanetSilage" cyclesPerHour="6" costsPerActiveHour="4">
+            <production id="gbwFermenterHayPelletsToPlanetSilage" name="$l10n_production_gbwHayPelletsToPlanetSilage" cyclesPerHour="6" costsPerActiveHour="5">
                 <inputs>
                     <input fillType="HAY_PELLETS" amount="400"/>
-                    <input fillType="WATER" amount="120"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.08"/>
+                    <input fillType="WATER" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.12"/>
                 </inputs>
-                <outputs><output fillType="SILAGE_IN" amount="220"/></outputs>
+                <outputs><output fillType="SILAGE_IN" amount="1250"/></outputs>
             </production>
-            <production id="gbwFermenterStrawPelletsToPlanetSilage" name="$l10n_production_gbwStrawPelletsToPlanetSilage" cyclesPerHour="4" costsPerActiveHour="4.5">
+            <production id="gbwFermenterStrawPelletsToPlanetSilage" name="$l10n_production_gbwStrawPelletsToPlanetSilage" cyclesPerHour="4" costsPerActiveHour="5.5">
                 <inputs>
                     <input fillType="STRAW_PELLETS" amount="400"/>
-                    <input fillType="WATER" amount="120"/>
-                    <input fillType="SILAGE_ADDITIVE" amount="0.08"/>
+                    <input fillType="WATER" amount="200"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.12"/>
                 </inputs>
-                <outputs><output fillType="SILAGE_IN" amount="150"/></outputs>
+                <outputs><output fillType="SILAGE_IN" amount="1050"/></outputs>
             </production>
         </productions>
 

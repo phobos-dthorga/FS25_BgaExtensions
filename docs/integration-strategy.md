@@ -30,9 +30,9 @@ For pellet heat features, treat `pdlc_strawHarvestPack` as the owner of the HALL
 - output `STRAW_PELLETS` and `HAY_PELLETS` as dry-fuel handoffs to the HALLSYS Pellet Heat Plant ecosystem
 - keep the HALLSYS plant itself dependency-owned and unmodified
 - do not copy Straw Harvest XML, models, textures, icons, scripts, or sounds into this repository
-- keep pellet BGA use additive-gated and weaker than properly fermented material, so the heat route remains meaningful
+- keep pellet BGA use additive-gated, premium versus matching raw hay/straw pretreatment, and still below prepared silage throughput so the heat route remains meaningful
 
-The current proof of concept keeps low-yield assisted straw BGA pretreatment in the biomass intakes, moves pellet production to a focused Dry Fuel Processor, stores pellets in dry fuel yards, and allows pellet BGA use only through water-and-additive-assisted fermentation.
+The current proof of concept keeps assisted straw BGA pretreatment in the biomass intakes, moves pellet production to a focused Dry Fuel Processor, stores pellets in dry fuel yards, and allows pellet BGA use only through water-and-additive-assisted fermentation. Pellet liters are treated as compressed upstream biomass, so their fermenter output is balanced against raw-material equivalent instead of liter-for-liter pellet volume.
 
 ## Asset And Licensing Boundary
 

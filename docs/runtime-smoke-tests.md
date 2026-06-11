@@ -95,8 +95,8 @@ The biomass intakes no longer accept wet/root/produce crops directly, and they n
 | --- | --- | --- |
 | Mash fermentation | Unload each available mash family into GBW Fermentation Vessel. | `SUGARBEETCUT_IN` is produced and can be loaded out. |
 | Additive-assisted fermentation | Unload a mash family plus `SILAGE_ADDITIVE`, start the matching additive route. | `SUGARBEETCUT_IN` is produced at the improved additive rate. |
-| Hay pellet fermentation | Unload `HAY_PELLETS`, `WATER`, and `SILAGE_ADDITIVE`, start assisted hay pellet fermentation. | `SILAGE_IN` is produced, the route is readable, and it remains weaker than properly fermented material. |
-| Straw pellet fermentation | Unload `STRAW_PELLETS`, `WATER`, and `SILAGE_ADDITIVE`, start assisted straw pellet fermentation. | `SILAGE_IN` is produced, the route is readable, and it stays weaker than the hay pellet route. |
+| Hay pellet fermentation | Unload `HAY_PELLETS`, `WATER`, and `SILAGE_ADDITIVE`, start assisted hay pellet fermentation. | `1250 SILAGE_IN` is produced per cycle, the route is readable, and throughput remains below prepared silage. |
+| Straw pellet fermentation | Unload `STRAW_PELLETS`, `WATER`, and `SILAGE_ADDITIVE`, start assisted straw pellet fermentation. | `1050 SILAGE_IN` is produced per cycle, the route is readable, and it stays below the hay pellet route. |
 | Additive gate | Try to run a pellet fermentation route without `SILAGE_ADDITIVE`. | No plain pellet fermentation route is available. |
 | Visual fit | Place the vessel beside a PlanET BGA layout. | The PlanET fermenter model reads as a fermentation step, not a crop-prep bunker. |
 

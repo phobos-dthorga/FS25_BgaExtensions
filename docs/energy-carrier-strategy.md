@@ -12,8 +12,8 @@ Each building family should own one clear process type. This keeps the in-game p
 
 | Carrier | Role | Current posture |
 | --- | --- | --- |
-| `STRAW_PELLETS` | Dry combustion fuel | Active. Produced by Dry Fuel Processor and stored in dry fuel yards. Intended for Straw Harvest HALLSYS heat logistics. |
-| `HAY_PELLETS` | Dry combustion fuel and assisted BGA substrate | Active. Produced by Dry Fuel Processor, stored in dry fuel yards, and allowed into BGA only with water and silage additive. |
+| `STRAW_PELLETS` | Dry combustion fuel and assisted BGA substrate | Active. Produced by Dry Fuel Processor, stored in dry fuel yards, and allowed into BGA only with water and silage additive. Premium versus raw straw because pellets represent compressed upstream biomass. |
+| `HAY_PELLETS` | Dry combustion fuel and assisted BGA substrate | Active. Produced by Dry Fuel Processor, stored in dry fuel yards, and allowed into BGA only with water and silage additive. Better BGA substrate than straw pellets, still below prepared silage throughput. |
 | `MOLASSES` | Pellet binder/sugar input | Active as a Dry Fuel Processor input for pellet manufacture. Do not repeat it in Fermentation Vessel recipes unless the UI need becomes clear. |
 | `WATER` | Rehydration/process input | Active for pellet manufacture and assisted pellet fermentation. |
 | `WOODCHIPS` | Dry combustion fuel | Active as storage/logistics only. Keep out of BGA digestion by default. |
@@ -60,7 +60,9 @@ Current route:
 
 - mash-family fermentation to `SUGARBEETCUT_IN`
 - additive-assisted mash fermentation where `SILAGE_ADDITIVE` helps biology along with better throughput and yield
-- pellet fermentation to `SILAGE_IN`, but only with `WATER` and `SILAGE_ADDITIVE`
+- premium pellet fermentation to `SILAGE_IN`, but only with `WATER` and `SILAGE_ADDITIVE`
+
+Pellet fermentation should be balanced against the raw-material equivalent that went through pellet manufacture, not against pellet volume alone. Hay and straw pellets may outperform their raw BGA pretreatment routes because the player has already invested water, molasses, and processing time, but they should not overtake prepared silage as the cleanest handoff.
 
 The first implementation uses PlanET's small fermenter model by dependency reference. Keep this family focused on fermentation. Do not add raw crop chopping, forage intake, dry fuel handling, methane export, or digestate processing here.
 

@@ -24,6 +24,8 @@ Unfermented materials that would normally be ensiled, mashed, inoculated, or oth
 
 Difficult real-world fermentation routes should require `SILAGE_ADDITIVE` by default. This includes pelletized fibrous feedstocks and assisted raw-straw pretreatment. Pelleting improves handling and surface area, but dry pellets still need water and inoculation help before they make sense as BGA substrate. Molasses belongs in pellet manufacture, where Straw Harvest already treats it as a pellet-system input, rather than being repeated in the Fermentation Vessel UI.
 
+Starting with `v0.2.24.0`, pellet fermentation treats pellet liters as compressed upstream biomass, not weak low-volume residue. Balance pellet routes against the raw hay or straw required to manufacture them, while keeping the assisted pellet routes below prepared silage throughput.
+
 See `docs/integration-strategy.md` for the companion-module rule that governs PlanET and future third-party integrations.
 
 See `docs/energy-carrier-strategy.md` for the rule that separates biomass preparation, combustion fuel logistics, BGA digestion, and energy export into different building families.
@@ -157,8 +159,10 @@ Current Fermentation Vessel recipes:
 
 - each GBW mash family -> `SUGARBEETCUT_IN`
 - each GBW mash family + `SILAGE_ADDITIVE` -> improved `SUGARBEETCUT_IN`
-- `HAY_PELLETS` + `WATER` + `SILAGE_ADDITIVE` -> low-to-moderate `SILAGE_IN`
-- `STRAW_PELLETS` + `WATER` + `SILAGE_ADDITIVE` -> low-yield `SILAGE_IN`
+- `HAY_PELLETS` + `WATER` + `SILAGE_ADDITIVE` -> premium assisted `SILAGE_IN`
+- `STRAW_PELLETS` + `WATER` + `SILAGE_ADDITIVE` -> premium assisted `SILAGE_IN`
+
+The premium pellet routes currently use `400 HAY_PELLETS + 200 WATER + 0.12 SILAGE_ADDITIVE -> 1250 SILAGE_IN` and `400 STRAW_PELLETS + 200 WATER + 0.12 SILAGE_ADDITIVE -> 1050 SILAGE_IN`. They beat the matching raw hay/straw routes by hourly output because pellet manufacture already consumed bulk biomass, water, and molasses, but they remain below prepared silage as the cleaner BGA handoff.
 
 The Fermentation Vessel uses the PlanET `PlanET_Fermenter100.i3d` model by dependency reference. The model is not copied into GBW. The dependency remains the source of truth for its assets.
 

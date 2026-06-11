@@ -34,19 +34,17 @@ The first entries in this table are pre-GBW historical lines from versions befor
 
 ## Pending Test Targets
 
-For `v0.2.23.0`, smoke-test the runtime-gated organic waste side-stream add-on slice:
+For `v0.2.24.0`, smoke-test the premium pellet fermentation rebalance:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.23.0`
-- confirm `GBW Waste-Aware Wet Substrate Prep` and `GBW Waste-Aware Biomass Intake - Large` appear under `GBW Compat` when the Orchards/Greenhouses compat add-on is enabled, the provider is active, and the setting is enabled/default
-- confirm disabling `Waste-aware organic side-streams` and reloading hides both shop items without deleting already placed test objects
-- confirm one sweet/root/green recipe produces its mash family plus `ORGANICWASTE`
-- confirm one chaff route and assisted straw in the waste-aware large intake produce normal `SILAGE_IN` plus `ORGANICWASTE`
-- confirm prepared silage and manure in the waste-aware large intake do not produce `ORGANICWASTE`
-- confirm the `ORGANICWASTE` side-stream can be loaded out and routed to GBW Organic Residue Prep or GBW Compost Bay
-- confirm GBW Compost Bay and GBW Organic Residue Prep still work unchanged
+- confirm core FS25_BgaExtensions loads as version `0.2.24.0`
+- confirm hay pellet fermentation uses `400 HAY_PELLETS`, `200 WATER`, and `0.12 SILAGE_ADDITIVE` to produce `1250 SILAGE_IN`
+- confirm straw pellet fermentation uses `400 STRAW_PELLETS`, `200 WATER`, and `0.12 SILAGE_ADDITIVE` to produce `1050 SILAGE_IN`
+- confirm both pellet fermentation routes still require `WATER` and `SILAGE_ADDITIVE`
+- confirm no plain pellet fermentation route appears
+- confirm pellet manufacture remains unchanged and still keeps `MOLASSES` in the Dry Fuel Processor
 - confirm no GBW-owned warnings or errors appear in the FS25 log
 
-The user reported `v0.2.20.0` testing complete before the organic waste side-stream slice. Previous Compost Bay, Process Supply Hub, and Process Pallet Dock behavior is accepted unless a new log line says otherwise.
+The user reported `v0.2.23.0` testing complete before the premium pellet rebalance. Previous waste-aware, Compost Bay, Process Supply Hub, and Process Pallet Dock behavior is accepted unless a new log line says otherwise.
 
 ## User Test Confirmation
 
