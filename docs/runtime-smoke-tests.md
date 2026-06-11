@@ -18,7 +18,7 @@ CI now checks the common XML mistakes that previously required extra in-game smo
 - production outputs are covered by load triggers unless the placeable has a real pallet spawner
 - same-fillType dispatcher recipes are allowed only for the Process Supply Hub and Process Pallet Dock
 - the Process Supply Hub uses direct PlanET water handling, while the Process Pallet Dock uses a real pallet marker/trigger plus a load-out station rather than bulk unloading
-- the Orchards/Greenhouses waste-aware prep is not a static store item and is exposed only by the runtime setting/provider/fillType gate
+- the Orchards/Greenhouses waste-aware prep and large intake are not static store items and are exposed only by the runtime setting/provider/fillType gate
 - core fermentation-priority balance rules
 - package version alignment and SHA-256 generation
 
@@ -151,7 +151,9 @@ Only run these when the matching optional add-on and provider mod are installed.
 | Potato Washer Compat | Enable `FS25_BgaExtensions_PotatoWasherCompat` with `FS25_potatoWasher`, buy GBW Washed Potato Prep, unload `POTATO_WASHED`, and start washed potato mash. | `GBW_ROOT_MASH` is produced and can be loaded out for the normal Fermentation Vessel route. |
 | Orchards/Greenhouses Compat | Enable `FS25_BgaExtensions_OrchardsGreenhousesCompat` with `FS25_orchardsAndGreenhouses_crossplay`, buy GBW Organic Residue Prep, unload `ORGANICWASTE`, and start organic waste mash. | `GBW_RESIDUE_MASH` is produced and can be loaded out for the normal Fermentation Vessel route. |
 | Orchards/Greenhouses Compat | With `Waste-aware organic side-streams` enabled or unset, reload the save, buy GBW Waste-Aware Wet Substrate Prep, and run one sweet, root, or green crop route. | The shop item appears, then the expected mash family and a small `ORGANICWASTE` side-stream are produced and can be loaded out. |
-| Orchards/Greenhouses Compat | Disable `Waste-aware organic side-streams`, reload the save, and inspect the GBW Compat tab. | GBW Waste-Aware Wet Substrate Prep does not appear as a new shop item. Already placed test objects are not forcibly deleted. |
+| Orchards/Greenhouses Compat | With `Waste-aware organic side-streams` enabled or unset, reload the save, buy GBW Waste-Aware Biomass Intake - Large, and run one chaff route and the assisted straw route. | The shop item appears, then the normal `SILAGE_IN` output and a small `ORGANICWASTE` side-stream are produced and can be loaded out. |
+| Orchards/Greenhouses Compat | Run prepared silage and manure in GBW Waste-Aware Biomass Intake - Large. | Prepared silage produces only `SILAGE_IN`; manure produces only `MANURE_IN`. Neither route creates artificial `ORGANICWASTE`. |
+| Orchards/Greenhouses Compat | Disable `Waste-aware organic side-streams`, reload the save, and inspect the GBW Compat tab. | GBW Waste-Aware Wet Substrate Prep and GBW Waste-Aware Biomass Intake - Large do not appear as new shop items. Already placed test objects are not forcibly deleted. |
 | Orchards/Greenhouses Compat | Start organic waste composting. | `COMPOST` is produced and can be loaded out for the provider's normal compost/farm loop. |
 | Orchards/Greenhouses Compat | Buy GBW Compost Bay, unload `ORGANICWASTE`, then unload one ordinary compostable material such as `STRAW` or `MANURE`. | The bay uses the Orchards/Greenhouses compost-silo model, behaves like a composting bunker, and produces `COMPOST` without GBW-owned log warnings. |
 

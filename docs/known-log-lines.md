@@ -34,12 +34,14 @@ The first entries in this table are pre-GBW historical lines from versions befor
 
 ## Pending Test Targets
 
-For `v0.2.22.0`, smoke-test the runtime-gated organic waste side-stream add-on slice:
+For `v0.2.23.0`, smoke-test the runtime-gated organic waste side-stream add-on slice:
 
-- confirm core FS25_BgaExtensions loads as version `0.2.22.0`
-- confirm `GBW Waste-Aware Wet Substrate Prep` appears under `GBW Compat` when the Orchards/Greenhouses compat add-on is enabled, the provider is active, and the setting is enabled/default
-- confirm disabling `Waste-aware organic side-streams` and reloading hides the shop item without deleting already placed test objects
+- confirm core FS25_BgaExtensions loads as version `0.2.23.0`
+- confirm `GBW Waste-Aware Wet Substrate Prep` and `GBW Waste-Aware Biomass Intake - Large` appear under `GBW Compat` when the Orchards/Greenhouses compat add-on is enabled, the provider is active, and the setting is enabled/default
+- confirm disabling `Waste-aware organic side-streams` and reloading hides both shop items without deleting already placed test objects
 - confirm one sweet/root/green recipe produces its mash family plus `ORGANICWASTE`
+- confirm one chaff route and assisted straw in the waste-aware large intake produce normal `SILAGE_IN` plus `ORGANICWASTE`
+- confirm prepared silage and manure in the waste-aware large intake do not produce `ORGANICWASTE`
 - confirm the `ORGANICWASTE` side-stream can be loaded out and routed to GBW Organic Residue Prep or GBW Compost Bay
 - confirm GBW Compost Bay and GBW Organic Residue Prep still work unchanged
 - confirm no GBW-owned warnings or errors appear in the FS25 log

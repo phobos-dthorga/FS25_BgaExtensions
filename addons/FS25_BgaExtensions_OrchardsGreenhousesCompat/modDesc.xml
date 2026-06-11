@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <modDesc descVersion="107" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://validation.gdn.giants-software.com/xml/fs25/modDesc.xsd">
     <author>Gekko BioWorks</author>
-    <version>0.2.22.0</version>
+    <version>0.2.23.0</version>
     <title>
         <en>GBW BGA Extensions - Orchards Greenhouses Compat</en>
     </title>
     <description>
-        <en>Optional compatibility add-on for FS25 BGA Extensions and Orchards And Greenhouses. Routes organic waste toward Residue Mash or compost, adds a runtime-gated waste-aware wet substrate prep, and adds a GBW Compost Bay.</en>
+        <en>Optional compatibility add-on for FS25 BGA Extensions and Orchards And Greenhouses. Routes organic waste toward Residue Mash or compost, adds runtime-gated waste-aware processing, and adds a GBW Compost Bay.</en>
     </description>
     <iconFilename>icon.dds</iconFilename>
 
@@ -36,6 +36,12 @@
         </text>
         <text name="function_gbwWasteAwareWetSubstratePrep">
             <en>Prepares wet crops into mash while collecting organic waste.</en>
+        </text>
+        <text name="storeItem_gbwWasteAwareBiomassIntakeLarge">
+            <en>GBW Waste-Aware Biomass Intake - Large</en>
+        </text>
+        <text name="function_gbwWasteAwareBiomassIntakeLarge">
+            <en>Large PlanET intake that recovers organic waste from raw biomass handling.</en>
         </text>
         <text name="storeItem_gbwCompostBay">
             <en>GBW Compost Bay</en>
@@ -75,6 +81,30 @@
         </text>
         <text name="production_gbwWasteAwareGreenBeanToGreenMash">
             <en>Green bean mash + waste</en>
+        </text>
+        <text name="production_gbwRecoveredChaffToPlanetSilage">
+            <en>Chaff substrate + recovered waste</en>
+        </text>
+        <text name="production_gbwRecoveredChaffAdditiveToPlanetSilage">
+            <en>Chaff additive substrate + recovered waste</en>
+        </text>
+        <text name="production_gbwRecoveredSilageToPlanetSilage">
+            <en>Prepared silage intake</en>
+        </text>
+        <text name="production_gbwRecoveredGrassToPlanetSilage">
+            <en>Grass substrate + recovered waste</en>
+        </text>
+        <text name="production_gbwRecoveredGrassAdditiveToPlanetSilage">
+            <en>Grass additive substrate + recovered waste</en>
+        </text>
+        <text name="production_gbwRecoveredHayToPlanetSilage">
+            <en>Hay substrate + recovered waste</en>
+        </text>
+        <text name="production_gbwRecoveredStrawToPlanetSilage">
+            <en>Straw pretreatment + recovered waste</en>
+        </text>
+        <text name="production_gbwRecoveredManureToPlanetManure">
+            <en>Manure intake</en>
         </text>
     </l10n>
 

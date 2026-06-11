@@ -132,6 +132,8 @@ Current biomass intake recipes:
 - `DRYGRASS_WINDROW` -> `SILAGE_IN`
 - `STRAW` + `SILAGE_ADDITIVE` -> `SILAGE_IN` at poor efficiency
 
+The Orchards/Greenhouses compatibility add-on also packages a waste-aware large Biomass Intake. Its shop availability uses the same runtime gate as waste-aware wet prep. It mirrors the core large intake outputs, but the raw biomass routes recover modest `ORGANICWASTE` side-streams: chaff, chaff with additive, grass, grass with additive, hay, and assisted straw. Prepared `SILAGE` and `MANURE` stay clean because they are already prepared or already represented by the PlanET manure handoff.
+
 Current Dry Fuel Processor recipes:
 
 - `STRAW` + `WATER` + `MOLASSES` -> `STRAW_PELLETS` for the Straw Harvest HALLSYS Pellet Heat Plant
@@ -196,6 +198,7 @@ Active optional add-on inputs:
 - `POTATO_WASHED` -> `GBW_ROOT_MASH` in `FS25_BgaExtensions_PotatoWasherCompat`
 - `ORGANICWASTE` -> `GBW_RESIDUE_MASH` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
 - `ORGANICWASTE` -> `COMPOST` in `FS25_BgaExtensions_OrchardsGreenhousesCompat`
+- large biomass intake raw routes -> normal PlanET handoff + small recovered `ORGANICWASTE` side-streams in `FS25_BgaExtensions_OrchardsGreenhousesCompat` when the runtime gate is enabled
 - wet/root/green crops -> GBW mash families + `ORGANICWASTE` in `FS25_BgaExtensions_OrchardsGreenhousesCompat` when the runtime gate is enabled
 
 Generated waste should be conservative:

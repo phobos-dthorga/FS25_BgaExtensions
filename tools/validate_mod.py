@@ -153,6 +153,7 @@ PROCESS_PALLET_DOCK_FILE = "processPalletDock.xml"
 ORCHARDS_GREENHOUSES_COMPAT_MOD = "FS25_BgaExtensions_OrchardsGreenhousesCompat"
 COMPOST_BAY_FILE = "compostBay.xml"
 WASTE_AWARE_WET_PREP_FILE = "wasteAwareWetSubstratePrep.xml"
+WASTE_AWARE_BIOMASS_INTAKE_LARGE_FILE = "wasteAwareBiomassIntakeLarge.xml"
 GBW_COMPAT_SETTINGS_SCRIPT = "scripts/GBWCompatSettings.lua"
 WASTE_AWARE_GATE_SCRIPT = "scripts/GBWWasteAwareGate.lua"
 COMPOST_BAY_ACCEPTED_FILLTYPES = {
@@ -251,6 +252,56 @@ WASTE_AWARE_WET_PREP_RECIPES = {
         "waste_amount": 15.0,
         "cycles": "8",
         "cost": "3",
+    },
+}
+WASTE_AWARE_BIOMASS_INTAKE_LARGE_RECIPES = {
+    "gbwCompatLargeChaffToPlanetSilageRecoveredWaste": {
+        "inputs": {"CHAFF": 840.0},
+        "outputs": {"SILAGE_IN": 760.0, "ORGANICWASTE": 24.0},
+        "cycles": "12",
+        "cost": "3",
+    },
+    "gbwCompatLargeChaffAdditiveToPlanetSilageRecoveredWaste": {
+        "inputs": {"CHAFF": 840.0, "SILAGE_ADDITIVE": 0.1},
+        "outputs": {"SILAGE_IN": 810.0, "ORGANICWASTE": 12.0},
+        "cycles": "14",
+        "cost": "3.5",
+    },
+    "gbwCompatLargeSilageToPlanetSilage": {
+        "inputs": {"SILAGE": 840.0},
+        "outputs": {"SILAGE_IN": 840.0},
+        "cycles": "24",
+        "cost": "2.5",
+    },
+    "gbwCompatLargeGrassToPlanetSilageRecoveredWaste": {
+        "inputs": {"GRASS_WINDROW": 840.0},
+        "outputs": {"SILAGE_IN": 600.0, "ORGANICWASTE": 36.0},
+        "cycles": "10",
+        "cost": "3",
+    },
+    "gbwCompatLargeGrassAdditiveToPlanetSilageRecoveredWaste": {
+        "inputs": {"GRASS_WINDROW": 840.0, "SILAGE_ADDITIVE": 0.1},
+        "outputs": {"SILAGE_IN": 700.0, "ORGANICWASTE": 18.0},
+        "cycles": "12",
+        "cost": "3.5",
+    },
+    "gbwCompatLargeHayToPlanetSilageRecoveredWaste": {
+        "inputs": {"DRYGRASS_WINDROW": 840.0},
+        "outputs": {"SILAGE_IN": 660.0, "ORGANICWASTE": 24.0},
+        "cycles": "10",
+        "cost": "3",
+    },
+    "gbwCompatLargeStrawToPlanetSilageRecoveredWaste": {
+        "inputs": {"STRAW": 840.0, "SILAGE_ADDITIVE": 0.1},
+        "outputs": {"SILAGE_IN": 500.0, "ORGANICWASTE": 48.0},
+        "cycles": "7",
+        "cost": "4",
+    },
+    "gbwCompatLargeManureToPlanetManure": {
+        "inputs": {"MANURE": 400.0},
+        "outputs": {"MANURE_IN": 400.0},
+        "cycles": "20",
+        "cost": "2.5",
     },
 }
 CORE_FORBIDDEN_PROVIDER_XML_TOKENS = {
@@ -1289,6 +1340,135 @@ def validate_compost_bay_rules(
         validation.error(f"GBW Compost Bay outputFillType must be COMPOST in {relative_path}")
 
 
+def validate_waste_aware_biomass_intake_large_rules(
+    path: Path,
+    mod_root: Path,
+    repo_root: Path,
+    tree: ET.ElementTree,
+    validation: Validation,
+) -> None:
+    if path.name != WASTE_AWARE_BIOMASS_INTAKE_LARGE_FILE:
+        return
+
+    relative_path = path.relative_to(repo_root)
+    if mod_root.name != ORCHARDS_GREENHOUSES_COMPAT_MOD:
+        validation.error(
+            f"GBW Waste-Aware Biomass Intake - Large may only be shipped in "
+            f"{ORCHARDS_GREENHOUSES_COMPAT_MOD}: {relative_path}"
+        )
+
+    if tree.getroot().get("type") != "productionPoint":
+        validation.error(f"GBW Waste-Aware Biomass Intake - Large must be a productionPoint in {relative_path}")
+
+    base_filename = (tree.findtext("./base/filename") or "").strip()
+    expected_base = "$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Bunker_Gross.i3d"
+    if base_filename != expected_base:
+        validation.error(
+            f"GBW Waste-Aware Biomass Intake - Large must reference the PlanET large bunker model in {relative_path}"
+        )
+
+    store_image = (tree.findtext("./storeData/image") or "").strip()
+    expected_image = "$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerGross.dds"
+    if store_image != expected_image:
+        validation.error(
+            f"GBW Waste-Aware Biomass Intake - Large must reference the PlanET large bunker store icon in {relative_path}"
+        )
+
+    brush_tab = (tree.findtext("./storeData/brush/tab") or "").strip()
+    if brush_tab != "gbwBgaCompatibility":
+        validation.error(f"GBW Waste-Aware Biomass Intake - Large must be under the GBW Compat tab in {relative_path}")
+
+    price = (tree.findtext("./storeData/price") or "").strip()
+    daily_upkeep = (tree.findtext("./storeData/dailyUpkeep") or "").strip()
+    if price != "165000" or daily_upkeep != "70":
+        validation.error(
+            f"GBW Waste-Aware Biomass Intake - Large balance must be price 165000 and dailyUpkeep 70 in {relative_path}"
+        )
+
+    expected_inputs = {
+        "CHAFF",
+        "DRYGRASS_WINDROW",
+        "GRASS_WINDROW",
+        "MANURE",
+        "SILAGE",
+        "SILAGE_ADDITIVE",
+        "STRAW",
+    }
+    expected_outputs = {"MANURE_IN", "ORGANICWASTE", "SILAGE_IN"}
+
+    if unload_trigger_filltypes(tree) != expected_inputs:
+        validation.error(
+            f"GBW Waste-Aware Biomass Intake - Large unload inputs must match the core large intake in {relative_path}"
+        )
+    if load_trigger_filltypes(tree) != expected_outputs:
+        validation.error(
+            f"GBW Waste-Aware Biomass Intake - Large load outputs must expose SILAGE_IN, MANURE_IN, and ORGANICWASTE in {relative_path}"
+        )
+
+    expected_storage = expected_inputs.union(expected_outputs)
+    if storage_filltypes(tree) != expected_storage:
+        validation.error(
+            f"GBW Waste-Aware Biomass Intake - Large storage must mirror core large intake plus ORGANICWASTE in {relative_path}"
+        )
+
+    capacity_by_filltype = {
+        (node.get("fillType") or "").upper(): (node.get("capacity") or "")
+        for node in tree.findall(".//storage/capacity")
+    }
+    expected_capacities = {
+        "CHAFF": "160000",
+        "SILAGE": "160000",
+        "GRASS_WINDROW": "160000",
+        "DRYGRASS_WINDROW": "160000",
+        "STRAW": "100000",
+        "MANURE": "70000",
+        "SILAGE_ADDITIVE": "480",
+        "SILAGE_IN": "240000",
+        "MANURE_IN": "70000",
+        "ORGANICWASTE": "50000",
+    }
+    if capacity_by_filltype != expected_capacities:
+        validation.error(f"GBW Waste-Aware Biomass Intake - Large capacities are not the expected values in {relative_path}")
+
+    productions = {
+        production.get("id", ""): production
+        for production in tree.findall(".//productions/production")
+    }
+    expected_ids = set(WASTE_AWARE_BIOMASS_INTAKE_LARGE_RECIPES)
+    actual_ids = set(productions)
+    if actual_ids != expected_ids:
+        missing = sorted(expected_ids - actual_ids)
+        extra = sorted(actual_ids - expected_ids)
+        if missing:
+            validation.error(
+                f"GBW Waste-Aware Biomass Intake - Large is missing recipes {', '.join(missing)} in {relative_path}"
+            )
+        if extra:
+            validation.error(
+                f"GBW Waste-Aware Biomass Intake - Large has unexpected recipes {', '.join(extra)} in {relative_path}"
+            )
+
+    for production_id, expected in WASTE_AWARE_BIOMASS_INTAKE_LARGE_RECIPES.items():
+        production = productions.get(production_id)
+        if production is None:
+            continue
+
+        inputs = production_amounts(production, "inputs")
+        outputs = production_amounts(production, "outputs")
+        if inputs != expected["inputs"]:
+            validation.error(f"Recipe '{production_id}' has unexpected inputs in {relative_path}")
+        if outputs != expected["outputs"]:
+            validation.error(f"Recipe '{production_id}' has unexpected outputs in {relative_path}")
+        if production.get("cyclesPerHour", "") != expected["cycles"] or production.get("costsPerActiveHour", "") != expected["cost"]:
+            validation.error(f"Recipe '{production_id}' has unexpected speed or cost in {relative_path}")
+
+        if production_id in {"gbwCompatLargeSilageToPlanetSilage", "gbwCompatLargeManureToPlanetManure"}:
+            if "ORGANICWASTE" in outputs:
+                validation.error(f"Recipe '{production_id}' must not produce ORGANICWASTE in {relative_path}")
+        elif outputs.get("ORGANICWASTE", 0.0) <= 0.0:
+            validation.error(f"Recipe '{production_id}' must produce a positive ORGANICWASTE side stream in {relative_path}")
+
+
 def validate_orchards_compost_asset_policy(mod_root: Path, repo_root: Path, validation: Validation) -> None:
     if mod_root.name != ORCHARDS_GREENHOUSES_COMPAT_MOD:
         return
@@ -1305,12 +1485,16 @@ def validate_orchards_compost_asset_policy(mod_root: Path, repo_root: Path, vali
             for node in root.findall("./extraSourceFiles/sourceFile")
         }
 
-        waste_aware_store_path = f"placeables/gbw/{WASTE_AWARE_WET_PREP_FILE}"
-        if waste_aware_store_path in static_store_items:
-            validation.error(
-                f"{waste_aware_store_path} must not be listed as a static storeItem; "
-                f"GBWWasteAwareGate.lua owns runtime shop registration"
-            )
+        runtime_gated_store_paths = {
+            f"placeables/gbw/{WASTE_AWARE_WET_PREP_FILE}",
+            f"placeables/gbw/{WASTE_AWARE_BIOMASS_INTAKE_LARGE_FILE}",
+        }
+        for runtime_gated_store_path in sorted(runtime_gated_store_paths):
+            if runtime_gated_store_path in static_store_items:
+                validation.error(
+                    f"{runtime_gated_store_path} must not be listed as a static storeItem; "
+                    f"GBWWasteAwareGate.lua owns runtime shop registration"
+                )
 
         for script in (GBW_COMPAT_SETTINGS_SCRIPT, WASTE_AWARE_GATE_SCRIPT):
             if script not in extra_source_files:
@@ -1323,6 +1507,10 @@ def validate_orchards_compost_asset_policy(mod_root: Path, repo_root: Path, vali
     waste_aware_prep = mod_root / "placeables" / "gbw" / WASTE_AWARE_WET_PREP_FILE
     if not waste_aware_prep.is_file():
         validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must include placeables/gbw/{WASTE_AWARE_WET_PREP_FILE}")
+
+    waste_aware_intake = mod_root / "placeables" / "gbw" / WASTE_AWARE_BIOMASS_INTAKE_LARGE_FILE
+    if not waste_aware_intake.is_file():
+        validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must include placeables/gbw/{WASTE_AWARE_BIOMASS_INTAKE_LARGE_FILE}")
 
     settings_script = mod_root / GBW_COMPAT_SETTINGS_SCRIPT
     if not settings_script.is_file():
@@ -1349,6 +1537,7 @@ def validate_orchards_compost_asset_policy(mod_root: Path, repo_root: Path, vali
             "FS25_orchardsAndGreenhouses_crossplay": "check the Orchards/Greenhouses provider mod",
             "ORGANICWASTE": "check the provider-owned ORGANICWASTE fillType",
             "wasteAwareWetSubstratePrep.xml": "own the waste-aware prep shop XML path",
+            "wasteAwareBiomassIntakeLarge.xml": "own the waste-aware biomass intake shop XML path",
             "GBWCompatSettings": "respect the user setting before registration",
             "g_modIsLoaded": "check active mod state",
             "g_fillTypeManager": "check runtime fillType registration",
@@ -1583,6 +1772,7 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
         validate_construction_tabs(path, repo_root, tree, known_construction_tabs, validation)
         validate_compost_bay_rules(path, mod_root, repo_root, tree, validation)
         validate_waste_aware_wet_prep_rules(path, mod_root, repo_root, tree, validation)
+        validate_waste_aware_biomass_intake_large_rules(path, mod_root, repo_root, tree, validation)
 
         if tree.getroot().get("type") == "productionPoint" or tree.find(".//productions") is not None:
             validate_identity_dispatcher_rules(path, repo_root, tree, validation)

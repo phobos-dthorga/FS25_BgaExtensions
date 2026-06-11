@@ -21,7 +21,7 @@ The current PlanET-compatible preparation modules produce or handle these materi
 | --- | --- | --- | --- |
 | `SILAGE_IN` | Chaff, silage, grass, hay, low-yield straw pretreatment | PlanET modular fermenter input | Good as a PlanET-owned handoff only. Do not expose as general farm material. |
 | `MANURE_IN` | Manure intake | PlanET modular fermenter input | Good as a PlanET-owned handoff only. |
-| GBW mash families | Wet Substrate Prep from sugar crops, roots, greens, and organic residue | GBW staging materials, then fermented into `SUGARBEETCUT_IN` | Good internal GBW intermediaries. Keep them internal until a real storage/logistics use appears. The Orchards/Greenhouses add-on can use a runtime-gated waste-aware variant that also emits small `ORGANICWASTE` side-streams. |
+| GBW mash families | Wet Substrate Prep from sugar crops, roots, greens, and organic residue | GBW staging materials, then fermented into `SUGARBEETCUT_IN` | Good internal GBW intermediaries. Keep them internal until a real storage/logistics use appears. The Orchards/Greenhouses add-on can use runtime-gated waste-aware variants that also emit small `ORGANICWASTE` side-streams. |
 | `SUGARBEETCUT_IN` | GBW Fermentation Vessel mash fermentation | PlanET modular fermenter input | Good as final PlanET wet-substrate handoff. |
 | `STRAW_PELLETS` | Dry Fuel Processor straw pelletizing | Straw Harvest HALLSYS Pellet Heat Plant, pellet-compatible systems, and assisted GBW fermentation | Strong cross-mod by-product/fuel route. Keep heat logistics meaningful and BGA use additive-gated. |
 | `HAY_PELLETS` | Dry Fuel Processor hay pelletizing | Straw Harvest pellet-compatible systems and assisted GBW fermentation | Useful dual-purpose route; better BGA substrate than straw pellets, but still below prepared silage. |
@@ -67,6 +67,7 @@ Recommended routes:
 
 - `ORGANICWASTE` -> `GBW_RESIDUE_MASH` for BGA co-digestion
 - `ORGANICWASTE` -> `COMPOST` when `COMPOST` exists, preferably through the Compost Bay when a physical bunker workflow is desired
+- large biomass intake raw routes -> normal `SILAGE_IN` handoff plus small recovered `ORGANICWASTE` side-streams
 - wet/root/green mash prep -> slightly reduced mash output + a small `ORGANICWASTE` stream in the Orchards/Greenhouses add-on when the runtime gate is enabled
 
 3. Dry fuel route

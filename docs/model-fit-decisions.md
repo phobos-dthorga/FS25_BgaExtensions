@@ -39,6 +39,8 @@ Starting with `v0.2.12.0`, the optional Orchards/Greenhouses compatibility add-o
 
 Starting with `v0.2.21.0`, the same add-on uses the small PlanET bunker model for Waste-Aware Wet Substrate Prep. This is still an active wet-material preparation process, so the mixer visual language remains appropriate. Starting with `v0.2.22.0`, that placeable is runtime-gated through the GBW setting/provider check instead of being a static shop item. The `ORGANICWASTE` side-stream is a by-product of prep, not passive storage.
 
+Starting with `v0.2.23.0`, the same add-on uses the large PlanET bunker model for Waste-Aware Biomass Intake - Large. The model matches the existing large intake, while the higher price/upkeep represents better screening and recovery equipment. Only the large compat intake gets recovered `ORGANICWASTE`; small and medium core intakes remain simple, dependable PlanET handoff modules.
+
 Starting with `v0.2.20.0`, the same add-on adds `placeables/gbw/compostBay.xml`, which references the Orchards/Greenhouses compost silo model and store icon. This avoids using another PlanET bunker for compost. The visual language should read as a physical composting bay or heap, not as BGA machinery.
 
 Starting with `v0.2.16.0`, mash fermentation moves from Wet Substrate Prep into `placeables/gbw/planetFermentationVessel.xml`, which references PlanET's `PlanET_Fermenter100.i3d` model and store icon from the required PlanET Modular BGA dependency.
@@ -80,6 +82,7 @@ The same dependency-reference rule applies to Orchards/Greenhouses assets. Do no
 | Washed Potato Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit. |
 | Organic Residue Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active residue preparation fit. |
 | Waste-Aware Wet Substrate Prep add-on | `PlanET_Bunker_Klein.i3d` | Good active wet-material preparation fit; emits provider-owned `ORGANICWASTE` only in the Orchards/Greenhouses add-on. |
+| Waste-Aware Biomass Intake - Large add-on | `PlanET_Bunker_Gross.i3d` | Good large-intake fit; recovered `ORGANICWASTE` represents extra screening/recovery equipment on the large compat tier. |
 | Compost Bay add-on | Orchards/Greenhouses `compostSilo.i3d` | Good physical composting/logistics fit; avoids another generic PlanET bunker. |
 | Dry Fuel Processor | `PlanET_Bunker_Klein.i3d` | Acceptable active dry-material processing fit. |
 | Medium Dry Fuel Yard | `PlanET_Bunker_Mittel.i3d` | Acceptable passive bunker storage. |

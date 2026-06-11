@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<placeable type="productionPoint" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../shared/xml/schema/placeable.xsd">
+    <storeData>
+        <name>$l10n_storeItem_gbwWasteAwareBiomassIntakeLarge</name>
+        <functions>
+            <function>$l10n_function_gbwWasteAwareBiomassIntakeLarge</function>
+        </functions>
+        <image>$moddir$FS25_PlanET_BGA_Modular/storeIcon/store_PlanET_BunkerGross.dds</image>
+        <price>165000</price>
+        <dailyUpkeep>70</dailyUpkeep>
+        <lifetime>1000</lifetime>
+        <rotation>0</rotation>
+        <brand>PLANET</brand>
+        <species>PLACEABLE</species>
+        <category>productionPoints</category>
+        <brush>
+            <type>placeable</type>
+            <category>production</category>
+            <tab>gbwBgaCompatibility</tab>
+        </brush>
+    </storeData>
+
+    <base>
+        <filename>$moddir$FS25_PlanET_BGA_Modular/i3d/PlanET_Bunker_Gross.i3d</filename>
+        <canBeRenamed>true</canBeRenamed>
+        <boughtWithFarmland>true</boughtWithFarmland>
+    </base>
+
+    <placement useRandomYRotation="false" useManualYRotation="true">
+        <testAreas>
+            <testArea startNode="testArea1Start" endNode="testArea1End"/>
+        </testAreas>
+        <sounds>
+            <place template="smallImp" pitchScale="1.4"/>
+        </sounds>
+    </placement>
+
+    <clearAreas>
+        <clearArea startNode="clearArea1Start" widthNode="clearArea1Width" heightNode="clearArea1Height"/>
+    </clearAreas>
+
+    <leveling requireLeveling="true" maxSmoothDistance="10" maxSlope="75" maxEdgeAngle="30">
+        <levelAreas>
+            <levelArea startNode="clearArea1Start" widthNode="clearArea1Width" heightNode="clearArea1Height" groundType="asphalt"/>
+        </levelAreas>
+    </leveling>
+
+    <indoorAreas>
+        <indoorArea startNode="indoorArea1Start" widthNode="indoorArea1Width" heightNode="indoorArea1Height"/>
+    </indoorAreas>
+
+    <tipOcclusionUpdateAreas>
+        <tipOcclusionUpdateArea startNode="tipOcclusionUpdateArea1Start" endNode="tipOcclusionUpdateArea1End"/>
+    </tipOcclusionUpdateAreas>
+
+    <ai>
+        <updateAreas>
+            <updateArea startNode="tipOcclusionUpdateArea1Start" endNode="tipOcclusionUpdateArea1End"/>
+        </updateAreas>
+    </ai>
+
+    <infoTrigger triggerNode="infoTrigger"/>
+
+    <triggerMarkers>
+        <triggerMarker node="unloadTriggerMixerMarker" filename="$data/shared/assets/marker/markerIconUnload.i3d" id="UNLOAD" adjustToGround="false"/>
+        <triggerMarker node="loadTriggerMarker" filename="$data/shared/assets/marker/markerIconLoad.i3d" id="LOAD" adjustToGround="true"/>
+        <triggerMarker node="playerTriggerMarker" filename="$data/shared/assets/marker/markerIconWrench.i3d" id="WRENCH" adjustToGround="true"/>
+    </triggerMarkers>
+
+    <hotspots>
+        <hotspot type="PRODUCTION_POINT" linkNode="hotspotMarker" teleportNode="teleportNode"/>
+    </hotspots>
+
+    <productionPoint>
+        <productions sharedThroughputCapacity="false">
+            <production id="gbwCompatLargeChaffToPlanetSilageRecoveredWaste" name="$l10n_production_gbwRecoveredChaffToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3">
+                <inputs><input fillType="CHAFF" amount="840"/></inputs>
+                <outputs>
+                    <output fillType="SILAGE_IN" amount="760"/>
+                    <output fillType="ORGANICWASTE" amount="24"/>
+                </outputs>
+            </production>
+            <production id="gbwCompatLargeChaffAdditiveToPlanetSilageRecoveredWaste" name="$l10n_production_gbwRecoveredChaffAdditiveToPlanetSilage" cyclesPerHour="14" costsPerActiveHour="3.5">
+                <inputs>
+                    <input fillType="CHAFF" amount="840"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
+                </inputs>
+                <outputs>
+                    <output fillType="SILAGE_IN" amount="810"/>
+                    <output fillType="ORGANICWASTE" amount="12"/>
+                </outputs>
+            </production>
+            <production id="gbwCompatLargeSilageToPlanetSilage" name="$l10n_production_gbwRecoveredSilageToPlanetSilage" cyclesPerHour="24" costsPerActiveHour="2.5">
+                <inputs><input fillType="SILAGE" amount="840"/></inputs>
+                <outputs><output fillType="SILAGE_IN" amount="840"/></outputs>
+            </production>
+            <production id="gbwCompatLargeGrassToPlanetSilageRecoveredWaste" name="$l10n_production_gbwRecoveredGrassToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="3">
+                <inputs><input fillType="GRASS_WINDROW" amount="840"/></inputs>
+                <outputs>
+                    <output fillType="SILAGE_IN" amount="600"/>
+                    <output fillType="ORGANICWASTE" amount="36"/>
+                </outputs>
+            </production>
+            <production id="gbwCompatLargeGrassAdditiveToPlanetSilageRecoveredWaste" name="$l10n_production_gbwRecoveredGrassAdditiveToPlanetSilage" cyclesPerHour="12" costsPerActiveHour="3.5">
+                <inputs>
+                    <input fillType="GRASS_WINDROW" amount="840"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
+                </inputs>
+                <outputs>
+                    <output fillType="SILAGE_IN" amount="700"/>
+                    <output fillType="ORGANICWASTE" amount="18"/>
+                </outputs>
+            </production>
+            <production id="gbwCompatLargeHayToPlanetSilageRecoveredWaste" name="$l10n_production_gbwRecoveredHayToPlanetSilage" cyclesPerHour="10" costsPerActiveHour="3">
+                <inputs><input fillType="DRYGRASS_WINDROW" amount="840"/></inputs>
+                <outputs>
+                    <output fillType="SILAGE_IN" amount="660"/>
+                    <output fillType="ORGANICWASTE" amount="24"/>
+                </outputs>
+            </production>
+            <production id="gbwCompatLargeStrawToPlanetSilageRecoveredWaste" name="$l10n_production_gbwRecoveredStrawToPlanetSilage" cyclesPerHour="7" costsPerActiveHour="4">
+                <inputs>
+                    <input fillType="STRAW" amount="840"/>
+                    <input fillType="SILAGE_ADDITIVE" amount="0.1"/>
+                </inputs>
+                <outputs>
+                    <output fillType="SILAGE_IN" amount="500"/>
+                    <output fillType="ORGANICWASTE" amount="48"/>
+                </outputs>
+            </production>
+            <production id="gbwCompatLargeManureToPlanetManure" name="$l10n_production_gbwRecoveredManureToPlanetManure" cyclesPerHour="20" costsPerActiveHour="2.5">
+                <inputs><input fillType="MANURE" amount="400"/></inputs>
+                <outputs><output fillType="MANURE_IN" amount="400"/></outputs>
+            </production>
+        </productions>
+
+        <sellingStation node="sellingStation" appearsOnStats="false" supportsExtension="false" allowMissions="false">
+            <unloadTrigger exactFillRootNode="unloadTriggerMixer" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW MANURE SILAGE_ADDITIVE"/>
+            <baleTrigger triggerNode="baleTrigger" fillTypes="CHAFF SILAGE GRASS_WINDROW DRYGRASS_WINDROW STRAW"/>
+        </sellingStation>
+
+        <loadingStation supportsExtension="false">
+            <loadTrigger triggerNode="loadTrigger" fillTypes="SILAGE_IN MANURE_IN ORGANICWASTE" aiNode="loadTriggerAiNode"/>
+        </loadingStation>
+
+        <storage isExtension="false" fillLevelSyncThreshold="100">
+            <capacity fillType="CHAFF" capacity="160000"/>
+            <capacity fillType="SILAGE" capacity="160000"/>
+            <capacity fillType="GRASS_WINDROW" capacity="160000"/>
+            <capacity fillType="DRYGRASS_WINDROW" capacity="160000"/>
+            <capacity fillType="STRAW" capacity="100000"/>
+            <capacity fillType="MANURE" capacity="70000"/>
+            <capacity fillType="SILAGE_ADDITIVE" capacity="480"/>
+            <capacity fillType="SILAGE_IN" capacity="240000"/>
+            <capacity fillType="MANURE_IN" capacity="70000"/>
+            <capacity fillType="ORGANICWASTE" capacity="50000"/>
+
+            <dynamicFillPlane node="bunkerFillVolume" allSidePlanes="false" maxAllowedHeapAngle="10" maxDelta="0.2" defaultFillType="SILAGE"/>
+        </storage>
+
+        <playerTrigger node="playerTrigger"/>
+
+        <sounds>
+            <idle template="dairyIdle" linkNode="0>" outerRadius="10" volumeScale="0.2"/>
+            <active template="dairyWork" linkNode="0>" outerRadius="10" volumeScale="0.4"/>
+        </sounds>
+    </productionPoint>
+
+    <i3dMappings>
+        <i3dMapping id="clearArea1Start" node="0>0|0"/>
+        <i3dMapping id="clearArea1Width" node="0>0|0|0"/>
+        <i3dMapping id="clearArea1Height" node="0>0|0|1"/>
+        <i3dMapping id="indoorArea1Start" node="0>1|0"/>
+        <i3dMapping id="indoorArea1Width" node="0>1|0|0"/>
+        <i3dMapping id="indoorArea1Height" node="0>1|0|1"/>
+        <i3dMapping id="testArea1Start" node="0>2|0"/>
+        <i3dMapping id="testArea1End" node="0>2|0|0"/>
+        <i3dMapping id="tipOcclusionUpdateArea1Start" node="0>3|0"/>
+        <i3dMapping id="tipOcclusionUpdateArea1End" node="0>3|0|0"/>
+        <i3dMapping id="infoTrigger" node="0>4"/>
+        <i3dMapping id="hotspotMarker" node="0>9"/>
+        <i3dMapping id="teleportNode" node="0>10"/>
+        <i3dMapping id="loadTrigger" node="0>11|0|0"/>
+        <i3dMapping id="loadTriggerMarker" node="0>11|0|1"/>
+        <i3dMapping id="loadTriggerAiNode" node="0>11|0|2"/>
+        <i3dMapping id="bunkerFillVolume" node="0>11|2|0"/>
+        <i3dMapping id="baleTrigger" node="0>11|2|1"/>
+        <i3dMapping id="unloadTriggerMixer" node="0>11|2|2"/>
+        <i3dMapping id="unloadTriggerMixerMarker" node="0>11|2|3"/>
+        <i3dMapping id="playerTrigger" node="0>11|4"/>
+        <i3dMapping id="playerTriggerMarker" node="0>11|4|0"/>
+    </i3dMappings>
+</placeable>

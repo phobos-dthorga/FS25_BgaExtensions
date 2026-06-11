@@ -5,6 +5,10 @@ GBWWasteAwareGate.modDirectory = g_currentModDirectory or ""
 GBWWasteAwareGate.providerModName = "FS25_orchardsAndGreenhouses_crossplay"
 GBWWasteAwareGate.requiredFillType = "ORGANICWASTE"
 GBWWasteAwareGate.storeXml = "placeables/gbw/wasteAwareWetSubstratePrep.xml"
+GBWWasteAwareGate.storeXmls = {
+    "placeables/gbw/wasteAwareWetSubstratePrep.xml",
+    "placeables/gbw/wasteAwareBiomassIntakeLarge.xml"
+}
 
 local function gbwGateInfo(message, ...)
     if Logging ~= nil and Logging.info ~= nil then
@@ -83,12 +87,12 @@ function GBWWasteAwareGate:getInactiveReason()
     return nil
 end
 
-function GBWWasteAwareGate:findStoreItem()
+function GBWWasteAwareGate:findStoreItem(storeXml)
     if g_storeManager == nil or g_storeManager.items == nil then
         return nil, nil
     end
 
-    local needle = normalizePath(self.storeXml)
+    local needle = normalizePath(storeXml or self.storeXml)
     for index, item in ipairs(g_storeManager.items) do
         local xmlFilename = normalizePath(item.xmlFilename or item.xmlFilenameLower)
         if xmlFilename == needle or string.find(xmlFilename, needle, 1, true) ~= nil then
@@ -99,31 +103,31 @@ function GBWWasteAwareGate:findStoreItem()
     return nil, nil
 end
 
-function GBWWasteAwareGate:hideStoreItem(reason)
-    local item = self:findStoreItem()
+function GBWWasteAwareGate:hideStoreItem(storeXml, reason)
+    local item = self:findStoreItem(storeXml)
     if item ~= nil then
         item.showInStore = false
     end
 
-    gbwGateInfo("Waste-aware wet substrate prep shop item hidden: %s.", reason)
+    gbwGateInfo("Waste-aware shop item '%s' hidden: %s.", storeXml, reason)
 end
 
-function GBWWasteAwareGate:registerStoreItem()
+function GBWWasteAwareGate:registerStoreItem(storeXml)
     if g_storeManager == nil or g_storeManager.loadItem == nil then
-        gbwGateWarning("Store manager is unavailable; waste-aware wet substrate prep cannot be registered.")
+        gbwGateWarning("Store manager is unavailable; waste-aware shop item '%s' cannot be registered.", storeXml)
         return false
     end
 
-    local existingItem = self:findStoreItem()
+    local existingItem = self:findStoreItem(storeXml)
     if existingItem ~= nil then
         existingItem.showInStore = true
-        gbwGateInfo("Waste-aware wet substrate prep shop item enabled.")
+        gbwGateInfo("Waste-aware shop item '%s' enabled.", storeXml)
         return true
     end
 
-    local item = g_storeManager:loadItem(self.storeXml, self.modDirectory, self.modName, true, false, nil, nil, true)
+    local item = g_storeManager:loadItem(storeXml, self.modDirectory, self.modName, true, false, nil, nil, true)
     if item == nil then
-        gbwGateWarning("Could not load waste-aware wet substrate prep shop item from '%s'.", self.storeXml)
+        gbwGateWarning("Could not load waste-aware shop item from '%s'.", storeXml)
         return false
     end
 
@@ -138,8 +142,20 @@ function GBWWasteAwareGate:registerStoreItem()
         g_storeManager.xmlFilenameToItem[item.xmlFilenameLower] = item
     end
 
-    gbwGateInfo("Waste-aware wet substrate prep shop item registered.")
+    gbwGateInfo("Waste-aware shop item '%s' registered.", storeXml)
     return true
+end
+
+function GBWWasteAwareGate:hideStoreItems(reason)
+    for _, storeXml in ipairs(self.storeXmls) do
+        self:hideStoreItem(storeXml, reason)
+    end
+end
+
+function GBWWasteAwareGate:registerStoreItems()
+    for _, storeXml in ipairs(self.storeXmls) do
+        self:registerStoreItem(storeXml)
+    end
 end
 
 function GBWWasteAwareGate:loadMap()
@@ -149,11 +165,11 @@ function GBWWasteAwareGate:loadMap()
 
     local inactiveReason = self:getInactiveReason()
     if inactiveReason ~= nil then
-        self:hideStoreItem(inactiveReason)
+        self:hideStoreItems(inactiveReason)
         return
     end
 
-    self:registerStoreItem()
+    self:registerStoreItems()
 end
 
 addModEventListener(GBWWasteAwareGate)
