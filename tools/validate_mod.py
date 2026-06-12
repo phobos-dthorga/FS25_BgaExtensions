@@ -53,6 +53,7 @@ DEPENDENCY_FILLTYPES = {
         "GBW_ROOT_MASH",
         "GBW_SWEET_MASH",
     },
+    "FS25_PhobosLib": set(),
     "FS25_PlanET_BGA_Modular": {
         "LIQUIDMANURE1",
         "MANURE_IN",
@@ -156,6 +157,17 @@ WASTE_AWARE_WET_PREP_FILE = "wasteAwareWetSubstratePrep.xml"
 WASTE_AWARE_BIOMASS_INTAKE_LARGE_FILE = "wasteAwareBiomassIntakeLarge.xml"
 GBW_COMPAT_SETTINGS_SCRIPT = "scripts/GBWCompatSettings.lua"
 WASTE_AWARE_GATE_SCRIPT = "scripts/GBWWasteAwareGate.lua"
+CORE_REQUIRED_DEPENDENCIES = {
+    "FS25_PhobosLib",
+    "FS25_PlanET_BGA_Modular",
+    "pdlc_strawHarvestPack",
+}
+ORCHARDS_GREENHOUSES_REQUIRED_DEPENDENCIES = {
+    "FS25_BgaExtensions",
+    "FS25_PhobosLib",
+    "FS25_PlanET_BGA_Modular",
+    "FS25_orchardsAndGreenhouses_crossplay",
+}
 COMPOST_BAY_ACCEPTED_FILLTYPES = {
     "BEETROOT",
     "CARROT",
@@ -509,6 +521,53 @@ def moddesc_data(mod_root: Path, validation: Validation) -> tuple[set[str], set[
         if node.get("name")
     }
     return dependencies, l10n_keys, construction_tabs
+
+
+def validate_required_dependencies(mod_root: Path, dependencies: set[str], validation: Validation) -> None:
+    is_core = (mod_root / "config" / "biomassCropRegistry.xml").is_file()
+    if is_core:
+        missing = sorted(CORE_REQUIRED_DEPENDENCIES - dependencies)
+        for dependency in missing:
+            validation.error(f"Core FS25_BgaExtensions must declare dependency {dependency}")
+
+    if mod_root.name == ORCHARDS_GREENHOUSES_COMPAT_MOD:
+        missing = sorted(ORCHARDS_GREENHOUSES_REQUIRED_DEPENDENCIES - dependencies)
+        for dependency in missing:
+            validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must declare dependency {dependency}")
+
+
+def validate_phoboslib_usage(mod_root: Path, validation: Validation) -> None:
+    is_core = (mod_root / "config" / "biomassCropRegistry.xml").is_file()
+    if is_core:
+        data_pack_script = mod_root / "scripts" / "GBWDataPacks.lua"
+        if data_pack_script.is_file():
+            text = data_pack_script.read_text(encoding="utf-8")
+            required_fragments = {
+                "PhobosFS25.Logging": "use shared Phobos logging helpers",
+                "PhobosFS25.FillTypes": "use shared fillType lookup helpers",
+            }
+            for fragment, reason in required_fragments.items():
+                if fragment not in text:
+                    validation.error(f"GBWDataPacks.lua must {reason}")
+
+    if mod_root.name == ORCHARDS_GREENHOUSES_COMPAT_MOD:
+        settings_script = mod_root / GBW_COMPAT_SETTINGS_SCRIPT
+        if settings_script.is_file():
+            text = settings_script.read_text(encoding="utf-8")
+            if "PhobosFS25.Logging" not in text:
+                validation.error(f"{GBW_COMPAT_SETTINGS_SCRIPT} must use shared Phobos logging helpers")
+
+        gate_script = mod_root / WASTE_AWARE_GATE_SCRIPT
+        if gate_script.is_file():
+            text = gate_script.read_text(encoding="utf-8")
+            required_fragments = {
+                "PhobosFS25.Logging": "use shared Phobos logging helpers",
+                "PhobosFS25.Mods": "use shared active-mod detection helpers",
+                "PhobosFS25.FillTypes": "use shared fillType lookup helpers",
+            }
+            for fragment, reason in required_fragments.items():
+                if fragment not in text:
+                    validation.error(f"{WASTE_AWARE_GATE_SCRIPT} must {reason}")
 
 
 def collect_filltype_refs(path: Path, tree: ET.ElementTree) -> set[str]:
@@ -1792,6 +1851,8 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
         return
 
     dependencies, l10n_keys, construction_tabs = moddesc_data(mod_root, validation)
+    validate_required_dependencies(mod_root, dependencies, validation)
+    validate_phoboslib_usage(mod_root, validation)
     known_construction_tabs = dict(construction_tabs)
     for dependency in dependencies:
         known_construction_tabs.update(DEPENDENCY_CONSTRUCTION_TABS.get(dependency, {}))

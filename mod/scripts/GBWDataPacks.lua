@@ -71,7 +71,9 @@ GBWDataPacks.activeCountsByTarget = {}
 GBWDataPacks.loadedPackIds = {}
 
 local function gbwInfo(message, ...)
-    if Logging ~= nil and Logging.info ~= nil then
+    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.infoSource ~= nil then
+        PhobosFS25.Logging.infoSource("GBWDataPacks", message, ...)
+    elseif Logging ~= nil and Logging.info ~= nil then
         Logging.info("[GBWDataPacks] " .. message, ...)
     else
         print(string.format("[GBWDataPacks] " .. message, ...))
@@ -79,7 +81,9 @@ local function gbwInfo(message, ...)
 end
 
 local function gbwWarning(message, ...)
-    if Logging ~= nil and Logging.warning ~= nil then
+    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.warnSource ~= nil then
+        PhobosFS25.Logging.warnSource("GBWDataPacks", message, ...)
+    elseif Logging ~= nil and Logging.warning ~= nil then
         Logging.warning("[GBWDataPacks] " .. message, ...)
     else
         print(string.format("[GBWDataPacks] Warning: " .. message, ...))
@@ -144,6 +148,10 @@ function GBWDataPacks:resetLoadedRoutes()
 end
 
 function GBWDataPacks:getFillTypeId(fillTypeName)
+    if PhobosFS25 ~= nil and PhobosFS25.FillTypes ~= nil and PhobosFS25.FillTypes.getIndex ~= nil then
+        return PhobosFS25.FillTypes.getIndex(fillTypeName)
+    end
+
     if g_fillTypeManager == nil or g_fillTypeManager.getFillTypeIndexByName == nil then
         return nil
     end

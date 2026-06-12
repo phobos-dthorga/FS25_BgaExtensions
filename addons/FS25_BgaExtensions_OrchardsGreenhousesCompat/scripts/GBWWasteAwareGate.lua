@@ -11,7 +11,9 @@ GBWWasteAwareGate.storeXmls = {
 }
 
 local function gbwGateInfo(message, ...)
-    if Logging ~= nil and Logging.info ~= nil then
+    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.infoSource ~= nil then
+        PhobosFS25.Logging.infoSource("GBWWasteAwareGate", message, ...)
+    elseif Logging ~= nil and Logging.info ~= nil then
         Logging.info("[GBWWasteAwareGate] " .. message, ...)
     else
         print(string.format("[GBWWasteAwareGate] " .. message, ...))
@@ -19,7 +21,9 @@ local function gbwGateInfo(message, ...)
 end
 
 local function gbwGateWarning(message, ...)
-    if Logging ~= nil and Logging.warning ~= nil then
+    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.warnSource ~= nil then
+        PhobosFS25.Logging.warnSource("GBWWasteAwareGate", message, ...)
+    elseif Logging ~= nil and Logging.warning ~= nil then
         Logging.warning("[GBWWasteAwareGate] " .. message, ...)
     else
         print(string.format("[GBWWasteAwareGate] Warning: " .. message, ...))
@@ -33,6 +37,10 @@ local function normalizePath(value)
 end
 
 function GBWWasteAwareGate:isProviderActive()
+    if PhobosFS25 ~= nil and PhobosFS25.Mods ~= nil and PhobosFS25.Mods.isLoaded ~= nil then
+        return PhobosFS25.Mods.isLoaded(self.providerModName)
+    end
+
     if g_modIsLoaded ~= nil then
         return g_modIsLoaded[self.providerModName] == true
     end
@@ -45,6 +53,13 @@ function GBWWasteAwareGate:isProviderActive()
 end
 
 function GBWWasteAwareGate:hasRequiredFillType()
+    if PhobosFS25 ~= nil and PhobosFS25.FillTypes ~= nil and PhobosFS25.FillTypes.getIndex ~= nil then
+        local fillTypeIndex = PhobosFS25.FillTypes.getIndex(self.requiredFillType)
+        if fillTypeIndex ~= nil and (FillType == nil or FillType.UNKNOWN == nil or fillTypeIndex ~= FillType.UNKNOWN) then
+            return true
+        end
+    end
+
     if g_fillTypeManager == nil then
         return false
     end

@@ -39,6 +39,8 @@ The validator intentionally covers checks that are cheap to automate and annoyin
 - every production output must be available from a load trigger
 - storage-only production-point fillTypes fail validation
 - optional provider fillTypes must stay in guarded add-on packages
+- GBW Lua helpers must continue using `FS25_PhobosLib` for shared logging,
+  active-mod detection, and fillType lookup where those helpers apply
 - data-pack XML must use documented targets, templates, tiers, route caps, and stable IDs
 - fermentation-priority recipe relationships are enforced for current core BGA lanes
 - package versions must match across the active package set
@@ -168,8 +170,8 @@ Good next steps:
 
 - Add branch protection once CI has proven stable.
 - Add a pull request checkbox for disposable-save log review.
-- Add a release workflow only after deciding whether GitHub or `tools/release.ps1` owns release creation. Do not run both as release creators.
-- Make the local release helper consume `tools/package_manifest.json` for add-on assets after the manual release flow has had another pass or two.
+- Keep GitHub Actions as the release owner and leave `tools/release.ps1` as a fallback only.
+- Make the local release helper consume `tools/package_manifest.json` for add-on assets if the fallback path is used again.
 - Add a local `measure-baseline` helper if load-time comparisons become frequent.
 - Add Lua syntax/lint checks once Lua enters the repository.
 - Add GIANTS schema validation if a redistributable or easily configured validator becomes available.

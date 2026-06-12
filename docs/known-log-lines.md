@@ -12,6 +12,7 @@ Local FS25 `log.txt` supplied by the maintainer.
 | --- | --- |
 | `Available mod: ... (Version: 0.2.3.0) FS25_BgaExtensions` | The packaged mod was visible to the game. |
 | `Load mod: FS25_BgaExtensions` | The mod was selected and loaded in the tested save. |
+| `Load mod: FS25_PhobosLib` | Shared helper dependency was present and loaded. |
 | `Info: Loaded 4 fill types from mod: FS25_BgaExtensions` | The four GBW mash fillTypes registered. |
 | `Load mod: FS25_PlanET_BGA_Modular` and `Loaded 9 fill types` | PlanET dependency was present and its fillTypes loaded. |
 | `Loaded 3 fill types from mod: pdlc_strawHarvestPack` | Straw Harvest pDLC dependency was present and loaded. |
@@ -44,6 +45,14 @@ For `v0.2.24.0`, smoke-test the premium pellet fermentation rebalance:
 - confirm pellet manufacture remains unchanged and still keeps `MOLASSES` in the Dry Fuel Processor
 - confirm no GBW-owned warnings or errors appear in the FS25 log
 
+For `v0.2.25.0`, smoke-test the PhobosLib migration:
+
+- confirm `FS25_PhobosLib` loads before GBW packages
+- confirm core `FS25_BgaExtensions` loads as version `0.2.25.0`
+- confirm the data-pack loader still reports Stage 1 route preparation
+- confirm Orchards/Greenhouses waste-aware shop gating still respects provider, `ORGANICWASTE`, and the user setting
+- run log triage and confirm no GBW-owned or Phobos-owned warnings/errors are introduced
+
 The user reported `v0.2.23.0` testing complete before the premium pellet rebalance. Previous waste-aware, Compost Bay, Process Supply Hub, and Process Pallet Dock behavior is accepted unless a new log line says otherwise.
 
 ## User Test Confirmation
@@ -67,8 +76,9 @@ Treat this as successful proof-of-concept confirmation for the PlanET biomass in
 After each disposable-save test:
 
 1. Search for `FS25_BgaExtensions`.
-2. Search for `Warning (` paths that include `FS25_BgaExtensions`.
-3. Search for `Error:` near the time GBW placeables are placed or loaded.
-4. Add new findings here with date, version, interpretation, and action.
+2. Search for `FS25_PhobosLib` and `PhobosFS25` when GBW Lua helpers are involved.
+3. Search for `Warning (` paths that include `FS25_BgaExtensions`.
+4. Search for `Error:` near the time GBW placeables are placed or loaded.
+5. Add new findings here with date, version, interpretation, and action.
 
 Do not normalize warnings as harmless if they come from GBW XML. Either fix them, document why they are acceptable, or remove the feature that causes them.

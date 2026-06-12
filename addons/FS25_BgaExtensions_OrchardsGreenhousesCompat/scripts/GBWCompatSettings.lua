@@ -8,7 +8,9 @@ GBWCompatSettings.wasteAwareOrganicSideStreams = true
 GBWCompatSettings.loaded = false
 
 local function gbwSettingsInfo(message, ...)
-    if Logging ~= nil and Logging.info ~= nil then
+    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.infoSource ~= nil then
+        PhobosFS25.Logging.infoSource("GBWCompatSettings", message, ...)
+    elseif Logging ~= nil and Logging.info ~= nil then
         Logging.info("[GBWCompatSettings] " .. message, ...)
     else
         print(string.format("[GBWCompatSettings] " .. message, ...))

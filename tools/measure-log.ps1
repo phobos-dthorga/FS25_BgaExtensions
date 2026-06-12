@@ -105,7 +105,10 @@ function Test-GBWLine {
     return (
         $lowered.Contains($ModName.ToLowerInvariant()) -or
         $lowered.Contains("/placeables/gbw/") -or
-        $lowered.Contains("gbw_")
+        $lowered.Contains("gbw_") -or
+        $lowered.Contains("gbwdatapacks") -or
+        $lowered.Contains("gbwcompatsettings") -or
+        $lowered.Contains("gbwwasteawaregate")
     )
 }
 
@@ -164,8 +167,8 @@ function Invoke-PowerShellLogSummary {
             }
         }
 
-        $isError = $line.Contains("Error:")
-        $isWarning = $line.Contains("Warning")
+        $isError = $line.Contains("Error:") -or $line.Contains("[ERROR]")
+        $isWarning = $line.Contains("Warning") -or $line.Contains("[WARN]")
         if (-not ($isError -or $isWarning)) {
             continue
         }

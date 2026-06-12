@@ -22,11 +22,14 @@ This repository is the staging ground for early design and implementation. The m
 
 ## Release Rhythm
 
-Each shipped mod version should get a GitHub release and retain its old releases as the project timeline. See `docs/release-process.md`; `tools/release.ps1` builds a versioned package, creates a `vX.Y.Z.W` tag, and publishes a GitHub prerelease by default.
+Each shipped mod version should get a GitHub release and retain its old releases
+as the project timeline. See `docs/release-process.md`; the GitHub Actions
+`Release` workflow builds the versioned package set, creates or verifies a
+`vX.Y.Z.W` tag, and publishes a GitHub prerelease by default.
 
 ## Current Design Direction
 
-The current implementation provides PlanET-compatible biomass intake modules, Wet Substrate Prep, a Fermentation Vessel, a Process Supply Hub, a Process Pallet Dock, a Dry Fuel Processor, and scaled dry fuel yards. The intake modules convert forage, manure, and assisted low-grade straw routes into the internal feedstocks used by `FS25_PlanET_BGA_Modular`; Wet Substrate Prep makes wet/root/produce mash families; Fermentation Vessel turns mash and assisted pellet substrates into PlanET feedstock; the supply hub distributes process water; the pallet dock distributes silage additive and molasses; Dry Fuel Processor converts straw and hay into Straw Harvest pellets using water and molasses; dry fuel yards store `WOODCHIPS`, `STRAW_PELLETS`, and `HAY_PELLETS` for heat-plant logistics; and the Orchards/Greenhouses compatibility add-on includes runtime-gated waste-aware wet substrate prep, a waste-aware large biomass intake, and a GBW Compost Bay for physical composting/logistics.
+The current implementation provides PlanET-compatible biomass intake modules, Wet Substrate Prep, a Fermentation Vessel, a Process Supply Hub, a Process Pallet Dock, a Dry Fuel Processor, and scaled dry fuel yards. The intake modules convert forage, manure, and assisted low-grade straw routes into the internal feedstocks used by `FS25_PlanET_BGA_Modular`; Wet Substrate Prep makes wet/root/produce mash families; Fermentation Vessel turns mash and assisted pellet substrates into PlanET feedstock; the supply hub distributes process water; the pallet dock distributes silage additive and molasses; Dry Fuel Processor converts straw and hay into Straw Harvest pellets using water and molasses; dry fuel yards store `WOODCHIPS`, `STRAW_PELLETS`, and `HAY_PELLETS` for heat-plant logistics; and the Orchards/Greenhouses compatibility add-on includes runtime-gated waste-aware wet substrate prep, a waste-aware large biomass intake, and a GBW Compost Bay for physical composting/logistics. Shared Lua helpers come from `FS25_PhobosLib`.
 
 Maize+/MaizePlus integration is parked until a production-ready FS25 release is installed and explicitly selected as a target. Corn Production Pack remains observation-only.
 

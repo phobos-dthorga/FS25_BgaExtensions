@@ -84,6 +84,9 @@ def is_gbw_line(line: str, mod_name: str) -> bool:
         mod_name.lower() in lowered
         or "/placeables/gbw/" in lowered
         or "gbw_" in lowered
+        or "gbwdatapacks" in lowered
+        or "gbwcompatsettings" in lowered
+        or "gbwwasteawaregate" in lowered
     )
 
 
@@ -115,8 +118,8 @@ def summarize_log(log_path: Path, mod_name: str) -> dict[str, object]:
             key = "mod_available_lines" if "Available mod:" in line else "mod_load_lines"
             summary[key].append(line)
 
-        is_error = "Error:" in line
-        is_warning = "Warning" in line
+        is_error = "Error:" in line or "[ERROR]" in line
+        is_warning = "Warning" in line or "[WARN]" in line
         if not (is_error or is_warning):
             continue
 
