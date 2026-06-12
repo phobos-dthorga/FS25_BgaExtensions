@@ -43,6 +43,19 @@ For manual dispatch, leave the version empty to use the package version from
 workflow refuses to release when the requested version, tag version, and package
 version disagree.
 
+Manual dispatches should use the hybrid release-note inputs:
+
+- `summary`: one short public-facing summary of the release.
+- `notes`: extra curated context that should appear before the package list.
+- `testing`: concise validation or runtime test notes.
+- `known_issues`: known warnings, limitations, or required follow-up.
+
+The workflow combines those curated notes with a generated commit changelog
+since the previous `v*` tag, package sizes, SHA256 hashes, and prerelease/stable
+status. If a curated field is omitted, the release still publishes with useful
+generated notes, but `Testing` will say `Not provided.` and `Known Issues` will
+say `None documented.`.
+
 Use `stable` only when the project is genuinely ready to leave pre-release for
 that version. Use `draft` when notes need manual editing before publication.
 
@@ -56,8 +69,10 @@ Release notes are public-facing changelog entries. Keep them concise and player-
 
 Every release note should include:
 
+- a short public-facing summary
 - dependency requirements
 - what changed
+- validation or runtime test notes
 - known warnings or log lines when they affect the released package
 - performance target status when relevant
 
