@@ -29,6 +29,18 @@ Build versioned packages from the manifest:
 python tools\package_set.py --versioned --validate --write-sha256 --write-json
 ```
 
+## Release Automation
+
+GitHub Actions owns the normal release path through
+`.github/workflows/release.yml`.
+
+The workflow runs on `v*` tags or manual dispatch. It builds the versioned
+package set from `tools/package_manifest.json`, validates each package, writes
+checksums and `package-set.json`, and publishes all zips as GitHub release
+assets. Manual dispatch creates the matching tag when needed.
+
+Use the local `tools/release.ps1` only as a fallback.
+
 ## FillType Icons
 
 Build GBW-owned fillType HUD DDS icons from source PNG artwork:

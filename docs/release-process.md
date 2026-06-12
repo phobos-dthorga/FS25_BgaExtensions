@@ -21,23 +21,34 @@ All current releases should be GitHub pre-releases.
 3. Validate XML and packaging.
 4. Commit and push the version bump.
 5. Let GitHub CI pass on the pushed commit.
-6. Run `tools/release.ps1`.
+6. Use the GitHub Actions `Release` workflow, or push a matching `vX.Y.Z.W`
+   tag after CI is green.
 
-The helper script:
+## Automated Release Workflow
 
-- reads the version from `modDesc.xml` if `-Version` is omitted
-- builds a versioned zip in `dist/`
-- can attach extra prebuilt add-on packages with `-AdditionalAsset`
-- creates a `vX.Y.Z.W` tag
-- pushes the tag
-- creates a GitHub pre-release by default
-- refuses to overwrite an existing tag or release
+`.github/workflows/release.yml` is the release owner for GitHub releases.
 
-GitHub CI currently builds validation artifacts only. It does not create releases, because `tools/release.ps1` remains the release owner. Do not add a release-creating tag workflow until the local helper is retired or changed to delegate release creation to GitHub Actions.
+The workflow:
 
-Use `-Stable` only when the project is genuinely ready to leave pre-release for that version. Use `-Draft` when notes need manual editing before publication.
+- compiles Python and Lua files;
+- builds every package in `tools/package_manifest.json` with versioned names;
+- validates every package;
+- writes `SHA256SUMS.txt` and `package-set.json`;
+- creates or verifies a `vX.Y.Z.W` tag for manual dispatches;
+- publishes all package zips plus release metadata as GitHub release assets;
+- publishes as a prerelease by default.
 
-When a release includes optional add-ons, build and validate each add-on package before running `tools/release.ps1`, then pass the add-on zip with `-AdditionalAsset`.
+For manual dispatch, leave the version empty to use the package version from
+`mod/modDesc.xml`, or enter the same version to make the intent explicit. The
+workflow refuses to release when the requested version, tag version, and package
+version disagree.
+
+Use `stable` only when the project is genuinely ready to leave pre-release for
+that version. Use `draft` when notes need manual editing before publication.
+
+`tools/release.ps1` remains a local fallback, but the preferred path is GitHub
+Actions so package sets, checksums, metadata, and release assets are produced
+the same way every time.
 
 ## Release Notes Checklist
 
