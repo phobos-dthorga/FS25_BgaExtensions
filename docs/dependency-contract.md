@@ -6,7 +6,6 @@ This document records what `FS25_BgaExtensions` expects from required dependenci
 
 | Dependency | Why it is required | Contract used by GBW | Verification source |
 | --- | --- | --- | --- |
-| `FS25_PhobosLib` | Shared Phobos FS25 helper library for small Lua utilities. | Namespaced logging, fillType lookup, and guarded active-mod checks used by the GBW data-pack loader and runtime-gated compatibility add-on. | Public Phobos repository and local CI/package validation. |
 | `FS25_PlanET_BGA_Modular` | PlanET-specific intake, prep, fermentation, and supply modules use PlanET internal feedstocks and PlanET assets. | `SILAGE_IN`, `MANURE_IN`, `SUGARBEETCUT_IN`, plus referenced PlanET bunker, fermenter, slurry-storage models, and store icons. | Local mod XML and game log on 2026-06-07: loaded as version `1.0.0.1`, with 9 fillTypes loaded. |
 | `pdlc_strawHarvestPack` | Pellet output, molasses use, and dry fuel storage target the HALLSYS Pellet Heat Plant ecosystem. | `STRAW_PELLETS`, `HAY_PELLETS`, `MOLASSES`, and installed pDLC runtime support for pellet handling. | Game log and save data on 2026-06-09: pDLC version `1.1.0.0`, 3 fillTypes loaded, plus observed `HAY_PELLETS`, `STRAW_PELLETS`, and `MOLASSES` save entries. |
 
@@ -24,6 +23,14 @@ These GBW mash fillTypes are not meant to become broad farm commodities yet. The
 GBW may reference PlanET model and icon paths only while `FS25_PlanET_BGA_Modular` remains a declared dependency. The GBW package must not vendor PlanET assets.
 
 The Process Supply Hub may pass through existing `WATER` for distribution. The Process Pallet Dock may pass through existing `SILAGE_ADDITIVE` and `MOLASSES` for distribution. These are logistics recipes, not new materials, and must not become GBW-owned fillTypes unless the current same-fillType dispatcher pattern fails in-game and a new design decision approves internal buffers.
+
+## Lua Helper Boundary
+
+GBW packages are self-contained. Runtime-gated Lua helpers for logging,
+fillType lookup, optional provider checks, settings paths, XMLFile access, and
+translation fallback stay local to the package that uses them. Shared FS25
+patterns should be documented as copyable conventions instead of introduced as
+a required runtime dependency.
 
 ## Base Game Materials
 
@@ -59,6 +66,6 @@ Do not put optional fillTypes directly into the core placeable XML. The current 
 | Add-on package | Required dependencies | Contract used by GBW |
 | --- | --- | --- |
 | `FS25_BgaExtensions_PotatoWasherCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_potatoWasher` | `POTATO_WASHED` from Potato Washing System, `GBW_ROOT_MASH` from core GBW, and the small PlanET bunker model. |
-| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_BgaExtensions`, `FS25_PhobosLib`, `FS25_PlanET_BGA_Modular`, `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` and `COMPOST` from Orchards And Greenhouses, GBW mash families from core GBW, Phobos helper calls for logging/provider/fillType gates, the PlanET bunker models for Organic Residue Prep and runtime-gated waste-aware processing, and the Orchards/Greenhouses compost silo model for GBW Compost Bay. |
+| `FS25_BgaExtensions_OrchardsGreenhousesCompat` | `FS25_BgaExtensions`, `FS25_PlanET_BGA_Modular`, `FS25_orchardsAndGreenhouses_crossplay` | `ORGANICWASTE` and `COMPOST` from Orchards And Greenhouses, GBW mash families from core GBW, local logging/provider/fillType gates, the PlanET bunker models for Organic Residue Prep and runtime-gated waste-aware processing, and the Orchards/Greenhouses compost silo model for GBW Compost Bay. |
 
 The waste-aware prep and large-intake XML remain packaged for compatibility with early test saves, but they are not static shop items. New shop availability is controlled by the GBW setting plus runtime provider and `ORGANICWASTE` checks.

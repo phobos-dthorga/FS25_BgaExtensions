@@ -53,7 +53,6 @@ DEPENDENCY_FILLTYPES = {
         "GBW_ROOT_MASH",
         "GBW_SWEET_MASH",
     },
-    "FS25_PhobosLib": set(),
     "FS25_PlanET_BGA_Modular": {
         "LIQUIDMANURE1",
         "MANURE_IN",
@@ -158,13 +157,11 @@ WASTE_AWARE_BIOMASS_INTAKE_LARGE_FILE = "wasteAwareBiomassIntakeLarge.xml"
 GBW_COMPAT_SETTINGS_SCRIPT = "scripts/GBWCompatSettings.lua"
 WASTE_AWARE_GATE_SCRIPT = "scripts/GBWWasteAwareGate.lua"
 CORE_REQUIRED_DEPENDENCIES = {
-    "FS25_PhobosLib",
     "FS25_PlanET_BGA_Modular",
     "pdlc_strawHarvestPack",
 }
 ORCHARDS_GREENHOUSES_REQUIRED_DEPENDENCIES = {
     "FS25_BgaExtensions",
-    "FS25_PhobosLib",
     "FS25_PlanET_BGA_Modular",
     "FS25_orchardsAndGreenhouses_crossplay",
 }
@@ -524,6 +521,10 @@ def moddesc_data(mod_root: Path, validation: Validation) -> tuple[set[str], set[
 
 
 def validate_required_dependencies(mod_root: Path, dependencies: set[str], validation: Validation) -> None:
+    retired_dependency = "FS25_" + "Phobos" + "Lib"
+    if retired_dependency in dependencies:
+        validation.error(f"{mod_root.name} must be self-contained and must not declare the retired FS25 helper dependency")
+
     is_core = (mod_root / "config" / "biomassCropRegistry.xml").is_file()
     if is_core:
         missing = sorted(CORE_REQUIRED_DEPENDENCIES - dependencies)
@@ -536,46 +537,14 @@ def validate_required_dependencies(mod_root: Path, dependencies: set[str], valid
             validation.error(f"{ORCHARDS_GREENHOUSES_COMPAT_MOD} must declare dependency {dependency}")
 
 
-def validate_phoboslib_usage(mod_root: Path, validation: Validation) -> None:
-    is_core = (mod_root / "config" / "biomassCropRegistry.xml").is_file()
-    if is_core:
-        data_pack_script = mod_root / "scripts" / "GBWDataPacks.lua"
-        if data_pack_script.is_file():
-            text = data_pack_script.read_text(encoding="utf-8")
-            required_fragments = {
-                "PhobosFS25.Logging": "use shared Phobos logging helpers",
-                "PhobosFS25.FillTypes": "use shared fillType lookup helpers",
-                "PhobosFS25.XmlFile": "use shared XMLFile helpers",
-            }
-            for fragment, reason in required_fragments.items():
-                if fragment not in text:
-                    validation.error(f"GBWDataPacks.lua must {reason}")
+def validate_self_contained_lua(mod_root: Path, validation: Validation) -> None:
+    retired_dependency = "FS25_" + "Phobos" + "Lib"
+    retired_global = "Phobos" + "FS25"
 
-    if mod_root.name == ORCHARDS_GREENHOUSES_COMPAT_MOD:
-        settings_script = mod_root / GBW_COMPAT_SETTINGS_SCRIPT
-        if settings_script.is_file():
-            text = settings_script.read_text(encoding="utf-8")
-            required_fragments = {
-                "PhobosFS25.Logging": "use shared Phobos logging helpers",
-                "PhobosFS25.I18n": "use shared i18n fallback helpers",
-                "PhobosFS25.ModSettings": "use shared mod-settings path helpers",
-                "PhobosFS25.XmlFile": "use shared XMLFile helpers",
-            }
-            for fragment, reason in required_fragments.items():
-                if fragment not in text:
-                    validation.error(f"{GBW_COMPAT_SETTINGS_SCRIPT} must {reason}")
-
-        gate_script = mod_root / WASTE_AWARE_GATE_SCRIPT
-        if gate_script.is_file():
-            text = gate_script.read_text(encoding="utf-8")
-            required_fragments = {
-                "PhobosFS25.Logging": "use shared Phobos logging helpers",
-                "PhobosFS25.Mods": "use shared active-mod detection helpers",
-                "PhobosFS25.FillTypes": "use shared fillType lookup helpers",
-            }
-            for fragment, reason in required_fragments.items():
-                if fragment not in text:
-                    validation.error(f"{WASTE_AWARE_GATE_SCRIPT} must {reason}")
+    for script_path in sorted((mod_root / "scripts").glob("*.lua")):
+        text = script_path.read_text(encoding="utf-8")
+        if retired_dependency in text or retired_global in text:
+            validation.error(f"{script_path.relative_to(mod_root)} must not reference retired FS25 helper globals")
 
 
 def collect_filltype_refs(path: Path, tree: ET.ElementTree) -> set[str]:
@@ -1860,7 +1829,7 @@ def validate_source(repo_root: Path, mod_source: str, validation: Validation) ->
 
     dependencies, l10n_keys, construction_tabs = moddesc_data(mod_root, validation)
     validate_required_dependencies(mod_root, dependencies, validation)
-    validate_phoboslib_usage(mod_root, validation)
+    validate_self_contained_lua(mod_root, validation)
     known_construction_tabs = dict(construction_tabs)
     for dependency in dependencies:
         known_construction_tabs.update(DEPENDENCY_CONSTRUCTION_TABS.get(dependency, {}))

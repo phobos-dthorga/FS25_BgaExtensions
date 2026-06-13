@@ -1,23 +1,17 @@
 GBWCompatSettings = GBWCompatSettings or {}
 
 GBWCompatSettings.modName = g_currentModName or "FS25_BgaExtensions_OrchardsGreenhousesCompat"
-if PhobosFS25 ~= nil and PhobosFS25.ModSettings ~= nil then
-    GBWCompatSettings.modSettingsDirectory = PhobosFS25.ModSettings.getDirectory(GBWCompatSettings.modName)
-    GBWCompatSettings.xmlFilename = PhobosFS25.ModSettings.buildXmlPath(GBWCompatSettings.modName)
-else
-    GBWCompatSettings.modSettingsDirectory = g_currentModSettingsDirectory
-        or ((g_modSettingsDirectory or "") .. GBWCompatSettings.modName .. "/")
-    GBWCompatSettings.xmlFilename = GBWCompatSettings.modSettingsDirectory .. "settings.xml"
+GBWCompatSettings.modSettingsDirectory = g_currentModSettingsDirectory
+    or ((g_modSettingsDirectory or "") .. GBWCompatSettings.modName .. "/")
+if string.sub(GBWCompatSettings.modSettingsDirectory, -1) ~= "/" then
+    GBWCompatSettings.modSettingsDirectory = GBWCompatSettings.modSettingsDirectory .. "/"
 end
+GBWCompatSettings.xmlFilename = GBWCompatSettings.modSettingsDirectory .. "settings.xml"
 GBWCompatSettings.wasteAwareOrganicSideStreams = true
 GBWCompatSettings.loaded = false
 
 local function gbwSettingsInfo(message, ...)
-    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.infoOnceSource ~= nil then
-        PhobosFS25.Logging.infoOnceSource("GBWCompatSettings", message, ...)
-    elseif PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.infoSource ~= nil then
-        PhobosFS25.Logging.infoSource("GBWCompatSettings", message, ...)
-    elseif Logging ~= nil and Logging.info ~= nil then
+    if Logging ~= nil and Logging.info ~= nil then
         Logging.info("[GBWCompatSettings] " .. message, ...)
     else
         print(string.format("[GBWCompatSettings] " .. message, ...))
@@ -25,10 +19,6 @@ local function gbwSettingsInfo(message, ...)
 end
 
 local function gbwSettingsText(key, fallback)
-    if PhobosFS25 ~= nil and PhobosFS25.I18n ~= nil and PhobosFS25.I18n.get ~= nil then
-        return PhobosFS25.I18n.get(GBWCompatSettings.modName, key, fallback)
-    end
-
     if g_i18n ~= nil and g_i18n.modEnvironments ~= nil then
         local modEnvironment = g_i18n.modEnvironments[GBWCompatSettings.modName]
         if modEnvironment ~= nil and modEnvironment.texts ~= nil and modEnvironment.texts[key] ~= nil then
@@ -61,26 +51,16 @@ function GBWCompatSettings:loadUserSettings()
     end
 
     local xmlFile = nil
-    if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.loadIfExists ~= nil then
-        xmlFile = PhobosFS25.XmlFile.loadIfExists("GBWCompatSettings", self.xmlFilename)
-    else
+    if XMLFile.loadIfExists ~= nil then
         xmlFile = XMLFile.loadIfExists("GBWCompatSettings", self.xmlFilename)
     end
 
     if xmlFile ~= nil then
-        local getBool = PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.getBool or nil
-        self.wasteAwareOrganicSideStreams = (getBool ~= nil and getBool or function(file, key, defaultValue)
-            return file:getBool(key, defaultValue)
-        end)(
-            xmlFile,
+        self.wasteAwareOrganicSideStreams = xmlFile:getBool(
             "gbwCompatSettings.wasteAwareOrganicSideStreams#enabled",
             self.wasteAwareOrganicSideStreams
         )
-        if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.delete ~= nil then
-            PhobosFS25.XmlFile.delete(xmlFile)
-        else
-            xmlFile:delete()
-        end
+        xmlFile:delete()
     end
 end
 
@@ -89,38 +69,20 @@ function GBWCompatSettings:saveUserSettings()
         return
     end
 
-    if PhobosFS25 ~= nil and PhobosFS25.ModSettings ~= nil and PhobosFS25.ModSettings.ensureDirectory ~= nil then
-        PhobosFS25.ModSettings.ensureDirectory(self.modName, self.modSettingsDirectory)
-    elseif createFolder ~= nil then
+    if createFolder ~= nil then
         createFolder(self.modSettingsDirectory)
     end
 
     local xmlFile = nil
-    if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.create ~= nil then
-        xmlFile = PhobosFS25.XmlFile.create("GBWCompatSettings", self.xmlFilename, "gbwCompatSettings")
-    else
+    if XMLFile.create ~= nil then
         xmlFile = XMLFile.create("GBWCompatSettings", self.xmlFilename, "gbwCompatSettings")
     end
 
     if xmlFile ~= nil then
-        if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.setBool ~= nil then
-            PhobosFS25.XmlFile.setBool(
-                xmlFile,
-                "gbwCompatSettings.wasteAwareOrganicSideStreams#enabled",
-                self.wasteAwareOrganicSideStreams
-            )
-        else
-            xmlFile:setBool(
-                "gbwCompatSettings.wasteAwareOrganicSideStreams#enabled",
-                self.wasteAwareOrganicSideStreams
-            )
-        end
-
-        if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.saveAndDelete ~= nil then
-            PhobosFS25.XmlFile.saveAndDelete(xmlFile)
-            return
-        end
-
+        xmlFile:setBool(
+            "gbwCompatSettings.wasteAwareOrganicSideStreams#enabled",
+            self.wasteAwareOrganicSideStreams
+        )
         xmlFile:save()
         xmlFile:delete()
     end

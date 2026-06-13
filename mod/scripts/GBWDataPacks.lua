@@ -71,9 +71,7 @@ GBWDataPacks.activeCountsByTarget = {}
 GBWDataPacks.loadedPackIds = {}
 
 local function gbwInfo(message, ...)
-    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.infoSource ~= nil then
-        PhobosFS25.Logging.infoSource("GBWDataPacks", message, ...)
-    elseif Logging ~= nil and Logging.info ~= nil then
+    if Logging ~= nil and Logging.info ~= nil then
         Logging.info("[GBWDataPacks] " .. message, ...)
     else
         print(string.format("[GBWDataPacks] " .. message, ...))
@@ -81,9 +79,7 @@ local function gbwInfo(message, ...)
 end
 
 local function gbwWarning(message, ...)
-    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.warnSource ~= nil then
-        PhobosFS25.Logging.warnSource("GBWDataPacks", message, ...)
-    elseif Logging ~= nil and Logging.warning ~= nil then
+    if Logging ~= nil and Logging.warning ~= nil then
         Logging.warning("[GBWDataPacks] " .. message, ...)
     else
         print(string.format("[GBWDataPacks] Warning: " .. message, ...))
@@ -148,10 +144,6 @@ function GBWDataPacks:resetLoadedRoutes()
 end
 
 function GBWDataPacks:getFillTypeId(fillTypeName)
-    if PhobosFS25 ~= nil and PhobosFS25.FillTypes ~= nil and PhobosFS25.FillTypes.getIndex ~= nil then
-        return PhobosFS25.FillTypes.getIndex(fillTypeName)
-    end
-
     if g_fillTypeManager == nil or g_fillTypeManager.getFillTypeIndexByName == nil then
         return nil
     end
@@ -257,9 +249,7 @@ end
 
 function GBWDataPacks:loadPack(registration)
     local xmlFile = nil
-    if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.load ~= nil then
-        xmlFile = PhobosFS25.XmlFile.load("GBWDataPack", registration.xmlFilename)
-    elseif XMLFile ~= nil and XMLFile.load ~= nil then
+    if XMLFile ~= nil and XMLFile.load ~= nil then
         xmlFile = XMLFile.load("GBWDataPack", registration.xmlFilename)
     end
 
@@ -269,12 +259,7 @@ function GBWDataPacks:loadPack(registration)
     end
 
     local rootKey = "gbwDataPack"
-    local hasRoot = false
-    if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.hasProperty ~= nil then
-        hasRoot = PhobosFS25.XmlFile.hasProperty(xmlFile, rootKey)
-    else
-        hasRoot = xmlFile:hasProperty(rootKey)
-    end
+    local hasRoot = xmlFile.hasProperty ~= nil and xmlFile:hasProperty(rootKey)
 
     if not hasRoot then
         gbwWarning("Data pack '%s' has no gbwDataPack root node.", registration.modName)
@@ -318,9 +303,7 @@ function GBWDataPacks:loadPack(registration)
         end
     end
 
-    if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.iterate ~= nil then
-        PhobosFS25.XmlFile.iterate(xmlFile, rootKey .. ".routes.route", loadRoute, self.MAX_ROUTES_PER_PACK + 1)
-    else
+    if xmlFile.iterate ~= nil then
         xmlFile:iterate(rootKey .. ".routes.route", loadRoute)
     end
 

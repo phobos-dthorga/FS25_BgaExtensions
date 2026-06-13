@@ -39,9 +39,9 @@ The validator intentionally covers checks that are cheap to automate and annoyin
 - every production output must be available from a load trigger
 - storage-only production-point fillTypes fail validation
 - optional provider fillTypes must stay in guarded add-on packages
-- GBW Lua helpers must continue using `FS25_PhobosLib` for shared logging,
-  active-mod detection, fillType lookup, settings paths, XMLFile access, and
-  i18n fallback where those helpers apply
+- GBW Lua helpers must remain self-contained for logging, active-mod detection,
+  fillType lookup, settings paths, XMLFile access, and i18n fallback where
+  those helpers apply
 - data-pack XML must use documented targets, templates, tiers, route caps, and stable IDs
 - fermentation-priority recipe relationships are enforced for current core BGA lanes
 - package versions must match across the active package set
