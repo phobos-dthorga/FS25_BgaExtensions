@@ -545,6 +545,7 @@ def validate_phoboslib_usage(mod_root: Path, validation: Validation) -> None:
             required_fragments = {
                 "PhobosFS25.Logging": "use shared Phobos logging helpers",
                 "PhobosFS25.FillTypes": "use shared fillType lookup helpers",
+                "PhobosFS25.XmlFile": "use shared XMLFile helpers",
             }
             for fragment, reason in required_fragments.items():
                 if fragment not in text:
@@ -554,8 +555,15 @@ def validate_phoboslib_usage(mod_root: Path, validation: Validation) -> None:
         settings_script = mod_root / GBW_COMPAT_SETTINGS_SCRIPT
         if settings_script.is_file():
             text = settings_script.read_text(encoding="utf-8")
-            if "PhobosFS25.Logging" not in text:
-                validation.error(f"{GBW_COMPAT_SETTINGS_SCRIPT} must use shared Phobos logging helpers")
+            required_fragments = {
+                "PhobosFS25.Logging": "use shared Phobos logging helpers",
+                "PhobosFS25.I18n": "use shared i18n fallback helpers",
+                "PhobosFS25.ModSettings": "use shared mod-settings path helpers",
+                "PhobosFS25.XmlFile": "use shared XMLFile helpers",
+            }
+            for fragment, reason in required_fragments.items():
+                if fragment not in text:
+                    validation.error(f"{GBW_COMPAT_SETTINGS_SCRIPT} must {reason}")
 
         gate_script = mod_root / WASTE_AWARE_GATE_SCRIPT
         if gate_script.is_file():

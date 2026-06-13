@@ -256,14 +256,27 @@ function GBWDataPacks:loadRoute(xmlFile, routeKey, pack, routeIndex)
 end
 
 function GBWDataPacks:loadPack(registration)
-    local xmlFile = XMLFile.load("GBWDataPack", registration.xmlFilename)
+    local xmlFile = nil
+    if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.load ~= nil then
+        xmlFile = PhobosFS25.XmlFile.load("GBWDataPack", registration.xmlFilename)
+    elseif XMLFile ~= nil and XMLFile.load ~= nil then
+        xmlFile = XMLFile.load("GBWDataPack", registration.xmlFilename)
+    end
+
     if xmlFile == nil then
         gbwWarning("Could not load data pack XML for '%s': %s", registration.modName, registration.xmlFilename)
         return 0
     end
 
     local rootKey = "gbwDataPack"
-    if not xmlFile:hasProperty(rootKey) then
+    local hasRoot = false
+    if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.hasProperty ~= nil then
+        hasRoot = PhobosFS25.XmlFile.hasProperty(xmlFile, rootKey)
+    else
+        hasRoot = xmlFile:hasProperty(rootKey)
+    end
+
+    if not hasRoot then
         gbwWarning("Data pack '%s' has no gbwDataPack root node.", registration.modName)
         xmlFile:delete()
         return 0
@@ -298,12 +311,18 @@ function GBWDataPacks:loadPack(registration)
 
     local loadedRoutes = 0
     local routeIndex = 0
-    xmlFile:iterate(rootKey .. ".routes.route", function(_, routeKey)
+    local function loadRoute(_, routeKey)
         routeIndex = routeIndex + 1
         if self:loadRoute(xmlFile, routeKey, pack, routeIndex) then
             loadedRoutes = loadedRoutes + 1
         end
-    end)
+    end
+
+    if PhobosFS25 ~= nil and PhobosFS25.XmlFile ~= nil and PhobosFS25.XmlFile.iterate ~= nil then
+        PhobosFS25.XmlFile.iterate(xmlFile, rootKey .. ".routes.route", loadRoute, self.MAX_ROUTES_PER_PACK + 1)
+    else
+        xmlFile:iterate(rootKey .. ".routes.route", loadRoute)
+    end
 
     if routeIndex == 0 then
         gbwWarning("Data pack '%s' does not define any routes.", packId)

@@ -11,7 +11,9 @@ GBWWasteAwareGate.storeXmls = {
 }
 
 local function gbwGateInfo(message, ...)
-    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.infoSource ~= nil then
+    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.infoOnceSource ~= nil then
+        PhobosFS25.Logging.infoOnceSource("GBWWasteAwareGate", message, ...)
+    elseif PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.infoSource ~= nil then
         PhobosFS25.Logging.infoSource("GBWWasteAwareGate", message, ...)
     elseif Logging ~= nil and Logging.info ~= nil then
         Logging.info("[GBWWasteAwareGate] " .. message, ...)
@@ -21,7 +23,9 @@ local function gbwGateInfo(message, ...)
 end
 
 local function gbwGateWarning(message, ...)
-    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.warnSource ~= nil then
+    if PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.warnOnceSource ~= nil then
+        PhobosFS25.Logging.warnOnceSource("GBWWasteAwareGate", message, ...)
+    elseif PhobosFS25 ~= nil and PhobosFS25.Logging ~= nil and PhobosFS25.Logging.warnSource ~= nil then
         PhobosFS25.Logging.warnSource("GBWWasteAwareGate", message, ...)
     elseif Logging ~= nil and Logging.warning ~= nil then
         Logging.warning("[GBWWasteAwareGate] " .. message, ...)
@@ -37,6 +41,10 @@ local function normalizePath(value)
 end
 
 function GBWWasteAwareGate:isProviderActive()
+    if PhobosFS25 ~= nil and PhobosFS25.Integrations ~= nil and PhobosFS25.Integrations.isAvailable ~= nil then
+        return PhobosFS25.Integrations.isAvailable(self.providerModName)
+    end
+
     if PhobosFS25 ~= nil and PhobosFS25.Mods ~= nil and PhobosFS25.Mods.isLoaded ~= nil then
         return PhobosFS25.Mods.isLoaded(self.providerModName)
     end
